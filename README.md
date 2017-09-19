@@ -14,3 +14,6 @@ Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     |
 Pamela Khouri         | khouripamela@gmail.com        | 40016194     | Team leader
 Joséphine Ng          | jng11232@hotmail.com          | 40001872     |
 Yan Ming Hu           | yanming_hu@yahoo.ca           | 40005813     | 
+Hasan Ahmed           |                               |              |
+Brandon Goldwax       |                               |              | 
+Charles-Philippe Labbé|                               |              |         
