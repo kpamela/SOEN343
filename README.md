@@ -15,5 +15,5 @@ Pamela Khouri         | khouripamela@gmail.com        | 40016194     | Team lead
 Joséphine Ng          | jng11232@hotmail.com          | 40001872     |
 Yan Ming Hu           | yanming_hu@yahoo.ca           | 40005813     | 
 Hasan Ahmed           |                               |              |
-Brandon Goldwax       |                               |              | 
+Brandon Goldwax       | bgoldwax@hotmail.com          | 40006986     | 
 Charles-Philippe Labbé|                               |              |         
