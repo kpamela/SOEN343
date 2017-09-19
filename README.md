@@ -1,4 +1,4 @@
-# SOEN 343
+# SOEN 343 - Team 15
 This repository regroups all the files necessary for the SOEN 343 project.
 
 ## Team members 
