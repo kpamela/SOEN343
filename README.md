@@ -17,3 +17,22 @@ Yan Ming Hu           | yanming_hu@yahoo.ca           | 40005813     |
 Hasan Ahmed           |                               |              |
 Brandon Goldwax       | bgoldwax@hotmail.com          | 40006986     | 
 Charles-Philippe Labbé|                               |              |         
+
+## Web stack
+**View** | ReactJS
+**Style** | SCSS
+**HTTP** | Axios
+**Webserver** | NodeJS/Express
+**Database** | MySQL
+**Bundler** | Webpack
+
+## Package install
+```bash
+npm install --save
+```
+
+## Start the local server
+```bash
+npm start
+```
+Then go to http://localhost:3000/
