@@ -1,0 +1,26 @@
+//// Say you have a file named style.scss in the same directory as main.scss
+// to import the styling here follow the convention below
+// @import 'style'
+// you dont need the file extension.
+// Make sure all imports are at the top of this file.
+
+// NESTING example
+// MARKUP
+// <div className="container">
+//   <div className="child1"></div>
+//   <div className="child2"></div>
+// </div>
+// SCSS
+// .container {
+//     .child1 {
+//         width: 50px;
+//     }
+//     .child2 {
+//         height: 50px;
+//     }
+// }
+
+body{
+    margin:0px;
+    padding:0px;
+}
