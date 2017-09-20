@@ -14,6 +14,6 @@ William Leclerc       | w.dfj.leclerc@gmail.com       | 27424973     |
 Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     |
 Joséphine Ng          | jng11232@hotmail.com          | 40001872     |
 Yan Ming Hu           | yanming_hu@yahoo.ca           | 40005813     | 
-Hasan Ahmed           |                               |              |
+Hasan Ahmed           | hasan.mahmed95@gmail.com      | 27546467     |
 Brandon Goldwax       | bgoldwax@hotmail.com          | 40006986     | 
 Charles-Philippe Labbé|                               |              |         
