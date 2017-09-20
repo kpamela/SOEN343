@@ -1,0 +1,4 @@
+# Add files or folders to be ignored by git
+
+# Ignore node_modules 
+node_modules/
