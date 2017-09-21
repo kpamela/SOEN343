@@ -30,6 +30,7 @@ Charles-Philippe Labbé|                               |              |
 ```bash
 npm install --save
 ```
+***Install XAMPP before running the package
 
 ## Start the local server
 ```bash
