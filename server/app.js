@@ -8,12 +8,14 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     passport = require('passport'),
-    mysql = require('mysql'),
     webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
     config = require('../webpack.config.js'),
     compiler = webpack(config);
+
+// Configure the database
+var configDB = require('./config/database.js');
 
 // Launch express
 const app = express();
@@ -28,24 +30,6 @@ app.use(webpackDevMiddleware(compiler, {
     }
 }));
 
-// Create the connection to the db
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root'
-});
-
-// Connect to the db
-db.connect((err) => {
-    if(err) throw err;
-    console.log('Mysql connected');
-    // Create the database
-    let sql = 'CREATE DATABASE IF NOT EXISTS tecmarket';
-    db.query(sql, (err, result) => {
-        if(err) throw err;
-        console.log('Database tecmarket created')
-    });
-});
-
 // Port number
 const port = process.env.PORT || 3000;
 
@@ -53,7 +37,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 
 // Set static folder
-app.use('/' ,express.static(path.join(__dirname, 'public')));
+app.use('/' ,express.static(path.join(__dirname, '../public')));
 
 // bodyParser middleware
 app.use(bodyParser.json());
@@ -64,7 +48,7 @@ app.use(bodyParser.json());
 //require('./config/passport')(passport);
 
 // API routes go here
-
+app.use('/users', require('./routes/users.js'));
 
 // Index route
 //app.get('/', (req, res) => {
@@ -79,3 +63,4 @@ app.all('*', (req, res) => {
 app.listen(port, () => {
     console.log('Server started on port ' + port);
 });
+
