@@ -17,5 +17,6 @@ class App extends Component {
   }
 }
 //import './Test.js';
-import './Catalogue.js';
+//import './Catalog.js';
+import './Catalog_v1.2.js';
 export default App;

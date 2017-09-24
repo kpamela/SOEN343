@@ -4,7 +4,7 @@ import Product from './Product.js';
 
 
 
-class Catalogue extends React.Component{
+class Catalog extends React.Component{
     constructor(){
         super();
         this.state={
@@ -17,11 +17,11 @@ class Catalogue extends React.Component{
         this.setState({products: this.state.products.concat([{name: ''}])});
    }
 
-   handleChangeProduct(index, evt){
+   handleNewProduct(index, evt){
        this.setState({products: this.state.products[index] = [{name: evt.target.value}]});
 
    }
-   handleRemoveProduct(index){
+   handleCancelProduct(index){
         this.setState({products: this.state.products.filter((prod,i) => index !== i)});
     }
 
@@ -30,8 +30,9 @@ class Catalogue extends React.Component{
        console.log(name);
        this.setState({listing: this.state.listing.concat([<Product value={name}/>])});
 
-
-       this.handleRemoveProduct(index);
+        var test = <Product value={'test'}/>;
+        console.log(test.props.value);
+       this.handleCancelProduct(index);
    }
 
 
@@ -49,10 +50,10 @@ class Catalogue extends React.Component{
                             type="text"
                             placeholder={`Product #${index + 1} name`}
                             value={product.name}
-                            onChange={evt => this.handleChangeProduct(index, evt)}
+                            onChange={evt => this.handleNewProduct(index, evt)}
                             />
                         <button type="button" onClick={() => this.submitProduct(index)} className="add">Submit</button>
-                        <button type="button" onClick={() => this.handleRemoveProduct(index)} className="rem">-</button>
+                        <button type="button" onClick={() => this.handleCancelProduct(index)} className="rem">-</button>
                     </div>
                 ))}
                 {this.state.listing}
@@ -63,6 +64,6 @@ class Catalogue extends React.Component{
 }
 
 ReactDOM.render(
-    <Catalogue/>,
+    <Catalog/>,
     document.getElementById('Catalogue')
 );
