@@ -16,7 +16,8 @@
     "passport-jwt": "^3.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "^1.0.13"
+    "react-scripts": "^1.0.13",
+    "validator": "^8.2.0"
   },
   "scripts": {
     "start": "node ./server/app.js",
