@@ -11,7 +11,7 @@ class Product extends React.Component{
     render(){
         return (
             <button className="product">
-                <b>{this.props.name}</b><br/>{this.props.description}<br/>{this.props.price}
+                <b>{this.props.name}</b><br/>{this.props.description}<br/>{this.props.price}<br/>{this.props.amount}
         </button>
         );
     }
@@ -28,7 +28,7 @@ class ProductListing extends React.Component{
                 return;
             }
 
-            listing.push(<Product name={product.name} description={product.description} price={product.price}/>);
+            listing.push(<Product name={product.name} description={product.description} price={product.price} amount={product.amount}/>);
         });
 
         return(
@@ -67,7 +67,7 @@ class AddProduct extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            newItem:{name:'', description:'', price:''},
+            newItem:{name:'', description:'', price:'', amount: null},
             dispField: false,
             dispSign: '+'
         }
@@ -78,9 +78,9 @@ class AddProduct extends React.Component{
     }
 
     handleChange(e){
-        console.log(e.target.id);
-
-        this.setState({newItem: this.state.newItem.description = e.target.value});
+        var item = this.state.newItem;
+        item[e.target.id] = e.target.value;
+        this.setState({newItem: item});
     }
 
     addProductField(){
@@ -92,35 +92,48 @@ class AddProduct extends React.Component{
                         type="text"
                         placeholder={'Enter Product Name'}
                         value={this.state.newItem.name}
-                        id="Name"
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder={'Enter Product Description'}
-                        value={this.state.newItem.description}
-                        id="Description"
+                        id="name"
                         onChange={this.handleChange}
                     />
                     <input
                         type="text"
                         placeholder={'Enter Product Price'}
                         value={this.state.newItem.price}
-                        id="Price"
+                        id="price"
                         onChange={this.handleChange}
                     />
+                    <input
+                        type="text"
+                        placeholder={'Enter Product Amount'}
+                        id="amount"
+                        onChange={this.handleChange}
+                    />
+                    <br/>
+                    <textarea
+                        type="text"
+                        placeholder={'Enter Product Description'}
+                        value={this.state.newItem.description}
+                        id="description"
+                        onChange={this.handleChange}
+                    />
+                    <br/>
                     <input type="submit" value="Submit" />
                 </form>
             );
         }
         else{
             this.state.dispSign = '-';
+            this.state.newItem = {name:'', description:'', price:'', amount: null};
             return;
         }
     }
 
     handleNewItemOnClick(e){
-        this.props.onNewItem(this.state.newItem);
+        var item = {name:this.state.newItem.name,
+            description:this.state.newItem.description,
+            price:this.state.newItem.price,
+            amount:this.state.newItem.amount};
+        this.props.onNewItem(item);
         e.preventDefault();
     }
 
@@ -141,8 +154,8 @@ class Catalog extends React.Component{
         super(props);
         this.state={
             PRODUCTS : [
-                {name: 'MacBook', description:'Aluminium', price:'$$$'},
-                {name: 'Windows', description:'Plastic', price:'$'}
+                {name: 'MacBook', description:'Aluminium', price:'$$$', amount:4},
+                {name: 'Windows', description:'Plastic', price:'$', amount:5}
             ],
             filterText: '',
 
@@ -158,8 +171,9 @@ class Catalog extends React.Component{
     }
 
     handleNewItem(newItem){
+
         this.setState({
-            PRODUCTS: this.state.PRODUCTS.concat([{name: newItem}])
+            PRODUCTS: this.state.PRODUCTS.concat(newItem)
 
         });
     }
