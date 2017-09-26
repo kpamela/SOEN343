@@ -2,11 +2,12 @@
  * Created by CharlesPhilippe on 2017-09-25.
  */
 import React from 'react';
+
 export default class AddProduct extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            newItem:{name:'', description:'', price:'', amount: null},
+            newItem:{name:'',category:'', description:'', price:'', amount: null},
             dispField: false,
             dispSign: '+'
         }
@@ -41,6 +42,13 @@ export default class AddProduct extends React.Component{
                         id="price"
                         onChange={this.handleChange}
                     />
+                    <br/>
+                    <input
+                        type="text"
+                        placeholder={'Enter ProductCategory'}
+                        id="category"
+                        onChange={this.handleChange}
+                    />
                     <input
                         type="text"
                         placeholder={'Enter Product Amount'}
@@ -62,13 +70,14 @@ export default class AddProduct extends React.Component{
         }
         else{
             this.state.dispSign = '-';
-            this.state.newItem = {name:'', description:'', price:'', amount: null};
+            this.state.newItem = {name:'',category:'', description:'', price:'', amount: null};
             return;
         }
     }
     //On submit, pass newItem to Catalog via onNewItem()
     handleNewItemOnClick(e){
         var item = {name:this.state.newItem.name,
+            category: this.state.newItem.category,
             description:this.state.newItem.description,
             price:this.state.newItem.price,
             amount:this.state.newItem.amount};

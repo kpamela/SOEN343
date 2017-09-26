@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import Product from './Product.js'
+
 export default class ProductListing extends React.Component{
     render(){
         var listing = [];
@@ -10,11 +11,17 @@ export default class ProductListing extends React.Component{
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
 
-            if(product.name.indexOf(this.props.filterText) === -1){
+            //searching for substrings in name or category
+            if(product.name.indexOf(this.props.filterText) === -1
+                && product.category.indexOf(this.props.filterText) === -1){
                 return;
             }
             //Converting product object to product component
-            listing.push(<Product name={product.name} description={product.description} price={product.price} amount={product.amount}/>);
+            listing.push(<Product name={product.name}
+                                  category={product.category}
+                                  description={product.description}
+                                  price={product.price}
+                                  amount={product.amount}/>);
         });
 
         return(

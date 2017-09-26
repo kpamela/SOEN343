@@ -2,6 +2,7 @@
  * Created by CharlesPhilippe on 2017-09-25.
  */
 import React from 'react';
+
 export default class SearchBar extends React.Component{
     constructor(props){
         super(props);

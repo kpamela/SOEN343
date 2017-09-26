@@ -12,8 +12,8 @@ class Catalog extends React.Component{
         super(props);
         this.state={
             PRODUCTS : [
-                {name: 'MacBook', description:'Aluminium', price:'$$$', amount:4},
-                {name: 'Windows', description:'Plastic', price:'$', amount:5}
+                {name: 'MacBook', category: 'computer', description:'Aluminium', price:'$$$', amount:4},
+                {name: 'Windows', category: 'computer', description:'Plastic', price:'$', amount:5}
             ],
             filterText: '',
 
@@ -22,7 +22,7 @@ class Catalog extends React.Component{
         this.handleNewItem = this.handleNewItem.bind(this);
     }
     //Changing filterText state upon receive new value
-    handleFilterTextInput(filterText){
+    handleFilterTextInput(filterText) {
         this.setState({
             filterText: filterText
         });
