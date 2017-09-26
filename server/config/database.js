@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 
 var dbConfig = {
-    connectTimeout: 10000,
-    host: 'localhost',
+    host: '35.196.50.143',
     user: 'root',
+    port: '3306',
     database: 'tecmarket'
 }
 
