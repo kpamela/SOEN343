@@ -13,6 +13,7 @@ db.getConnection((err, connection) => {
         let sql = table;
         connection.query(sql, (err, result) => {
             if(err) throw err;
+            res.send(result);
         });
     });
 
@@ -30,6 +31,7 @@ db.getConnection((err, connection) => {
                     // Add user
                     connection.query(sql, newUser, (err, result) => {
                         if(err){
+                            console.log(err);
                             return res.json({success: false, msg: "Failed to register user"});
                         }
                         else{
