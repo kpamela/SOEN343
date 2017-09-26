@@ -11,7 +11,7 @@ class Product extends React.Component{
     render(){
         return (
             <button className="product">
-            {this.props.name}
+                <b>{this.props.name}</b><br/>{this.props.description}<br/>{this.props.price}
         </button>
         );
     }
@@ -28,7 +28,7 @@ class ProductListing extends React.Component{
                 return;
             }
 
-            listing.push(<Product name={product.name}/>);
+            listing.push(<Product name={product.name} description={product.description} price={product.price}/>);
         });
 
         return(
@@ -67,7 +67,7 @@ class AddProduct extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            newItem:'',
+            newItem:{name:'', description:'', price:''},
             dispField: false,
             dispSign: '+'
         }
@@ -78,7 +78,8 @@ class AddProduct extends React.Component{
     }
 
     handleChange(e){
-        this.setState({newItem: e.target.value});
+        console.log(e.target.id);
+        this.setState({newItem: this.state.newItem.description = e.target.value});
     }
 
     addProductField(){
@@ -89,7 +90,22 @@ class AddProduct extends React.Component{
                     <input
                         type="text"
                         placeholder={'Enter Product Name'}
-                        value={this.state.newItem}
+                        value={this.state.newItem.name}
+                        id="Name"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        type="text"
+                        placeholder={'Enter Product Description'}
+                        value={this.state.newItem.description}
+                        id="Description"
+                        onChange={this.handleChange}
+                    />
+                    <input
+                        type="text"
+                        placeholder={'Enter Product Price'}
+                        value={this.state.newItem.price}
+                        id="Price"
                         onChange={this.handleChange}
                     />
                     <input type="submit" value="Submit" />
@@ -124,8 +140,8 @@ class Catalog extends React.Component{
         super(props);
         this.state={
             PRODUCTS : [
-                {name: 'MacBook'},
-                {name: 'Windows'}
+                {name: 'MacBook', description:'Aluminium', price:'$$$'},
+                {name: 'Windows', description:'Plastic', price:'$'}
             ],
             filterText: '',
 
@@ -148,6 +164,8 @@ class Catalog extends React.Component{
     }
 
     render(){
+        var test = <Product name={'test'}/>;
+        console.log(test.props.name);
         return(
             <div>
                 <SearchBar
@@ -155,7 +173,6 @@ class Catalog extends React.Component{
                     onFilterTextInput={this.handleFilterTextInput}
                 />
                 <AddProduct
-
                     onNewItem={this.handleNewItem}
                 />
 
