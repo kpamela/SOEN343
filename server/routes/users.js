@@ -13,6 +13,7 @@ db.getConnection((err, connection) => {
         let sql = table;
         connection.query(sql, (err, result) => {
             if(err) throw err;
+            res.send(result);
         });
     });
 
