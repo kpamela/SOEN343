@@ -7,7 +7,7 @@ import ProductListing from './ProductListing.js';
 import SearchBar from './SearchBar.js';
 import AddProduct from './AddProduct.js';
 
-class Catalog extends React.Component{
+ export default class Catalog extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -55,9 +55,3 @@ class Catalog extends React.Component{
         );
     }
 }
-
-
-ReactDOM.render(
-    <Catalog />,
-    document.getElementById('Catalogue')
-);
