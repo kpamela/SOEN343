@@ -3,129 +3,17 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-
-
-
-class Product extends React.Component{
-    render(){
-        return (
-            <button className="product">
-            {this.props.name}
-        </button>
-        );
-    }
-}
-
-class ProductListing extends React.Component{
-    render(){
-        var listing = [];
-
-        //going through pass-by products adding them to current listing
-        this.props.products.forEach((product) => {
-
-            if(product.name.indexOf(this.props.filterText) === -1){
-                return;
-            }
-
-            listing.push(<Product name={product.name}/>);
-        });
-
-        return(
-            <div>
-                {listing}
-            </div>
-        );
-
-    }
-
-}
-
-class SearchBar extends React.Component{
-    constructor(props){
-        super(props);
-        this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
-    }
-
-    handleFilterTextInputChange(e){
-        this.props.onFilterTextInput(e.target.value);
-    }
-
-    render(){
-        return(
-            <form>
-                <input type="text" placeholder="Search..."
-                       value={this.props.filterText}
-                        onChange={this.handleFilterTextInputChange}
-                />
-            </form>
-        );
-    }
-}
-
-class AddProduct extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state={
-            newItem:'',
-            dispField: false,
-            dispSign: '+'
-        }
-
-        this.handleNewItemOnClick = this.handleNewItemOnClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-
-    }
-
-    handleChange(e){
-        this.setState({newItem: e.target.value});
-    }
-
-    addProductField(){
-        if(this.state.dispField){
-            this.state.dispSign = '+';
-            return(
-                <form onSubmit={this.handleNewItemOnClick}>
-                    <input
-                        type="text"
-                        placeholder={'Enter Product Name'}
-                        value={this.state.newItem}
-                        onChange={this.handleChange}
-                    />
-                    <input type="submit" value="Submit" />
-                </form>
-            );
-        }
-        else{
-            this.state.dispSign = '-';
-            return;
-        }
-    }
-
-    handleNewItemOnClick(e){
-        this.props.onNewItem(this.state.newItem);
-        e.preventDefault();
-    }
-
-    render(){
-        return(
-            <div>
-                <button className="add" onClick={() => {this.setState({dispField: !this.state.dispField})}} >
-                    {this.state.dispSign}
-                </button>
-                {this.addProductField()}
-            </div>
-        );
-    }
-}
+import ProductListing from './ProductListing.js';
+import SearchBar from './SearchBar.js';
+import AddProduct from './AddProduct.js';
 
 class Catalog extends React.Component{
     constructor(props){
         super(props);
         this.state={
             PRODUCTS : [
-                {name: 'MacBook'},
-                {name: 'Windows'}
+                {name: 'MacBook', category: 'computer', description:'Aluminium', price:'$$$', amount:4},
+                {name: 'Windows', category: 'computer', description:'Plastic', price:'$', amount:5}
             ],
             filterText: '',
 
@@ -133,16 +21,17 @@ class Catalog extends React.Component{
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleNewItem = this.handleNewItem.bind(this);
     }
-
-    handleFilterTextInput(filterText){
+    //Changing filterText state upon receive new value
+    handleFilterTextInput(filterText) {
         this.setState({
             filterText: filterText
         });
     }
-
+    //Adding new product to product list upon receiving new item
     handleNewItem(newItem){
+
         this.setState({
-            PRODUCTS: this.state.PRODUCTS.concat([{name: newItem}])
+            PRODUCTS: this.state.PRODUCTS.concat(newItem)
 
         });
     }
@@ -155,7 +44,6 @@ class Catalog extends React.Component{
                     onFilterTextInput={this.handleFilterTextInput}
                 />
                 <AddProduct
-
                     onNewItem={this.handleNewItem}
                 />
 
