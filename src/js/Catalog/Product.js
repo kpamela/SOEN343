@@ -2,26 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class Product extends React.Component{
-
-    constructor(){
-        super();
-
-        this.state = {
-            name: 'test',
-        };
-    }
-
-    getName(){
-        return this.state.name;
-    }
-
     render(){
-        return(
+        return (
             <button className="product">
-                {this.props.value}
+                <b>{this.props.name}</b><br/>
+                <i>{this.props.category}</i><br/>
+                {this.props.description}<br/>
+                {this.props.price}<br/>
+                {this.props.amount}
             </button>
         );
     }
-
-
 }
