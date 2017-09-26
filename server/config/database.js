@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 
 var dbConfig = {
-    host: '35.196.50.143',
-    user: 'root',
-    port: '3306',
-    database: 'tecmarket'
+    host: 'us-cdbr-iron-east-05',
+    user: 'b2486b8bd3fd87',
+    password: 'c2424e78',
+    database: 'heroku_f09d70d39831307'
 }
 
 // Create MySQL connection pool
