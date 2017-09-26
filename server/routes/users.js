@@ -30,6 +30,7 @@ db.getConnection((err, connection) => {
                     // Add user
                     connection.query(sql, newUser, (err, result) => {
                         if(err){
+                            console.log(err);
                             return res.json({success: false, msg: "Failed to register user"});
                         }
                         else{
