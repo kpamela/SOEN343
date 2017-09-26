@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "node ./server/app.js",
-    "build": "webpack"
+    "build": "webpack --config ./webpack.config.js"
   },
   "main": "./server/app.js",
   "repository": "https://github.com/kpamela/SOEN343.git",
