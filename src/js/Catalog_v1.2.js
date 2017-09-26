@@ -79,6 +79,7 @@ class AddProduct extends React.Component{
 
     handleChange(e){
         console.log(e.target.id);
+
         this.setState({newItem: this.state.newItem.description = e.target.value});
     }
 
