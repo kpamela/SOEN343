@@ -14,11 +14,6 @@ var pool = mysql.createPool(dbConfig);
 pool.getConnection((err, result) => {
     if(err) throw err;
     console.log('MySQL connected');
-    let sql = 'CREATE DATABASE IF NOT EXISTS tecmarket';
-    pool.query(sql, (err, result) => {
-        if(err) throw err;
-        console.log('Database tecmarket created');
-    });
 });
 
 module.exports = pool;
