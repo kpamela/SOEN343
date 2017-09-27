@@ -3,9 +3,9 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ProductListing from './ProductListing.js';
-import SearchBar from './SearchBar.js';
-import AddProduct from './AddProduct.js';
+import ProductListing from '../ProductListing.js';
+import SearchBar from '../SearchBar.js';
+import AddProduct from '../AddProduct.js';
 
 class Catalog extends React.Component{
     constructor(props){
