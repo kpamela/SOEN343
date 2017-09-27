@@ -5,16 +5,16 @@
 
 import React, { Component } from 'react';
 import '../scss/App.scss';
-
-
+import './Catalog/Catalog.js';
+import NavBar from './NavBar/NavBar.js';
 class App extends Component {
   render() {
     return (
-      <div id="Catalogue" className="App"></div>
+      <div id="Catalogue" className="App">
+      Insert large image here
+      <NavBar/>
+      </div>
     );
   }
 }
-//import './Test.js';
-//import './Catalog.js';
-import './Catalog/Catalog_v1.2.js';
 export default App;
