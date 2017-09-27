@@ -11,15 +11,15 @@ db.getConnection((err, connection) => {
   products.post('/add', (req, res) => {
     //Authenticate the request using jwt
     //Verify if a token is provided
-    var token = req.headers['Authorization'];
+    var token = req.headers.authorization;
     if (!token){
-      return res.json(401, {success: false, msg: "Unauthorized"});
+      return res.json(401, {success: false, msg: "Unauthorized: No Token Provided"});
     }
 
     //Validate token signature
     jwt.verify(token, 'mysecret', function(err, decoded) {
       if (err){
-        return res.json(401, {success: false, msg: "Unauthorized"});
+        return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
         return res.json(201, {success: true, msg: "New Product Created"});
       }
