@@ -7,7 +7,7 @@ const express = require('express'),
     db = require('../config/database.js');
 
 db.getConnection((err, connection) => {
-    
+
     // Create the users table
     users.get('/createtable', (req, res) => {
         let sql = table;
