@@ -16,10 +16,12 @@ import AddProduct from './AddProduct.js';
                 {name: 'Windows', category: 'computer', description:'Plastic', price:'$', amount:5}
             ],
             filterText: '',
+            include: {names: true, descriptions: false, categories:false}
 
         };
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleNewItem = this.handleNewItem.bind(this);
+        this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
     }
     //Changing filterText state upon receive new value
     handleFilterTextInput(filterText) {
@@ -27,6 +29,13 @@ import AddProduct from './AddProduct.js';
             filterText: filterText
         });
     }
+    //Selecting where the search searches
+     handleSearchIncludes(include){
+        this.setState({
+            include: include
+        });
+        console.log(this.state.include);
+     }
     //Adding new product to product list upon receiving new item
     handleNewItem(newItem){
 
@@ -39,9 +48,13 @@ import AddProduct from './AddProduct.js';
     render(){
         return(
             <div>
+                <h1>TecMarket</h1>
+                <h3>Catalog</h3>
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextInput={this.handleFilterTextInput}
+                    include={this.state.include}
+                    onIncludeChange={this.handleSearchIncludes}
                 />
                 <AddProduct
                     onNewItem={this.handleNewItem}
@@ -50,6 +63,7 @@ import AddProduct from './AddProduct.js';
                 <ProductListing
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
+                    include={this.state.include}
                 />
             </div>
         );
