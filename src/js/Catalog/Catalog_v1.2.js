@@ -6,14 +6,15 @@ import ReactDOM from 'react-dom';
 import ProductListing from './ProductListing.js';
 import SearchBar from './SearchBar.js';
 import AddProduct from './AddProduct.js';
+import $ from 'jquery';
 
  export default class Catalog extends React.Component{
     constructor(props){
         super(props);
         this.state={
             PRODUCTS : [
-                {name: 'MacBook', category: 'computer', description:'Aluminium', price:'$$$', amount:4},
-                {name: 'Windows', category: 'computer', description:'Plastic', price:'$', amount:5}
+                {name: 'MacBook', category: 'computer', description: {additionalInfo: 'aluminium'}, price:'$$$', amount:4},
+                {name: 'Windows', category: 'computer', description:{additionalInfo: 'plastic'}, price:'$', amount:5}
             ],
             filterText: '',
             include: {names: true, descriptions: false, categories:false}
@@ -43,6 +44,25 @@ import AddProduct from './AddProduct.js';
             PRODUCTS: this.state.PRODUCTS.concat(newItem)
 
         });
+        console.log('test');
+        $.ajax({
+            url: 'http://localhost:3000/products/add',
+            type: 'post',
+            data: {
+                newItem
+            },
+            headers: {
+                Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts"
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+        console.log('test');
     }
 
     render(){
