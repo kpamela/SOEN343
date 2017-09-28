@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, BrowserRouter, Route } from 'react-router-dom';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
-import Register from '../Register/Register.js';
+import Register from '../Register/Register2.js';
 import Catalog from '../Catalog/Catalog.js';
 
 
