@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal, Tooltip, Popover, Button, FieldGroup} from 'react-bootstrap';
+import {Modal, Button, FieldGroup} from 'react-bootstrap';
 
 
 export const LoginModal = React.createClass({
@@ -27,12 +27,16 @@ export const LoginModal = React.createClass({
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Login to your account to save items to save your items!
+            Login to your account to save items to save your cart and make purchases!
             <form>
               <label>
-                Username:
-                <input type="text" name="name" />
+                Username: <input type="text" name="name" />
               </label>
+              <br />
+              <label>
+                Password: <input type="password" name="password" />
+              </label>
+              <br />
               <input type="submit" value="Submit" />
             </form>
           </Modal.Body>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal, Tooltip, Popover, Button, FieldGroup} from 'react-bootstrap';
+import {Modal, Button, FieldGroup} from 'react-bootstrap';
 
 
 export const RegisterModal = React.createClass({
@@ -30,9 +30,29 @@ export const RegisterModal = React.createClass({
             Register
             <form>
               <label>
-                Username:
-                <input type="text" name="name" />
+                First Name: <input type="text" name="firstName" />
               </label>
+              <br/>
+              <label>
+                Last Name: <input type="text" name="lastName" />
+              </label>
+              <br/>
+              <label>
+                E-mail: <input type="email" name="name" />
+              </label>
+              <br/>
+              <label>
+                Phone number: <input type="text" name="name" />
+              </label>
+              <br/>
+              <label>
+                Password: <input type="password" name="username" />
+              </label>
+              <br/>
+              <label>
+                Confirm Password: <input type="password" name="username" />
+              </label>
+              <br/>
               <input type="submit" value="Submit" />
             </form>
           </Modal.Body>
