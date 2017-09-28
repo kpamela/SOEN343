@@ -4,15 +4,22 @@
  */
 
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../scss/App.scss';
-import './Catalog/Catalog.js';
-import NavBar from './NavBar/NavBar.js';
+
+import Catalog from './Catalog/Catalog.js';
+import Master from './Master.js';
+import Register from './Register/Register.js';
+
 class App extends Component {
   render() {
     return (
-      <div id="Catalogue" className="App">
-      Insert large image here
-      <NavBar/>
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Master}/>
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }

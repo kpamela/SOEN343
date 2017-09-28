@@ -1,63 +1,65 @@
-/**
- * Created by CharlesPhilippe on 2017-09-24.
- */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ProductListing from './ProductListing.js';
-import SearchBar from './SearchBar.js';
-import AddProduct from './AddProduct.js';
+import Product from './Product.js';
 
-class Catalog extends React.Component{
-    constructor(props){
-        super(props);
+
+
+export default class Catalog extends React.Component{
+    constructor(){
+        super();
         this.state={
-            PRODUCTS : [
-                {name: 'MacBook', category: 'computer', description:'Aluminium', price:'$$$', amount:4},
-                {name: 'Windows', category: 'computer', description:'Plastic', price:'$', amount:5}
-            ],
-            filterText: '',
-
+            products: [{name: ''}],
+            listing: Array()
         };
-        this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
-        this.handleNewItem = this.handleNewItem.bind(this);
     }
-    //Changing filterText state upon receive new value
-    handleFilterTextInput(filterText) {
-        this.setState({
-            filterText: filterText
-        });
-    }
-    //Adding new product to product list upon receiving new item
-    handleNewItem(newItem){
 
-        this.setState({
-            PRODUCTS: this.state.PRODUCTS.concat(newItem)
+   handleAddProduct(){
+        this.setState({products: this.state.products.concat([{name: ''}])});
+   }
 
-        });
+   handleNewProduct(index, evt){
+       this.setState({products: this.state.products[index] = [{name: evt.target.value}]});
+
+   }
+   handleCancelProduct(index){
+        this.setState({products: this.state.products.filter((prod,i) => index !== i)});
     }
+
+   submitProduct(index){
+       var name = this.state.products[index].name;
+       console.log(name);
+       this.setState({listing: this.state.listing.concat([<Product value={name}/>])});
+
+        var test = <Product value={'test'}/>;
+        console.log(test.props.value);
+       this.handleCancelProduct(index);
+   }
+
+
 
     render(){
+
         return(
             <div>
-                <SearchBar
-                    filterText={this.state.filterText}
-                    onFilterTextInput={this.handleFilterTextInput}
-                />
-                <AddProduct
-                    onNewItem={this.handleNewItem}
-                />
-
-                <ProductListing
-                    products={this.state.PRODUCTS}
-                    filterText={this.state.filterText}
-                />
+                <button className="add" onClick={() => this.handleAddProduct()} >
+                    {'+'}
+                </button>
+                {this.state.products.map((product, index) => (
+                    <div className="list">
+                        <input
+                            type="text"
+                            placeholder={`Product #${index + 1} name`}
+                            value={product.name}
+                            onChange={evt => this.handleNewProduct(index, evt)}
+                            />
+                        <button type="button" onClick={() => this.submitProduct(index)} className="add">Submit</button>
+                        <button type="button" onClick={() => this.handleCancelProduct(index)} className="rem">-</button>
+                    </div>
+                ))}
+                {this.state.listing}
             </div>
         );
     }
+
 }
 
-
-ReactDOM.render(
-    <Catalog />,
-    document.getElementById('Catalogue')
-);
