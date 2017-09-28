@@ -35,7 +35,7 @@ CREATE TABLE Catalogue(
 
 CREATE TABLE Television(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber int(10) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
     Dimensions double NOT NULL, 
     Weight double NOT NULL, 
     BrandName varchar(20) NOT NULL, 
@@ -48,7 +48,7 @@ CREATE TABLE Television(
 
 CREATE TABLE DesktopComputer(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber int(10) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
     Dimensions double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
     RAMSize long NOT NULL, 
@@ -64,7 +64,7 @@ CREATE TABLE DesktopComputer(
 
 CREATE TABLE MonitorDisplay(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber int(10) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
     Size double NOT NULL, 
     Weight double NOT NULL, 
     BrandName varchar(20) NOT NULL, 
@@ -76,7 +76,7 @@ CREATE TABLE MonitorDisplay(
 
 CREATE TABLE Laptop(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber int(10) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
     DisplaySize double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
     RAMSize long NOT NULL, 
@@ -97,7 +97,7 @@ CREATE TABLE Laptop(
 -- Table structure for table 'TabletComputer' -- 
 CREATE TABLE TabletComputer(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber int(10) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
     DisplaySize double NOT NULL, 
     DetailedDimensions double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
