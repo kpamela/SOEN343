@@ -17,6 +17,7 @@ let sql = `CREATE TABLE IF NOT EXISTS Laptop(
     Camera boolean, 
     TouchScreen boolean, 
     Available boolean, 
+    ProductName varchar(45) NOT NULL, 
     PRIMARY KEY (SerialNumber), 
     FOREIGN KEY (SerialNumber, Available) REFERENCES Catalogue (SerialNumber, Available) ON UPDATE CASCADE
 )`

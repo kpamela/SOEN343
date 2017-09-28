@@ -13,6 +13,7 @@ let sql = `CREATE TABLE IF NOT EXISTS DesktopComputer(
     BrandName varchar(20) NOT NULL, 
     Price double(10,2) NOT NULL, 
 	Available boolean, 
+    ProductName varchar(45) NOT NULL, 
     PRIMARY KEY (SerialNumber),
     FOREIGN KEY (SerialNumber, Available) REFERENCES Catalogue (SerialNumber, Available) ON UPDATE CASCADE
 )`

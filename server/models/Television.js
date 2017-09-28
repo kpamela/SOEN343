@@ -10,6 +10,7 @@ let sql = `CREATE TABLE IF NOT EXISTS Television(
     TelevisionType varchar(5) NOT NULL, -- liste déroulante quand le Admin va ajouter du UI -- 
     Price double(10,2) NOT NULL,
 	Available boolean, 
+    ProductName varchar(45) NOT NULL, 
     PRIMARY KEY (SerialNumber), 
 	FOREIGN KEY (SerialNumber, Available) REFERENCES Catalogue (SerialNumber, Available) ON UPDATE CASCADE
 )`
