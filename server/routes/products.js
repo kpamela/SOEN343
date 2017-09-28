@@ -22,7 +22,7 @@ db.getConnection((err, connection) => {
         return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
         let newProduct = req.body;
-        let category = newProduct.category;
+        let category = req.body.category;
 
         //verify if the category is valid
         if (!category.match(/^(DesktopComputer|TabletComputer|Laptop|Television)$/)){
