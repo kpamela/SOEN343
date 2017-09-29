@@ -1,10 +1,11 @@
 
 import Catalog from './Catalog/Catalog.js';
-import HomePage from './HomePage/HomePage.js';
+import Main from './Main/Main.js';
 import NavBar from './NavBar/NavBar.js'
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import auth from './General/auth.js'
 require ('../scss/App.scss');
 
 /**
@@ -13,12 +14,14 @@ require ('../scss/App.scss');
  */
 
 class App extends Component {
+
+
   render() {
     return(
       <div className="App">
         <BrowserRouter>
           <div>
-              <Route path="/" component={HomePage} />
+              <Route path="/" component={Main} />
                 <Switch>
                   <Route path="/catalog" component={Catalog} />
                 </Switch>

@@ -32,8 +32,13 @@ function loggedIn(){
     }
 }
 
+function logOut(){
+    localStorage.clear();
+}
+
 export default{
     setAuthToken: setAuthToken,
     getCredentials: getCredentials,
-    loggedIn: loggedIn
+    loggedIn: loggedIn,
+    logOut: logOut
 }

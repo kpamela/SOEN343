@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Modal, Button, FieldGroup} from 'react-bootstrap';
+import auth from '../General/auth.js';
 
 
 export const RegisterModal = React.createClass({
@@ -16,6 +17,9 @@ export const RegisterModal = React.createClass({
   },
 
   render() {
+    if(auth.loggedIn()){
+      return(null);
+    }
     return (
       <div>
         <Button bsStyle="default" bsSize="sm" onClick={this.open}>

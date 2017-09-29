@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar.js'
  * Login and sign up page
  */
 
-export default class HomePage extends Component{
+export default class Main extends Component{
     constructor(props){
         super(props);
     }
@@ -13,7 +13,7 @@ export default class HomePage extends Component{
     render(){
         let path = this.props.location.pathname;
         return(
-            <div className="homepage">
+            <div className="main">
                 <NavBar />
             </div>
         );
