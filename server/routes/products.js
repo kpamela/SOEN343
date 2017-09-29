@@ -77,7 +77,7 @@ db.getConnection((err, connection) => {
         connection.query(sql, newCatalogueItem, (err, result) => {
             if(err){
                 console.log(err);
-                return res.json(500, {success: false, msg: "New Catalogue Item Could Not Be Added"});
+                return res.json(500, {success: false, msg: "New Catalogue Item Could Not Be Added", error: err});
             }
             else{
               console.log("New item has been added to catalogue table");
@@ -86,7 +86,7 @@ db.getConnection((err, connection) => {
               connection.query(sql, newProduct, (err, result) => {
                   if(err){
                       console.log(err);
-                      return res.json(500, {success: false, msg: "New Product Could Not Be Added"});
+                      return res.json(500, {success: false, msg: "New Product Could Not Be Added", error: err});
                   }
                   else{
                       return res.json(201, {success: true, msg: "New Product Has Been Added"});
