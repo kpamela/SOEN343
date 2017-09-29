@@ -5,18 +5,18 @@ This repository regroups all the files necessary for the SOEN 343 project.
 
 Concordia Students that worked on the project:
 
-Team members          | Email                         | Student Id   | Role 
-------------          | --------------------          | ------------ |------------
-Pamela Khouri         | khouripamela@gmail.com        | 40016194     | Team leader
-Sarbeng Frimpong      | sarbeng4@hotmail.com          | 29344039     |
-Raphaelle Giraud      | Raph1105@hotmail.com          | 27514204     | 
-William Leclerc       | w.dfj.leclerc@gmail.com       | 27424973     | 
-Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     |
-Joséphine Ng          | jng11232@hotmail.com          | 40001872     |
-Yan Ming Hu           | yanming_hu1996@yahoo.ca           | 40005813     | 
-Hasan Ahmed           | hasan.mahmed95@gmail.com      | 27546467     |
-Brandon Goldwax       | bgoldwax@hotmail.com          | 40006986     | 
-Charles-Philippe Labbé| c.p.labbe@me.com              | 40002442     |         
+Team members          | Email                         | Student Id   | Role        |Github Usernames
+------------          | --------------------          | ------------ |------------ |----------------
+Pamela Khouri         | khouripamela@gmail.com        | 40016194     | Team leader | kpamela
+Sarbeng Frimpong      | sarbeng4@hotmail.com          | 29344039     |             | jiggy357
+Raphaelle Giraud      | Raph1105@hotmail.com          | 27514204     |             | Raph1105
+William Leclerc       | w.dfj.leclerc@gmail.com       | 27424973     |             | LeCleric
+Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     |             | franksauve
+Joséphine Ng          | jng11232@hotmail.com          | 40001872     |             | jng11232
+Yan Ming Hu           | yanming_hu1996@yahoo.ca       | 40005813     |             | Lordofsnails
+Hasan Ahmed           | hasan.mahmed95@gmail.com      | 27546467     |             | hasan-ahmed
+Brandon Goldwax       | bgoldwax@hotmail.com          | 40006986     |             | bgoldwax
+Charles-Philippe Labbé| c.p.labbe@me.com              | 40002442     |             | CharlesPhilippeLabbe
 
 ## Web stack
 **View** | ReactJS

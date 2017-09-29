@@ -49,6 +49,7 @@ require('./config/passport')(passport);
 
 // API routes go here
 app.use('/users', require('./routes/users.js'));
+app.use('/products', require('./routes/products.js'));
 
 // Index route
 //app.get('/', (req, res) => {
@@ -63,4 +64,3 @@ app.all('*', (req, res) => {
 app.listen(port, () => {
     console.log('Server started on port ' + port);
 });
-

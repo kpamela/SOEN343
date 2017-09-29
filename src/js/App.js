@@ -1,20 +1,35 @@
+
+import Catalog from './Catalog/Catalog.js';
+import Main from './Main/Main.js';
+import NavBar from './NavBar/NavBar.js'
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import auth from './General/auth.js'
+require ('../scss/App.scss');
+
 /**
  * Main React file
  * Import other components here
  */
 
-import React, { Component } from 'react';
-import '../scss/App.scss';
-
-
 class App extends Component {
+
+
   render() {
-    return (
-      <div id="Catalogue" className="App"></div>
+    return(
+      <div className="App">
+        <BrowserRouter>
+          <div>
+              <Route path="/" component={Main} />
+                <Switch>
+                  <Route path="/catalog" component={Catalog} />
+                </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
 }
-//import './Test.js';
-//import './Catalog.js';
-import './Catalog/Catalog_v1.2.js';
+
 export default App;
