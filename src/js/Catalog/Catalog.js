@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import ProductListing from './ProductListing.js';
 import SearchBar from './SearchBar.js';
 import AddProduct from './AddProduct.js';
+import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 
  export default class Catalog extends React.Component{
@@ -44,28 +45,27 @@ import $ from 'jquery';
             PRODUCTS: this.state.PRODUCTS.concat(newItem)
 
         });
-        console.log('test');
+
+    }
+
+    render(){
+        var prods;
         $.ajax({
-            url: '/products/add',
-            type: 'post',
-            data: {
-                newItem
-            },
+            url: '/products/view',
+            type: 'get',
+
             headers: {
                 Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts"
             },
             dataType: 'json',
             success: function (data) {
+                prods = data;
                 console.log(data);
             },
             error: function(data){
                 console.log(data);
             }
         });
-        console.log('test');
-    }
-
-    render(){
         return(
             <div>
                 <h1>TecMarket</h1>
@@ -80,6 +80,7 @@ import $ from 'jquery';
                     onNewItem={this.handleNewItem}
                 />
 
+                {JSON.stringify(prods)}
                 <ProductListing
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
@@ -88,4 +89,40 @@ import $ from 'jquery';
             </div>
         );
     }
+}
+function renderPostRequest(newItem){
+    return(
+        <Request
+            // instance={axios.create({})} /* custom instance of axios - optional */
+            method="post" /* get, delete, head, post, put and patch - required */
+            url={"/products/add?Authorization='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts'"}//+localStorage.getItem('jwtToken') }/*  url endpoint to be requested - required */
+            data={newItem} /* post data - optional */
+            // config={} /* axios config - optional */
+            debounce={200} /* minimum time between requests events - optional */
+            debounceImmediate={true} /* make the request on the beginning or trailing end of debounce - optional */
+            isReady={true} /* can make the axios request - optional */
+            onSuccess={(response)=>{console.log(response);}} /* called on success of axios request - optional */
+            onLoading={()=>{console.log("loading...")}} /* called on start of axios request - optional */
+            onError={(error)=>{console.log(error);}} /* called on error of axios request - optional */
+        />
+    );
+
+}
+function renderGetRequest(){
+    return(
+        <Request
+            // instance={axios.create({})} /* custom instance of axios - optional */
+            method="get" /* get, delete, head, post, put and patch - required */
+            url={"/products/view"}//+localStorage.getItem('jwtToken') }/*  url endpoint to be requested - required */
+            //data={Authorization="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts" } /* post data - optional */
+            //config={Authorization="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts" } /* axios config - optional */
+            debounce={200} /* minimum time between requests events - optional */
+            debounceImmediate={true} /* make the request on the beginning or trailing end of debounce - optional */
+            isReady={true} /* can make the axios request - optional */
+            onSuccess={(response)=>{console.log(response);}} /* called on success of axios request - optional */
+            onLoading={()=>{console.log("loading...")}} /* called on start of axios request - optional */
+            onError={(error)=>{console.log(error);}} /* called on error of axios request - optional */
+        />
+    );
+
 }
