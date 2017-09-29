@@ -15,7 +15,7 @@ export default class SearchBar extends React.Component{
     }
 
     render(){
-        return( 
+        return(
             <form>
                 <input type="text" placeholder="Search..."
                        value={this.props.filterText}
