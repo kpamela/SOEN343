@@ -51,42 +51,40 @@ export const LoginModal = React.createClass({
   },
 
   render() {
-    if(this.state.redirect){
+    if(auth.loggedIn()){
       return(
         <Redirect push to="/catalog" />
-      )
-    }
-    else{
-      return (
-        <div>
-          <Button bsStyle="primary" bsSize="sm" onClick={this.open}>
-            Login
-          </Button>
-
-          <Modal show={this.state.showModal} onHide={this.close}>
-            <Modal.Header closeButton>
-              <Modal.Title>Login</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Login to your account to save items to save your cart and make purchases!
-              <form onSubmit={this.login.bind(this)}>
-                <label>
-                  Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange}/>
-                </label>
-                <br />
-                <label>
-                  Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
-                </label>
-                <br />
-                <input type="submit" value="Submit" />
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={this.close}>Close</Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
       );
     }
+    return (
+      <div>
+        <Button bsStyle="primary" bsSize="sm" onClick={this.open}>
+          Login
+        </Button>
+
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Login</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Login to your account to save items to save your cart and make purchases!
+            <form onSubmit={this.login.bind(this)}>
+              <label>
+                Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange}/>
+              </label>
+              <br />
+              <label>
+                Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
+              </label>
+              <br />
+              <input type="submit" value="Submit" />
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.close}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
   }
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { LoginModal } from './LoginModal.js';
 import { RegisterModal } from './RegisterModal.js';
+import Logout from './Logout.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 
 
@@ -36,6 +37,7 @@ export default class NavBar extends Component{
           <Nav pullRight>
             <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem>
             <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>
+            <NavItem eventKey={3} href="#"> <Logout /> </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
