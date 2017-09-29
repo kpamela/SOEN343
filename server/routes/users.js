@@ -56,13 +56,13 @@ db.getConnection((err, connection) => {
         connection.query(sql, (err, user) => {
             if(err) throw err;
             if(user.length == 0){
-                return res.json({success: false, msg: "User not found"});
+                return res.json(401,{success: false, msg: "User not found"});
             }
             bcrypt.compare(password, user[0].Password, (err, isMatch) => {
                 if(err) throw err;
                 if(isMatch){
                     const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn: 604800}); //1 week
-                    res.json({
+                    res.json(200, {
                         success: true,
                         token: 'JWT' + token,
                         user:{
@@ -71,7 +71,7 @@ db.getConnection((err, connection) => {
                     });
                 }
                 else{
-                    return res.json({success: false, msg: "Wrong password"});
+                    return res.json(401, {success: false, msg: "Wrong password"});
                 }
             });
         });
