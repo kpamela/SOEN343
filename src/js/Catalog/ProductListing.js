@@ -11,11 +11,18 @@ export default class ProductListing extends React.Component{
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
 
-            //searching for substrings in name or category
-            if(product.name.indexOf(this.props.filterText) === -1
-                && product.category.indexOf(this.props.filterText) === -1){
-                return;
+            //searching for substrings when selected
+            if ((this.props.include.names || this.props.include.descriptions || this.props.include.categories)
+            && this.props.filterText) {
+
+                if (!((this.props.include.names || product.name.indexOf(this.props.filterText) === -1)
+                    && (this.props.include.categories || product.category.indexOf(this.props.filterText) === -1)
+                    && (this.props.include.descriptions || product.description.indexOf(this.props.filterText) === -1))) {
+                 return;
+             }
             }
+            //if category is selected
+
             //Converting product object to product component
             listing.push(<Product name={product.name}
                                   category={product.category}

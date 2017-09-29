@@ -4,7 +4,7 @@ import Product from './Product.js';
 
 
 
-export default class Catalog extends React.Component{
+class Catalog extends React.Component{
     constructor(){
         super();
         this.state={
@@ -63,3 +63,7 @@ export default class Catalog extends React.Component{
 
 }
 
+ReactDOM.render(
+    <Catalog/>,
+    document.getElementById('Catalogue')
+);
