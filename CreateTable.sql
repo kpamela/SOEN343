@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS Catalogue(
 -- Table structure for table 'Television' -- 
 CREATE TABLE IF NOT EXISTS Television(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber varchar(10) NOT NULL, 
+    ModelNumber int(10) NOT NULL, 
     Dimensions double NOT NULL, 
     Weight double NOT NULL, 
     BrandName varchar(20) NOT NULL, 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Television(
 -- Table structure for table 'DesktopComputer' -- 
 CREATE TABLE IF NOT EXISTS DesktopComputer(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber varchar(10) NOT NULL, 
+    ModelNumber int(10) NOT NULL, 
     Dimensions double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
     RAMSize long NOT NULL, 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS DesktopComputer(
 -- Table structure for table 'MonitorDisplay' -- 
 CREATE TABLE IF NOT EXISTS MonitorDisplay(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber varchar(10) NOT NULL, 
+    ModelNumber int(10) NOT NULL, 
     Size double NOT NULL, 
     Weight double NOT NULL, 
     BrandName varchar(20) NOT NULL, 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS MonitorDisplay(
 -- Table structure for table 'Laptop' -- 
 CREATE TABLE IF NOT EXISTS Laptop(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber varchar(10) NOT NULL, 
+    ModelNumber int(10) NOT NULL, 
     DisplaySize double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
     RAMSize long NOT NULL, 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS Laptop(
 -- Table structure for table 'TabletComputer' -- 
 CREATE TABLE IF NOT EXISTS TabletComputer(
 	SerialNumber int(9) NOT NULL, 
-    ModelNumber varchar(10) NOT NULL, 
+    ModelNumber int(10) NOT NULL, 
     DisplaySize double NOT NULL, 
     DetailedDimensions double NOT NULL, 
     ProcessorType varchar(20) NOT NULL, 
