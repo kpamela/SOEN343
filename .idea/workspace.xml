@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2fc27f6b-e2e7-43b9-bc5d-5fab0cd93094" name="Default" comment="Merge branch 'Charles'&#10;&#10;# Conflicts:&#10;#&#9;package.json&#10;#&#9;src/js/App.js&#10;#&#9;src/js/Catalog/Catalog_v1.2.js&#10;#&#9;src/js/Catalog/SearchBar.js&#10;" />
+    <list default="true" id="2fc27f6b-e2e7-43b9-bc5d-5fab0cd93094" name="Default" comment="Merge branch 'Charles'&#10;&#10;# Conflicts:&#10;#&#9;package.json&#10;#&#9;src/js/App.js&#10;#&#9;src/js/Catalog/Catalog_v1.2.js&#10;#&#9;src/js/Catalog/SearchBar.js&#10;">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/js/Catalog/Catalog_v1.2.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,28 +40,25 @@
       <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+            <state relative-caret-position="304">
+              <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1506649508856" expanded="true" signature="54:286" ph="..." />
-                <marker date="1506649508856" expanded="true" signature="318:376" ph="/** Main React file ...*/" />
-                <marker date="1506649508856" expanded="true" signature="406:690" ph="{...}" />
-                <marker date="1506649508856" expanded="true" signature="419:688" ph="{...}" />
-                <marker date="1506649508856" expanded="true" signature="439:677" ph="&lt;div/&gt;" />
-                <marker date="1506649508856" expanded="true" signature="469:664" ph="&lt;BrowserRouter/&gt;" />
-                <marker date="1506649508856" expanded="true" signature="495:639" ph="&lt;Switch/&gt;" />
+                <element signature="e#47#90#0" expanded="true" />
+                <element signature="e#180#221#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Catalog.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/js/Catalog/Catalog.js">
+      <file leaf-file-name="NavBar.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/js/NavBar/NavBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="544">
+              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,10 +86,10 @@
       <file leaf-file-name="SearchBar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/Catalog/SearchBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+            <state relative-caret-position="176">
+              <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
               <folding>
-                <marker date="1506649508860" expanded="true" signature="159:275" ph="{...}" />
+                <marker date="1506650046807" expanded="true" signature="159:275" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -157,8 +157,9 @@
         <option value="$PROJECT_DIR$/src/js/Catalog/Catalog_v1.2.js" />
         <option value="$PROJECT_DIR$/src/js/Catalog/ProductListing.js" />
         <option value="$PROJECT_DIR$/src/js/Homepage/LandingPage.js" />
-        <option value="$PROJECT_DIR$/src/js/App.js" />
         <option value="$PROJECT_DIR$/src/js/Catalog/Catalog.js" />
+        <option value="$PROJECT_DIR$/src/js/App.js" />
+        <option value="$PROJECT_DIR$/src/js/NavBar/NavBar.js" />
       </list>
     </option>
   </component>
@@ -257,7 +258,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Catalog" />
+              <option name="myItemId" value="NavBar" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -417,7 +418,7 @@
       <workItem from="1506027405425" duration="16386000" />
       <workItem from="1506185790660" duration="80000" />
       <workItem from="1506212114231" duration="36904000" />
-      <workItem from="1506462320271" duration="25399000" />
+      <workItem from="1506462320271" duration="26882000" />
     </task>
     <task id="LOCAL-00001" summary="email">
       <created>1506027552822</created>
@@ -503,15 +504,22 @@
       <option name="project" value="LOCAL" />
       <updated>1506632456377</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Merge branch 'Charles'&#10;&#10;# Conflicts:&#10;#&#9;package.json&#10;#&#9;src/js/App.js&#10;#&#9;src/js/Catalog/Catalog_v1.2.js&#10;#&#9;src/js/Catalog/SearchBar.js&#10;">
+      <created>1506652756775</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1506652756775</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78769000" />
+    <option name="totallyTimeSpent" value="80252000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="932" height="900" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -521,7 +529,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.48651686" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921347" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33932585" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33932585" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2494382" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -552,7 +560,8 @@
     <MESSAGE value="Added checkboxes to select what to search. To follow project description section 2.4." />
     <MESSAGE value="Added different description forms depending on categories" />
     <MESSAGE value="jquery" />
-    <option name="LAST_COMMIT_MESSAGE" value="jquery" />
+    <MESSAGE value="Merge branch 'Charles'&#10;&#10;# Conflicts:&#10;#&#9;package.json&#10;#&#9;src/js/App.js&#10;#&#9;src/js/Catalog/Catalog_v1.2.js&#10;#&#9;src/js/Catalog/SearchBar.js&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'Charles'&#10;&#10;# Conflicts:&#10;#&#9;package.json&#10;#&#9;src/js/App.js&#10;#&#9;src/js/Catalog/Catalog_v1.2.js&#10;#&#9;src/js/Catalog/SearchBar.js&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -669,10 +678,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/Catalog/SearchBar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+        <state relative-caret-position="176">
+          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
           <folding>
-            <marker date="1506649508860" expanded="true" signature="159:275" ph="{...}" />
+            <marker date="1506650046807" expanded="true" signature="159:275" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -739,28 +748,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/App.js">
+    <entry file="file://$PROJECT_DIR$/src/js/Catalog/Catalog.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        <state relative-caret-position="450">
+          <caret line="47" column="16" lean-forward="true" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1506649508856" expanded="true" signature="54:286" ph="..." />
-            <marker date="1506649508856" expanded="true" signature="318:376" ph="/** Main React file ...*/" />
-            <marker date="1506649508856" expanded="true" signature="406:690" ph="{...}" />
-            <marker date="1506649508856" expanded="true" signature="419:688" ph="{...}" />
-            <marker date="1506649508856" expanded="true" signature="439:677" ph="&lt;div/&gt;" />
-            <marker date="1506649508856" expanded="true" signature="469:664" ph="&lt;BrowserRouter/&gt;" />
-            <marker date="1506649508856" expanded="true" signature="495:639" ph="&lt;Switch/&gt;" />
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#53#79#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/Catalog/Catalog.js">
+    <entry file="file://$PROJECT_DIR$/src/js/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="304">
+          <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#47#90#0" expanded="true" />
+            <element signature="e#180#221#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/NavBar/NavBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
