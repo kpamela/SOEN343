@@ -46,7 +46,7 @@ import $ from 'jquery';
         });
         console.log('test');
         $.ajax({
-            url: 'http://localhost:3000/products/add',
+            url: '/products/add',
             type: 'post',
             data: {
                 newItem

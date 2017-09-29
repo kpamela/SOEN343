@@ -23,9 +23,12 @@ function getCredentials(token){
     return user;
 }
 
-function loggedIn(nextState, replace){
+function loggedIn(){
     if(getCredentials(localStorage.getItem('jwtToken'))){
-        replace('/dashboard');
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
