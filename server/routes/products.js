@@ -20,8 +20,26 @@ db.getConnection((err, connection) => {
       if (err){
         return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
-        
+        //get all of the products from the database
+        let sqlMultiple = 'SELECT * FROM television; SELECT * FROM desktopcomputer; SELECT * FROM tabletcomputer; SELECT * FROM laptop; SELECT * FROM monitordisplay';
+
+        connection.query(sqlMultiple, function (error, results, fields) {
+          if (error) return res.json(500, {success: false, msg: "Items could not be retrieved"});
+          // `results` is an array with one element for every statement in the query:
+          console.log(results[0]);
+          let products = {
+            television: results[0],
+            desktopcomputer: results[1],
+            tabletcomputer: results[2],
+            laptop: results[3],
+            monitor: results[4]
+          }
+
+          return res.json(200, products);
+
+        });
       }
+    });
   });
 
   // Add a product in the db
@@ -40,7 +58,7 @@ db.getConnection((err, connection) => {
       } else {
         //verify if the category is valid
         let category = req.body.category;
-        if (!category.match(/^(desktopComputer|tablet|laptop|television)$/)){
+        if (!category.match(/^(desktopComputer|tabletcomputer|laptop|television|monitordisplay)$/)){
           return res.json(400, {success: false, msg: "Invalid product category."});
         }
 
