@@ -1,8 +1,8 @@
 //import './Test.js';
 //import './Catalog.js';
-import Catalog from './Catalog/Catalog_v1.2.js';
+import Catalog from './Catalog/Catalog.js';
 import HomePage from './HomePage/HomePage.js';
-
+//import NavBar from './NavBar/NavBar.js'
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
