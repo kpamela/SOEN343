@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import {Modal, Button, FieldGroup} from 'react-bootstrap';
+import axios from 'axios';
+import auth from '../General/auth.js'
+import {Redirect} from 'react-router-dom';
 
 
 export const LoginModal = React.createClass({
   getInitialState() {
-    return { showModal: false };
+    return { 
+      showModal: false,
+
+      Username: '',
+      Password:'',
+
+      redirect:false
+     };
   },
 
   close() {
@@ -15,37 +25,69 @@ export const LoginModal = React.createClass({
     this.setState({ showModal: true });
   },
 
-  render() {
-    return (
-      <div>
-        <Button bsStyle="primary" bsSize="sm" onClick={this.open}>
-          Login
-        </Button>
+  handleChange(e){
+    this.setState({[e.target.name]: e.target.value})
+  },
 
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Login</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Login to your account to save items to save your cart and make purchases!
-            <form>
-              <label>
-                Username: <input type="text" name="name" />
-              </label>
-              <br />
-              <label>
-                Password: <input type="password" name="password" />
-              </label>
-              <br />
-              <input type="submit" value="Submit" />
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
+  login(e){
+    e.preventDefault();
+    console.log(this.state.Username);
+    console.log(this.state.Password);
+    axios.post('/users/authenticate', {Username: this.state.Username, Password: this.state.Password})
+      .then(res => {
+        console.log(res);
+        if(res.data.success){
+          const token = res.data.token;
+          localStorage.setItem('jwtToken', token);
+          auth.setAuthToken(token);
+          this.setState({redirect: true});
+        }
+        else{
+          console.log(res.data.msg)
+        }
+      });
+
+  },
+
+  render() {
+    if(this.state.redirect){
+      return(
+        <Redirect to={{pathname:'/catalog'}} />
+      )
+    }
+    else{
+      return (
+        <div>
+          <Button bsStyle="primary" bsSize="sm" onClick={this.open}>
+            Login
+          </Button>
+
+          <Modal show={this.state.showModal} onHide={this.close}>
+            <Modal.Header closeButton>
+              <Modal.Title>Login</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Login to your account to save items to save your cart and make purchases!
+              <form onSubmit={this.login.bind(this)}>
+                <label>
+                  Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange}/>
+                </label>
+                <br />
+                <label>
+                  Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
+                </label>
+                <br />
+                <input type="submit" value="Submit" />
+              </form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.close}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      );
+    }
+    
   }
 
 });

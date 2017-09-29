@@ -9,7 +9,6 @@ import '../scss/App.scss';
 
 import Catalog from './Catalog/Catalog.js';
 import Master from './Master.js';
-import Register from './Register/Register.js';
 
 class App extends Component {
   render() {
