@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {Modal, Button, FieldGroup} from 'react-bootstrap';
 import axios from 'axios';
 import auth from '../General/auth.js'
-import {Redirect} from 'react-router-dom';
+import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
+import Catalog from '../Catalog/Catalog.js'
 
 
 export const LoginModal = React.createClass({
@@ -52,7 +53,7 @@ export const LoginModal = React.createClass({
   render() {
     if(this.state.redirect){
       return(
-        <Redirect to={{pathname:'/catalog'}} />
+        <Redirect push to="/catalog" />
       )
     }
     else{
@@ -87,7 +88,5 @@ export const LoginModal = React.createClass({
         </div>
       );
     }
-    
   }
-
 });

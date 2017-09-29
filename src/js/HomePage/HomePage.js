@@ -8,10 +8,6 @@ import NavBar from '../NavBar/NavBar.js'
 export default class HomePage extends Component{
     constructor(props){
         super(props);
-
-        this.state = {
-            formType: 'login'
-        }
     }
 
     render(){
