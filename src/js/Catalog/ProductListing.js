@@ -2,7 +2,7 @@
  * Created by CharlesPhilippe on 2017-09-25.
  */
 import React from 'react';
-import Product from './Catalog/Product.js'
+import Product from './Product.js'
 
 export default class ProductListing extends React.Component{
     render(){
