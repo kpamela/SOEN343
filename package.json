@@ -49,11 +49,15 @@
   "scripts": {
     "start": "node ./server/app.js",
     "build": "webpack --config ./webpack.config.js",
-    "test": "jest"
+    "test": "mocha ./server/test --timeout 150000"
   },
   "main": "./server/app.js",
   "repository": "https://github.com/kpamela/SOEN343.git",
   "author": "<franksauve@outlook.com>",
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^3.5.3"
+  }
 }
