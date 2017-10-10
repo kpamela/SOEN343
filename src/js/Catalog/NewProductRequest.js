@@ -24,6 +24,18 @@ export default class NewProductRequest extends React.Component{
     }
 
     /**
+     * going through validation process before showing form
+     */
+    validateAdd(){
+
+        let err = {amount: true, disabled: true};
+        err.amount = parseInt(this.state.fieldValue.amount) != this.state.fieldValue.amount;
+        err.disabled = this.state.fieldValue.category == "" || err.amount
+        this.setState( {currentForm: this.addProductForm(err)})
+       // console.log(this.state.fieldValue.category);
+    }
+
+    /**
      * handle change to set state values
      * @param e
      */
@@ -32,6 +44,7 @@ export default class NewProductRequest extends React.Component{
         value[e.target.id] = e.target.value;
 
         this.setState({fieldValue: value});
+        this.validateAdd();
         //console.log(this.state.fieldValue);
     }
 
@@ -42,7 +55,8 @@ export default class NewProductRequest extends React.Component{
     handleOnAddProduct(e){
         e.preventDefault();
         let i = this.props.mapper.addProduct(this.state.fieldValue.category, this.state.fieldValue.amount);
-        this.setState({currentForm: this.specifyForm(), productIndex: i});
+        this.setState({productIndex: i});
+        this.validateSpecify();
 
     }
 
@@ -50,6 +64,7 @@ export default class NewProductRequest extends React.Component{
         let value = this.state.fieldValue;
         value['description'] = desc;
         this.setState({fieldValue: value});
+        this.validateSpecify();
         //console.log(this.state.fieldValue);
     }
 
@@ -67,14 +82,14 @@ export default class NewProductRequest extends React.Component{
     /**
      * returns the specify category and amount Form
      */
-    addProductForm(){
+    addProductForm(errors){
         return(
             <div>
                 <form onSubmit={this.handleOnAddProduct}>
 
                     <label>
                         Select Category
-                        <select id="category"  onChange={this.handleFieldChange}>
+                        <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                             <option value="" default> Select Category</option>
                             <option value="Television">Television</option>
                             <option value="Monitor">Monitor</option>
@@ -84,34 +99,59 @@ export default class NewProductRequest extends React.Component{
 
                         </select>
                     </label>
-
+                    <br/>
                     <label>
                         Enter amount
+
                         <input
-                            type="text"
-                            placeholder={'Enter Product Amount'}
+                            className={errors.amount ? "error" : ""}
+                            type="number"
+                            value={this.state.fieldValue.amount}
+                            min="0"
                             id="amount"
                             onChange={this.handleFieldChange}
                         />
                     </label>
-                    <input type="submit" value="Add" />
+                    <input disabled={errors.disabled} type="submit" value="Add" />
                 </form>
             </div>
         );
+    }
+
+    validateSpecify(){
+        let err = {disabled: false};
+        if(this.state.fieldValue.description) {
+            for(let ind in this.state.fieldValue.description){
+                switch(ind){
+                    case 'price':
+                    case 'weight':
+                    case 'HDSize':
+                    case 'RAM':
+                    case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                        break;
+                    default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
+                }
+                if(err[ind]){
+                    err['disabled'] = true;
+                }
+            }
+        }
+        console.log(err);
+        this.setState({currentForm: this.specifyForm(err)});
     }
 
     /**
      * Returns the form for specifications
      *
      */
-    specifyForm(){
+    specifyForm(errors){
         return(
             <div>
-                <DescriptionForm category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
-                <button className="another" onClick={() => this.handleAnotherProduct()}  >
+                <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+                <button disabled={errors.disabled} className="another" onClick={() => this.handleAnotherProduct()}  >
                     Add Another
                 </button>
-                <button className="done"  onClick={() => this.handleOnSubmit()}>Done</button>
+                <button disabled={errors.disabled} className="done"  onClick={() => this.handleOnSubmit()}>Done</button>
             </div>
         );
     }
@@ -121,14 +161,16 @@ export default class NewProductRequest extends React.Component{
      * On request, display form, and start passing values to the mapper
      */
     newProductRequest(){
-        let newForm = this.addProductForm();
-        this.setState({fieldValue: {category:'', amount:''}, currentForm: newForm});
+       // let newForm = this.addProductForm(errors);
+        this.setState({fieldValue: {category:"", amount:""}});
+        this.validateAdd();
     }
+
+
 
     render(){
         return(
             <div>
-
                 {this.state.currentForm}
             </div>
         );

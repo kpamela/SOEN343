@@ -36,7 +36,7 @@ export  class Mapper{
             case 'Laptop':
             case 'LaptopComputer': return new Laptop(amount);
             case 'Desktop':
-            case 'DescktopComputer': return new Desktop(amount);
+            case 'DesktopComputer': return new Desktop(amount);
             default: return null;
         }
     }
@@ -55,7 +55,7 @@ export  class Mapper{
 
     submit(){
         console.log(this.p);
-        location.reload();
+       // location.reload();
     }
 
 }
