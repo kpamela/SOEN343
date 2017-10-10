@@ -33,13 +33,13 @@ export default class AddProduct extends React.Component{
             description:desc,
             price:this.state.newItem.price,
             amount:this.state.newItem.amount};
-        console.log(item);
+       // console.log(item);
         this.setState({newItem: item});
     }
 
     showDescriptionForm(){
         //checking for different categories of input => different forms
-        console.log(this.state.newItem.category);
+        //console.log(this.state.newItem.category);
         return(
           <DescriptionForm category={this.state.newItem.category} onDescriptionChange={this.handleDescriptionChange}/>
         );
@@ -49,6 +49,8 @@ export default class AddProduct extends React.Component{
 
     //add product field view toggle
     addProductField(){
+        this.props.p['n'] = 'a';
+        //console.log(this.props.p);
         if(this.state.dispField){
             this.state.dispSign = '+';
             return(
