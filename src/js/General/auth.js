@@ -23,14 +23,22 @@ function getCredentials(token){
     return user;
 }
 
-function loggedIn(nextState, replace){
+function loggedIn(){
     if(getCredentials(localStorage.getItem('jwtToken'))){
-        replace('/dashboard');
+        return true;
     }
+    else{
+        return false;
+    }
+}
+
+function logOut(){
+    localStorage.clear();
 }
 
 export default{
     setAuthToken: setAuthToken,
     getCredentials: getCredentials,
-    loggedIn: loggedIn
+    loggedIn: loggedIn,
+    logOut: logOut
 }
