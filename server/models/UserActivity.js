@@ -1,7 +1,7 @@
 
 
-// Table structure for table 'UserActivity' 
-let sql = `CREATE TABLE IF NOT EXISTS UserActivity(
+// Table structure for table 'ActiveUsersRegistry' 
+let sql = `CREATE TABLE IF NOT EXISTS ActiveUsersRegistry(
 	UserID int(9) NOT NULL, 
     LoginTimestamp timestamp, 
     IsActive boolean, 
