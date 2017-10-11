@@ -11,7 +11,7 @@ let sql = `CREATE TABLE IF NOT EXISTS Models(
     Size double, 
     DisplaySize double,
     HadCamera boolean, 
-    TouchScreen boolean, 
+    HadTouchScreen boolean, 
     OperatingSystem varchar(20),
     BatteryInfo varchar(20),
     Dimensions double NOT NULL, 
