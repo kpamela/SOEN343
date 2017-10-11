@@ -9,8 +9,8 @@ let sql = `CREATE TABLE IF NOT EXISTS users (
     EmailAddress varchar(255) NOT NULL,
     PhoneNumber long NOT NULL,
     Administrator boolean NOT NULL,
-    PRIMARY KEY (UserID) 
+    PRIMARY KEY (UserID), 
+    FOREIGN KEY (AddressID) REFERENCES Address (AddressID) ON DELETE CASCADE ON UPDATE CASCADE;
 )`
-// Add this line later
-//FOREIGN KEY (AddressID) REFERENCES Address (AddressID) ON DELETE CASCADE ON UPDATE CASCADE;
+
 module.exports = sql

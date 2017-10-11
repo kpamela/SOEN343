@@ -8,7 +8,7 @@ let sql = `CREATE TABLE IF NOT EXISTS Address(
   City varchar(30) NOT NULL,
   ZIP varchar(6) NOT NULL,
   Country varchar(30) NOT NULL,
-  
+
   PRIMARY KEY (AddressID)
 )`
 
