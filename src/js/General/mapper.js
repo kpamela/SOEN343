@@ -22,7 +22,7 @@ export  class Mapper{
         let q = this.newProduct(category, amount);
         this.p.push(q);
 
-        return this.p.length - 1;//returning length for future use
+        return this.p.length - 1;//returning index for future use
     }
 
     /**
