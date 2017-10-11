@@ -27,12 +27,13 @@ export default class NewProductRequest extends React.Component{
      * going through validation process before showing form
      */
     validateAdd(){
-
-        let err = {amount: true, disabled: true};
-        err.amount = parseInt(this.state.fieldValue.amount) != this.state.fieldValue.amount;
-        err.disabled = this.state.fieldValue.category == "" || err.amount
+        let err = {amount: true, disabled: true};//setting erroneous at first
+        err.amount = parseInt(this.state.fieldValue.amount) != this.state.fieldValue.amount;//amount is integer
+        //if category is empty and amount is not an integer prevent submission
+        err.disabled = this.state.fieldValue.category == "" || err.amount;
+        //applying form change
         this.setState( {currentForm: this.addProductForm(err)})
-       // console.log(this.state.fieldValue.category);
+
     }
 
     /**
@@ -45,7 +46,7 @@ export default class NewProductRequest extends React.Component{
 
         this.setState({fieldValue: value});
         this.validateAdd();
-        //console.log(this.state.fieldValue);
+
     }
 
     /**
@@ -60,23 +61,37 @@ export default class NewProductRequest extends React.Component{
 
     }
 
+    /**
+     * Handling the changes in description form, setting the description in fieldValue
+     * @param desc
+     */
     handleDescriptionChange(desc){
         let value = this.state.fieldValue;
         value['description'] = desc;
         this.setState({fieldValue: value});
         this.validateSpecify();
-        //console.log(this.state.fieldValue);
+
     }
 
+    /**
+     * Handling new product addition, resetting the form to 'addForm'
+     * @param e
+     */
     handleAnotherProduct(e){
        // e.preventDefault();
         this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
+        this.props.onSubmit();//sending signal to update product listing
         this.newProductRequest();
     }
 
+    /**
+     * Handling user finished with adding new products
+     * @param e
+     */
     handleOnSubmit(e){
         this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
         this.props.mapper.submit();
+        this.props.onSubmit();
     }
 
     /**
@@ -118,6 +133,9 @@ export default class NewProductRequest extends React.Component{
         );
     }
 
+    /**
+     * type validation before showing form, and before updating it
+     */
     validateSpecify(){
         let err = {disabled: false};
         if(this.state.fieldValue.description) {
@@ -136,7 +154,10 @@ export default class NewProductRequest extends React.Component{
                 }
             }
         }
-        console.log(err);
+        else{
+            err.disabled = true;
+        }
+
         this.setState({currentForm: this.specifyForm(err)});
     }
 
@@ -162,8 +183,10 @@ export default class NewProductRequest extends React.Component{
      */
     newProductRequest(){
        // let newForm = this.addProductForm(errors);
-        this.setState({fieldValue: {category:"", amount:""}});
-        this.validateAdd();
+        //synchronizing state reset and validate form
+        this.setState({fieldValue: {category:'', amount:''}}, function(){
+            this.validateAdd();
+        });
     }
 
 

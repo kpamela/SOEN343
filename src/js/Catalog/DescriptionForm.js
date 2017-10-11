@@ -13,6 +13,10 @@ export default class DescriptionForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
     }
 
+    /**
+     * Returning the appropriate form depending on the category submitted
+     * @returns {*}
+     */
     categoryDescription(){
         switch(this.props.category){
             case 'Television': return this.televisionDescription();
@@ -24,6 +28,10 @@ export default class DescriptionForm extends React.Component{
         }
     }
 
+    /**
+     * Television
+     * @returns {XML}
+     */
     televisionDescription(){
         return(
             <div>
@@ -36,6 +44,11 @@ export default class DescriptionForm extends React.Component{
             </div>
         );
     }
+
+    /**
+     * Monitor
+     * @returns {XML}
+     */
     monitorDescription(){
         return(
             <input
@@ -49,6 +62,11 @@ export default class DescriptionForm extends React.Component{
         );
     }
 
+    /**
+     * Depending on the computer type, the appropriate form is returned
+     * @param computerType
+     * @returns {XML}
+     */
     computerDescription(computerType){
         let typeDescription;
         switch (computerType){
@@ -100,6 +118,10 @@ export default class DescriptionForm extends React.Component{
         );
     }
 
+    /**
+     * Tablet
+     * @returns {XML}
+     */
     tabletDescription(){
         return(
             <div>
@@ -131,7 +153,16 @@ export default class DescriptionForm extends React.Component{
             </div>
         );
     }
+
+    /**
+     * desktop doesn't have particularities
+     */
     desktopDescription(){}
+
+    /**
+     * Laptop
+     * @returns {XML}
+     */
     laptopDescription(){
         return(
             <div>
@@ -175,7 +206,10 @@ export default class DescriptionForm extends React.Component{
     }
 
 
-
+    /**
+     * Changes are sent to newProductRequest component
+     * @param e
+     */
     handleChange(e){
         var desc = this.state.currentDescription;
         desc[e.target.id] = e.target.value;

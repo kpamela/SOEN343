@@ -22,9 +22,15 @@ export  class Mapper{
         let q = this.newProduct(category, amount);
         this.p.push(q);
 
-        return this.p.length - 1;
+        return this.p.length - 1;//returning length for future use
     }
 
+    /**
+     * Returns an instanciated product, depending on its category
+     * @param category
+     * @param amount
+     * @returns {*}
+     */
     newProduct(category, amount){
         switch(category){
             case 'Television':
