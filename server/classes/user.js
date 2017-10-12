@@ -42,9 +42,9 @@ class User{
                             });
                         }
                         else {
-                                if(this.username == user[0].Username){
-                                    resolve({success: false, msg: "Username already exists"});
-                                }
+                            if(this.username == user[0].Username){
+                                resolve({success: false, msg: "Username already exists"});
+                            }
                         }
                     });
                 });
