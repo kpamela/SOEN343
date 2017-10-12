@@ -62,7 +62,7 @@ export const LoginModal = React.createClass({
           Login
         </Button>
 
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal className='loginModal' show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
