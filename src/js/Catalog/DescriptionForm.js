@@ -178,9 +178,9 @@ export default class DescriptionForm extends React.Component{
         <div>
             <input
                 type="text"
-                placeholder={'Enter Product Serial Number'}
-                value={this.state.currentDescription['serialNumber']}
-                id="serialNumber"
+                placeholder={'Enter Price'}
+                value={this.state.currentDescription['price']}
+                id="price"
                 onChange={this.handleChange}
             />
             <input

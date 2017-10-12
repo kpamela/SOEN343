@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 export default class Product extends React.Component{
     render(){
-        console.log(JSON.stringify(this.props.description));
+       // console.log(JSON.stringify(this.props.description));
 
         return (
             <button className="product">

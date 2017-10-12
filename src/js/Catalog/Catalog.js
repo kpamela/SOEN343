@@ -3,15 +3,20 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import NewProductRequest from './NewProductRequest.js';
 import ProductListing from './ProductListing.js';
 import SearchBar from './SearchBar.js';
 import AddProduct from './AddProduct.js';
+import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
+import {Mapper, getData, postData} from  "../General/mapper.js";
 
  export default class Catalog extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            mapper:new Mapper(),
+            prods: <div>no data</div>,
             PRODUCTS : [
                 {name: 'MacBook', category: 'computer', description: {additionalInfo: 'aluminium'}, price:'$$$', amount:4},
                 {name: 'Windows', category: 'computer', description:{additionalInfo: 'plastic'}, price:'$', amount:5}
@@ -23,6 +28,7 @@ import $ from 'jquery';
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
+        this.handleGetData = this.handleGetData.bind(this);
     }
     //Changing filterText state upon receive new value
     handleFilterTextInput(filterText) {
@@ -35,7 +41,7 @@ import $ from 'jquery';
         this.setState({
             include: include
         });
-        console.log(this.state.include);
+        //console.log(this.state.include);
      }
     //Adding new product to product list upon receiving new item
     handleNewItem(newItem){
@@ -44,28 +50,24 @@ import $ from 'jquery';
             PRODUCTS: this.state.PRODUCTS.concat(newItem)
 
         });
-        console.log('test');
-        $.ajax({
-            url: '/products/add',
-            type: 'post',
-            data: {
-                newItem
-            },
-            headers: {
-                Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts"
-            },
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-            },
-            error: function(data){
-                console.log(data);
-            }
-        });
-        console.log('test');
+
+    }
+
+    handleGetData(data){
+
+        //this.setState({PRODUCTS: [data]});
+        this.setState({prods :<div>{JSON.stringify(data)}</div> });
     }
 
     render(){
+/*
+        if(this.state.mapper.data.state() === "pending"){
+            getData(this.state.mapper);
+            this.state.mapper.data.then(this.handleGetData);
+        }
+*/
+
+        //console.log(this.state.prods);
         return(
             <div>
                 <h1>TecMarket</h1>
@@ -76,8 +78,9 @@ import $ from 'jquery';
                     include={this.state.include}
                     onIncludeChange={this.handleSearchIncludes}
                 />
-                <AddProduct
-                    onNewItem={this.handleNewItem}
+
+                <NewProductRequest
+                mapper={this.state.mapper}
                 />
 
                 <ProductListing
