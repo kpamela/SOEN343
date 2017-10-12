@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Models(
     Size double, 
 	DisplaySize double,
     HadCamera boolean, 
-    TouchScreen boolean, 
+    HadTouchScreen boolean, 
 	OperatingSystem varchar(20),
     BatteryInfo varchar(20),
     Dimensions double NOT NULL, 
@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS Products(
     FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE
 ); 
 
--- Table structure for table 'UserActivity' -- 
-CREATE TABLE UserActivity(
+-- Table structure for table 'ActiveUsersRegistry' -- 
+CREATE TABLE ActiveUsersRegistry(
 	UserID int(9) NOT NULL, 
     LoginTimestamp timestamp, 
     IsActive boolean, 
