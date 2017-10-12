@@ -21,10 +21,10 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <div>
-              <Route path="/" component={Main} />
-                <Switch>
-                  <Route path="/catalog" component={Catalog} />
-                </Switch>
+            <Route path="/" component={Main} />
+              <Switch>
+                <Route path="/catalog" component={Catalog} />
+              </Switch>
           </div>
         </BrowserRouter>
       </div>
