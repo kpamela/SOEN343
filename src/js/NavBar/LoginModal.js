@@ -68,7 +68,7 @@ export const LoginModal = React.createClass({
           </Modal.Header>
           <Modal.Body>
             Login to your account to save items to save your cart and make purchases!
-            <form onSubmit={this.login.bind(this)}>
+            <form onSubmit={this.login}>
               <label>
                 Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange}/>
               </label>
