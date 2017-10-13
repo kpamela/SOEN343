@@ -11,11 +11,11 @@ export default class ModifyProduct extends React.Component{
     super(props);
     this.state={
       modItem:{
-        name: this.state.item.name,
-        category: this.state.item.category,
-        description: this.state.item.description,
-        price: this.state.item.price,
-        amount: this.state.item.price
+        name: this.props.item.name,
+        category: this.props.item.category,
+        description: this.props.item.description,
+        price: this.props.item.price,
+        amount: this.props.item.price
       },
       dispField:false,
       dispSign: "Edit Product"
@@ -25,37 +25,38 @@ export default class ModifyProduct extends React.Component{
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.showDescriptionForm = this.showDescriptionForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleModItemOnClick = this.handleModItemOnClick.bind(this);
 
   }
 
   handleChange(e){
-    var item = this.state.newItem;
+    var item = this.state.modItem;
     item[e.target.id] = e.target.value;
     //could use setState but it does a forceUpdate and since its just on a child value its overkill
-    this.forceUpdate({newItem: item});
+    this.forceUpdate({modItem: item});
   }
 
   handleDescriptionChange(desc){
-      var item = {name:this.state.newItem.name,
-          category: this.state.newItem.category,
+      var item = {name:this.state.modItem.name,
+          category: this.state.modItem.category,
           description:desc,
-          price:this.state.newItem.price,
-          amount:this.state.newItem.amount};
+          price:this.state.modItem.price,
+          amount:this.state.modItem.amount};
       console.log(item);
-      this.forceUpdate({newItem: item});
+      this.forceUpdate({modItem: item});
   }
 
   showDescriptionForm(){
       //checking for different categories of input => different forms
-      console.log(this.state.newItem.category);
+      console.log(this.state.modItem.category);
       return(
-        <DescriptionForm category={this.state.newItem.category} onDescriptionChange={this.handleDescriptionChange}/>
+        <DescriptionForm category={this.state.modItem.category} onDescriptionChange={this.handleDescriptionChange}/>
       );
 
   }
 
   handleSubmit(event) {
-   alert('A Product has been modified ' + this.state.value.name);
+   alert('A Product has been modified ' + this.state.modItem.name);
    event.preventDefault();
  }
 
@@ -63,26 +64,26 @@ export default class ModifyProduct extends React.Component{
   //modifying product field view toggle
   modifyProductField(){
       if(this.state.dispField){
-          this.state.dispSign = '+';
+          this.state.dispSign = 'Edit';
           return(
-              <form onSubmit={this.handleNewItemOnClick}>
+              <form onSubmit={this.handleModItemOnClick}>
                   <input
                       type="text"
                       placeholder={'Enter Product Name'}
-                      value={this.state.item.name}
+                      value={this.state.modItem.name}
                       id="name"
                       onChange={this.handleChange}
                   />
                   <input
                       type="text"
                       placeholder={'Enter Product Price'}
-                      value={this.state.item.price}
+                      value={this.state.modItem.price}
                       id="price"
                       onChange={this.handleChange}
                   />
                   <br/>
                   <input
-                      value ={this.state.item.amount}
+                      value ={this.state.modItem.amount}
                       type="text"
                       placeholder={'Enter Product Amount'}
                       id="amount"
@@ -116,12 +117,12 @@ export default class ModifyProduct extends React.Component{
       }
   }
   //On submit, pass newItem to Catalog via onNewItem()
-  handleNewItemOnClick(e){
-      var item = {name:this.state.newItem.name,
-          category: this.state.newItem.category,
-          description:this.state.newItem.description,
-          price:this.state.newItem.price,
-          amount:this.state.newItem.amount};
+  handleModItemOnClick(e){
+      var item = {name:this.state.modItem.name,
+          category: this.state.modItem.category,
+          description:this.state.modItem.description,
+          price:this.state.modItem.price,
+          amount:this.state.modItem.amount};
       this.props.onNewItem(item);
       e.preventDefault();
   }
