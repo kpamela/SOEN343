@@ -26,6 +26,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
+        this.handleOnWhat = this.handleOnWhat.bind(this);
     }
 
      /**
@@ -59,6 +60,9 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.setState({prods :<div>{JSON.stringify(data)}</div> });
     }
 
+    handleOnWhat(i){
+        this.setState({hello: i});
+    }
     render(){
 /*
         if(this.state.mapper.data.state() === "pending"){
@@ -89,6 +93,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
                     filterText={this.state.filterText}
                     include={this.state.include}
                 />
+
             </div>
         );
     }
