@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import ProductListing from '../ProductListing.js';
 import SearchBar from '../SearchBar.js';
 import AddProduct from '../AddProduct.js';
+import ModifyProduct from '../ModifyProduct.js';
 
 class Catalog extends React.Component{
     constructor(props){
@@ -46,6 +47,8 @@ class Catalog extends React.Component{
                 <AddProduct
                     onNewItem={this.handleNewItem}
                 />
+
+
 
                 <ProductListing
                     products={this.state.PRODUCTS}

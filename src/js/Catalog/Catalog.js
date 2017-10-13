@@ -10,6 +10,9 @@ import AddProduct from './AddProduct.js';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 import {Mapper, getData, postData} from  "../General/mapper.js";
+import ModifyProduct from './ModifyProduct.js';
+import DeleteProduct from './DeleteProduct.js'
+
 
  export default class Catalog extends React.Component{
     constructor(props){
