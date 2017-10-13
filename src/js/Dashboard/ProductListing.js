@@ -18,7 +18,12 @@ export default class ProductListing extends React.Component{
   handleShowForm(item){
     this.setState({modifyForm: <ModifyProduct item={item}/>})
   }
-    render(){
+
+  handleModify(item){
+      this.props.mapper.modify(item);
+  }
+
+  render(){
         var listing = [];
 
         //going through pass-by products adding them to current listing
@@ -38,7 +43,8 @@ export default class ProductListing extends React.Component{
 
             //Converting product object to product component
             listing.push(<Product item={product}
-                          onShowForm={this.handleShowForm}/>);
+                          onShowForm={this.handleShowForm}
+                            onModify={this.handleModify}/>);
         });
 /*
 name={product.name}

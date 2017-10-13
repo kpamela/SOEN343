@@ -64,6 +64,10 @@ export  class Mapper{
        // location.reload();
     }
 
+    modify(item){
+
+    }
+
 }
 
 
