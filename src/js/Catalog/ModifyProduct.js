@@ -25,7 +25,7 @@ export default class ModifyProduct extends React.Component{
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.showDescriptionForm = this.showDescriptionForm.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+
   }
 
   handleChange(e){
