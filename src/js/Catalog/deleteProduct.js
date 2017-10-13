@@ -4,6 +4,13 @@ import React from ' react ';
 
 export default class deleteProduct extends React.Component{
 
+  contructor(props){
+    super(props);
+
+    this.state({
+
+    })
+  }
   remove(id){
     this.setState({
       items: this.state.items.filter((el) => id !== el.id)
@@ -11,4 +18,12 @@ export default class deleteProduct extends React.Component{
 
 }
 
-//render(){ return (<div> <buttoon className="del" onClick: this.remove(this.id)</div>)}
+render(){
+  return (
+    <div>
+      <button className="del" onClick:() => this.remove(this.id) >
+      </button>
+    </div>
+
+  )
+}

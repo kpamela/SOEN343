@@ -2,9 +2,32 @@
   * Created by Yan Ming on 2017-10-11
   */
 import React from 'react';
+import DescriptionForm from './DescriptionForm.js'
 //descriptionform
 
 export default class ModifyProduct extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state={
+      modItem:{
+        name: this.state.item.name,
+        category: this.state.item.category,
+        description: this.state.item.description,
+        price: this.state.item.price,
+        amount: this.state.item.price
+      },
+      dispField:false,
+      dispSign: "Edit Product"
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.showDescriptionForm = this.showDescriptionForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    
+  }
+
   handleChange(e){
     var item = this.state.newItem;
     item[e.target.id] = e.target.value;
@@ -31,6 +54,11 @@ export default class ModifyProduct extends React.Component{
 
   }
 
+  handleSubmit(event) {
+   alert('A Product has been modified ' + this.state.value.name);
+   event.preventDefault();
+ }
+
 
   //modifying product field view toggle
   modifyProductField(){
@@ -41,7 +69,7 @@ export default class ModifyProduct extends React.Component{
                   <input
                       type="text"
                       placeholder={'Enter Product Name'}
-                      value={this.state.nitem.name}
+                      value={this.state.item.name}
                       id="name"
                       onChange={this.handleChange}
                   />
