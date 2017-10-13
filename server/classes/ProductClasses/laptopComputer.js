@@ -7,12 +7,12 @@ const express = require('express'),
 
 class LaptopComputer extends Computers {
     constructor(product){
-        super();
+        super(product);
         this.displaySize = product.display;
         this.batteryInfo = product.batteryInfo;
-        this.hasCamera = product.hasCamera;
+        this.hadCamera = product.hadCamera;
         this.operatingSystem = product.operatingSystem;
     }
 }
 
-module.exports(LaptopComputer);
+module.exports = LaptopComputer;

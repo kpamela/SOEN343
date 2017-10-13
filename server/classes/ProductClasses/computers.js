@@ -7,7 +7,7 @@ const express = require('express'),
 
 class Computers extends ProductDescription {
     constructor(product){
-        super();
+        super(product);
         this.processorType = product.processorType;
         this.RAMSize = product.RAMSize;
         this.numberOfCores = product.numberOfCores;
@@ -15,4 +15,4 @@ class Computers extends ProductDescription {
     }
 }
 
-module.exports(Computers);
+module.exports= Computers;

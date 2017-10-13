@@ -7,9 +7,9 @@ const express = require('express'),
 
 class Monitor extends ProductDescription {
     constructor(product){
-        super();
+        super(product);
         this.size = product.size;
     }
 }
 
-module.exports(Monitor);
+module.exports = Monitor;

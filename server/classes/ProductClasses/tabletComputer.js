@@ -7,7 +7,7 @@ const express = require('express'),
 
 class TabletComputer extends Computers {
     constructor(product){
-        super();
+        super(product);
         this.displaySize = product.displaySize;
         this.batteryInfo = product.batteryInfo;
         this.cameraInfo = product.cameraInfo;
@@ -15,4 +15,4 @@ class TabletComputer extends Computers {
     }
 }
 
-module.exports(TabletComputer);
+module.exports = TabletComputer;

@@ -15,6 +15,7 @@ class ProductDescription{
         this.amountRemaining = product.amountRemaining;
         this.weight = product.weight;
     }
+
 }
 
-module.exports(ProductDescription);
+module.exports = ProductDescription;

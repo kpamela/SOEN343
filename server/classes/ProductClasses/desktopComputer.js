@@ -7,8 +7,8 @@ const express = require('express'),
 
 class DesktopComputer extends Computers {
     constructor(product){
-        super();
+        super(product);
     }
 }
 
-module.exports(DesktopComputer);
+module.exports = DesktopComputer;
