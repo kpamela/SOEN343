@@ -10,9 +10,6 @@ import AddProduct from './AddProduct.js';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 import {Mapper, getData, postData} from  "../General/mapper.js";
-import ModifyProduct from './ModifyProduct.js';
-// import DeleteProduct from './DeleteProduct.js'
-
 
  export default class Dashboard extends React.Component{
     constructor(props){
@@ -20,10 +17,7 @@ import ModifyProduct from './ModifyProduct.js';
         this.state={
             mapper:new Mapper(),
             prods: <div>no data</div>,
-            PRODUCTS : [
-                {name: 'MacBook', category: 'computer', description: {additionalInfo: 'aluminium'}, price:'$$$', amount:4},
-                {name: 'Windows', category: 'computer', description:{additionalInfo: 'plastic'}, price:'$', amount:5}
-            ],
+            PRODUCTS :[],
             filterText: '',
             include: {names: true, descriptions: false, categories:false}
 
@@ -32,8 +26,12 @@ import ModifyProduct from './ModifyProduct.js';
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
+        this.handleOnWhat = this.handleOnWhat.bind(this);
     }
-    //Changing filterText state upon receive new value
+
+     /**
+      * Changing filterText state upon receive new value
+      */
     handleFilterTextInput(filterText) {
         this.setState({
             filterText: filterText
@@ -44,13 +42,13 @@ import ModifyProduct from './ModifyProduct.js';
         this.setState({
             include: include
         });
-        //console.log(this.state.include);
+
      }
-    //Adding new product to product list upon receiving new item
-    handleNewItem(newItem){
+    //Adding new product to product list upon receiving new item signal
+    handleNewItem(){
 
         this.setState({
-            PRODUCTS: this.state.PRODUCTS.concat(newItem)
+            PRODUCTS: this.state.mapper.p
 
         });
 
@@ -62,6 +60,9 @@ import ModifyProduct from './ModifyProduct.js';
         this.setState({prods :<div>{JSON.stringify(data)}</div> });
     }
 
+    handleOnWhat(i){
+        this.setState({hello: i});
+    }
     render(){
 /*
         if(this.state.mapper.data.state() === "pending"){
@@ -84,6 +85,7 @@ import ModifyProduct from './ModifyProduct.js';
 
                 <NewProductRequest
                 mapper={this.state.mapper}
+                onSubmit={this.handleNewItem}
                 />
 
                 <ProductListing
@@ -91,6 +93,7 @@ import ModifyProduct from './ModifyProduct.js';
                     filterText={this.state.filterText}
                     include={this.state.include}
                 />
+
             </div>
         );
     }

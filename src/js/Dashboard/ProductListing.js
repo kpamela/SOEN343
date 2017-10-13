@@ -33,7 +33,7 @@ export default class ProductListing extends React.Component{
                     && (this.props.include.descriptions || product.description.indexOf(this.props.filterText) === -1))) {
                  return;
              }
-           }
+            }
             //if category is selected
 
             //Converting product object to product component
