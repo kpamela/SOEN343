@@ -97,6 +97,62 @@ db.getConnection((err, connection) => {
       }
     });
   });
+
+  // Remove a product in the db
+  products.delete('/delete', (req, res) => { //REPLACE .post with DELETE?
+    //Authenticate the request using jwt
+    //Verify if a token is provided
+    var token = req.headers.authorization;
+    if (!token){
+      return res.json(401, {success: false, msg: "Unauthorized: No Token Provided"});
+    }
+
+    //Validate token signature
+    jwt.verify(token, 'mysecret', function(err, decoded) {
+      if (err){
+        return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
+      } else {
+        //verify if the category is valid
+        let category = req.body.category;
+        if (!category.match(/^(desktopComputer|tabletcomputer|laptop|television|monitordisplay)$/)){
+          return res.json(400, {success: false, msg: "Invalid product category."});
+        }
+
+        // build newProduct JSON Object by parsing the request
+        let oldProduct = req.body;
+
+        let oldCatalogueItem = {
+          SerialNumber : oldProduct.SerialNumber,
+          Available : oldProduct.Available
+        }
+
+        //Build query and add new catalogue entry
+        let sql = `DELETE FROM catalogue WHERE ?`;
+        connection.query(sql, oldCatalogueItem, (err, result) => {
+            if(err){
+                console.log(err);
+                return res.json(500, {success: false, msg: "Catalogue Item Could Not Be Removed", error: err});
+            }
+            else{
+              console.log("Item has been removed from the catalogue table");
+              return res.json(500,{success: true, msg: "Catalogue Item Was Removed"});
+              /*
+              //Build query and remove product description in the db
+              sql = `DELETE FROM ${category} WHERE ?`;
+              connection.query(sql, oldProduct, (err, result) => {
+                  if(err){
+                      console.log(err);
+                      return res.json(500, {success: false, msg: "New Product Could Not Be Removed", error: err});
+                  }
+                  else{
+                      return res.json(201, {success: true, msg: "New Product Has Been Removed"});
+                  }
+              });*/
+            }
+        });
+      }
+    });
+  });
 });
 
 module.exports = products;
