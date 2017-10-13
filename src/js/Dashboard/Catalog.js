@@ -14,7 +14,7 @@ import ModifyProduct from './ModifyProduct.js';
 // import DeleteProduct from './DeleteProduct.js'
 
 
- export default class Catalog extends React.Component{
+ export default class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state={

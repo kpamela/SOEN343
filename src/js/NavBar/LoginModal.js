@@ -3,7 +3,7 @@ import {Modal, Button, FieldGroup} from 'react-bootstrap';
 import axios from 'axios';
 import auth from '../General/auth.js'
 import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
-import Catalog from '../Catalog/Catalog.js'
+import Catalog from '../Dashboard/Catalog.js'
 
 
 export const LoginModal = React.createClass({

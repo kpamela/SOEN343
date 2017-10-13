@@ -116,7 +116,7 @@ export default class ModifyProduct extends React.Component{
           return;
       }
   }
-  //On submit, pass newItem to Catalog via onNewItem()
+  //On submit, pass newItem to Dashboard via onNewItem()
   handleModItemOnClick(e){
       var item = {name:this.state.modItem.name,
           category: this.state.modItem.category,
