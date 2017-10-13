@@ -1,142 +1,186 @@
 /**
   * Created by Yan Ming on 2017-10-11
   */
-import React from 'react';
-import DescriptionForm from './DescriptionForm.js'
-//descriptionform
+  /**
+   * Created by CharlesPhilippe on 2017-10-09.
+   */
+  import React from 'react';
+  import DescriptionForm from './DescriptionForm.js'
+  export default class ModifyProduct extends React.Component{
 
-export default class ModifyProduct extends React.Component{
+      constructor(props){
+          super(props);
+          this.state ={
+              productIndex: 0,
+              fieldValue: props.item,
+              currentForm: <div>
+                  <button className="Edit" onClick={() => this.modifyProductRequest()}  >
+                     Edit
+                  </button>
+              </div>
+          };
 
-  constructor(props) {
-    super(props);
-    this.state={
-      modItem:{
-        name: this.props.item.name,
-        category: this.props.item.category,
-        description: this.props.item.description,
-        price: this.props.item.price,
-        amount: this.props.item.price
-      },
-      dispField:false,
-      dispSign: "Edit Product"
-    }
+          this.handleFieldChange = this.handleFieldChange.bind(this);
+          // this.handleOnModifyProduct = this.handleOnModifyProduct.bind(this);
+          this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+      }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.showDescriptionForm = this.showDescriptionForm.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleModItemOnClick = this.handleModItemOnClick.bind(this);
-
-  }
-
-  handleChange(e){
-    var item = this.state.modItem;
-    item[e.target.id] = e.target.value;
-    //could use setState but it does a forceUpdate and since its just on a child value its overkill
-    this.forceUpdate({modItem: item});
-  }
-
-  handleDescriptionChange(desc){
-      var item = {name:this.state.modItem.name,
-          category: this.state.modItem.category,
-          description:desc,
-          price:this.state.modItem.price,
-          amount:this.state.modItem.amount};
-      console.log(item);
-      this.forceUpdate({modItem: item});
-  }
-
-  showDescriptionForm(){
-      //checking for different categories of input => different forms
-      console.log(this.state.modItem.category);
-      return(
-        <DescriptionForm category={this.state.modItem.category} onDescriptionChange={this.handleDescriptionChange}/>
-      );
-
-  }
-
-  handleSubmit(event) {
-   alert('A Product has been modified ' + this.state.modItem.name);
-   event.preventDefault();
- }
+      handleOnModifyProduct(){
+        this.props.onModify(this.state.fieldValue0)
+      }
 
 
-  //modifying product field view toggle
-  modifyProductField(){
-      if(this.state.dispField){
-          this.state.dispSign = 'Edit';
+      /**
+       * going through validation process before showing form
+       */
+      validateModify(){
+          let err = {amount: true, disabled: true};//setting erroneous at first
+          err.amount = parseInt(this.state.fieldValue.amount) != this.state.fieldValue.amount;//amount is integer
+          //if category is empty and amount is not an integer prevent submission
+          err.disabled = this.state.fieldValue.category == "" || err.amount;
+          //applying form change
+          this.setState( {currentForm: this.modifyProductForm(err)})
+
+      }
+
+      /**
+       * handle change to set state values
+       * @param e
+       */
+      handleFieldChange(e){
+          let value = this.state.fieldValue;
+          value[e.target.id] = e.target.value;
+
+          this.setState({fieldValue: value});
+          this.validateModify();
+
+      }
+
+
+      /**
+       * Handling the changes in description form, setting the description in fieldValue
+       * @param desc
+       */
+      handleDescriptionChange(desc){
+          let value = this.state.fieldValue;
+          value['description'] = desc;
+          this.setState({fieldValue: value});
+          this.validateDescription();
+
+      }
+
+
+      /**
+       * Handling user finished with adding new products
+       * @param e
+       */
+      handleOnSubmit(e){
+
+      }
+
+      /**
+       * returns the specify category and amount Form
+       */
+      modifyProductForm(errors){
           return(
-              <form onSubmit={this.handleModItemOnClick}>
-                  <input
-                      type="text"
-                      placeholder={'Enter Product Name'}
-                      value={this.state.modItem.name}
-                      id="name"
-                      onChange={this.handleChange}
-                  />
-                  <input
-                      type="text"
-                      placeholder={'Enter Product Price'}
-                      value={this.state.modItem.price}
-                      id="price"
-                      onChange={this.handleChange}
-                  />
-                  <br/>
-                  <input
-                      value ={this.state.modItem.amount}
-                      type="text"
-                      placeholder={'Enter Product Amount'}
-                      id="amount"
-                      onChange={this.handleChange}
-                  />
-                  <br/>
-                  <label>
-                      Select Category
-                  <select id="category" value={this.state.item.category} onChange={this.handleChange}>
-                      <option value="" default> Select Category</option>
-                      <option value="Television">Television</option>
-                      <option value="Monitor">Monitor</option>
-                      <option value="TabletComputer">TabletComputer</option>
-                      <option value="DesktopComputer">DesktopComputer</option>
-                      <option value="LaptopComputer">LaptopComputer</option>
+              <div>
+                  <form onSubmit={this.handleOnSubmit}>
 
-                  </select>
-                  </label>
+                      <label>
+                          Select Category
+                          <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
+                              <option value="" default> Select Category</option>
+                              <option value="Television">Television</option>
+                              <option value="Monitor">Monitor</option>
+                              <option value="TabletComputer">TabletComputer</option>
+                              <option value="DesktopComputer">DesktopComputer</option>
+                              <option value="LaptopComputer">LaptopComputer</option>
 
-                  <br/>
-                  {this.showDescriptionForm()}
-                  <br/>
-                  <input type="submit" value="Submit" />
-              </form>
+                          </select>
+                      </label>
+                      <br/>
+                      <label>
+                          Enter amount
+
+                          <input
+                              className={errors.amount ? "error" : ""}
+                              type="number"
+                              value={this.state.fieldValue.amount}
+                              min="0"
+                              id="amount"
+                              onChange={this.handleFieldChange}
+                          />
+                      </label>
+                      <input disabled={errors.disabled} type="submit" value="Add" />
+                  </form>
+                  {this.validateDescription()};
+                  <button className="Submit-mod" onClick={this.handleOnModifyProduct()}>
+                      Submit
+                  </button>
+              </div>
           );
       }
-      else{
-          this.state.dispSign = '-';
-          this.state.newItem = {name:'',category:'', description:'', price:'', amount: null};
-          return;
+
+      /**
+       * type validation before showing form, and before updating it
+       */
+      validateDescription(){
+          let err = {disabled: false};
+          if(this.state.fieldValue.description) {
+              for(let ind in this.state.fieldValue.description){
+                  switch(ind){
+                      case 'price':
+                      case 'weight':
+                      case 'HDSize':
+                      case 'RAM':
+                      case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                          break;
+                      default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
+                  }
+                  if(err[ind]){
+                      err['disabled'] = true;
+                  }
+              }
+          }
+          else{
+              err.disabled = true;
+          }
+
+
+          return this.showDescriptionForm(err);
+      }
+
+      /**
+       * Returns the form for specifications
+       *
+       */
+      showDescriptionForm(errors){
+          return(
+              <div>
+                  <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+              </div>
+          );
+      }
+
+
+      /**
+       * On request, display form, and start passing values to the mapper
+       */
+      modifyProductRequest(){
+         // let newForm = this.addProductForm(errors);
+          //synchronizing state reset and validate form
+          //this.setState({fieldValue: {category:'', amount:''}}, function(){
+              this.validateModify();
+
+      }
+
+
+
+      render(){
+          return(
+              <div>
+                  {this.state.currentForm}
+              </div>
+          );
       }
   }
-  //On submit, pass newItem to Dashboard via onNewItem()
-  handleModItemOnClick(e){
-      var item = {name:this.state.modItem.name,
-          category: this.state.modItem.category,
-          description:this.state.modItem.description,
-          price:this.state.modItem.price,
-          amount:this.state.modItem.amount};
-      this.props.onNewItem(item);
-      e.preventDefault();
-  }
-
-  render(){
-      return(
-          <div>
-              <button className="Modify" onClick={() => {this.setState({dispField: !this.state.dispField})}} >
-                  {this.state.dispSign}
-              </button>
-              {this.modifyProductField()}
-          </div>
-      );
-  }
-
-
-}
