@@ -24,16 +24,21 @@ export default class ProductListing extends React.Component{
             //if category is selected
 
             //Converting product object to product component
-            listing.push(<Product name={product.name}
-                                  category={product.category}
-                                  description={product.description}
-                                  price={product.price}
-                                  amount={product.amount}/>);
+            listing.push(<Product item={product}/>);
         });
 
+        /*
+         name={product.name}
+         category={product.category}
+         description={product.description}
+         price={product.price}
+         amount={product.amount}
+         */
+        console.log(this.props.products);
         return(
             <div>
                 {listing}
+
             </div>
         );
 

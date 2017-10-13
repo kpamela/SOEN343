@@ -7,8 +7,8 @@ export default class Product extends React.Component{
 
         let desc =[];
 
-        for(let i in this.props.description){
-            desc.push(<p>{i }: {this.props.description[i] }</p>);
+        for(let i in this.props.item.description){
+            desc.push(<p>{i }: {this.props.item.description[i] }</p>);
 
         }
 
@@ -16,26 +16,28 @@ export default class Product extends React.Component{
     }
 
     func(){
-        console.log("jdj");
+        alert("hh");
     }
 
     render(){
        // console.log(JSON.stringify(this.props.description));
 
         return (
-            <span>
+            <div>
             <button className="product">
-                <b>{this.props.name}</b><br/>
-                <i>{this.props.category}</i><br/>
+                <b>{this.props.item.name}</b><br/>
+                <i>{this.props.item.category}</i><br/>
                 {this.displayDescription()}
-
-                {this.props.amount}
-            </button>
-                <br/>
-                <button onclick={()=> this.func()}>
+                {this.props.item.amount}
+                <span>
+                <button onClick={()=> this.func()}>
 
                 </button>
-            </span>
+                </span>
+            </button>
+                <br/>
+
+            </div>
         );
     }
 }
