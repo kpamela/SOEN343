@@ -3,7 +3,12 @@ const express = require('express'),
     mysql = require('mysql'),
     passport = require('passport'),
     jwt = require('jsonwebtoken'),
-    db = require('../config/database.js');
+    db = require('../config/database.js'),
+    Television = require('../classes/ProductClasses/television'),
+    DesktopComputer =  require('../classes/ProductClasses/desktopComputer'),
+    LaptopComputer = require('../classes/ProductClasses/laptopComputer'),
+    TabletComputer = require('../classes/ProductClasses/tabletComputer'),
+    Monitor = require('../classes/ProductClasses/television');
 
 db.getConnection((err, connection) => {
   // Get all products
@@ -66,34 +71,36 @@ db.getConnection((err, connection) => {
         let newProduct = req.body.description;
         newProduct.Price = req.body.price;
         newProduct.Available = req.body.available;
+        newProduct.productName = req.body.name;
 
-        let newCatalogueItem = {
-          SerialNumber : newProduct.SerialNumber,
-          Available : newProduct.Available
+        console.log(JSON.stringify(newProduct));
+
+        // Instantiate the right product class based on the category
+        var product;
+
+        switch(category){
+            case 'desktopcomputer':
+              product = new DesktopComputer(newProduct);
+              break;
+            case 'tabletcomputer':
+              product = new TabletComputer(newProduct);
+              break;
+            case 'laptop':
+              product = new LaptopComputer(newProduct);
+              break;
+            case 'television':
+              product = new Television(newProduct);
+              break;
+            case 'monitordisplay':
+              product = new Monitor;
+              break;
         }
 
-        //Build query and add new catalogue entry
-        let sql = `INSERT INTO catalogue SET ?`;
-        connection.query(sql, newCatalogueItem, (err, result) => {
-            if(err){
-                console.log(err);
-                return res.json(500, {success: false, msg: "New Catalogue Item Could Not Be Added", error: err});
-            }
-            else{
-              console.log("New item has been added to catalogue table");
-              //Build query and add new product in the db
-              sql = `INSERT INTO ${category} SET ?`;
-              connection.query(sql, newProduct, (err, result) => {
-                  if(err){
-                      console.log(err);
-                      return res.json(500, {success: false, msg: "New Product Could Not Be Added", error: err});
-                  }
-                  else{
-                      return res.json(201, {success: true, msg: "New Product Has Been Added"});
-                  }
-              });
-            }
-        });
+        if (!product.create()){
+            return res.json(500, {success: false, msg: "Product Couldn't be created"});
+        } else {
+            return res.json(200, {success: false, msg: "Product Created"});
+        }
       }
     });
   });
