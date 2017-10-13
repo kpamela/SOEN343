@@ -3,8 +3,21 @@
  */
 import React from 'react';
 import Product from './Product.js'
+import ModifyProduct from './ModifyProduct.js'
 
 export default class ProductListing extends React.Component{
+  constructor(props){
+    super(props);
+    this.state= {
+      modifyForm:<div></div>
+    };
+
+    this.handleShowForm = this.handleShowForm.bind(this);
+  }
+
+  handleShowForm(item){
+    this.setState({modifyForm: <ModifyProduct item={item}/>})
+  }
     render(){
         var listing = [];
 
@@ -24,21 +37,21 @@ export default class ProductListing extends React.Component{
             //if category is selected
 
             //Converting product object to product component
-            listing.push(<Product item={product}/>);
+            listing.push(<Product item={product}
+                          onShowForm={this.handleShowForm}/>);
         });
+/*
+name={product.name}
+                      category={product.category}
+                      description={product.description}
+                      price={product.price}
+                      amount={product.amount}
 
-        /*
-         name={product.name}
-         category={product.category}
-         description={product.description}
-         price={product.price}
-         amount={product.amount}
-         */
-        console.log(this.props.products);
+*/
         return(
             <div>
                 {listing}
-
+                {this.state.modifyForm}
             </div>
         );
 

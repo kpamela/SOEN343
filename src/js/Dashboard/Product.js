@@ -1,7 +1,15 @@
+/*
+created by CharlesPhilippe
+*/
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default class Product extends React.Component{
+
+    showModifyForm(){
+      this.props.onShowForm(this.props.item);
+    }
 
     displayDescription(){
 
@@ -24,7 +32,7 @@ export default class Product extends React.Component{
 
         return (
             <div>
-            <button className="product">
+            <button className="product" onClick={() =>this.showModifyForm()}>
                 <b>{this.props.item.name}</b><br/>
                 <i>{this.props.item.category}</i><br/>
                 {this.displayDescription()}
