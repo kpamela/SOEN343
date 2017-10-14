@@ -137,7 +137,7 @@ export default class NewProductRequest extends React.Component{
      * type validation before showing form, and before updating it
      */
     validateSpecify(){
-        let err = {disabled: false};
+        let err = {disabled: false, modelNumber: true};
         if(this.state.fieldValue.description) {
             for(let ind in this.state.fieldValue.description){
                 switch(ind){

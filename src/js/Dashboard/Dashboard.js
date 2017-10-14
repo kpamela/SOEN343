@@ -92,6 +92,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
                     include={this.state.include}
+                    mapper={this.state.mapper}
                 />
 
             </div>

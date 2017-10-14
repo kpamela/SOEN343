@@ -13,10 +13,12 @@ export default class ProductListing extends React.Component{
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
+    this.handleModify = this.handleModify.bind(this);
   }
 
   handleShowForm(item){
-    this.setState({modifyForm: <ModifyProduct item={item}/>})
+
+    this.setState({modifyForm: <ModifyProduct item={item} onModify={this.handleModify}/>})
   }
 
   handleModify(item){
@@ -44,7 +46,7 @@ export default class ProductListing extends React.Component{
             //Converting product object to product component
             listing.push(<Product item={product}
                           onShowForm={this.handleShowForm}
-                            onModify={this.handleModify}/>);
+                            />);
         });
 /*
 name={product.name}

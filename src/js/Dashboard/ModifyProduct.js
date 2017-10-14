@@ -12,11 +12,13 @@
       constructor(props){
           super(props);
           this.state ={
+
+              disabled: false,
               productIndex: 0,
               fieldValue: props.item,
               currentForm: <div>
                   <button className="Edit" onClick={() => this.modifyProductRequest()}  >
-                     Edit
+                     Edit {this.props.item.description.modelNumber}
                   </button>
               </div>
           };
@@ -27,7 +29,8 @@
       }
 
       handleOnModifyProduct(){
-        this.props.onModify(this.state.fieldValue0)
+
+        this.props.onModify(this.state.fieldValue)
       }
 
 
@@ -40,7 +43,10 @@
           //if category is empty and amount is not an integer prevent submission
           err.disabled = this.state.fieldValue.category == "" || err.amount;
           //applying form change
-          this.setState( {currentForm: this.modifyProductForm(err)})
+          this.setState({disabled: err.disabled}, function(){
+              this.setState( {currentForm: this.modifyProductForm(err)});
+          });
+
 
       }
 
@@ -52,8 +58,10 @@
           let value = this.state.fieldValue;
           value[e.target.id] = e.target.value;
 
-          this.setState({fieldValue: value});
-          this.validateModify();
+          this.setState({fieldValue: value}, function(){
+              this.validateModify();
+              //this.validateDescription();
+          });
 
       }
 
@@ -63,10 +71,16 @@
        * @param desc
        */
       handleDescriptionChange(desc){
+
           let value = this.state.fieldValue;
-          value['description'] = desc;
-          this.setState({fieldValue: value});
-          this.validateDescription();
+          for(let i in desc){
+              value.description[i] = desc[i];
+          }
+          //value['description'] = desc;
+          this.setState({fieldValue: value}, function(){
+              this.validateModify();
+          });
+
 
       }
 
@@ -112,12 +126,9 @@
                               onChange={this.handleFieldChange}
                           />
                       </label>
-                      <input disabled={errors.disabled} type="submit" value="Add" />
                   </form>
-                  {this.validateDescription()};
-                  <button className="Submit-mod" onClick={this.handleOnModifyProduct()}>
-                      Submit
-                  </button>
+                  {this.validateDescription()}
+
               </div>
           );
       }
@@ -136,7 +147,7 @@
                       case 'RAM':
                       case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                           break;
-                      default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
+                      default: err[ind] = this.state.fieldValue.description[ind].length < 0;
                   }
                   if(err[ind]){
                       err['disabled'] = true;
@@ -148,7 +159,14 @@
           }
 
 
-          return this.showDescriptionForm(err);
+
+          let d = (this.state.disabled || err.disabled);
+
+
+          this.setState({disabled: d});
+
+          return this.showDescriptionForm(err)
+
       }
 
       /**
@@ -159,6 +177,10 @@
           return(
               <div>
                   <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+
+                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={this.handleOnModifyProduct()}>
+                      Submit
+                  </button>
               </div>
           );
       }
@@ -180,6 +202,7 @@
       render(){
           return(
               <div>
+
                   {this.state.currentForm}
               </div>
           );
