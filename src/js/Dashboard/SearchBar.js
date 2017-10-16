@@ -9,7 +9,7 @@ export default class SearchBar extends React.Component{
         this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
     }
 
-    //gets input from textField and pass it to Catalog via onFilterTextInput()
+    //gets input from textField and pass it to Dashboard via onFilterTextInput()
     handleFilterTextInputChange(e){
         this.props.onFilterTextInput(e.target.value);
     }

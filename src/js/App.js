@@ -1,5 +1,5 @@
 
-import Catalog from './Catalog/Catalog.js';
+import Catalog from './Dashboard/Dashboard.js';
 import Main from './Main/Main.js';
 import NavBar from './NavBar/NavBar.js'
 import React, { Component } from 'react';

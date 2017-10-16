@@ -13,6 +13,10 @@ export default class DescriptionForm extends React.Component{
         this.handleChange = this.handleChange.bind(this);
     }
 
+    /**
+     * Returning the appropriate form depending on the category submitted
+     * @returns {*}
+     */
     categoryDescription(){
         switch(this.props.category){
             case 'Television': return this.televisionDescription();
@@ -24,6 +28,10 @@ export default class DescriptionForm extends React.Component{
         }
     }
 
+    /**
+     * Television
+     * @returns {XML}
+     */
     televisionDescription(){
         return(
             <div>
@@ -36,9 +44,15 @@ export default class DescriptionForm extends React.Component{
             </div>
         );
     }
+
+    /**
+     * Monitor
+     * @returns {XML}
+     */
     monitorDescription(){
         return(
             <input
+                className={this.props.errors["size"] ? "error":""}
                 type="text"
                 placeholder={'Enter Monitor Size'}
                 value={this.state.currentDescription["size"]}
@@ -48,6 +62,11 @@ export default class DescriptionForm extends React.Component{
         );
     }
 
+    /**
+     * Depending on the computer type, the appropriate form is returned
+     * @param computerType
+     * @returns {XML}
+     */
     computerDescription(computerType){
         let typeDescription;
         switch (computerType){
@@ -62,6 +81,7 @@ export default class DescriptionForm extends React.Component{
         return(
             <div>
                 <input
+                    className={this.props.errors["processor"] ? "error":""}
                     type="text"
                     placeholder={'Enter Processor Type'}
                     value={this.state.currentDescription["processor"]}
@@ -69,6 +89,7 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <input
+                    className={this.props.errors["RAM"] ? "error":""}
                     type="text"
                     placeholder={'Enter RAM size'}
                     value={this.state.currentDescription["RAM"]}
@@ -76,6 +97,7 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <input
+                    className={this.props.errors["cores"] ? "error":""}
                     type="text"
                     placeholder={'Enter Number of CPU cores'}
                     value={this.state.currentDescription["cores"]}
@@ -83,6 +105,7 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <input
+                    className={this.props.errors["HDSize"] ? "error":""}
                     type="text"
                     placeholder={'Enter Hard Drive Size'}
                     value={this.state.currentDescription["HDSize"]}
@@ -95,10 +118,15 @@ export default class DescriptionForm extends React.Component{
         );
     }
 
+    /**
+     * Tablet
+     * @returns {XML}
+     */
     tabletDescription(){
         return(
             <div>
                 <input
+                    className={this.props.errors["OS"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
                     value={this.state.currentDescription["OS"]}
@@ -106,6 +134,7 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <input
+                    className={this.props.errors["battery"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
                     value={this.state.currentDescription["battery"]}
@@ -114,6 +143,7 @@ export default class DescriptionForm extends React.Component{
                 />
                 <br/>
                 <input
+                    className={this.props.errors["camera"] ? "error":""}
                     type="text"
                     placeholder={'Enter Camera Information'}
                     value={this.state.currentDescription["camera"]}
@@ -123,11 +153,21 @@ export default class DescriptionForm extends React.Component{
             </div>
         );
     }
+
+    /**
+     * desktop doesn't have particularities
+     */
     desktopDescription(){}
+
+    /**
+     * Laptop
+     * @returns {XML}
+     */
     laptopDescription(){
         return(
             <div>
                 <input
+                    className={this.props.errors["OS"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
                     value={this.state.currentDescription["OS"]}
@@ -135,6 +175,7 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <input
+                    className={this.props.errors["battery"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
                     value={this.state.currentDescription["battery"]}
@@ -165,7 +206,10 @@ export default class DescriptionForm extends React.Component{
     }
 
 
-
+    /**
+     * Changes are sent to newProductRequest component
+     * @param e
+     */
     handleChange(e){
         var desc = this.state.currentDescription;
         desc[e.target.id] = e.target.value;
@@ -176,7 +220,9 @@ export default class DescriptionForm extends React.Component{
     render(){
         return(
         <div>
+            <h4> Adding a {this.props.category}</h4>
             <input
+                className={this.props.errors["price"] ? "error":""}
                 type="text"
                 placeholder={'Enter Price'}
                 value={this.state.currentDescription['price']}
@@ -184,6 +230,7 @@ export default class DescriptionForm extends React.Component{
                 onChange={this.handleChange}
             />
             <input
+                className={this.props.errors["modelNumber"] ? "error":""}
                 type="text"
                 placeholder={'Enter Product Model Number'}
                 value={this.state.currentDescription['modelNumber']}
@@ -192,6 +239,7 @@ export default class DescriptionForm extends React.Component{
             />
             <br/>
             <input
+                className={this.props.errors["weight"] ? "error":""}
                 type="text"
                 placeholder={'Enter Product Weight'}
                 value={this.state.currentDescription['weight']}
@@ -200,6 +248,7 @@ export default class DescriptionForm extends React.Component{
             />
 
             <input
+                className={this.props.errors["brand"] ? "error":""}
                 type="text"
                 placeholder={'Enter Product Brand Name'}
                 value={this.state.currentDescription['brand']}

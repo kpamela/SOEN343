@@ -3,9 +3,29 @@
  */
 import React from 'react';
 import Product from './Product.js'
+import ModifyProduct from './ModifyProduct.js'
 
 export default class ProductListing extends React.Component{
-    render(){
+  constructor(props){
+    super(props);
+    this.state= {
+      modifyForm:<div></div>
+    };
+
+    this.handleShowForm = this.handleShowForm.bind(this);
+    this.handleModify = this.handleModify.bind(this);
+  }
+
+  handleShowForm(item){
+
+    this.setState({modifyForm: <ModifyProduct item={item} onModify={this.handleModify}/>})
+  }
+
+  handleModify(item){
+      this.props.mapper.modify(item);
+  }
+
+  render(){
         var listing = [];
 
         //going through pass-by products adding them to current listing
@@ -24,16 +44,22 @@ export default class ProductListing extends React.Component{
             //if category is selected
 
             //Converting product object to product component
-            listing.push(<Product name={product.name}
-                                  category={product.category}
-                                  description={product.description}
-                                  price={product.price}
-                                  amount={product.amount}/>);
+            listing.push(<Product item={product}
+                          onShowForm={this.handleShowForm}
+                            />);
         });
+/*
+name={product.name}
+                      category={product.category}
+                      description={product.description}
+                      price={product.price}
+                      amount={product.amount}
 
+*/
         return(
             <div>
                 {listing}
+                {this.state.modifyForm}
             </div>
         );
 
