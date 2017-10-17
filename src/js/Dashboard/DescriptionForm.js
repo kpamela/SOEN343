@@ -21,8 +21,11 @@ export default class DescriptionForm extends React.Component{
         switch(this.props.category){
             case 'Television': return this.televisionDescription();
             case 'Monitor': return this.monitorDescription();
+            case 'Tablet':
             case 'TabletComputer': return this.computerDescription('tablet');
+            case 'Desktop':
             case 'DesktopComputer': return this.computerDescription('desktop');
+            case 'Laptop':
             case 'LaptopComputer': return this.computerDescription('laptop');
             default: return;
         }

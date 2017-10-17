@@ -79,9 +79,14 @@ export default class NewProductRequest extends React.Component{
      */
     handleAnotherProduct(e){
        // e.preventDefault();
-        this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
-        this.props.onSubmit();//sending signal to update product listing
-        this.newProductRequest();
+        if(this.props.mapper.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+            window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
+        }
+        else {
+            this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.onSubmit();//sending signal to update product listing
+            this.newProductRequest();
+        }
     }
 
     /**
@@ -89,9 +94,14 @@ export default class NewProductRequest extends React.Component{
      * @param e
      */
     handleOnSubmit(e){
-        this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
-        this.props.mapper.submit();
-        this.props.onSubmit();
+        if(this.props.mapper.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+            window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
+        }
+        else {
+            this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.mapper.submit();
+            this.props.onSubmit();
+        }
     }
 
     /**

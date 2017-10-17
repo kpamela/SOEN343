@@ -1,13 +1,23 @@
 /**
  * Created by CharlesPhilippe on 2017-10-02.
  */
+import React from 'react';
 import $ from 'jquery';
 import {Television, Monitor, Tablet, Laptop, Desktop} from './ProductTest.js';
+import {AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios';
+import axios from 'axios'
+
 
 export  class Mapper{
     constructor() {
         this.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MDY1NDI2MDQsImV4cCI6MTUzODA3ODYwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.AJ4hiuABiG2SkUgVOsU9xNRCpKcDtIVnMKMbfgxPCts";
         this.data = new $.Deferred();
+        const CancelToken = axios.CancelToken;
+        this.source = CancelToken.source();
+        this.axiosInstance = axios.create({
+            baseURL: '/products/',
+            headers: {'Authorization': this.token}
+        });
 
         this.p = new Array();
     }
@@ -64,32 +74,69 @@ export  class Mapper{
        // location.reload();
     }
 
-    modify(item){
+    modify(item, pos){
+        this.p[pos] = item;
+      // console.log(pos);
+    }
 
+    lookForModel(model){
+        let pos = -1;
+        for(let i in this.p){
+            if(this.p[i].description.modelNumber === model){
+                pos = i;//looking through all the array
+            }
+        }
+        return pos;
+    }
+
+    cancelGetData(){
+        this.source.cancel('Operation canceled by the user');
+    }
+
+    modifyData(data){
+        this.axiosInstance.post('modify', {data});
+    }
+
+    postData(data){
+
+        this.axiosInstance.post('add', {data});
+
+    }
+
+    getData(){
+        this.axiosInstance.get("view", {cancelToken: this.source.token})
+            .then(function(response){
+                console.log(response.data);
+            })
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log(thrown.message);
+                }
+                else console.log(thrown.message);
+            });
+      //  this.source.cancel('Operation canceled');
+       /* return(
+            <div>
+                <Get url="view" instance ={this.axiosInstance}>
+                    {(error, response, isLoading) => {
+                        if(error){
+                            console.log(this.token);
+                            return (<div> Something bad occurred: {error.message}</div>)
+                        }
+                        else if(isLoading){
+                            return (<div>Loading...</div>)
+                        }
+                        else if(response !== null){
+                            this.data.resolve(response.data);
+                            return (<div>{response.data.message}</div>)
+                        }
+
+                        return <div>Get request was made</div>
+                    }}
+                </Get>
+            </div>
+        );*/
     }
 
 }
 
-
-export function getData(mapper){
-    $.ajax({
-        url: '/products/view',
-        type: 'get',
-
-        headers: {
-            Authorization: mapper.token
-        },
-        dataType: 'json',
-        success: function (data) {
-            mapper.data.resolve(data);
-           // console.log(data);
-        },
-        error: function(data){
-            console.log(data);
-        }
-    });
-}
-
-export function postData(mapper, data){
-
-}

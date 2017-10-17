@@ -8,7 +8,13 @@ import ReactDOM from 'react-dom';
 export default class Product extends React.Component{
 
     showModifyForm(){
-      this.props.onShowForm(this.props.item);
+        let item = {category: this.props.item.category, amount: this.props.item.amount, description:{}}
+
+        for(let i in this.props.item.description){
+            item.description[i]= this.props.item.description[i];
+        }
+
+      this.props.onShowForm(item);
     }
 
     displayDescription(){
@@ -23,9 +29,6 @@ export default class Product extends React.Component{
         return desc;
     }
 
-    func(){
-        alert("hh");
-    }
 
     render(){
        // console.log(JSON.stringify(this.props.description));
@@ -37,11 +40,7 @@ export default class Product extends React.Component{
                 <i>{this.props.item.category}</i><br/>
                 {this.displayDescription()}
                 {this.props.item.amount}
-                <span>
-                <button onClick={()=> this.func()}>
 
-                </button>
-                </span>
             </button>
                 <br/>
 

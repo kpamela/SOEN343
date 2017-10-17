@@ -76,6 +76,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
             <div>
                 <h1>TecMarket</h1>
                 <h3>Catalog</h3>
+                {this.state.mapper.getData()}
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextInput={this.handleFilterTextInput}

@@ -9,7 +9,8 @@ export default class ProductListing extends React.Component{
   constructor(props){
     super(props);
     this.state= {
-      modifyForm:<div></div>
+      modifyForm:<div></div>,
+        currentPosition: -1
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
@@ -17,12 +18,23 @@ export default class ProductListing extends React.Component{
   }
 
   handleShowForm(item){
+        //resetting the state before any change is requested
+      const pos = this.props.mapper.lookForModel(item.description.modelNumber);
+      this.setState({modifyForm: <div>...</div>, currentPosition: pos}, function(){
+          this.setState({modifyForm: <ModifyProduct item={item} onModify={this.handleModify}/>})
+      });
 
-    this.setState({modifyForm: <ModifyProduct item={item} onModify={this.handleModify}/>})
   }
 
   handleModify(item){
-      this.props.mapper.modify(item);
+      const i = this.props.mapper.lookForModel(item.description.modelNumber);//looking for already existing model numbers
+      if( i === this.state.currentPosition || i == -1){
+          this.props.mapper.modify(item, this.state.currentPosition);
+          this.setState({modifyForm: <div></div>});
+      }
+      else {
+          window.alert("Model number " +item.description.modelNumber + " already exists");
+      }
   }
 
   render(){

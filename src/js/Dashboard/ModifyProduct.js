@@ -91,6 +91,7 @@
        */
       handleOnSubmit(e){
 
+
       }
 
       /**
@@ -168,6 +169,13 @@
           return this.showDescriptionForm(err)
 
       }
+      cancel(){
+
+          this.setState({currentForm: <div>
+              <button className="Edit" onClick={() => this.modifyProductRequest()}  >
+                  Edit {this.props.item.description.modelNumber}
+              </button></div>});
+      }
 
       /**
        * Returns the form for specifications
@@ -178,8 +186,11 @@
               <div>
                   <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
 
-                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={this.handleOnModifyProduct()}>
+                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
                       Submit
+                  </button>
+                  <button onClick={()=>this.cancel()}>
+                      Cancel
                   </button>
               </div>
           );
@@ -202,7 +213,6 @@
       render(){
           return(
               <div>
-
                   {this.state.currentForm}
               </div>
           );
