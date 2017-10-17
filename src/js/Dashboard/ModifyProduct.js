@@ -106,7 +106,7 @@
                           Select Category
                           <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                               <option value="" default> Select Category</option>
-                              <option value="Television">Television</option>
+                              {/*<option value="Television">Television</option>*/}
                               <option value="Monitor">Monitor</option>
                               <option value="TabletComputer">TabletComputer</option>
                               <option value="DesktopComputer">DesktopComputer</option>

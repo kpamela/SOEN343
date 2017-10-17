@@ -19,14 +19,16 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
             prods: <div>no data</div>,
             PRODUCTS :[],
             filterText: '',
-            include: {names: true, descriptions: false, categories:false}
+            include: "",
+            sorting:""
 
         };
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
-        this.handleOnWhat = this.handleOnWhat.bind(this);
+        this.handleSortChange = this.handleSortChange.bind(this);
+
     }
 
      /**
@@ -48,8 +50,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
     handleNewItem(){
 
         this.setState({
-            PRODUCTS: this.state.mapper.p
-
+            PRODUCTS: this.state.mapper.p, sorting:""
         });
 
     }
@@ -60,9 +61,12 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.setState({prods :<div>{JSON.stringify(data)}</div> });
     }
 
-    handleOnWhat(i){
-        this.setState({hello: i});
+    handleSortChange(asc){
+        this.state.mapper.orderPrice(asc);
+        this.setState({sorting: asc});
+
     }
+
     render(){
 /*
         if(this.state.mapper.data.state() === "pending"){
@@ -76,12 +80,14 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
             <div>
                 <h1>TecMarket</h1>
                 <h3>Catalog</h3>
-                {this.state.mapper.getData()}
+                {/*this.state.mapper.getData()*/}
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextInput={this.handleFilterTextInput}
                     include={this.state.include}
                     onIncludeChange={this.handleSearchIncludes}
+                    sorting={this.state.sorting}
+                    onSortChange={this.handleSortChange}
                 />
 
                 <NewProductRequest

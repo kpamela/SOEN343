@@ -116,7 +116,7 @@ export default class NewProductRequest extends React.Component{
                         Select Category
                         <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                             <option value="" default> Select Category</option>
-                            <option value="Television">Television</option>
+                            {/* <option value="Television">Television</option>*/}
                             <option value="Monitor">Monitor</option>
                             <option value="TabletComputer">TabletComputer</option>
                             <option value="DesktopComputer">DesktopComputer</option>
@@ -147,7 +147,7 @@ export default class NewProductRequest extends React.Component{
      * type validation before showing form, and before updating it
      */
     validateSpecify(){
-        let err = {disabled: false, modelNumber: true};
+        let err = {disabled: false, modelNumber: true, price: true};
         if(this.state.fieldValue.description) {
             for(let ind in this.state.fieldValue.description){
                 switch(ind){

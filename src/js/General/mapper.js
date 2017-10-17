@@ -89,6 +89,68 @@ export  class Mapper{
         return pos;
     }
 
+    orderPrice(asc){
+        switch(asc) {
+            case "true":
+                this.p = this.quickSort(this.p, 0, this.p.length - 1, true);
+                break;
+            case "false":
+                this.p = this.quickSort(this.p, 0, this.p.length - 1, false);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    quickSort(arr, left, right, asc){
+        let len = arr.length, pivot, partitionIndex;
+
+        if(left < right){
+            pivot = right;
+            partitionIndex = asc ? this.partitionAscending(arr, pivot, left, right): this.partitionDescending(arr, pivot, left, right);
+
+            //sort left and right
+            this.quickSort(arr, left, partitionIndex-1,asc);
+            this.quickSort(arr, partitionIndex+1, right,asc);
+        }
+        return arr;
+    }
+
+    partitionAscending(arr, pivot, left, right){
+        let pivotValue = arr[pivot].description.price;
+        let partitionIndex = left;
+
+        for(let i =left; i<right; i++){
+            if(arr[i].description.price < pivotValue){
+                this.swap(arr,i,partitionIndex);
+                partitionIndex++;
+            }
+        }
+        this.swap(arr,right,partitionIndex);
+        return partitionIndex;
+    }
+    partitionDescending(arr, pivot, left, right){
+        let pivotValue = arr[pivot].description.price;
+        let partitionIndex = left;
+
+        for(let i =left; i<right; i++){
+            if(arr[i].description.price >= pivotValue){
+                this.swap(arr,i,partitionIndex);
+                partitionIndex++;
+            }
+        }
+        this.swap(arr,right,partitionIndex);
+        return partitionIndex;
+    }
+
+    swap(arr,i,j){
+        let temp = arr[i];
+        arr[i] =arr[j];
+        arr[j] = temp;
+    }
+
+
     cancelGetData(){
         this.source.cancel('Operation canceled by the user');
     }
