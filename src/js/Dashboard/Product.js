@@ -24,12 +24,10 @@ export default class Product extends React.Component{
     }
 
     func(){
-        alert("hh");
+        alert("The button you have clicked is a delete button.");
     }
 
     render(){
-       // console.log(JSON.stringify(this.props.description));
-
         return (
             <div>
             <button className="product" onClick={() =>this.showModifyForm()}>

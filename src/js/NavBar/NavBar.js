@@ -25,11 +25,6 @@ export default class NavBar extends Component{
                 <MenuItem eventKey={4.2}> Laptops </MenuItem>
                 <MenuItem eventKey={4.3}> Desktops </MenuItem>
               </NavDropdown>
-              <NavDropdown eventKey={5} title="Televisions" id="basic-nav-dropdown">
-                <MenuItem eventKey={5.1}> OLED </MenuItem>
-                <MenuItem eventKey={5.2}> HD </MenuItem>
-                <MenuItem eventKey={5.3}> 4K </MenuItem>
-              </NavDropdown>
               <MenuItem divider />
               <MenuItem eventKey={3.3}>Shop all categories</MenuItem>
             </NavDropdown>

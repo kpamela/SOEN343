@@ -19,30 +19,12 @@ export default class DescriptionForm extends React.Component{
      */
     categoryDescription(){
         switch(this.props.category){
-            case 'Television': return this.televisionDescription();
             case 'Monitor': return this.monitorDescription();
             case 'TabletComputer': return this.computerDescription('tablet');
             case 'DesktopComputer': return this.computerDescription('desktop');
             case 'LaptopComputer': return this.computerDescription('laptop');
             default: return;
         }
-    }
-
-    /**
-     * Television
-     * @returns {XML}
-     */
-    televisionDescription(){
-        return(
-            <div>
-                <select id="TelevisionType" value={this.state.currentDescription["type"]} onChange={this.handleChange}>
-                    <option value="" default>Select Type</option>
-                    <option value="HD LED">LED</option>
-                    <option value="Smart">Smart</option>
-                    <option value="3d">3d</option>
-                </select>
-            </div>
-        );
     }
 
     /**

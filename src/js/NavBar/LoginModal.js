@@ -3,12 +3,12 @@ import {Modal, Button, FieldGroup} from 'react-bootstrap';
 import axios from 'axios';
 import auth from '../General/auth.js'
 import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
-import Catalog from '../Dashboard/Dashboard.js'
+import Catalog from '../Catalog/Catalog.js'
 
 
 export const LoginModal = React.createClass({
   getInitialState() {
-    return { 
+    return {
       showModal: false,
 
       Username: '',
