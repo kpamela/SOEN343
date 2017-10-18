@@ -37,3 +37,11 @@ npm install --save
 npm start
 ```
 Then go to http://localhost:3000/
+
+## Testing
+Administrator access can be obtained by using the following:
+username: test
+password: test
+
+## Github Workspace
+Every iteration, a new project is created under the "projects" tab. The product backlog is imported into the iteration and tasks are created. Any left-over tasks from past iterations carry on as cards to the next. 

@@ -20,7 +20,55 @@
 //     }
 // }
 
-body{
-    margin:0px;
-    padding:0px;
+//HomePage css
+.HomePage-Container{
+    .HomePage-Jumbotron{
+        margin-left:200px;
+        margin-right:200px;
+        text-align: center;
+    }
+    Button{
+        margin-left:5px;
+        margin-right:5px;
+    }
+}
+
+//Footer css
+footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #eee;
+    text-align: center;
+}
+
+//NavBar css
+.Navbar{
+    .NavbarLink{
+        color:#9d9d9d;
+        text-decoration:none;
+    }
+    .NavbarLink:hover{
+        color:#fff;
+        text-decoration:none;
+    }
+    .NavbarDropdownLink{
+        color: #333;
+    }
+    .NavbarDropdownLink:hover{
+        color:#262626;
+        text-decoration:none;
+    }
+}
+
+input.error {
+    border-color: red;
+}
+
+//AboutUs css
+.AboutUs-Container{
+    margin-left:100px;
+    margin-right:100px;
 }

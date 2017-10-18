@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavBar from '../NavBar/NavBar.js'
 
 /**
- * Login and sign up page
+ * This class is rendered on every page
  */
 
 export default class Main extends Component{
@@ -15,6 +15,9 @@ export default class Main extends Component{
         return(
             <div className="main">
                 <NavBar />
+                <footer>
+                    <p>SOEN 343 Team 15 Project</p>
+                </footer>
             </div>
         );
     }

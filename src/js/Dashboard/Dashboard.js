@@ -11,16 +11,13 @@ import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios 
 import $ from 'jquery';
 import {Mapper, getData, postData} from  "../General/mapper.js";
 
- export default class Catalog extends React.Component{
+ export default class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state={
             mapper:new Mapper(),
             prods: <div>no data</div>,
-            PRODUCTS : [
-                {name: 'MacBook', category: 'computer', description: {additionalInfo: 'aluminium'}, price:'$$$', amount:4},
-                {name: 'Windows', category: 'computer', description:{additionalInfo: 'plastic'}, price:'$', amount:5}
-            ],
+            PRODUCTS :[],
             filterText: '',
             include: {names: true, descriptions: false, categories:false}
 
@@ -29,8 +26,12 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
+        this.handleOnWhat = this.handleOnWhat.bind(this);
     }
-    //Changing filterText state upon receive new value
+
+     /**
+      * Changing filterText state upon receive new value
+      */
     handleFilterTextInput(filterText) {
         this.setState({
             filterText: filterText
@@ -41,13 +42,13 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.setState({
             include: include
         });
-        //console.log(this.state.include);
+
      }
-    //Adding new product to product list upon receiving new item
-    handleNewItem(newItem){
+    //Adding new product to product list upon receiving new item signal
+    handleNewItem(){
 
         this.setState({
-            PRODUCTS: this.state.PRODUCTS.concat(newItem)
+            PRODUCTS: this.state.mapper.p
 
         });
 
@@ -59,6 +60,9 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
         this.setState({prods :<div>{JSON.stringify(data)}</div> });
     }
 
+    handleOnWhat(i){
+        this.setState({hello: i});
+    }
     render(){
 /*
         if(this.state.mapper.data.state() === "pending"){
@@ -81,13 +85,16 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
 
                 <NewProductRequest
                 mapper={this.state.mapper}
+                onSubmit={this.handleNewItem}
                 />
 
                 <ProductListing
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
                     include={this.state.include}
+                    mapper={this.state.mapper}
                 />
+
             </div>
         );
     }

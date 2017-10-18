@@ -22,9 +22,15 @@ export  class Mapper{
         let q = this.newProduct(category, amount);
         this.p.push(q);
 
-        return this.p.length - 1;
+        return this.p.length - 1;//returning index for future use
     }
 
+    /**
+     * Returns an instanciated product, depending on its category
+     * @param category
+     * @param amount
+     * @returns {*}
+     */
     newProduct(category, amount){
         switch(category){
             case 'Television':
@@ -36,7 +42,7 @@ export  class Mapper{
             case 'Laptop':
             case 'LaptopComputer': return new Laptop(amount);
             case 'Desktop':
-            case 'DescktopComputer': return new Desktop(amount);
+            case 'DesktopComputer': return new Desktop(amount);
             default: return null;
         }
     }
@@ -55,7 +61,11 @@ export  class Mapper{
 
     submit(){
         console.log(this.p);
-        location.reload();
+       // location.reload();
+    }
+
+    modify(item){
+
     }
 
 }

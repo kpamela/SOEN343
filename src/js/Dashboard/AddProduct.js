@@ -103,7 +103,7 @@ export default class AddProduct extends React.Component{
             return;
         }
     }
-    //On submit, pass newItem to Catalog via onNewItem()
+    //On submit, pass newItem to Dashboard via onNewItem()
     handleNewItemOnClick(e){
         var item = {name:this.state.newItem.name,
             category: this.state.newItem.category,
