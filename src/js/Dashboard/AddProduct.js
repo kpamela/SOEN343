@@ -81,7 +81,6 @@ export default class AddProduct extends React.Component{
                         Select Category
                     <select id="category" value={this.state.newItem.category} onChange={this.handleChange}>
                         <option value="" default> Select Category</option>
-                        <option value="Television">Television</option>
                         <option value="Monitor">Monitor</option>
                         <option value="TabletComputer">TabletComputer</option>
                         <option value="DesktopComputer">DesktopComputer</option>
