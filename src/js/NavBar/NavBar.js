@@ -4,6 +4,7 @@ import { RegisterModal } from './RegisterModal.js';
 import Logout from './Logout.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import auth from '../General/auth.js';
 
 
 export default class NavBar extends Component{
@@ -34,6 +35,7 @@ export default class NavBar extends Component{
               <MenuItem divider />
               <MenuItem eventKey={3.3}><Link className="NavbarDropdownLink" to="/catalog">Shop all categories</Link></MenuItem>
             </NavDropdown>
+            {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/dashboard">Administrator Dashboard</Link></NavItem> : null}
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem>

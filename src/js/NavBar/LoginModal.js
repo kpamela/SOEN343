@@ -12,7 +12,7 @@ export const LoginModal = React.createClass({
       showModal: false,
 
       Username: '',
-      Password:'',
+      Password: '',
 
       redirect:false
      };
@@ -41,6 +41,7 @@ export const LoginModal = React.createClass({
           const token = res.data.token;
           localStorage.setItem('jwtToken', token);
           auth.setAuthToken(token);
+          auth.setIsAdmin(res.data.user.isAdmin);
           this.setState({redirect: true});
         }
         else{
@@ -52,9 +53,16 @@ export const LoginModal = React.createClass({
 
   render() {
     if(auth.loggedIn()){
-      return(
-        <Redirect push to="/catalog" />
-      );
+      if(auth.getIsAdmin() == 1){
+        return(
+          <Redirect push to="/dashboard" />
+        );
+      }
+      else if(auth.getIsAdmin() == 0){
+        return(
+          <Redirect push to="/catalog" />
+        );
+      }
     }
     return (
       <div>
