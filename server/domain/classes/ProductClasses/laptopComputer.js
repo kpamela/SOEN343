@@ -1,32 +1,42 @@
 const express = require('express'),
     users = express.Router(),
     mysql = require('mysql'),
-    db = require('../../config/database.js'),
-    ProductDescription = require('./productDescription.js');
+    db = require('../../../data-source/config/database.js'),
+    Computers = require('./computers.js');
 
 
-class Monitor extends ProductDescription {
+class LaptopComputer extends Computers {
     constructor(product){
         super(product);
-        this.size = product.size;
+        this.displaySize = product.display;
+        this.batteryInfo = product.batteryInfo;
+        this.hadCamera = product.hadCamera;
+        this.operatingSystem = product.operatingSystem;
     }
 
     create(){
         db.getConnection((err, connection) => {
-            var monitor = {
-                Discriminator : "Monitor",
+            var laptopComputer = {
+                Discriminator : "LaptopComputer",
                 ProductName : this.productName,
                 BrandName : this.brandName,
                 ModelNumber: this.modelNumber,
                 Dimensions: this.dimensions,
                 Price: this.price,
                 Weight: this.weight,
-                Size: this.size
+                ProcessorType: this.processorType,
+                RAMSize: this.RAMSize,
+                NumberOfCores: this.numberOfCores,
+                HardDriveSize: this.hardDriveSize,
+                DisplaySize: this.displaySize,
+                BatteryInfo: this.batteryInfo,
+                HasCamera: this.hadCamera,
+                OperatingSystem: this.operatingSystem
             }
 
             //Build query and add new product in the db
             let sql = `INSERT INTO models SET ?`;
-            connection.query(sql, monitor, (err, result) => {
+            connection.query(sql, laptopComputer, (err, result) => {
                 if(err){
                     console.log(err);
                     return false;
@@ -42,4 +52,4 @@ class Monitor extends ProductDescription {
     }
 }
 
-module.exports = Monitor;
+module.exports = LaptopComputer;

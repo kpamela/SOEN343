@@ -4,8 +4,8 @@ const express = require('express'),
     table = require('../models/users.js'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../config/database.js');
-    User = require('../classes/user.js')
+    db = require('../../data-source/config/database.js');
+    User = require('./user.js')
 
 db.getConnection((err, connection) => {
 

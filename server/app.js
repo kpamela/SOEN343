@@ -15,7 +15,7 @@ const express = require('express'),
     compiler = webpack(config);
 
 // Configure the database
-var configDB = require('./config/database.js');
+var configDB = require('./data-source/config/database.js');
 
 // Launch express
 const app = express();
@@ -45,11 +45,11 @@ app.use(bodyParser.json());
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
+require('./data-source/config/passport')(passport);
 
-// API routes go here
-app.use('/users', require('./routes/users.js'));
-app.use('/products', require('./routes/products.js'));
+// API mappers go here
+app.use('/users', require('./domain/mappers/users.js'));
+app.use('/products', require('./domain/mappers/products.js'));
 
 app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));

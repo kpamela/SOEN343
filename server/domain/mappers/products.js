@@ -3,12 +3,12 @@ const express = require('express'),
     mysql = require('mysql'),
     passport = require('passport'),
     jwt = require('jsonwebtoken'),
-    db = require('../config/database.js'),
-    Television = require('../classes/ProductClasses/television'),
-    DesktopComputer =  require('../classes/ProductClasses/desktopComputer'),
-    LaptopComputer = require('../classes/ProductClasses/laptopComputer'),
-    TabletComputer = require('../classes/ProductClasses/tabletComputer'),
-    Monitor = require('../classes/ProductClasses/television');
+    db = require('../../data-source/config/database.js'),
+    Television = require('./ProductClasses/television'),
+    DesktopComputer =  require('./ProductClasses/desktopComputer'),
+    LaptopComputer = require('./ProductClasses/laptopComputer'),
+    TabletComputer = require('./ProductClasses/tabletComputer'),
+    Monitor = require('./ProductClasses/television');
 
 db.getConnection((err, connection) => {
   // Get all products

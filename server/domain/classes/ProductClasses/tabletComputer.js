@@ -1,31 +1,38 @@
 const express = require('express'),
     users = express.Router(),
     mysql = require('mysql'),
-    db = require('../../config/database.js'),
-    ProductDescription = require('./productDescription.js');
+    db = require('../../../data-source/config/database.js'),
+    Computers = require('./computers.js');
 
 
-class Television extends ProductDescription {
+class TabletComputer extends Computers {
     constructor(product){
-     super(product);
-     this.televisionType = product.televisionType;
+        super(product);
+        this.displaySize = product.displaySize;
+        this.batteryInfo = product.batteryInfo;
+        this.cameraInfo = product.cameraInfo;
+        this.operatingSystem = product.operatingSystem;
     }
 
     create(){
         db.getConnection((err, connection) => {
-            var television = {
+            var tabletComputer = {
+                Discriminator : "TabletComputer",
                 ProductName : this.productName,
                 BrandName : this.brandName,
                 ModelNumber: this.modelNumber,
                 Dimensions: this.dimensions,
                 Price: this.price,
                 Weight: this.weight,
-                TelevisionType: this.televisionType
+                DisplaySize: this.displaySize,
+                BatteryInfo: this.batteryInfo,
+                CameraInfo: this.cameraInfo,
+                OperatingSystem: this.operatingSystem
             }
 
             //Build query and add new product in the db
             let sql = `INSERT INTO models SET ?`;
-            connection.query(sql, television, (err, result) => {
+            connection.query(sql, tabletComputer, (err, result) => {
                 if(err){
                     console.log(err);
                     return false;
@@ -41,4 +48,4 @@ class Television extends ProductDescription {
     }
 }
 
-module.exports= Television;
+module.exports = TabletComputer;
