@@ -150,11 +150,13 @@ export default class NewProductRequest extends React.Component{
         let err = {disabled: false, modelNumber: true, price: true};
         if(this.state.fieldValue.description) {
             for(let ind in this.state.fieldValue.description){
+
                 switch(ind){
                     case 'price':
                     case 'weight':
                     case 'HDSize':
                     case 'RAM':
+                    case 'size':
                     case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                         break;
                     default: err[ind] = this.state.fieldValue.description[ind].length <= 0;

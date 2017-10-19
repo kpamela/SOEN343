@@ -20,15 +20,15 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
             PRODUCTS :[],
             filterText: '',
             include: "",
-            sorting:""
-
+            sorting:"",
+            disableSort: ""
         };
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
-
+        this.toggleDisableSort = this.toggleDisableSort.bind(this);
     }
 
      /**
@@ -64,9 +64,13 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
     handleSortChange(asc){
         this.state.mapper.orderPrice(asc);
         this.setState({sorting: asc});
-
+        this.forceUpdate();
     }
 
+    toggleDisableSort(disabled){
+            this.setState({disableSort: disabled});
+
+    }
     render(){
 /*
         if(this.state.mapper.data.state() === "pending"){
@@ -88,6 +92,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
                     onIncludeChange={this.handleSearchIncludes}
                     sorting={this.state.sorting}
                     onSortChange={this.handleSortChange}
+                    disableSort={this.state.disableSort}
                 />
 
                 <NewProductRequest
@@ -100,6 +105,7 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
                     filterText={this.state.filterText}
                     include={this.state.include}
                     mapper={this.state.mapper}
+                    toggleDisableSort={this.toggleDisableSort}
                 />
 
             </div>
