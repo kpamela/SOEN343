@@ -69,8 +69,8 @@ db.getConnection((err, connection) => {
 
         // build newProduct JSON Object by parsing the request
         let newProduct = req.body.description;
-        newProduct.Price = req.body.price;
-        newProduct.Available = req.body.available;
+        newProduct.price = req.body.price;
+        newProduct.available = req.body.available;
         newProduct.productName = req.body.name;
 
         console.log(JSON.stringify(newProduct));

@@ -31,12 +31,11 @@ class Television extends ProductDescription {
                     return false;
                 }
                 else{
+                    console.log("The product has been added to the db with the following result message: \n\t" + result);
                     return true;
                 }
             });
         });
-
-
 
 
     }

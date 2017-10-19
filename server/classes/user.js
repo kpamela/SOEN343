@@ -11,7 +11,7 @@ class User{
         this.password = user.Password;
         this.firstName = user.FirstName;
         this.lastName = user.LastName;
-        this.emailAddress = user.emailAddress;
+        this.emailAddress = user.EmailAddress;
         this.phoneNumber = user.PhoneNumber;
         this.administrator = user.Administrator;
     }
@@ -28,7 +28,7 @@ class User{
                             let sql = `INSERT INTO users SET ?`;
                             bcrypt.hash(this.password, 10, (err, hash) => {
                                 if(err) throw err;
-                                this.Password = hash;
+                                this.password = hash;
                                 // Add user
                                 connection.query(sql, this, (err, result) => {
                                     if(err){
@@ -72,7 +72,8 @@ class User{
                                     success: true,
                                     token: 'JWT' + token,
                                     user:{
-                                        username: user[0].Username
+                                        username: user[0].Username,
+                                        isAdmin: user[0].Administrator
                                     }
                                 });
                             }
