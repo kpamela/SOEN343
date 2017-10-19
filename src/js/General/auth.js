@@ -23,6 +23,14 @@ function getCredentials(token){
     return user;
 }
 
+function setIsAdmin(isAdmin){
+    localStorage.setItem('isAdmin', isAdmin);
+}
+
+function getIsAdmin(){
+    return localStorage.getItem('isAdmin');
+}
+
 function loggedIn(){
     if(getCredentials(localStorage.getItem('jwtToken'))){
         return true;
@@ -39,6 +47,8 @@ function logOut(){
 export default{
     setAuthToken: setAuthToken,
     getCredentials: getCredentials,
+    setIsAdmin: setIsAdmin,
+    getIsAdmin: getIsAdmin,
     loggedIn: loggedIn,
     logOut: logOut
 }

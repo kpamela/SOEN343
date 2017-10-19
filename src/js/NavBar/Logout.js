@@ -26,7 +26,7 @@ export default class Logout extends Component{
             );
         }
         return(
-            <Button onClick={this.logOut}> Logout</Button>
+            <Button bsSize="sm" onClick={this.logOut}> Logout</Button>
         );
 
     }
