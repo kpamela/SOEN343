@@ -3,7 +3,7 @@ const express = require('express'),
     mysql = require('mysql'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/database.js');
+    db = require('../../data-source/config/database.js');
 
 class User{
     constructor(user){

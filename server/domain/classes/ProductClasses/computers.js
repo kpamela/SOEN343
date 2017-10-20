@@ -1,7 +1,7 @@
 const express = require('express'),
     users = express.Router(),
     mysql = require('mysql'),
-    db = require('../.././database.js'),
+    db = require('../../../data-source/config/database.js'),
     ProductDescription = require('./productDescription.js');
 
 
