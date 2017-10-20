@@ -1,10 +1,9 @@
 const express = require('express'),
     users = express.Router(),
-    mysql = require('mysql'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/config/database.js');
-
+    db = require('../../data-source/config/database.js')
+    userTDG = require('../../data-source/TDG/userTDG');
 class User{
     constructor(user){
         this.username = user.Username;
@@ -15,13 +14,13 @@ class User{
         this.phoneNumber = user.PhoneNumber;
         this.administrator = user.Administrator;
     }
-    
+
     //Register the user in the DB
     register(){
         var promise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 db.getConnection((err, connection) => {
-                    let getUserSQL = `SELECT * FROM users WHERE Username = '${this.username}' LIMIT 1`;
+                  SQLget_user_all(this.username);
                     connection.query(getUserSQL, (err, user) => {
                         if(err) throw err;
                         if(user.length == 0){
@@ -57,14 +56,14 @@ class User{
     authenticate() {
         var promise = new Promise((resolve, reject) => {
             setTimeout(() =>{
-                db.getConnection((err, connection) => {
-                    let sql = `SELECT * FROM users WHERE Username = '${this.username}'`;
+                db.getConnection((err, connection) =>
+                    SQLget_user_all(this.username);
                     connection.query(sql, (err, user) => {
                         if(err) throw err;
                         if(user.length == 0){
                             resolve({success: false, msg: "User not found"});
                         }
-                        bcrypt.compare(this.password, user[0].Password, (err, isMatch) => {
+                        bcrypt.compare(this.password, SQLget_user_password(this.username), (err, isMatch) => {
                             if(err) throw err;
                             if(isMatch){
                                 const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn: 604800}); //1 week
