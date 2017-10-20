@@ -62,44 +62,47 @@ db.getConnection((err, connection) => {
         return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
         //verify if the category is valid
-        let category = req.body.category;
-        if (!category.match(/^(desktopComputer|tabletcomputer|laptop|television|monitordisplay)$/)){
+
+        let category = req.body.data.category;
+        if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
           return res.json(400, {success: false, msg: "Invalid product category."});
         }
 
         // build newProduct JSON Object by parsing the request
-        let newProduct = req.body.description;
-        newProduct.price = req.body.price;
-        newProduct.available = req.body.available;
-        newProduct.productName = req.body.name;
+        let newProduct = {category: req.body.data.category, amount: req.body.data.amount};
+        for(let i in req.body.data.description){
+            newProduct[i] = req.body.data.description[i];
+        }
 
-        console.log(JSON.stringify(newProduct));
+        console.log(newProduct);
 
         // Instantiate the right product class based on the category
         var product;
 
         switch(category){
-            case 'desktopcomputer':
+            case 'DesktopComputer':
               product = new DesktopComputer(newProduct);
               break;
-            case 'tabletcomputer':
+            case 'TabletComputer':
               product = new TabletComputer(newProduct);
               break;
-            case 'laptop':
+            case 'LaptopComputer':
               product = new LaptopComputer(newProduct);
               break;
-            case 'television':
+            case 'Television':
               product = new Television(newProduct);
               break;
-            case 'monitordisplay':
-              product = new Monitor;
+            case 'Monitor':
+              product = new Monitor(newProduct);
               break;
         }
 
         if (!product.create()){
-            return res.json(500, {success: false, msg: "Product Couldn't be created"});
+            console.log("he, no success");
+            return res.status(500).json({success: false, message: "Product Couldn't be created"});
         } else {
-            return res.json(200, {success: false, msg: "Product Created"});
+            console.log("he, success");
+            return res.status(200).json({success: true, message: "Product Created"});
         }
       }
     });

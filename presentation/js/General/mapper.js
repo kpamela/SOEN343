@@ -16,7 +16,7 @@ export  class Mapper{
         this.source = CancelToken.source();
         this.axiosInstance = axios.create({
             baseURL: '/products/',
-            headers: {'Authorization': this.token}
+            headers: {'authorization': this.token}
         });
 
         this.p = new Array();
@@ -161,14 +161,23 @@ export  class Mapper{
 
     postData(data){
 
-        this.axiosInstance.post('add', {data});
-
+        this.axiosInstance.post('add', {data},{ cancelToken: this.source.token})
+            .then(function(response){
+                console.log(response.data);
+            })
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log(thrown.message);
+                }
+                else console.log(thrown);
+            });
     }
 
     getData(){
         this.axiosInstance.get("view", {cancelToken: this.source.token})
             .then(function(response){
-                console.log(response.data);
+                console.log("he");
+                console.log(response);
             })
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){

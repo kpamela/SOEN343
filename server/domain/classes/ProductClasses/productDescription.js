@@ -7,7 +7,7 @@ const express = require('express'),
 
 class ProductDescription{
     constructor(product){
-        this.productName = product.productName;
+        this.productName = " ";
         this.brandName = product.brandName;
         this.modelNumber = product.modelNumber;
         this.dimensions = product.dimensions;
