@@ -51,6 +51,8 @@ import {Mapper, getData, postData} from  "../General/mapper.js";
 
         this.setState({
             PRODUCTS: this.state.mapper.p, sorting:""
+        }, function(){
+            this.state.mapper.postData(this.state.mapper.p[0]);
         });
 
     }

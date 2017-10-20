@@ -157,6 +157,7 @@ export default class NewProductRequest extends React.Component{
                     case 'HDSize':
                     case 'RAM':
                     case 'size':
+                    case 'dimensions':
                     case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                         break;
                     default: err[ind] = this.state.fieldValue.description[ind].length <= 0;

@@ -146,11 +146,11 @@ export default class DescriptionForm extends React.Component{
                 />
                 <br/>
                 <input
-                    className={this.props.errors["camera"] ? "error":""}
+                    className={this.props.errors["cameraInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Camera Information'}
-                    value={this.state.currentDescription["camera"]}
-                    id="camera"
+                    value={this.state.currentDescription["cameraInfo"]}
+                    id="cameraInfo"
                     onChange={this.handleChange}
                 />
             </div>
@@ -221,6 +221,7 @@ export default class DescriptionForm extends React.Component{
             case 'HDSize':
             case 'size':
             case 'RAM':
+            case 'dimensions':
             case 'cores':
                 if(e.target.value){
 
@@ -264,6 +265,14 @@ export default class DescriptionForm extends React.Component{
             />
             <br/>
             <input
+                className={this.props.errors["dimensions"] ? "error":""}
+                type="text"
+                placeholder={'Enter Product Dimensions'}
+                value={this.state.currentDescription['dimensions']}
+                id="dimensions"
+                onChange={this.handleChange}
+            />
+            <input
                 className={this.props.errors["weight"] ? "error":""}
                 type="text"
                 placeholder={'Enter Product Weight'}
@@ -273,11 +282,11 @@ export default class DescriptionForm extends React.Component{
             />
 
             <input
-                className={this.props.errors["brand"] ? "error":""}
+                className={this.props.errors["brandName"] ? "error":""}
                 type="text"
                 placeholder={'Enter Product Brand Name'}
-                value={this.state.currentDescription['brand']}
-                id="brand"
+                value={this.state.currentDescription['brandName']}
+                id="brandName"
                 onChange={this.handleChange}
             />
             <br/>
