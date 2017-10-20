@@ -40,7 +40,7 @@ export default class SearchBar extends React.Component{
                     <option value="Tablet">Tablet</option>
                     <option value="Computer">all Computers</option>
                 </select>
-                <select value={this.props.sorting} onChange={this.handleSortChange}>
+                <select disabled={this.props.disableSort} value={this.props.sorting} onChange={this.handleSortChange}>
                     <option value="" default>Select Sorting Option</option>
                     <option value="true">Sort by Ascending Price</option>
                     <option value="false">Sort by Descending price</option>

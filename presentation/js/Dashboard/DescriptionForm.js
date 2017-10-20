@@ -8,7 +8,7 @@ export default class DescriptionForm extends React.Component{
     constructor(props){
         super(props);
         this.state= {
-            currentDescription: {}};
+            currentDescription: {modelNumber:"", price:""}};//mandatory fields
 
         this.handleChange = this.handleChange.bind(this);
     }
@@ -215,7 +215,29 @@ export default class DescriptionForm extends React.Component{
      */
     handleChange(e){
         var desc = this.state.currentDescription;
-        desc[e.target.id] = e.target.value;
+        switch(e.target.id){
+            case 'price':
+            case 'weight':
+            case 'HDSize':
+            case 'size':
+            case 'RAM':
+            case 'cores':
+                if(e.target.value){
+
+                    desc[e.target.id] = parseFloat(e.target.value);
+                    if(isNaN(desc[e.target.id]) || e.target.value.indexOf(".") === e.target.value.length -1){
+                        desc[e.target.id] = e.target.value;
+                    }
+                    break;
+                }
+
+
+            default:
+                desc[e.target.id] = e.target.value;
+                break;
+        }
+
+
         this.setState({currentDescription: desc});
         this.props.onDescriptionChange(this.state.currentDescription);
     }

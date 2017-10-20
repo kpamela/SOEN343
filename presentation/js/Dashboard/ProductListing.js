@@ -19,16 +19,28 @@ export default class ProductListing extends React.Component{
 
   handleShowForm(item){
         //resetting the state before any change is requested
+      this.props.toggleDisableSort("disabled");
       const pos = this.props.mapper.lookForModel(item.description.modelNumber);
       this.setState({modifyForm: <div>...</div>, currentPosition: pos}, function(){
-          this.setState({modifyForm: <ModifyProduct item={item} onModify={this.handleModify}/>})
+          this.setState({modifyForm: <div>
+              <ModifyProduct item={item} onModify={this.handleModify}/>
+              <button onClick={()=>this.cancel()}>
+                  Cancel
+              </button>
+          </div>})
       });
 
   }
+    cancel(){
+        this.props.toggleDisableSort("");
+        this.setState({modifyForm: <div></div>});
+
+    }
 
   handleModify(item){
       const i = this.props.mapper.lookForModel(item.description.modelNumber);//looking for already existing model numbers
       if( i === this.state.currentPosition || i == -1){
+          this.props.toggleDisableSort("");
           this.props.mapper.modify(item, this.state.currentPosition);
           this.setState({modifyForm: <div></div>});
       }
@@ -56,6 +68,7 @@ export default class ProductListing extends React.Component{
                           onShowForm={this.handleShowForm}
                             />);
         });
+
 /*
 name={product.name}
                       category={product.category}
