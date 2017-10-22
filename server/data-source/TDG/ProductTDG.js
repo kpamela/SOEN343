@@ -30,13 +30,15 @@ class ProductTDG{
     handleWrite(addProduct);
   }
 
-  SQLmodify_product_modelNumber(modelNumber, modification){                                                   //Will modify all products with the same model number
+  SQLmodify_product_modelNumber(modelNumber, modification){                      //Will modify all products with the same model number
     let modifyProduct = '';
     handleWrite(modifyProduct);
   }
 
-  SQLmodify_product()
-
+  SQLdelete_product(modelNumber){
+    let deleteProduct = '';
+    handleWrite(deleteProduct);
+  }
 
 
 
