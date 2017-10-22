@@ -9,10 +9,7 @@ export default class Admin extends User{
 
     constructor(){
         super();
-        this.dashboard =
-            <div>
-
-            </div>;
+        this.dashboard = <div></div>;
     }
 
     /**

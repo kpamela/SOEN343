@@ -48,7 +48,7 @@ function logOut(){
 }
 
 //TODO proper login
-export function login(){
+function login(){
     if(getIsAdmin()){
         return new Admin();
     }
@@ -66,5 +66,6 @@ export default{
     setIsAdmin: setIsAdmin,
     getIsAdmin: getIsAdmin,
     loggedIn: loggedIn,
-    logOut: logOut
+    logOut: logOut,
+    login: login
 }

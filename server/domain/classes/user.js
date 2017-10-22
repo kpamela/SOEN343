@@ -1,7 +1,9 @@
 const express = require('express'),
     users = express.Router(),
+    bcrypt = require('bcryptjs'),
     mysql = require('mysql'),                             // When all queries are moved to tdg, this can be removed
-    db = require('../../data-source/config/database.js')
+    db = require('../../data-source/config/database.js'),
+    jwt = require('jsonwebtoken'),
     userTDG = require('../../data-source/TDG/UserTDG');
 class User{
     constructor(user){
@@ -26,11 +28,12 @@ class User{
 
     //Authenticates the user to the DB
     authenticate() {
+        let usr = new userTDG();
         var promise = new Promise((resolve, reject) => {
             setTimeout(() =>{
                 db.getConnection((err, connection) => {
-                    SQLget_user_All(this.username);
-                    connection.query(SQLget_user_All(this.username), (err, user) => {
+                    //usr.SQLget_user_All(this.username);
+                    connection.query(usr.SQLget_user_All(this.username), (err, user) => {
                         if(err) throw err;
                         if(user.length == 0){
                             resolve({success: false, msg: "User not found"});

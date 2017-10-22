@@ -18,17 +18,22 @@ export default class ProductListing extends React.Component{
   }
 
   handleShowForm(item){
-        //resetting the state before any change is requested
-      this.props.toggleDisableSort("disabled");
-      const pos = this.props.mapper.lookForModel(item.description.modelNumber);
-      this.setState({modifyForm: <div>...</div>, currentPosition: pos}, function(){
-          this.setState({modifyForm: <div>
-              <ModifyProduct item={item} onModify={this.handleModify}/>
-              <button onClick={()=>this.cancel()}>
-                  Cancel
-              </button>
-          </div>})
-      });
+      if(this.props.userType === "admin") {
+          //resetting the state before any change is requested
+          this.props.toggleDisableSort("disabled");
+          const pos = this.props.usr.lookForModel(item.description.modelNumber);
+          this.setState({modifyForm: <div>...</div>, currentPosition: pos}, function () {
+              this.setState({
+                  modifyForm: <div>
+                      <ModifyProduct item={item} onModify={this.handleModify}/>
+                      <button onClick={() => this.cancel()}>
+                          Cancel
+                      </button>
+                  </div>
+              })
+          });
+      }
+      else{}//TODO handle add to cart
 
   }
     cancel(){
@@ -38,10 +43,10 @@ export default class ProductListing extends React.Component{
     }
 
   handleModify(item){
-      const i = this.props.mapper.lookForModel(item.description.modelNumber);//looking for already existing model numbers
+      const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
       if( i === this.state.currentPosition || i == -1){
           this.props.toggleDisableSort("");
-          this.props.mapper.modify(item, this.state.currentPosition);
+          this.props.usr.modify(item, this.state.currentPosition);
           this.setState({modifyForm: <div></div>});
       }
       else {

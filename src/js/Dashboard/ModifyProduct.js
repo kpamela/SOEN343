@@ -193,7 +193,7 @@
 
 
       /**
-       * On request, display form, and start passing values to the mapper
+       * On request, display form, and start passing values to the usr
        */
       modifyProductRequest(){
          // let newForm = this.addProductForm(errors);

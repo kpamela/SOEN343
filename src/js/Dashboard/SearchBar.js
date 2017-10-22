@@ -11,7 +11,7 @@ export default class SearchBar extends React.Component{
         this.handleSortChange = this.handleSortChange.bind(this);
     }
 
-    //gets input from textField and pass it to Dashboard via onFilterTextInput()
+    //gets input from textField and pass it to AdminDashboard via onFilterTextInput()
     handleFilterTextInputChange(e){
         this.props.onFilterTextInput(e.target.value);
     }

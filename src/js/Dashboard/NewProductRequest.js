@@ -55,7 +55,7 @@ export default class NewProductRequest extends React.Component{
      */
     handleOnAddProduct(e){
         e.preventDefault();
-        let i = this.props.mapper.addProduct(this.state.fieldValue.category, this.state.fieldValue.amount);
+        let i = this.props.usr.addProduct(this.state.fieldValue.category, this.state.fieldValue.amount);
         this.setState({productIndex: i});
         this.validateSpecify();
 
@@ -79,11 +79,11 @@ export default class NewProductRequest extends React.Component{
      */
     handleAnotherProduct(e){
        // e.preventDefault();
-        if(this.props.mapper.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+        if(this.props.usr.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
             window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
         }
         else {
-            this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
             this.props.onSubmit();//sending signal to update product listing
             this.newProductRequest();
         }
@@ -94,12 +94,12 @@ export default class NewProductRequest extends React.Component{
      * @param e
      */
     handleOnSubmit(e){
-        if(this.props.mapper.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+        if(this.props.usr.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
             window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
         }
         else {
-            this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
-            this.props.mapper.submit();
+            this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.usr.submit();
             this.props.onSubmit();
 
             this.setState({currentForm: <div>
@@ -198,7 +198,7 @@ export default class NewProductRequest extends React.Component{
 
 
     /**
-     * On request, display form, and start passing values to the mapper
+     * On request, display form, and start passing values to the usr
      */
     newProductRequest(){
        // let newForm = this.addProductForm(errors);

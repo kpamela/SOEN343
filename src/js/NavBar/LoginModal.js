@@ -3,7 +3,7 @@ import {Modal, Button, FieldGroup} from 'react-bootstrap';
 import axios from 'axios';
 import auth from '../General/auth.js'
 import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
-import Catalog from '../Dashboard/Dashboard.js'
+import Catalog from '../Dashboard/Catalogue.js'
 
 
 export const LoginModal = React.createClass({
@@ -55,12 +55,12 @@ export const LoginModal = React.createClass({
     if(auth.loggedIn()){
       if(auth.getIsAdmin() == 1){
         return(
-          <Redirect push to="/dashboard" />
+          <Redirect push to="/AdminDashboard" />
         );
       }
       else if(auth.getIsAdmin() == 0){
         return(
-          <Redirect push to="/catalog" />
+          <Redirect push to="/ClientDashboard" />
         );
       }
     }

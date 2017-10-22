@@ -10,23 +10,23 @@ import AddProduct from './AddProduct.js';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 import {Mapper} from  "../General/mapper.js";
-import {login} from '../General/auth.js';
+import auth from '../General/auth.js';
 
 
- export default class Dashboard extends React.Component{
+ export default class Catalogue extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            mapper: login(),
+            usr: auth.login(),
             prods: <div>no data</div>,
-            PRODUCTS :[],
+            PRODUCTS :[{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}],
             filterText: '',
             include: "",
             sorting:"",
             disableSort: ""
         };
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
-        this.handleNewItem = this.handleNewItem.bind(this);
+
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
@@ -48,16 +48,7 @@ import {login} from '../General/auth.js';
         });
 
      }
-    //Adding new product to product list upon receiving new item signal
-    handleNewItem(){
 
-        this.setState({
-            PRODUCTS: this.state.mapper.p, sorting:""
-        }, function(){
-            this.state.mapper.postData(this.state.mapper.p[this.state.mapper.p.length-1]);
-        });
-
-    }
 
     handleGetData(data){
 
@@ -66,7 +57,7 @@ import {login} from '../General/auth.js';
     }
 
     handleSortChange(asc){
-        this.state.mapper.orderPrice(asc);
+        this.state.usr.orderPrice(asc);
         this.setState({sorting: asc});
         this.forceUpdate();
     }
@@ -75,11 +66,23 @@ import {login} from '../General/auth.js';
             this.setState({disableSort: disabled});
 
     }
+    showCatalogueOnly(){
+        if(!auth.loggedIn()){
+           return( <ProductListing
+                userType="regular"
+                products={this.state.PRODUCTS}
+                filterText={this.state.filterText}
+                include={this.state.include}
+                usr={this.state.usr}
+                toggleDisableSort={this.toggleDisableSort}
+            />);
+        }
+    }
     render(){
 /*
-        if(this.state.mapper.data.state() === "pending"){
-            getData(this.state.mapper);
-            this.state.mapper.data.then(this.handleGetData);
+        if(this.state.usr.data.state() === "pending"){
+            getData(this.state.usr);
+            this.state.usr.data.then(this.handleGetData);
         }
 */
 
@@ -87,8 +90,8 @@ import {login} from '../General/auth.js';
         return(
             <div>
                 <h1>TecMarket</h1>
-                <h3>Catalog</h3>
-                {/*this.state.mapper.getData()*/}
+                <h3>Catalogue</h3>
+                {/*this.state.usr.getData()*/}
                 <SearchBar
                     filterText={this.state.filterText}
                     onFilterTextInput={this.handleFilterTextInput}
@@ -98,21 +101,10 @@ import {login} from '../General/auth.js';
                     onSortChange={this.handleSortChange}
                     disableSort={this.state.disableSort}
                 />
-
-                <NewProductRequest
-                mapper={this.state.mapper}
-                onSubmit={this.handleNewItem}
-                />
-
-                <ProductListing
-                    products={this.state.PRODUCTS}
-                    filterText={this.state.filterText}
-                    include={this.state.include}
-                    mapper={this.state.mapper}
-                    toggleDisableSort={this.toggleDisableSort}
-                />
+                {this.showCatalogueOnly()}
 
             </div>
         );
     }
 }
+

@@ -34,6 +34,10 @@ export const RegisterModal = React.createClass({
             Register
             <form>
               <label>
+                Username: <input type="text" name="username" />
+              </label>
+              <br/>
+              <label>
                 First Name: <input type="text" name="firstName" />
               </label>
               <br/>
