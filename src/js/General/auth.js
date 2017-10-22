@@ -1,5 +1,8 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
+import Admin from './Admin.js';
+import Client from './Client.js';
+import User from './User.js'
 
 function setAuthToken(token){
     if(token){
@@ -42,6 +45,19 @@ function loggedIn(){
 
 function logOut(){
     localStorage.clear();
+}
+
+//TODO proper login
+export function login(){
+    if(getIsAdmin()){
+        return new Admin();
+    }
+    else if(loggedIn()){
+        return new Client();
+    }
+    else{
+        return new User();
+    }
 }
 
 export default{

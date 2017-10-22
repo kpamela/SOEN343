@@ -1,5 +1,6 @@
 const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
+    db = require('../../data-source/config/database.js'),
       jwt = require('jsonwebtoken');
 
 class UserTDG{

@@ -71,7 +71,9 @@ export  class Mapper{
 
     submit(){
         console.log(this.p);
-       // location.reload();
+       for(let i in this.p){
+           this.postData(this.p[i]);
+       }
     }
 
     modify(item, pos){
