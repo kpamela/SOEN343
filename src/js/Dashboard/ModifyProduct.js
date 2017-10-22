@@ -16,11 +16,11 @@
               disabled: false,
               productIndex: 0,
               fieldValue: props.item,
-              currentForm: <div>
+              currentForm:
                   <button className="Edit" onClick={() => this.modifyProductRequest()}  >
                      Edit {this.props.item.description.modelNumber}
                   </button>
-              </div>
+
           };
 
           this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -29,8 +29,8 @@
       }
 
       handleOnModifyProduct(){
-
         this.props.onModify(this.state.fieldValue)
+
       }
 
 
@@ -144,8 +144,10 @@
                   switch(ind){
                       case 'price':
                       case 'weight':
+                      case 'size':
                       case 'HDSize':
                       case 'RAM':
+                      case 'dimensions':
                       case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                           break;
                       default: err[ind] = this.state.fieldValue.description[ind].length < 0;
@@ -169,19 +171,14 @@
           return this.showDescriptionForm(err)
 
       }
-      cancel(){
 
-          this.setState({currentForm: <div>
-              <button className="Edit" onClick={() => this.modifyProductRequest()}  >
-                  Edit {this.props.item.description.modelNumber}
-              </button></div>});
-      }
 
       /**
        * Returns the form for specifications
        *
        */
       showDescriptionForm(errors){
+
           return(
               <div>
                   <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
@@ -189,9 +186,7 @@
                   <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
                       Submit
                   </button>
-                  <button onClick={()=>this.cancel()}>
-                      Cancel
-                  </button>
+
               </div>
           );
       }
