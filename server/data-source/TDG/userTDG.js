@@ -1,6 +1,6 @@
 const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
-    db = require('../../data-source/config/database.js'),
+      db = require('../../data-source/config/database.js'),
       jwt = require('jsonwebtoken');
 
 class UserTDG{
@@ -8,7 +8,7 @@ class UserTDG{
     let userInfo = `SELECT * FROM users WHERE Username = '${username}' LIMIT 1`;
     return userInfo;
   }
- 
+
   SQLset_user_Password(username){
     let setUserPassword = `SELECT Password FROM users WHERE Username = '${username}' LIMIT 1`;
     db.getConnection(userPassword, (err, connection) => {
