@@ -10,14 +10,18 @@ class ProductTDG{
   /****************************************
                   Read
   ****************************************/
-  SQLget_product_All(){                                                         //Retrieves every single product in the database
-    let productInfo = `SELECT * FROM products`;
-    handleRead(productInfo);
+     
+  //Retrieves every single product in the database
+  SQLget_product_All(){  
+    let modelInfo = `Select * From products, models 
+                     WHERE products.ModelNumber = models.ModelNumber AND products.Available = 1`
+    handleRead(productInfo);  
   }
 
-  SQLget_product_All(){
-    let productInfo = '';                                                       //Retrieves all products with a certain model number
-    handleRead(productInfo)
+  SQLget_model_Category(category){
+    let modelInfo = `Select * From products, models
+                     WHERE models.Discriminator = category AND products.ModelNumber = models.ModelNumber AND products.Available = 1`
+    handleRead(modelInfo);
   }
 
 
