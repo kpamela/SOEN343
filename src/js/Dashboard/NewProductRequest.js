@@ -101,6 +101,12 @@ export default class NewProductRequest extends React.Component{
             this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
             this.props.mapper.submit();
             this.props.onSubmit();
+
+            this.setState({currentForm: <div>
+                <button className="add" onClick={() => this.newProductRequest()}  >
+                    +
+                </button>
+            </div>});
         }
     }
 

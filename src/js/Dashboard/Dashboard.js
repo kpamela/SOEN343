@@ -9,13 +9,15 @@ import SearchBar from './SearchBar.js';
 import AddProduct from './AddProduct.js';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
-import {Mapper, getData, postData} from  "../General/mapper.js";
+import {Mapper} from  "../General/mapper.js";
+import {login} from '../General/auth.js';
+
 
  export default class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            mapper:new Mapper(),
+            mapper: login(),
             prods: <div>no data</div>,
             PRODUCTS :[],
             filterText: '',
