@@ -10,25 +10,14 @@ class ProductTDG{
   /****************************************
                   Read
   ****************************************/
-  SQLget_product_All(){
-    let productInfo = `SELECT * FROM models`;
+  SQLget_product_All(){                                                         //Retrieves every single product in the database
+    let productInfo = `SELECT * FROM products`;
     handleRead(productInfo);
   }
 
-  SQLget_product_Monitors(){
-    let monitors = '';
-    handleRead(monitors);
-  }
-  SQLget_product_Tablets(){
-    let tablets = '';
-    handleRead(tablets);
-  }
-  SQLget_product_Desktops(){
-    let desktops = '';
-  }
-  SQLget_product_Laptops(){
-    let laptops = '';
-    handleRead(laptops);
+  SQLget_product_All(){
+    let productInfo = '';                                                       //Retrieves all products with a certain model number
+    handleRead(productInfo)
   }
 
 
@@ -41,10 +30,12 @@ class ProductTDG{
     handleWrite(addProduct);
   }
 
-  SQLmodify_product(product){
-    let addProduct = 'INSERT INTO models SET ?';
-    handleWrite(product);
+  SQLmodify_product_modelNumber(modelNumber, modification){                                                   //Will modify all products with the same model number
+    let modifyProduct = '';
+    handleWrite(modifyProduct);
   }
+
+  SQLmodify_product()
 
 
 
