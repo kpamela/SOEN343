@@ -1,7 +1,12 @@
 /**
  * Created by CharlesPhilippe on 2017-10-22.
  */
-const Catalogue = require('./CatalogueMapper.js');
+const Catalogue = require('./CatalogueMapper.js'),
+    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
+    LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
+    TabletComputer = require('../classes/ProductClasses/TabletComputer'),
+    Monitor = require('../classes/ProductClasses/television');
+
 
 module.exports = class AdminDashboardMapper extends Catalogue{
 
@@ -15,12 +20,11 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
     }
 
-
-
    constructor(options={}) {
         super(options);
 
         this.add = this.add.bind(this);
+
     }
 
     add(req, res){
@@ -36,16 +40,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 return res.json(400, {success: false, msg: "Invalid product category."});
             }
             //TODO fix domain objects
-            let newProduct = {category: req.body.data.category, amount: req.body.data.amount};
-            for(let i in req.body.data.description){
-                newProduct[i] = req.body.data.description[i];
-            }
 
-            let product = this.addNewProduct(category);
+            let product = AdminDashboardMapper.addNewProduct(category, req.body.data);
 
 
             //TODO TDG calls and proper identyMap
-            AdminDashboardMapper.productListing.push(product);
+            AdminDashboardMapper.productListing.push(req.body.data);
 
 
             return res.json(AdminDashboardMapper.productListing);
@@ -56,7 +56,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
 
 
-    addNewProduct(category){
+    static addNewProduct(category, newProduct){
         switch(category){
             case 'DesktopComputer':
                 return new DesktopComputer(newProduct);

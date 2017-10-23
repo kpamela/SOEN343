@@ -5,9 +5,9 @@ const express = require('express'),
     jwt = require('jsonwebtoken'),
     db = require('../../data-source/config/database.js'),
     Television = require('../classes/ProductClasses/television'),
-    DesktopComputer =  require('../classes/ProductClasses/desktopComputer'),
-    LaptopComputer = require('../classes/ProductClasses/laptopComputer'),
-    TabletComputer = require('../classes/ProductClasses/tabletComputer'),
+    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
+    LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
+    TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/television');
 
 db.getConnection((err, connection) => {

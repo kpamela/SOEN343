@@ -2,7 +2,7 @@ const express = require('express'),
     users = express.Router(),
     mysql = require('mysql'),
     db = require('../../../data-source/config/database.js'),
-    ProductDescription = require('./productDescription.js');
+    ProductDescription = require('./ProductDescription.js');
 
 
 class Television extends ProductDescription {

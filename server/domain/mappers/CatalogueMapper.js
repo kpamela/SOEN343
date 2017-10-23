@@ -4,21 +4,24 @@
 const express = require('express'),
     ClassBasedRouter = require('express-class-router'),
   //  products = express.Router(),
-    mysql = require('mysql'),
     passport = require('passport'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/config/database.js'),
-    Television = require('../classes/ProductClasses/television'),
-    DesktopComputer =  require('../classes/ProductClasses/desktopComputer'),
-    LaptopComputer = require('../classes/ProductClasses/laptopComputer'),
-    TabletComputer = require('../classes/ProductClasses/tabletComputer'),
+    ProductTDG = require('../../data-source/TDG/ProductTDG'),
+    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
+    LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
+    TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/television');
 
+
+let _productListing = [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
 /**
  * Based on express-class-router
  * @type {CatalogueMapper}
  */
+
 module.exports = class CatalogueMapper extends ClassBasedRouter{
+
+
 
     get middlewares(){
         return [
@@ -33,13 +36,13 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
     }
 
     static get productListing(){
-        return [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
+        return _productListing;
     }
-    static set productListing(p){
+   /* static set productListing(p){
         this.productListing.push(p);
     }
 
-
+*/
    constructor(options={}) {
         super(options);
        // this.productListing = [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
@@ -84,6 +87,8 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         }
         else{
             //TODO proper tdg and identyMap calls
+
+            ProductTDG.SQLget_product_All();
             return res.send(CatalogueMapper.productListing);
 
         }

@@ -3,26 +3,29 @@
 */
 const mysql = require('mysql');
 
-export function handleRead(input){
-  connection.query(sql, input, (err, result) => {
-      if(err){
-          console.log(err);
-      }
-      else{
-        console.log("Successful read");
-        return input;
-      }
-  });
-}
+module.exports = {
+    handleRead: function (input, connection) {
+        connection.query(sql, input, (err, result) => {
+            if (err) {
+                console.log(err);
+                return err;
+            }
+            else {
+                console.log("Successful read");
+                return result;
+            }
+        });
+    },
 
-export function handleWrite(input){
-  connection.query(sql, input, (err, result) => {
-      if(err){
-          console.log(err);
-      }
-      else{
-        console.log("Successful write to database");
-        return input;
-      }
-  });
+    handleWrite: function (input, connection) {
+        connection.query(sql, input, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("Successful write to database");
+                return input;
+            }
+        });
+    }
 }

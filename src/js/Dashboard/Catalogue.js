@@ -56,7 +56,7 @@ import auth from '../General/auth.js';
     handleGetData(data){
 
         //this.setState({PRODUCTS: [data]});
-        this.setState({PRODUCTS: data});
+        this.setState({PRODUCTS: this.state.usr.p});
     }
 
     handleSortChange(asc){

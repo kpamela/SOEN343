@@ -27,6 +27,7 @@ export default class User{
 
 
         this.setListing = this.setListing.bind(this);
+        this.lookForModel = this.lookForModel.bind(this);
     }
 
 
@@ -108,7 +109,7 @@ export default class User{
             default:
                 break;
         }
-
+        return this.p;
     }
 
     /**
