@@ -10,16 +10,17 @@ class ProductTDG{
   /****************************************
                   Read
   ****************************************/
-     
-  //Retrieves every single product in the database
-  SQLget_product_All(){  
-    let modelInfo = `Select * From products, models 
+
+
+  SQLget_product_All(){                                                         //Retrieves every single product in the database
+    let productInfo = `SELECT * FROM products, models
                      WHERE products.ModelNumber = models.ModelNumber AND products.Available = 1`
-    handleRead(productInfo);  
+    handleRead(productInfo);
   }
 
-  SQLget_model_Category(category){
-    let modelInfo = `Select * From products, models
+
+  SQLget_product_Category(category){                                             //Retrieves products of a specific category
+    let productInfo = `SELECT * FROM products
                      WHERE models.Discriminator = category AND products.ModelNumber = models.ModelNumber AND products.Available = 1`
     handleRead(modelInfo);
   }
@@ -34,18 +35,25 @@ class ProductTDG{
     handleWrite(addProduct);
   }
 
-  SQLmodify_product_modelNumber(modelNumber, modification){                      //Will modify all products with the same model number
+  SQLmodify_product_modelNumber(modelNumber, modification){                     //Will modify all products with the same model number
     let modifyProduct = '';
     handleWrite(modifyProduct);
   }
 
-  SQLdelete_product(modelNumber){
+  SQLdelete_product(modelNumber){                                               //Will remove a single product from the database
     let deleteProduct = '';
     handleWrite(deleteProduct);
   }
 
+  SQLdelete_product(modelNumber, quantity){                                     //Will remove the amount of products specified from the database
+    let deleteProduct = '';
+    handleWrite(deleteProduct);
+  }
 
-
+  SQLdelete_product(modelNumber, quantity){                                     //Will remove the specified amount of products from the database
+    let deleteProduct = '';
+    handleWrite(deleteProduct);
+  }
 
 }
 module.exports = ProductTDG;

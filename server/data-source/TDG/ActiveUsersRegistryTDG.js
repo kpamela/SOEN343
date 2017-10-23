@@ -13,7 +13,7 @@ class ActiveUsersRegistryTDG{
                   Read
   ****************************************/
   SQLget_aur_All(){                                                             //Retrieves every single active user
-    let aurInfo = `SELECT * FROM `;
+    let aurInfo = `SELECT * FROM activeusersregistry `;
     handleRead(aurInfo);
   }
 
@@ -22,7 +22,7 @@ class ActiveUsersRegistryTDG{
                 Write
   ****************************************/
 
-  SQLadd_aur(username, timestamp){                                                  //Adds an online user to the active user registry at the time logged in
+  SQLadd_aur(username, timestamp){                                               //Adds an online user to the active user registry at the time logged in
     let addAUR = '';
     handleWrite(addAUR);
   }
