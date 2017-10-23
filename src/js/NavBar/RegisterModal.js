@@ -34,27 +34,27 @@ export const RegisterModal = React.createClass({
             Register
             <form>
               <label>
-                First Name: <input type="text" name="firstName" />
+                First Name: <input type="text" name="firstName" required/>
               </label>
               <br/>
               <label>
-                Last Name: <input type="text" name="lastName" />
+                Last Name: <input type="text" name="lastName" required/>
               </label>
               <br/>
               <label>
-                E-mail: <input type="email" name="name" />
+                E-mail: <input type="email" name="name" required/>
               </label>
               <br/>
               <label>
-                Phone number: <input type="text" name="name" />
+                Phone number: <input type="text" name="name" required/>
               </label>
               <br/>
               <label>
-                Password: <input type="password" name="username" />
+                Password: <input type="password" name="username" required/>
               </label>
               <br/>
               <label>
-                Confirm Password: <input type="password" name="username" />
+                Confirm Password: <input type="password" name="username" required/>
               </label>
               <br/>
               <input type="submit" value="Submit" />
