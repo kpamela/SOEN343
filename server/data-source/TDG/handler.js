@@ -10,6 +10,7 @@ export function handleRead(input){
       }
       else{
         console.log("Successful read");
+        return input;
       }
   });
 }

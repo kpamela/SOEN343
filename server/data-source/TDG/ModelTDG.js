@@ -11,12 +11,12 @@ class ModelTDG{
   ****************************************/
   SQLget_model_All(){                                                //Retrieves all models in the database
     let modelInfo = `SELECT * FROM models`;
-    this.handleRead(modelInfo);
+    handleRead(modelInfo);
   }
 
-  SQLget_model_Category(category){                                       //Retrieves all models of a certain category
-    let modelInfo = '';
-    this.handleRead(modelInfo);
+  SQLget_model_All(category){                                          //Retrieves all models of a certain category
+    let modelInfo = `SELECT * FROM models WHERE Discriminator = '${category}'`;
+    handleRead(modelInfo);
   }
 
 
@@ -26,12 +26,12 @@ class ModelTDG{
 
   SQLadd_model(model){                                               //Adds a model into the database
     let addModel = 'INSERT INTO models SET ?';
-    this.handleWrite(addModel);
+    handleWrite(addModel);
   }
 
   SQLmodify_model(model){                                           //Modifies the information for the model
     let modifyModel = '?';
-    this.handleWrite(modifyModel);
+    handleWrite(modifyModel);
   }
 
 
