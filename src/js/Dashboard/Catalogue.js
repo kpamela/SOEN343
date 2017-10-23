@@ -19,19 +19,22 @@ import auth from '../General/auth.js';
         this.state={
             usr: auth.login(),
             prods: <div>no data</div>,
-            PRODUCTS :[{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}],
+            PRODUCTS : [],
             filterText: '',
             include: "",
             sorting:"",
             disableSort: ""
         };
-        this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
 
+        //this.state.usr.getData();
+        //this.setState({PRODUCTS: this.state.usr.p});
+        this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
         this.toggleDisableSort = this.toggleDisableSort.bind(this);
     }
+
 
      /**
       * Changing filterText state upon receive new value
@@ -53,7 +56,7 @@ import auth from '../General/auth.js';
     handleGetData(data){
 
         //this.setState({PRODUCTS: [data]});
-        this.setState({prods :<div>{JSON.stringify(data)}</div> });
+        this.setState({PRODUCTS: data});
     }
 
     handleSortChange(asc){
@@ -79,13 +82,13 @@ import auth from '../General/auth.js';
         }
     }
     render(){
-/*
+
         if(this.state.usr.data.state() === "pending"){
-            getData(this.state.usr);
+            this.state.usr.getData();
             this.state.usr.data.then(this.handleGetData);
         }
-*/
 
+        {this.state.usr.getData()}
         //console.log(this.state.prods);
         return(
             <div>

@@ -6,7 +6,7 @@ import $ from 'jquery';
 //import Admin from './Admin.js';
 //import Client from './Client.js';
 const auth = require('./auth.js');
-
+import decode from 'jwt-decode';
 
 export default class User{
 
@@ -24,27 +24,36 @@ export default class User{
         });
 
         this.p = new Array();
+
+
+        this.setListing = this.setListing.bind(this);
     }
 
 
     cancelGetData(){
         this.source.cancel('Operation canceled by the user');
     }
+
+    setListing(response){
+        this.p = response.data;
+        this.data.resolve(response.data);
+
+    }
     //
     /**
      * Getting the data from Http request through view route
      */
     getData(){
-        this.axiosInstance.get("view", {cancelToken: this.source.token})
-            .then(function(response){
-                console.log(response.data);
-            })
+
+       this.axiosInstance.get("view", {cancelToken: this.source.token})
+            .then(this.setListing)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
-                    console.log(thrown.message);
+                    console.log(thrown);
                 }
-                else console.log(thrown.message);
+                else console.log(thrown);
             });
+
         //  this.source.cancel('Operation canceled');
         /* return(
          <div>

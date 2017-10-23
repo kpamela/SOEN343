@@ -17,13 +17,13 @@ db.getConnection((err, connection) => {
     //Verify if a token is provided
     var token = req.headers.authorization;
     if (!token){
-      return res.json(401, {success: false, msg: "Unauthorized: No Token Provided"});
+      return res.status(401).json({success: false, msg: "Unauthorized: No Token Provided"});
     }
 
     //Validate token signature
     jwt.verify(token, 'mysecret', function(err, decoded) {
       if (err){
-        return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
+        return res.status(401).json({success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
         //get all of the products from the database
         let sqlMultiple = 'SELECT * FROM television; SELECT * FROM desktopcomputer; SELECT * FROM tabletcomputer; SELECT * FROM laptop; SELECT * FROM monitordisplay';
@@ -96,6 +96,7 @@ db.getConnection((err, connection) => {
               product = new Monitor(newProduct);
               break;
         }
+
 
         if (!product.create()){
             console.log("he, no success");

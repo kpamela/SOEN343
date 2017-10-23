@@ -4,6 +4,7 @@
  */
 
 const express = require('express'),
+    AdminDashboardMapper = require('./domain/mappers/AdminDashboardMapper.js'),
     path = require('path'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
@@ -48,9 +49,10 @@ app.use(passport.session());
 require('./data-source/config/passport')(passport);
 
 // API mappers go here
+//TODO check for admin or client
+let adminDashboardMapper = new AdminDashboardMapper();
 app.use('/users', require('./domain/mappers/users.js'));
-app.use('/products', require('./domain/mappers/products.js'));
-
+app.use('/products', adminDashboardMapper.router);
 app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });

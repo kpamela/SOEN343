@@ -3,7 +3,7 @@
 */
 const mysql = require('mysql');
 
-handleRead(input){
+export function handleRead(input){
   connection.query(sql, input, (err, result) => {
       if(err){
           console.log(err);
@@ -14,7 +14,7 @@ handleRead(input){
   });
 }
 
-handleWrite(input){
+export function handleWrite(input){
   connection.query(sql, input, (err, result) => {
       if(err){
           console.log(err);
