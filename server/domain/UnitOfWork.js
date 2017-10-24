@@ -4,7 +4,7 @@
 
 module.exports = class UnitOfWork{
 
-
+//TODO add currently committing, to prevent writing at the same time
     constructor(){
         this.changeList = {newList:[], dirtyList:[], deletedList:[]};
     }

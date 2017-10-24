@@ -19,7 +19,7 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
      */
     findModel(model){
         for(let i in this.content){
-            if(this.content[i] === model){
+            if(this.content[i].modelNumber === model){
                 return i;
             }
         }
@@ -45,7 +45,7 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
     removeModel(model){
         const index = this.findModel(model);
         //removing model number
-        this.content.splice(index, 1);
+        this.removeIndex(index);
     }
 
 

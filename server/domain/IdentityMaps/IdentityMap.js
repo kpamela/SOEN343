@@ -19,4 +19,14 @@ module.exports = class IdentityMap{
         this.content.push(ob1);
     }
 
+    removeIndex(index){
+        this.content.splice(index, 1);
+    }
+
+    setTo(index, ob1){
+        this.content[index] = ob1;
+    }
+
+
+
 };

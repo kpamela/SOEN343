@@ -41,7 +41,7 @@ export default class Admin extends User{
     }
 
     commitChanges(){
-        this.axiosInstance.post('commitChanges', {},{ cancelToken: this.source.token})
+        this.axiosInstance.post('commitChanges', {},{cancelToken: this.source.token})
             .then(function(response){
                 console.log(response.data);
             })
@@ -53,9 +53,37 @@ export default class Admin extends User{
             });
     }
 
-    modify(item, pos){
+    modify(item, pos, model){
         this.p[pos] = item;
-        // console.log(pos);
+
+        this.axiosInstance.patch('modify', {previous: model, current: item},{ cancelToken: this.source.token})
+            .then(function(response){
+                console.log(response.data);
+            })
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log(thrown.message);
+                }
+                else console.log(thrown);
+            });
+
+    }
+
+    remove(index, model){
+        this.p.splice(index, 1);
+
+        console.log(model);
+        this.axiosInstance.post('remove', {model: model},{ cancelToken: this.source.token})
+            .then(function(response){
+                console.log(response.data);
+            })
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log(thrown.message);
+                }
+                else console.log(thrown);
+            });
+
     }
 
     addItem(data){

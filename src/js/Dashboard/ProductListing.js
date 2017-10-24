@@ -10,6 +10,7 @@ export default class ProductListing extends React.Component{
     super(props);
     this.state= {
       modifyForm:<div></div>,
+        model: "",
         currentPosition: -1
     };
 
@@ -22,10 +23,13 @@ export default class ProductListing extends React.Component{
           //resetting the state before any change is requested
           this.props.toggleDisableSort("disabled");
           const pos = this.props.usr.lookForModel(item.description.modelNumber);
-          this.setState({modifyForm: <div>...</div>, currentPosition: pos}, function () {
+          this.setState({modifyForm: <div>...</div>, currentPosition: pos, model: item.description.modelNumber}, function () {
               this.setState({
                   modifyForm: <div>
                       <ModifyProduct item={item} onModify={this.handleModify}/>
+                      <button onClick={() => this.remove()}>
+                          Delete {this.state.model}
+                      </button>
                       <button onClick={() => this.cancel()}>
                           Cancel
                       </button>
@@ -36,7 +40,20 @@ export default class ProductListing extends React.Component{
       else{}//TODO handle add to cart
 
   }
-    cancel(){
+
+
+  remove(){
+      let confirm = window.confirm("Do you really want to delete " + this.state.model + " forever and ever?");
+
+      if(confirm == true){
+          this.props.toggleDisableSort("");
+          this.setState({modifyForm: <div></div>});
+
+          this.props.usr.remove(this.state.currentPosition, this.state.model);
+      }
+  }
+
+  cancel(){
         this.props.toggleDisableSort("");
         this.setState({modifyForm: <div></div>});
 
@@ -46,7 +63,7 @@ export default class ProductListing extends React.Component{
       const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
       if( i === this.state.currentPosition || i == -1){
           this.props.toggleDisableSort("");
-          this.props.usr.modify(item, this.state.currentPosition);
+          this.props.usr.modify(item, this.state.currentPosition, this.state.model);
           this.setState({modifyForm: <div></div>});
       }
       else {
