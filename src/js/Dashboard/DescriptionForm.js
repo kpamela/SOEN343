@@ -84,35 +84,35 @@ export default class DescriptionForm extends React.Component{
         return(
             <div>
                 <input
-                    className={this.props.errors["processor"] ? "error":""}
+                    className={this.props.errors["processorType"] ? "error":""}
                     type="text"
                     placeholder={'Enter Processor Type'}
-                    value={this.state.currentDescription["processor"]}
-                    id="processor"
+                    value={this.state.currentDescription["processorType"]}
+                    id="processorType"
                     onChange={this.handleChange}
                 />
                 <input
-                    className={this.props.errors["RAM"] ? "error":""}
+                    className={this.props.errors["RAMSize"] ? "error":""}
                     type="text"
                     placeholder={'Enter RAM size'}
-                    value={this.state.currentDescription["RAM"]}
-                    id="RAM"
+                    value={this.state.currentDescription["RAMSize"]}
+                    id="RAMSize"
                     onChange={this.handleChange}
                 />
                 <input
-                    className={this.props.errors["cores"] ? "error":""}
+                    className={this.props.errors["numberOfCores"] ? "error":""}
                     type="text"
                     placeholder={'Enter Number of CPU cores'}
-                    value={this.state.currentDescription["cores"]}
-                    id="cores"
+                    value={this.state.currentDescription["numberOfCores"]}
+                    id="numberOfCores"
                     onChange={this.handleChange}
                 />
                 <input
-                    className={this.props.errors["HDSize"] ? "error":""}
+                    className={this.props.errors["hardDriveSize"] ? "error":""}
                     type="text"
                     placeholder={'Enter Hard Drive Size'}
-                    value={this.state.currentDescription["HDSize"]}
-                    id="HDSize"
+                    value={this.state.currentDescription["hardDriveSize"]}
+                    id="hardDriveSize"
                     onChange={this.handleChange}
                 />
                 <br/>
@@ -129,22 +129,30 @@ export default class DescriptionForm extends React.Component{
         return(
             <div>
                 <input
-                    className={this.props.errors["OS"] ? "error":""}
+                    className={this.props.errors["operatingSystem"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
-                    value={this.state.currentDescription["OS"]}
-                    id="OS"
+                    value={this.state.currentDescription["operatingSystem"]}
+                    id="operatingSystem"
                     onChange={this.handleChange}
                 />
                 <input
-                    className={this.props.errors["battery"] ? "error":""}
+                    className={this.props.errors["batteryInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
-                    value={this.state.currentDescription["battery"]}
-                    id="battery"
+                    value={this.state.currentDescription["batteryInfo"]}
+                    id="batteryInfo"
                     onChange={this.handleChange}
                 />
                 <br/>
+                <input
+                    className={this.props.errors["displaySize"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Display Size'}
+                    value={this.state.currentDescription["displaySize"]}
+                    id="displaySize"
+                    onChange={this.handleChange}
+                />
                 <input
                     className={this.props.errors["cameraInfo"] ? "error":""}
                     type="text"
@@ -170,19 +178,27 @@ export default class DescriptionForm extends React.Component{
         return(
             <div>
                 <input
-                    className={this.props.errors["OS"] ? "error":""}
+                    className={this.props.errors["operatingSystem"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
-                    value={this.state.currentDescription["OS"]}
-                    id="OS"
+                    value={this.state.currentDescription["operatingSystem"]}
+                    id="operatingSystem"
                     onChange={this.handleChange}
                 />
                 <input
-                    className={this.props.errors["battery"] ? "error":""}
+                    className={this.props.errors["batteryInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
-                    value={this.state.currentDescription["battery"]}
-                    id="battery"
+                    value={this.state.currentDescription["batteryInfo"]}
+                    id="batteryInfo"
+                    onChange={this.handleChange}
+                />
+                <input
+                    className={this.props.errors["displaySize"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Display Size'}
+                    value={this.state.currentDescription["displaySize"]}
+                    id="displaySize"
                     onChange={this.handleChange}
                 />
                 <br/>
@@ -190,8 +206,8 @@ export default class DescriptionForm extends React.Component{
                     Camera
                 <input
                     type="checkbox"
-                    value={this.state.currentDescription["camera"]}
-                    id="camera"
+                    value={this.state.currentDescription["hasCamera"]}
+                    id="hasCamera"
                     onChange={this.handleChange}
                 />
                 </label>
@@ -199,8 +215,8 @@ export default class DescriptionForm extends React.Component{
                     Touch-Screen
                 <input
                     type="checkbox"
-                    value={this.state.currentDescription["touch"]}
-                    id="touch"
+                    value={this.state.currentDescription["touchScreen"]}
+                    id="touchScreen"
                     onChange={this.handleChange}
                 />
                 </label>
@@ -218,11 +234,12 @@ export default class DescriptionForm extends React.Component{
         switch(e.target.id){
             case 'price':
             case 'weight':
-            case 'HDSize':
+            case 'hardDriveSize':
             case 'size':
-            case 'RAM':
+            case 'RAMSize':
             case 'dimensions':
-            case 'cores':
+            case 'numberOfCores':
+            case 'displaySize':
                 if(e.target.value){
 
                     desc[e.target.id] = parseFloat(e.target.value);

@@ -8,7 +8,7 @@ const express = require('express'),
 class LaptopComputer extends Computers {
     constructor(product){
         super(product);
-        this.displaySize = product.description.display;
+        this.displaySize = product.description.displaySize;
         this.batteryInfo = product.description.batteryInfo;
         this.hasCamera = product.description.hasCamera;
         this.operatingSystem = product.description.operatingSystem;

@@ -45,7 +45,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let product = AdminDashboardMapper.addNewProduct(category, req.body.data);
 
-
             AdminDashboardMapper.productListing.add(product);
 
             //transfer to unit of work for later commit

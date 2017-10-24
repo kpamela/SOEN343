@@ -144,11 +144,13 @@
                   switch(ind){
                       case 'price':
                       case 'weight':
+                      case 'hardDriveSize':
                       case 'size':
-                      case 'HDSize':
-                      case 'RAM':
+                      case 'RAMSize':
                       case 'dimensions':
-                      case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                      case 'numberOfCores':
+                      case 'displaySize':
+                          err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                           break;
                       default: err[ind] = this.state.fieldValue.description[ind].length < 0;
                   }
