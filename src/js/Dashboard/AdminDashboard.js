@@ -12,6 +12,7 @@ export class AdminDashboard extends Catalogue{
     constructor(props){
         super(props);
         this.handleNewItem = this.handleNewItem.bind(this);
+        this.handleCommit = this.handleCommit.bind(this);
     }
 
 
@@ -22,9 +23,19 @@ export class AdminDashboard extends Catalogue{
             PRODUCTS: this.state.usr.p, sorting:""
         }, function(){
             console.log(this.state.usr.p[this.state.usr.p.length-1]);
-            this.state.usr.postData(this.state.usr.p[this.state.usr.p.length-1]);
+            this.state.usr.addItem(this.state.usr.p[this.state.usr.p.length-1]);
         });
 
+    }
+
+    handleCommit(){
+        this.setState({
+            PRODUCTS: this.state.usr.p, sorting:""
+        }, function(){
+            console.log(this.state.usr.p[this.state.usr.p.length-1]);
+            this.state.usr.addItem(this.state.usr.p[this.state.usr.p.length-1]);
+            this.state.usr.commitChanges();
+        });
     }
 
 
@@ -35,7 +46,8 @@ export class AdminDashboard extends Catalogue{
                 {super.render()}
                 <NewProductRequest
                     usr={this.state.usr}
-                    onSubmit={this.handleNewItem}
+                    onAnother={this.handleNewItem}
+                    onSubmit={this.handleCommit}
                 />
 
                 <ProductListing

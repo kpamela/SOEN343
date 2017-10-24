@@ -2,10 +2,10 @@
  * Created by CharlesPhilippe on 2017-10-22.
  */
 const Catalogue = require('./CatalogueMapper.js'),
-    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
-    LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
-    TabletComputer = require('../classes/ProductClasses/TabletComputer'),
-    Monitor = require('../classes/ProductClasses/television');
+    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer.js'),
+    LaptopComputer = require('../classes/ProductClasses/LaptopComputer.js'),
+    TabletComputer = require('../classes/ProductClasses/TabletComputer.js'),
+    Monitor = require('../classes/ProductClasses/Monitor.js');
 
 
 module.exports = class AdminDashboardMapper extends Catalogue{
@@ -15,7 +15,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
     get routes(){
-        return super.routes.concat([['post', '/add','add']])
+        return super.routes.concat(
+            [['post', '/add','add'],
+            ['post', '/commitChanges', 'commitChanges']]);
 
 
     }
@@ -44,34 +46,72 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             let product = AdminDashboardMapper.addNewProduct(category, req.body.data);
 
 
-            //TODO TDG calls and proper identyMap
-            AdminDashboardMapper.productListing.push(req.body.data);
+            AdminDashboardMapper.productListing.add(product);
 
+            //transfer to unit of work for later commit
+            AdminDashboardMapper.unitOfWork.registerNew(product);
 
-            return res.json(AdminDashboardMapper.productListing);
+            return res.json(AdminDashboardMapper.productListing.content);
 
         }
 
     }
 
+    commitChanges(req, res){
+        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
+
+        if(!authorization.success){
+            return res.status(401).json(authorization);
+        }
+        else{
+            const changes = AdminDashboardMapper.unitOfWork.commit();
+
+            //Committing changes from unit of work
+            //storing them on db
+            //setting all clean -> sets UoW's changeList to default
+            for(let i in changes.newList){
+                const product = AdminDashboardMapper.productListing.getModel(changes.newList[i]);
+
+                AdminDashboardMapper.unitOfWork.registerClean(product);
+                console.log(product);
+                //TODO tdg work
+            }
+            for(let i in changes.dirtyList){
+                const product = AdminDashboardMapper.productListing.getModel(changes.newList[i]);
+
+                AdminDashboardMapper.unitOfWork.registerClean(product);
+                console.log(product);
+                //TODO tdg work
+            }
+            for(let i in changes.deletedList){
+                const product = AdminDashboardMapper.productListing.getModel(changes.newList[i]);
+
+                AdminDashboardMapper.unitOfWork.registerClean(product);
+                console.log(product);
+                //TODO tdg work
+            }
+
+            res.json("All changes have been committed to Database.")
+        }
 
 
-    static addNewProduct(category, newProduct){
+    }
+
+
+
+    static addNewProduct(category, product){
         switch(category){
             case 'DesktopComputer':
-                return new DesktopComputer(newProduct);
+                return new DesktopComputer(product);
 
             case 'TabletComputer':
-                return new TabletComputer(newProduct);
+                return new TabletComputer(product);
 
             case 'LaptopComputer':
-                return new LaptopComputer(newProduct);
-
-            case 'Television':
-                return  new Television(newProduct);
+                return new LaptopComputer(product);
 
             case 'Monitor':
-                return new Monitor(newProduct);
+                return new Monitor(product);
 
         }
     }

@@ -1,15 +1,15 @@
 const express = require('express'),
-    completedPurchases = express.Router(),
+    catalogue = express.Router(),
     mysql = require('mysql'),
-    table = require('../models/CompletedPurchases.js'),
+    table = require('../models/Catalogue.js'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/config/database.js');
+    db = require('../../../data-source/config/database.js');
 
 db.getConnection((err, connection) => {
     
-    // Create the CompletedPurchases table
-    completedPurchases.get('/createtable', (req, res) => {
+    // Create the Catalogue table
+    catalogue.get('/createtable', (req, res) => {
         let sql = table;
         connection.query(sql, (err, result) => {
             if(err) throw err;

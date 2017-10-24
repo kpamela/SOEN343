@@ -4,7 +4,7 @@ const express = require('express'),
     table = require('../models/Monitoring.js'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/config/database.js');
+    db = require('../../../data-source/config/database.js');
 
 db.getConnection((err, connection) => {
     

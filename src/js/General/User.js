@@ -6,6 +6,7 @@ import $ from 'jquery';
 //import Admin from './Admin.js';
 //import Client from './Client.js';
 const auth = require('./auth.js');
+import {Monitor, Tablet, Laptop, Desktop} from './Product.js';
 import decode from 'jwt-decode';
 
 export default class User{
@@ -36,10 +37,35 @@ export default class User{
     }
 
     setListing(response){
-        this.p = response.data;
+        this.p = [];
         this.data.resolve(response.data);
+        for(let i in response.data){
+            this.p.push(User.newProduct(response.data[i].category, response.data[i]))
+        }
 
     }
+
+    /**
+     * Returns an instanciated product, depending on its category
+     * @param category
+     * @param option
+     * @returns {*}
+     */
+    static newProduct(category, option){
+
+        switch(category){
+            case 'Monitor':
+            case 'monitor': return new Monitor(option);
+            case 'Tablet':
+            case 'TabletComputer': return new Tablet(option);
+            case 'Laptop':
+            case 'LaptopComputer': return new Laptop(option);
+            case 'Desktop':
+            case 'DesktopComputer': return new Desktop(option);
+            default: return null;
+        }
+    }
+
     //
     /**
      * Getting the data from Http request through view route
@@ -50,9 +76,9 @@ export default class User{
             .then(this.setListing)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
-                    console.log(thrown);
+                    console.log("canceled: " + thrown);
                 }
-                else console.log(thrown);
+                else console.log("error: " + thrown);
             });
 
         //  this.source.cancel('Operation canceled');

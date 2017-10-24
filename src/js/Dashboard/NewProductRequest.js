@@ -84,7 +84,7 @@ export default class NewProductRequest extends React.Component{
         }
         else {
             this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
-            this.props.onSubmit();//sending signal to update product listing
+            this.props.onAnother();//sending signal to update product listing
             this.newProductRequest();
         }
     }
@@ -99,7 +99,6 @@ export default class NewProductRequest extends React.Component{
         }
         else {
             this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
-            this.props.usr.submit();
             this.props.onSubmit();
 
             this.setState({currentForm: <div>

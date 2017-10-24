@@ -56,6 +56,7 @@ import auth from '../General/auth.js';
     handleGetData(data){
 
         //this.setState({PRODUCTS: [data]});
+
         this.setState({PRODUCTS: this.state.usr.p});
     }
 
@@ -84,11 +85,13 @@ import auth from '../General/auth.js';
     render(){
 
         if(this.state.usr.data.state() === "pending"){
+            console.log(this.state.usr.data.state());
             this.state.usr.getData();
             this.state.usr.data.then(this.handleGetData);
         }
 
-        {this.state.usr.getData()}
+        {//this.state.usr.getData()}
+        }
         //console.log(this.state.prods);
         return(
             <div>

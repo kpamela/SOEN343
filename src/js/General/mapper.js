@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import $ from 'jquery';
-import {Television, Monitor, Tablet, Laptop, Desktop} from './ProductTest.js';
+import {Television, Monitor, Tablet, Laptop, Desktop} from './Product.js';
 import {AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios';
 import axios from 'axios'
 

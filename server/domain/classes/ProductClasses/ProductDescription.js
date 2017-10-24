@@ -5,7 +5,21 @@ const express = require('express'),
     jwt = require('jsonwebtoken'),
     db = require('../../../data-source/config/database.js');
 
+const _NEW = 2;
+const _DIRTY = 1;
+const _CLEAN = 0;
+const _DELETED = -1;
+
+let _flag = _CLEAN;
+
+
 class ProductDescription{
+
+    get flag(){
+        return _flag;
+    }
+
+
     constructor(product){
         this.productName = " ";
         this.brandName = product.description.brandName;
@@ -17,7 +31,24 @@ class ProductDescription{
         this.amount = product.amount;
         this.category = product.category;
 
-        this.producIds = this.setProductIds(this.amount);
+        this.productIds = this.setProductIds(this.amount);
+
+        this.setNew();
+    }
+
+    setDirty(){
+        _flag = _DIRTY;
+    }
+
+    setNew(){
+        _flag = _NEW;
+    }
+
+    setClean(){
+        _flag = _CLEAN;
+    }
+    setDeleted(){
+        _flag = _DELETED;
     }
 
     /**

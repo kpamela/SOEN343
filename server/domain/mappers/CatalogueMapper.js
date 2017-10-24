@@ -10,10 +10,24 @@ const express = require('express'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
-    Monitor = require('../classes/ProductClasses/television');
+    Monitor = require('../classes/ProductClasses/Monitor.js'),
+    UnitOfWork = require('../UnitOfwork.js'),
+    ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap');
 
+/**
+ * ProductListing is common to all catalogues
+ * @type {[*]}
+ * @private
+ */
+//TODO make that a jquery deferred object, maybe
+let _productListing = new ProductsIdentityMap();
 
-let _productListing = [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
+// [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}]
+/**
+ * Unit of work is common to all catalogues
+ */
+let _unitOfWork = new UnitOfWork();
+
 /**
  * Based on express-class-router
  * @type {CatalogueMapper}
@@ -35,8 +49,20 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         ]
     }
 
+    /**
+     * Product listing is common to all catalogues
+     * @returns {*[]}
+     */
     static get productListing(){
         return _productListing;
+    }
+
+    /**
+     *
+     * @returns {*}
+     */
+    static get unitOfWork(){
+        return _unitOfWork;
     }
    /* static set productListing(p){
         this.productListing.push(p);
@@ -46,6 +72,8 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
    constructor(options={}) {
         super(options);
        // this.productListing = [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
+        let test = new Monitor({category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: 2});
+        CatalogueMapper.productListing.add(test);
 
 
         this.register(this.middlewares);
@@ -88,8 +116,8 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         else{
             //TODO proper tdg and identyMap calls
 
-            ProductTDG.SQLget_product_All();
-            return res.send(CatalogueMapper.productListing);
+           // ProductTDG.SQLget_product_All();
+            return res.send(CatalogueMapper.productListing.content);
 
         }
 
