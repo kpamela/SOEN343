@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Jumbotron, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom'
 import LoginModal from '../NavBar/LoginModal';
-
+import Catalogue from '../Dashboard/Catalogue.js';
 /**
  * HomePage rendered by going to path "/"
  */
@@ -29,7 +29,7 @@ export default class Main extends Component{
     render(){
         if(this.state.viewCatalog){
             return(
-                <Redirect to="/catalog" />
+                <Redirect to="/Catalogue" component={Catalogue} />
             )
         }
         else{

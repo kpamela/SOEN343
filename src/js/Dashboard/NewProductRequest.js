@@ -55,7 +55,7 @@ export default class NewProductRequest extends React.Component{
      */
     handleOnAddProduct(e){
         e.preventDefault();
-        let i = this.props.mapper.addProduct(this.state.fieldValue.category, this.state.fieldValue.amount);
+        let i = this.props.usr.addProduct(this.state.fieldValue.category, this.state.fieldValue.amount);
         this.setState({productIndex: i});
         this.validateSpecify();
 
@@ -79,9 +79,14 @@ export default class NewProductRequest extends React.Component{
      */
     handleAnotherProduct(e){
        // e.preventDefault();
-        this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
-        this.props.onSubmit();//sending signal to update product listing
-        this.newProductRequest();
+        if(this.props.usr.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+            window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
+        }
+        else {
+            this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.onSubmit();//sending signal to update product listing
+            this.newProductRequest();
+        }
     }
 
     /**
@@ -89,9 +94,20 @@ export default class NewProductRequest extends React.Component{
      * @param e
      */
     handleOnSubmit(e){
-        this.props.mapper.specify(this.state.productIndex, this.state.fieldValue.description);
-        this.props.mapper.submit();
-        this.props.onSubmit();
+        if(this.props.usr.lookForModel(this.state.fieldValue.description.modelNumber)>=0){
+            window.alert("Model number " +this.state.fieldValue.description.modelNumber + " already exists")
+        }
+        else {
+            this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
+            this.props.usr.submit();
+            this.props.onSubmit();
+
+            this.setState({currentForm: <div>
+                <button className="add" onClick={() => this.newProductRequest()}  >
+                    +
+                </button>
+            </div>});
+        }
     }
 
     /**
@@ -106,7 +122,7 @@ export default class NewProductRequest extends React.Component{
                         Select Category
                         <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                             <option value="" default> Select Category</option>
-                            <option value="Television">Television</option>
+                            {/* <option value="Television">Television</option>*/}
                             <option value="Monitor">Monitor</option>
                             <option value="TabletComputer">TabletComputer</option>
                             <option value="DesktopComputer">DesktopComputer</option>
@@ -137,14 +153,17 @@ export default class NewProductRequest extends React.Component{
      * type validation before showing form, and before updating it
      */
     validateSpecify(){
-        let err = {disabled: false, modelNumber: true};
+        let err = {disabled: false, modelNumber: true, price: true};
         if(this.state.fieldValue.description) {
             for(let ind in this.state.fieldValue.description){
+
                 switch(ind){
                     case 'price':
                     case 'weight':
                     case 'HDSize':
                     case 'RAM':
+                    case 'size':
+                    case 'dimensions':
                     case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                         break;
                     default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
@@ -179,7 +198,7 @@ export default class NewProductRequest extends React.Component{
 
 
     /**
-     * On request, display form, and start passing values to the mapper
+     * On request, display form, and start passing values to the usr
      */
     newProductRequest(){
        // let newForm = this.addProductForm(errors);

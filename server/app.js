@@ -4,6 +4,7 @@
  */
 
 const express = require('express'),
+    AdminDashboardMapper = require('./domain/mappers/AdminDashboardMapper.js'),
     path = require('path'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
@@ -15,7 +16,7 @@ const express = require('express'),
     compiler = webpack(config);
 
 // Configure the database
-var configDB = require('./config/database.js');
+var configDB = require('./data-source/config/database.js');
 
 // Launch express
 const app = express();
@@ -45,12 +46,13 @@ app.use(bodyParser.json());
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
+require('./data-source/config/passport')(passport);
 
-// API routes go here
-app.use('/users', require('./routes/users.js'));
-app.use('/products', require('./routes/products.js'));
-
+// API mappers go here
+//TODO check for admin or client
+let adminDashboardMapper = new AdminDashboardMapper();
+app.use('/users', require('./domain/mappers/users.js'));
+app.use('/products', adminDashboardMapper.router);
 app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });

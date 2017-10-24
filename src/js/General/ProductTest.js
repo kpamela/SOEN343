@@ -31,7 +31,7 @@ export class Tablet extends ProductDescription{
         super();
         this.amount = amount;
 
-        this.setCategory("Tablet");
+        this.setCategory("TabletComputer");
     }
 
 }
@@ -42,7 +42,7 @@ export class Laptop extends ProductDescription{
         super();
         this.amount = amount;
 
-        this.setCategory("Laptop");
+        this.setCategory("LaptopComputer");
     }
 
 }
@@ -52,7 +52,7 @@ export class Desktop extends ProductDescription{
         super();
         this.amount = amount;
 
-        this.setCategory("Desktop");
+        this.setCategory("DesktopComputer");
     }
 
 }
