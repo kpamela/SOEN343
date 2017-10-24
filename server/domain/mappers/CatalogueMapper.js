@@ -22,6 +22,8 @@ const express = require('express'),
 //TODO make that a jquery deferred object, maybe
 let _productListing = new ProductsIdentityMap();
 
+
+
 // [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}]
 /**
  * Unit of work is common to all catalogues

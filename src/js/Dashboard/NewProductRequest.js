@@ -188,7 +188,11 @@ export default class NewProductRequest extends React.Component{
     specifyForm(errors){
         return(
             <div>
-                <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+                <DescriptionForm errors={errors}
+                                 modelNumber=""
+                                 price=""
+                                 category={this.state.fieldValue.category}
+                                 onDescriptionChange={this.handleDescriptionChange}/>
                 <button disabled={errors.disabled} className="another" onClick={() => this.handleAnotherProduct()}  >
                     Add Another
                 </button>

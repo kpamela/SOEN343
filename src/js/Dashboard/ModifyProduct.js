@@ -183,7 +183,11 @@
 
           return(
               <div>
-                  <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+                  <DescriptionForm errors={errors}
+                                   modelNumber={this.props.item.description.modelNumber}
+                                   price={this.props.item.description.price}
+                                   category={this.state.fieldValue.category}
+                                   onDescriptionChange={this.handleDescriptionChange}/>
 
                   <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
                       Submit

@@ -8,7 +8,7 @@ export default class DescriptionForm extends React.Component{
     constructor(props){
         super(props);
         this.state= {
-            currentDescription: {modelNumber:"", price:""}};//mandatory fields
+            currentDescription: {modelNumber:this.props.modelNumber, price:this.props.price}};//mandatory fields
 
         this.handleChange = this.handleChange.bind(this);
     }
