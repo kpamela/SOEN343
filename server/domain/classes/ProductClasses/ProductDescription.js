@@ -21,7 +21,7 @@ class ProductDescription{
 
 
     constructor(product){
-        this.productName = " ";
+
         this.brandName = product.description.brandName;
         this.modelNumber = product.description.modelNumber;
         this.dimensions = product.description.dimensions;
