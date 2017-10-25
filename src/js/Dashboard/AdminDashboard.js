@@ -15,7 +15,7 @@ export class AdminDashboard extends Catalogue{
 
 
         this.handleNewItem = this.handleNewItem.bind(this);
-        this.handleCommit = this.handleCommit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.commitChanges = this.commitChanges.bind(this);
         this.revertChanges = this.revertChanges.bind(this);
         this.handleUncommittedChanges = this.handleUncommittedChanges.bind(this);
@@ -36,31 +36,34 @@ export class AdminDashboard extends Catalogue{
 
     }
 
-    handleCommit(){
+    handleSubmit(){
         this.setState({
             PRODUCTS: this.state.usr.p, sorting:""
         }, function(){
             console.log(this.state.usr.p[this.state.usr.p.length-1]);
             this.state.usr.addItem(this.state.usr.p[this.state.usr.p.length-1]);
-            this.state.usr.commitChanges();
-            this.handleUncommittedChanges();
+            this.state.usr.hasUncommittedChanges.then(this.commitChanges);//waiting for addItem;
+
         });
     }
 
     commitChanges(){
-        this.state.usr.commitChanges();
-        this.handleUncommittedChanges();
+        let confirm = window.confirm("Are you want to commit changes?");
+        if(confirm){
+            this.state.usr.commitChanges();
+            this.handleUncommittedChanges();
+        }
+
     }
 
     revertChanges(){
         this.state.usr.revertChanges();
         this.handleUncommittedChanges();
         this.state.usr.data.then(this.handleGetData);
-        this.forceUpdate();
     }
 
     handleUncommittedChangesCB(response){
-
+        console.log(response);
         if(response){
             this.setState({uncommittedChanges:
                 <div>
@@ -91,7 +94,7 @@ export class AdminDashboard extends Catalogue{
                 <NewProductRequest
                     usr={this.state.usr}
                     onAnother={this.handleNewItem}
-                    onSubmit={this.handleCommit}
+                    onSubmit={this.handleSubmit}
                 />
 
                 <ProductListing

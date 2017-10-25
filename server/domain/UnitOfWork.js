@@ -88,6 +88,7 @@ module.exports = class UnitOfWork{
         const changeList = this.changeList;
         //cleaning not handled by revert function in mapper
         this.changeList = {newList:[], dirtyList:[], deletedList:[]};
+        this.hasUncommittedChanges = false;
         //similar to commit
         return changeList;
     }

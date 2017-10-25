@@ -162,22 +162,22 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
-            for(let i in changes.newList){
-                let product = AdminDashboardMapper.productListing.getModel(changes.newList[i]);
+            while(changes.newList.length){//removing item every time
+                let product = AdminDashboardMapper.productListing.getModel(changes.newList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Added product: " + product.modelNumber);
                 //TODO tdg work
             }
-            for(let i in changes.dirtyList){
-                let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[i]);
+            while(changes.dirtyList.length){//removing item every time
+                let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Modified product: "+product.modelNumber);
                 //TODO tdg work
             }
-            for(let i in changes.deletedList){
-                let product = AdminDashboardMapper.getDeletedModel(changes.deletedList[i]);
+            while(changes.deletedList.length){//removing item every time
+                let product = AdminDashboardMapper.getDeletedModel(changes.deletedList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.modelNumber);
@@ -185,6 +185,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             }
 
             if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
+                console.log(AdminDashboardMapper.productHistory);
                 return res.status(500).json("Oops, something went wrong ")
             }
 

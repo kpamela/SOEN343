@@ -44,6 +44,7 @@ export default class Admin extends User{
     }
 
     setUncommittedChange(response){
+        console.log(response.data.hasUncommittedChanges);
         this.hasUncommittedChanges.resolve(response.data.hasUncommittedChanges);
     }
 
