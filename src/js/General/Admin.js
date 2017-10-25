@@ -4,12 +4,16 @@
 import axios from 'axios';
 import React from 'react';
 import User from './User.js';
+import $ from 'jquery';
 
 export default class Admin extends User{
 
     constructor(){
         super();
-        this.dashboard = <div></div>;
+        this.hasUncommittedChanges = new $.Deferred();
+
+        this.setUncommittedChange = this.setUncommittedChange.bind(this);
+        this.handleRevert = this.handleRevert.bind(this);
     }
 
     /**
@@ -35,16 +39,24 @@ export default class Admin extends User{
      * @param desc
      */
     specify(product, desc){
-
         this.p[product].setDescription(desc);
 
     }
 
+    setUncommittedChange(response){
+        this.hasUncommittedChanges.resolve(response.data.hasUncommittedChanges);
+    }
+
+    handleRevert(response){
+        console.log(response);
+        this.hasUncommittedChanges.resolve(response.data.hasUncommittedChanges);
+        this.setListing(response.data);
+    }
+
     commitChanges(){
+        this.hasUncommittedChanges = new $.Deferred();
         this.axiosInstance.post('commitChanges', {},{cancelToken: this.source.token})
-            .then(function(response){
-                console.log(response.data);
-            })
+            .then(this.setUncommittedChange)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
                     console.log(thrown.message);
@@ -53,13 +65,24 @@ export default class Admin extends User{
             });
     }
 
+    revertChanges(){
+        this.data = new $.Deferred();
+        this.hasUncommittedChanges = new $.Deferred();
+        this.axiosInstance.get("revertChanges", {cancelToken: this.source.token})
+            .then(this.handleRevert)
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log("canceled: " + thrown);
+                }
+                else console.log("error: " + thrown);
+            });
+    }
+
     modify(item, pos, model){
         this.p[pos] = item;
-
+        this.hasUncommittedChanges = new $.Deferred();
         this.axiosInstance.patch('modify', {previous: model, current: item},{ cancelToken: this.source.token})
-            .then(function(response){
-                console.log(response.data);
-            })
+            .then(this.setUncommittedChange)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
                     console.log(thrown.message);
@@ -71,12 +94,9 @@ export default class Admin extends User{
 
     remove(index, model){
         this.p.splice(index, 1);
-
-        console.log(model);
+        this.hasUncommittedChanges = new $.Deferred();
         this.axiosInstance.post('remove', {model: model},{ cancelToken: this.source.token})
-            .then(function(response){
-                console.log(response.data);
-            })
+            .then(this.setUncommittedChange)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
                     console.log(thrown.message);
@@ -87,11 +107,9 @@ export default class Admin extends User{
     }
 
     addItem(data){
-
+        this.hasUncommittedChanges = new $.Deferred();
         this.axiosInstance.post('add', {data},{ cancelToken: this.source.token})
-            .then(function(response){
-                console.log(response.data);
-            })
+            .then(this.setUncommittedChange)
             .catch(function(thrown){
                 if(axios.isCancel(thrown)){
                     console.log(thrown.message);

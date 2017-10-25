@@ -23,6 +23,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         return _productHistory;
     }
 
+    /**
+     * used to reset history
+     */
+    static resetProductHistory(){
+        _productHistory = {modified:[], deleted:[]};
+    }
+
     get middlewares(){
         return super.middlewares;
     }
@@ -159,23 +166,32 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 let product = AdminDashboardMapper.productListing.getModel(changes.newList[i]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Added product: " + product);
+                console.log("Added product: " + product.modelNumber);
                 //TODO tdg work
             }
             for(let i in changes.dirtyList){
                 let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[i]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Modified product: "+product);
+                console.log("Modified product: "+product.modelNumber);
                 //TODO tdg work
             }
             for(let i in changes.deletedList){
                 let product = AdminDashboardMapper.getDeletedModel(changes.deletedList[i]);
 
-                //AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Deleted product: " + product);
+                AdminDashboardMapper.unitOfWork.registerClean(product);
+                console.log("Deleted product: " + product.modelNumber);
                 //TODO tdg work
             }
+
+            if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
+                return res.status(500).json("Oops, something went wrong ")
+            }
+
+
+            AdminDashboardMapper.resetProductHistory();
+
+            console.log(AdminDashboardMapper.productHistory);
 
             res.json({msg: "All changes have been committed to Database.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
@@ -190,6 +206,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
         if(!authorization.success){
             return res.status(401).json(authorization);
+        }
+        else if(!AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
+            return res.status(412).json("No changes to revert");
         }
         else{
             const changes = AdminDashboardMapper.unitOfWork.rollback();
@@ -218,7 +237,14 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(old);
             }
 
+            if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
+                return res.status(500).json("Oops, something went wrong");
+            }
+
+            AdminDashboardMapper.resetProductHistory();
+
             res.json({msg:"All uncommitted changes have been reverted!",
+                data: AdminDashboardMapper.productListing.content,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 

@@ -50,13 +50,14 @@ export default class ProductListing extends React.Component{
           this.setState({modifyForm: <div></div>});
 
           this.props.usr.remove(this.state.currentPosition, this.state.model);
+          this.props.onChanges();
       }
   }
 
   cancel(){
         this.props.toggleDisableSort("");
         this.setState({modifyForm: <div></div>});
-
+         this.props.onChanges();
     }
 
   handleModify(item){
@@ -65,6 +66,7 @@ export default class ProductListing extends React.Component{
           this.props.toggleDisableSort("");
           this.props.usr.modify(item, this.state.currentPosition, this.state.model);
           this.setState({modifyForm: <div></div>});
+          this.props.onChanges();
       }
       else {
           window.alert("Model number " +item.description.modelNumber + " already exists");
