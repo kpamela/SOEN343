@@ -12,20 +12,25 @@ class ProductTDG{
                   Read
   ****************************************/
 
-
-  SQLget_product_All(){                                                         //Retrieves every single product in the database
+  SQLget_product(){                                                         //Retrieves every single product in the database
       db.getConnection((err, connection) => {
-          let productInfo = `SELECT * FROM products, models
-                     WHERE products.ModelNumber = models.ModelNumber AND products.Available = 1`;
+          let productInfo = {
+            sql: `SELECT * FROM products, models
+                  WHERE products.ModelNumber = models.ModelNumber
+                  AND products.Available = 1`
+          };
           handler.handleRead(productInfo, connection);
       });
   }
 
 
-  SQLget_product_Category(category){                                             //Retrieves products of a specific category
+  SQLget_product(modelNumber){                                                  //Retrieves products of a specific model
       db.getConnection((err, connection) => {
-          let productInfo = `SELECT * FROM products
-                     WHERE models.Discriminator = category AND products.ModelNumber = models.ModelNumber AND products.Available = 1`;
+          let productInfo = {
+            sql: `SELECT * FROM products
+                  WHERE modelsModelNumber = ?
+                  AND products.ModelNumber = models.ModelNumber
+                  AND products.Available = 1`, value: [modelNumber]};
           handler.handleRead(productInfo, connection);
       });
   }
@@ -37,27 +42,18 @@ class ProductTDG{
 
   SQLadd_product(modelNumber, quantity){                                        // Will add the specified amount of products into the database, with unique serial numbers
     let addProduct = '';
-      handler.handleWrite(addProduct);
+      handler.handleWrite(addProduct,connection);
   }
 
-  SQLmodify_product(product){
-    let addProduct = 'INSERT INTO models SET ?';
-      handler.handleWrite(product);
-  }
 
-  SQLdelete_product(modelNumber){                                               //Will remove a single product from the database
+  SQLdelete_product(modelNumber){                                               //Will remove all products from the database of a certain modelNumber
     let deleteProduct = '';
-      handler.handleWrite(deleteProduct);
+      handler.handleWrite(deleteProduct,connection);
   }
 
-  SQLdelete_product(modelNumber, quantity){                                     //Will remove the amount of products specified from the database
+  SQLdelete_product(modelNumber, quantity){                                     //Will remove the specified amount of products from the database of a certain model number
     let deleteProduct = '';
-      handler.handleWrite(deleteProduct);
-  }
-
-  SQLdelete_product(modelNumber, quantity){                                     //Will remove the specified amount of products from the database
-    let deleteProduct = '';
-      handler.handleWrite(deleteProduct);
+      handler.handleWrite(deleteProduct,connection );
   }
 
 }

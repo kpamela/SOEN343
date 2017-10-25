@@ -15,7 +15,8 @@ class ModelTDG{
   }
 
   SQLget_model_All(category){                                          //Retrieves all models of a certain category
-    let modelInfo = `SELECT * FROM models WHERE Discriminator = '${category}'`;
+    let modelInfo = {sql: `SELECT * FROM models WHERE models.Discriminator = ?`
+                     values: [category]};
     handleRead(modelInfo);
   }
 
@@ -29,17 +30,22 @@ class ModelTDG{
     handleWrite(addModel);
   }
 
-  SQLmodify_model(model){                                           //Modifies the information for the model
-    let modifyModel = '?';
+  SQLmodify_model(modelNumber, column, modification){                 //Modifies the information for the model
+    let modifyModel = '';
     handleWrite(modifyModel);
   }
 
+  SQLdelete_product(modelNumber){                                       //Will remove a model from the database
+    let deleteProduct = {sql:'DELETE FROM models WHERE ModelNumber = ?',
+                         value: [modelNumber]};
+      handler.handleWrite(deleteProduct);
+  }
 
   /****************************************
-              Error handling
+              Query execution
   ****************************************/
   handleRead(input){                                                //To be used after read queries for debugging
-    connection.query(sql, input, (err, result) => {
+    connection.query(sqlStatement, input, (err, result) => {
         if(err){
             console.log(err);
         }
@@ -50,7 +56,7 @@ class ModelTDG{
   }
 
   handleWrite(input){                                               //To be used after write queries for debugging
-    connection.query(sql, input, (err, result) => {
+    connection.query(sqlStatement, input, (err, result) => {
         if(err){
             console.log(err);
         }

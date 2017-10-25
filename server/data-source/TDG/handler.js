@@ -5,7 +5,7 @@ const mysql = require('mysql');
 
 module.exports = {
     handleRead: function (input, connection) {
-        connection.query(sql, input, (err, result) => {
+        connection.query(sqlStatement, input, (err, result) => {
             if (err) {
                 console.log(err);
                 return err;
@@ -18,7 +18,7 @@ module.exports = {
     },
 
     handleWrite: function (input, connection) {
-        connection.query(sql, input, (err, result) => {
+        connection.query(sqlStatement, input, (err, result) => {
             if (err) {
                 console.log(err);
             }
