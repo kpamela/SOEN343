@@ -142,6 +142,8 @@
           if(this.state.fieldValue.description) {
               for(let ind in this.state.fieldValue.description){
                   switch(ind){
+                      case 'modelNumber':err[ind] = this.state.fieldValue.description[ind].length <= 0;
+                                        break;
                       case 'price':
                       case 'weight':
                       case 'hardDriveSize':

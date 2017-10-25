@@ -40,7 +40,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 ['patch', '/modify', 'modify'],
                 ['post', '/remove', 'remove'],
                 ['post', '/commitChanges', 'commitChanges'],
-                ['get', '/revertChanges', 'revertChanges']]);
+                ['get', '/revertChanges', 'revertChanges'],
+                ['get', '/getCommitState', 'getCommitState']]);
 
 
     }
@@ -249,6 +250,17 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 
+        }
+    }
+
+    getCommitState(req, res){
+        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
+
+        if(!authorization.success){
+            return res.status(401).json(authorization);
+        }
+        else{
+            res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
         }
     }
 

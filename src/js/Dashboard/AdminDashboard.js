@@ -48,7 +48,7 @@ export class AdminDashboard extends Catalogue{
     }
 
     commitChanges(){
-        let confirm = window.confirm("Are you want to commit changes?");
+        let confirm = window.confirm("Are you sure you want to commit changes?");
         if(confirm){
             this.state.usr.commitChanges();
             this.handleUncommittedChanges();
@@ -63,7 +63,7 @@ export class AdminDashboard extends Catalogue{
     }
 
     handleUncommittedChangesCB(response){
-        console.log(response);
+
         if(response){
             this.setState({uncommittedChanges:
                 <div>
