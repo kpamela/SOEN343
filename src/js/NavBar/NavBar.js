@@ -37,7 +37,7 @@ export default class NavBar extends Component{
             <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem>
             <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>
             <NavItem eventKey={3} href="#"> <Logout /> </NavItem>
-            <NavItem eventKey={4} href="#"><ShoppingCart/></NavItem>
+            <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem>
 
           </Nav>
         </Navbar.Collapse>
