@@ -44,7 +44,7 @@ export default class Admin extends User{
     }
 
     setUncommittedChange(response){
-        console.log(response.data.hasUncommittedChanges);
+
         this.hasUncommittedChanges.resolve(response.data.hasUncommittedChanges);
     }
 
@@ -105,6 +105,18 @@ export default class Admin extends User{
                 else console.log(thrown);
             });
 
+    }
+
+    getCommitState(){
+        this.hasUncommittedChanges = new $.Deferred();
+        this.axiosInstance.get("getCommitState", {cancelToken: this.source.token})
+            .then(this.setUncommittedChange)
+            .catch(function(thrown){
+                if(axios.isCancel(thrown)){
+                    console.log("canceled: " + thrown);
+                }
+                else console.log("error: " + thrown);
+            });
     }
 
     addItem(data){

@@ -87,6 +87,11 @@ export class AdminDashboard extends Catalogue{
 
 
     render(){
+
+        if(this.state.usr.hasUncommittedChanges.state() === "pending"){
+            this.state.usr.getCommitState();
+            this.handleUncommittedChanges();
+        }
        // this.handleUncommittedChanges();
         return(
             <div>

@@ -84,8 +84,7 @@ import auth from '../General/auth.js';
     }
     render(){
 
-        if(this.state.usr.data.state() === "pending"){
-            console.log(this.state.usr.data.state());
+        if(this.state.usr.data.state() === "pending"){//TODO get commit state on reload;
             this.state.usr.getData();
             this.state.usr.data.then(this.handleGetData);
         }
