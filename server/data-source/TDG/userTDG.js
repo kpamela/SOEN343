@@ -20,7 +20,7 @@ class UserTDG{
 
   SQLadd_user(userInfo){
     let newUser = {sql:`INSERT INTO users SET ?`,
-                  values:[userInfo];}
+                  values:[userInfo]};
     handler.handleWrite(newUser);
   }
 
