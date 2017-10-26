@@ -6,6 +6,7 @@ const Catalogue = require('./CatalogueMapper.js'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer.js'),
     Monitor = require('../classes/ProductClasses/Monitor.js');
+const ProductHistory = require('../IdentityMaps/ProductHistory.js');
 
 /**
  * History containing the old products that were modified or deleted
@@ -14,7 +15,7 @@ const Catalogue = require('./CatalogueMapper.js'),
  * @type {{modified: Array, deleted: Array}}
  * @private
  */
-let _productHistory = {modified:[], deleted:[]};
+let _productHistory = new ProductHistory();
 
 
 module.exports = class AdminDashboardMapper extends Catalogue{
@@ -23,12 +24,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         return _productHistory;
     }
 
-    /**
-     * used to reset history
-     */
-    static resetProductHistory(){
-        _productHistory = {modified:[], deleted:[]};
-    }
 
     get middlewares(){
         return super.middlewares;
@@ -178,7 +173,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 //TODO tdg work
             }
             while(changes.deletedList.length){//removing item every time
-                let product = AdminDashboardMapper.getDeletedModel(changes.deletedList[0]);
+                let product = AdminDashboardMapper.productHistory.getDeletedModel(changes.deletedList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.modelNumber);
@@ -191,7 +186,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             }
 
 
-            AdminDashboardMapper.resetProductHistory();
+            AdminDashboardMapper.productHistory.resetHistory();
 
             console.log(AdminDashboardMapper.productHistory);
 
@@ -224,7 +219,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             for(let i in changes.dirtyList){
                 const index = AdminDashboardMapper.productListing.findModel(changes.dirtyList[i]);
                 //getting old object
-                let old = AdminDashboardMapper.getOldModel(changes.dirtyList[i]);
+                let old = AdminDashboardMapper.productHistory.getOldModel(changes.dirtyList[i]);
                 //restoring old model
                 AdminDashboardMapper.productListing.content[index] = old;
                 //setting old model to clean
@@ -232,7 +227,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             }
             for(let i in changes.deletedList){
 
-                let old = AdminDashboardMapper.getDeletedModel(changes.deletedList[i]);
+                let old = AdminDashboardMapper.productHistory.getDeletedModel(changes.deletedList[i]);
 
                 AdminDashboardMapper.productListing.add(old);
 
@@ -243,7 +238,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 return res.status(500).json("Oops, something went wrong");
             }
 
-            AdminDashboardMapper.resetProductHistory();
+            AdminDashboardMapper.productHistory.resetHistory();
 
             res.json({msg:"All uncommitted changes have been reverted!",
                 data: AdminDashboardMapper.productListing.content,
@@ -264,29 +259,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         }
     }
 
-
-    static getDeletedModel(model){
-        for(let i in AdminDashboardMapper.productHistory.deleted) {
-            if (AdminDashboardMapper.productHistory.deleted[i].modelNumber === model) {
-                return AdminDashboardMapper.productHistory.deleted[i];//found
-            }
-        }
-        return null;//item not found
-    }
-
-    static getOldModel(model){
-        const i = AdminDashboardMapper.getCurrentModelIndexInHistory(model);
-        return AdminDashboardMapper.productHistory.modified[i].old;
-    }
-
-    static getCurrentModelIndexInHistory(model){
-        for(let i in AdminDashboardMapper.productHistory.modified) {
-            if (AdminDashboardMapper.productHistory.modified[i].current === model) {
-                return i;//found
-            }
-        }
-        return -1;//item not found
-    }
 
     static addNewProduct(category, product){
         switch(category){
