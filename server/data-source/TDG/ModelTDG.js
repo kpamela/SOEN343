@@ -3,22 +3,26 @@
 */
 
 const mysql   = require('mysql'),
-      handler = require('./handler.js');
+      handler = require('./handler.js'),
+      jquery = require('jquery-deferred');
 
 class ModelTDG{
 
   /****************************************
                   Read
   ****************************************/
-  SQLget_model_All(){                                                //Retrieves all models in the database
-    let modelInfo = `SELECT * FROM models`;
-    handler.handleRead(modelInfo);
+  SQLget_models_All(){                                                //Retrieves all models in the database
+      let data = new jquery.Deferred();
+      let modelInfo = `SELECT * FROM models`;
+      handler.handleRead(modelInfo, data);
+      return data;
   }
 
-  SQLget_model_All(category){                                          //Retrieves all models of a certain category
-    let modelInfo = {sql: `SELECT * FROM models WHERE models.Category = ?`,
+  SQLget_models(category){                                          //Retrieves all models of a certain category
+      let data = new jquery.Deferred();
+      let modelInfo = {sql: `SELECT * FROM models WHERE models.Category = ?`,
                      values: [category]};
-    handler.handleRead(modelInfo);
+    handler.handleRead(modelInfo, data);
   }
 
 
@@ -26,22 +30,25 @@ class ModelTDG{
                 Write
   ****************************************/
 
-  SQLadd_model(model){                                               //Adds a model into the database
+  SQLadd_models(model){                                               //Adds a model into the database
+      let data = new jquery.Deferred();
     let addModel = {sql: `INSERT INTO models SET ?`,
                     values:[model]};
-    handler.handleWrite(addModel);
+    handler.handleWrite(addModel, data);
   }
 
-  SQLmodify_model(modelNumber, column, modification){                 //Modifies the information for the model
-    let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`,
+  SQLmodify_models(modelNumber, column, modification){                 //Modifies the information for the model
+      let data = new jquery.Deferred();
+      let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`,
                         values:[column, modification, modelNumber]};
-    handler.handleWrite(modifyModel);
+    handler.handleWrite(modifyModel, data);
   }
 
-  SQLdelete_product(modelNumber){                                       //Will remove a model from the database
+  SQLdelete_models(modelNumber){                                       //Will remove a model from the database
+      let data = new jquery.Deferred();
     let deleteProduct = {sql:`DELETE FROM models WHERE ModelNumber = ?`,
                          values: [modelNumber]};
-      handler.handleWrite(deleteProduct);
+      handler.handleWrite(deleteProduct,data);
   }
 
 }

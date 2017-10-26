@@ -5,33 +5,33 @@ const mysql   = require('mysql'),
       db      = require('../config/database.js');
 
 module.exports = {
-    handleRead: function (input, connection) {
-      db.getConnection((err, connection) => {
+    handleRead: function (input, data) {
+       db.getConnection((err, connection) => {
           connection.query(input, (err, results, fields) => {
               if (err) {
                   console.log(err);
-                  return err;
+                  data.resolve(err);
               }
               else {
                   console.log("Successful read");
-                  console.log(result);
-                  return result;
+                    data.resolve(results);
+                  //return results;
               }
           });
       });
     },
 
-    handleWrite: function (input, connection) {
+    handleWrite: function (input, data) {
       db.getConnection((err, connection) => {                               // Unsure if this needs to be returned
           connection.query(input, (err, results, fields) => {
               if (err) {
                   console.log(err);
-                  return err;
+                  data.resolve(err);
               }
               else {
                   console.log("Successfully modified the database!");
-                  console.log(result);
-                  return result;
+                  console.log(results);
+                  data.resolve(results);
               }
           });
       });
