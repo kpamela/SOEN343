@@ -6,7 +6,8 @@ const express = require('express'),
   //  products = express.Router(),
     passport = require('passport'),
     jwt = require('jsonwebtoken'),
-    ProductTDG = require('../../data-source/TDG/ProductTDG'),
+    ProductTDG = require('../../data-source/TDG/ProductTDG.js'),
+    ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
@@ -23,7 +24,7 @@ const express = require('express'),
 let _productListing = new ProductsIdentityMap();
 
 
-
+let modelTDG = new ModelTDG();
 // [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}]
 /**
  * Unit of work is common to all catalogues
@@ -118,6 +119,9 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         else{
             //TODO proper tdg and identyMap calls
 
+            modelTDG.SQLget_models_All().then(function(res){
+                console.log(res);
+            });
            // ProductTDG.SQLget_product_All();
             return res.send(CatalogueMapper.productListing.content);
 
