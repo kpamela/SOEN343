@@ -1,31 +1,39 @@
 /*
  Created by kpamela on 2017-10-20.
 */
-const mysql = require('mysql');
+const mysql   = require('mysql'),
+      db      = require('../config/database.js');
 
 module.exports = {
     handleRead: function (input, connection) {
-        connection.query(sqlStatement, input, (err, result) => {
-            if (err) {
-                console.log(err);
-                return err;
-            }
-            else {
-                console.log("Successful read");
-                return result;
-            }
-        });
+      db.getConnection((err, connection) => {
+          connection.query(sqlStatement, function(err, results, fields) => {
+              if (err) {
+                  console.log(err);
+                  return err;
+              }
+              else {
+                  console.log("Successful read");
+                  console.log(result);
+                  return result;
+              }
+          });
+      });
     },
 
     handleWrite: function (input, connection) {
-        connection.query(sqlStatement, input, (err, result) => {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log("Successful write to database");
-                return input;
-            }
-        });
+      db.getConnection((err, connection) => {                               // Unsure if this needs to be returned
+          connection.query(sqlStatement, function(err, results, fields) => {
+              if (err) {
+                  console.log(err);
+                  return err;
+              }
+              else {
+                  console.log("Successfully modified the database!");
+                  console.log(result);
+                  return result;
+              }
+          });
+      });
     }
 }

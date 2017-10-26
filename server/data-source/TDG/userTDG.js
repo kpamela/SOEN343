@@ -4,13 +4,27 @@ const mysql = require('mysql'),
       jwt = require('jsonwebtoken');
 
 class UserTDG{
+
+  /****************************************
+                  Read
+  ****************************************/
   SQLget_user_All(username){
-    let userInfo = `SELECT * FROM users WHERE Username = '${username}' LIMIT 1`;
+    let userInfo = {sql:`SELECT * FROM users WHERE Username = ? LIMIT 1`,
+                    values:[username]};
     return userInfo;
   }
 
+  /****************************************
+                  Write
+  ****************************************/
+
+  SQLadd_user(userInfo){
+    let newUser = {sql:''};
+  }
   SQLset_user_Password(username){
-    let setUserPassword = `SELECT Password FROM users WHERE Username = '${username}' LIMIT 1`;
+    let setUserPassword = {sql:`SELECT Password FROM users WHERE Username = ? LIMIT 1`,
+                          values:[username]};
+
     db.getConnection(userPassword, (err, connection) => {
         userPassword(username);
         connection.query(userPassword(username), (err, user) => {
