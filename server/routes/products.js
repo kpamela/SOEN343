@@ -73,6 +73,7 @@ db.getConnection((err, connection) => {
         newProduct.available = req.body.available;
         newProduct.productName = req.body.name;
 
+
         console.log(JSON.stringify(newProduct));
 
         // Instantiate the right product class based on the category
@@ -95,12 +96,11 @@ db.getConnection((err, connection) => {
               product = new Monitor;
               break;
         }
-
-        if (!product.create()){
-            return res.json(500, {success: false, msg: "Product Couldn't be created"});
-        } else {
+        product.create().then(function(result) {
             return res.json(200, {success: false, msg: "Product Created"});
-        }
+        }, function(error) {
+            return res.json(500, {success: false, msg: "Product Couldn't be created"});
+        });
       }
     });
   });

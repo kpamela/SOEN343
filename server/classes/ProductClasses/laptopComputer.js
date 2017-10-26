@@ -15,39 +15,39 @@ class LaptopComputer extends Computers {
     }
 
     create(){
-        db.getConnection((err, connection) => {
-            var laptopComputer = {
-                Discriminator : "LaptopComputer",
-                ProductName : this.productName,
-                BrandName : this.brandName,
-                ModelNumber: this.modelNumber,
-                Dimensions: this.dimensions,
-                Price: this.price,
-                Weight: this.weight,
-                ProcessorType: this.processorType,
-                RAMSize: this.RAMSize,
-                NumberOfCores: this.numberOfCores,
-                HardDriveSize: this.hardDriveSize,
-                DisplaySize: this.displaySize,
-                BatteryInfo: this.batteryInfo,
-                HasCamera: this.hadCamera,
-                OperatingSystem: this.operatingSystem
-            }
+        let that = this;
+        return new Promise(function(resolve, reject) {
+            db.getConnection((err, connection) => {
+                var laptopComputer = {
+                    Discriminator: "laptopcomputer",
+                    ProductName : that.productName,
+                    BrandName : that.brandName,
+                    ModelNumber: that.modelNumber,
+                    Dimensions: that.dimensions,
+                    Price: that.price,
+                    Weight: that.weight,
+                    ProcessorType: that.processorType,
+                    RAMSize: that.RAMSize,
+                    NumberOfCores: that.numberOfCores,
+                    HardDriveSize: that.hardDriveSize,
+                    DisplaySize: that.displaySize,
+                    BatteryInfo: that.batteryInfo,
+                    HasCamera: that.hadCamera,
+                    OperatingSystem: that.operatingSystem
+                }
 
-            //Build query and add new product in the db
-            let sql = `INSERT INTO models SET ?`;
-            connection.query(sql, laptopComputer, (err, result) => {
-                if(err){
-                    console.log(err);
-                    return false;
-                }
-                else{
-                    console.log("The product has been added to the db with the following result message: \n\t" + result);
-                    return true;
-                }
+                //Build query and add new product in the db
+                let sql = `INSERT INTO models SET ?`;
+                connection.query(sql, laptopComputer, (err, result) => {
+                    if (err){
+                        console.log(err);
+                        return reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
             });
         });
-
 
     }
 }

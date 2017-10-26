@@ -15,36 +15,39 @@ class TabletComputer extends Computers {
     }
 
     create(){
-        db.getConnection((err, connection) => {
-            var tabletComputer = {
-                Discriminator : "TabletComputer",
-                ProductName : this.productName,
-                BrandName : this.brandName,
-                ModelNumber: this.modelNumber,
-                Dimensions: this.dimensions,
-                Price: this.price,
-                Weight: this.weight,
-                DisplaySize: this.displaySize,
-                BatteryInfo: this.batteryInfo,
-                CameraInfo: this.cameraInfo,
-                OperatingSystem: this.operatingSystem
-            }
+        let that = this;
+        return new Promise(function(resolve, reject) {
+            db.getConnection((err, connection) => {
+                var tabletComputer = {
+                    Discriminator: "tabletcomputer",
+                    ProductName : that.productName,
+                    BrandName : that.brandName,
+                    ModelNumber: that.modelNumber,
+                    Dimensions: that.dimensions,
+                    Price: that.price,
+                    Weight: that.weight,
+                    ProcessorType: that.processorType,
+                    RAMSize: that.RAMSize,
+                    NumberOfCores: that.numberOfCores,
+                    HardDriveSize: that.hardDriveSize,
+                    DisplaySize: that.displaySize,
+                    CameraInfo: that.cameraInfo,
+                    BatteryInfo: that.batteryInfo,
+                    OperatingSystem: that.operatingSystem
+                }
 
-            //Build query and add new product in the db
-            let sql = `INSERT INTO models SET ?`;
-            connection.query(sql, tabletComputer, (err, result) => {
-                if(err){
-                    console.log(err);
-                    return false;
-                }
-                else{
-                    console.log("The product has been added to the db with the following result message: \n\t" + result);
-                    return true;
-                }
+                //Build query and add new product in the db
+                let sql = `INSERT INTO models SET ?`;
+                connection.query(sql, tabletComputer, (err, result) => {
+                    if (err){
+                        console.log(err);
+                        return reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
             });
         });
-
-
     }
 }
 

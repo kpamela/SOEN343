@@ -11,38 +11,34 @@ class DesktopComputer extends Computers {
     }
 
     create(){
+        let that = this;
         db.getConnection((err, connection) => {
             var desktopComputer = {
-                Discriminator : "DesktopComputer",
-                ProductName : this.productName,
-                BrandName : this.brandName,
-                ModelNumber: this.modelNumber,
-                Dimensions: this.dimensions,
-                Price: this.price,
-                Weight: this.weight,
-                ProcessorType: this.processorType,
-                RAMSize: this.RAMSize,
-                NumberOfCores: this.numberOfCores,
-                HardDriveSize: this.hardDriveSize
+                Discriminator: "desktopcomputer",
+                ProductName : that.productName,
+                BrandName : that.brandName,
+                ModelNumber: that.modelNumber,
+                Dimensions: that.dimensions,
+                Price: that.price,
+                Weight: that.weight,
+                ProcessorType: that.processorType,
+                RAMSize: that.RAMSize,
+                NumberOfCores: that.numberOfCores,
+                HardDriveSize: that.hardDriveSize
             }
 
             //Build query and add new product in the db
             let sql = `INSERT INTO models SET ?`;
             connection.query(sql, desktopComputer, (err, result) => {
-                if(err){
+                if (err){
                     console.log(err);
-                    return false;
-                }
-                else{
-                    console.log("The product has been added to the db with the following result message: \n\t" + result);
-                    return true;
+                    return reject(err);
+                } else {
+                    resolve(result);
                 }
             });
         });
-
-
     }
-
 }
 
 module.exports = DesktopComputer;
