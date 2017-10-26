@@ -14,8 +14,6 @@ class ProductDescription{
         this.price = product.price;
         this.amountRemaining = product.amountRemaining;
         this.weight = product.weight;
-
-        console.log(this.productName);
     }
 
 }

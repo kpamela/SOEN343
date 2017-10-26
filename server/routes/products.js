@@ -8,7 +8,7 @@ const express = require('express'),
     DesktopComputer =  require('../classes/ProductClasses/desktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/laptopComputer'),
     TabletComputer = require('../classes/ProductClasses/tabletComputer'),
-    Monitor = require('../classes/ProductClasses/television');
+    Monitor = require('../classes/ProductClasses/monitor');
 
 db.getConnection((err, connection) => {
   // Get all products
@@ -63,14 +63,14 @@ db.getConnection((err, connection) => {
       } else {
         //verify if the category is valid
         let category = req.body.category;
-        if (!category.match(/^(desktopComputer|tabletcomputer|laptop|television|monitordisplay)$/)){
+        if (!category.match(/^(desktopcomputer|tabletcomputer|laptop|television|monitordisplay)$/)){
           return res.json(400, {success: false, msg: "Invalid product category."});
         }
 
         // build newProduct JSON Object by parsing the request
         let newProduct = req.body.description;
         newProduct.price = req.body.price;
-        newProduct.available = req.body.available;
+        newProduct.amountRemaining = req.body.available;
         newProduct.productName = req.body.name;
 
 
@@ -93,7 +93,7 @@ db.getConnection((err, connection) => {
               product = new Television(newProduct);
               break;
             case 'monitordisplay':
-              product = new Monitor;
+              product = new Monitor(newProduct);
               break;
         }
         product.create().then(function(result) {

@@ -43,7 +43,27 @@ class TabletComputer extends Computers {
                         console.log(err);
                         return reject(err);
                     } else {
-                        resolve(result);
+                        // Build the appropriate number of products to put in the product table
+                        var products = [];
+                        for (var i = 0; i < that.amountRemaining; i++){
+                            console.log(i);
+                            if (!products[i]){
+                                products[i] = [];
+                            }
+                            products[i][0] = that.modelNumber;
+                            products[i][1] = 1;
+                        }
+
+                        console.log(products);
+                        sql = "INSERT INTO products (ModelNumber, Available) VALUES ?";
+                        connection.query(sql, [products], (err, result) => {
+                            if (err){
+                                console.log(err);
+                                return reject(err);
+                            } else {
+                                resolve(result);
+                            }
+                        });
                     }
                 });
             });
