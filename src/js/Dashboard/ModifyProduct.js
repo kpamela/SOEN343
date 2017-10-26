@@ -16,11 +16,11 @@
               disabled: false,
               productIndex: 0,
               fieldValue: props.item,
-              currentForm: <div>
+              currentForm:
                   <button className="Edit" onClick={() => this.modifyProductRequest()}  >
                      Edit {this.props.item.description.modelNumber}
                   </button>
-              </div>
+
           };
 
           this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -29,8 +29,8 @@
       }
 
       handleOnModifyProduct(){
-
         this.props.onModify(this.state.fieldValue)
+
       }
 
 
@@ -91,6 +91,7 @@
        */
       handleOnSubmit(e){
 
+
       }
 
       /**
@@ -105,7 +106,7 @@
                           Select Category
                           <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                               <option value="" default> Select Category</option>
-                              <option value="Television">Television</option>
+                              {/*<option value="Television">Television</option>*/}
                               <option value="Monitor">Monitor</option>
                               <option value="TabletComputer">TabletComputer</option>
                               <option value="DesktopComputer">DesktopComputer</option>
@@ -141,11 +142,17 @@
           if(this.state.fieldValue.description) {
               for(let ind in this.state.fieldValue.description){
                   switch(ind){
+                      case 'modelNumber':err[ind] = this.state.fieldValue.description[ind].length <= 0;
+                                        break;
                       case 'price':
                       case 'weight':
-                      case 'HDSize':
-                      case 'RAM':
-                      case 'cores': err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                      case 'hardDriveSize':
+                      case 'size':
+                      case 'RAMSize':
+                      case 'dimensions':
+                      case 'numberOfCores':
+                      case 'displaySize':
+                          err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                           break;
                       default: err[ind] = this.state.fieldValue.description[ind].length < 0;
                   }
@@ -169,25 +176,32 @@
 
       }
 
+
       /**
        * Returns the form for specifications
        *
        */
       showDescriptionForm(errors){
+
           return(
               <div>
-                  <DescriptionForm errors={errors} category={this.state.fieldValue.category} onDescriptionChange={this.handleDescriptionChange}/>
+                  <DescriptionForm errors={errors}
+                                   modelNumber={this.props.item.description.modelNumber}
+                                   price={this.props.item.description.price}
+                                   category={this.state.fieldValue.category}
+                                   onDescriptionChange={this.handleDescriptionChange}/>
 
-                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={this.handleOnModifyProduct()}>
+                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
                       Submit
                   </button>
+
               </div>
           );
       }
 
 
       /**
-       * On request, display form, and start passing values to the mapper
+       * On request, display form, and start passing values to the usr
        */
       modifyProductRequest(){
          // let newForm = this.addProductForm(errors);
@@ -202,7 +216,6 @@
       render(){
           return(
               <div>
-
                   {this.state.currentForm}
               </div>
           );

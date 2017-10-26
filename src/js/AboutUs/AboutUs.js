@@ -64,7 +64,7 @@ export default class Main extends Component{
                             <td>40005813</td>
                         </tr>
                     </tbody>
-                
+
                 </Table>
             </div>
         )

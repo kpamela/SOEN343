@@ -22,7 +22,7 @@ export default class Logout extends Component{
     render(){
         if(!auth.loggedIn()){
             return(
-                <Redirect push to="/" />
+                <Redirect push to="/Catalogue" />
             );
         }
         return(
