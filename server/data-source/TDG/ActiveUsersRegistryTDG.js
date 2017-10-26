@@ -22,8 +22,8 @@ class ActiveUsersRegistryTDG{
                 Write
   ****************************************/
 
-  SQLadd_aur(username, timestamp){                                               //Adds an online user to the active user registry at the time logged in
-    let addAUR = '';
+  SQLadd_aur(userid, timestamp){                                               //Adds an online user to the active user registry at the time logged in
+    let addAUR = `INSERT INTO activeusersregistry values(userid, timestamp, true)';
     handleWrite(addAUR);
   }
 

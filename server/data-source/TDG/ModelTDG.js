@@ -16,7 +16,7 @@ class ModelTDG{
   }
 
   SQLget_model_All(category){                                          //Retrieves all models of a certain category
-    let modelInfo = {sql: `SELECT * FROM models WHERE models.Discriminator = ?`,
+    let modelInfo = {sql: `SELECT * FROM models WHERE models.Category = ?`,
                      values: [category]};
     handler.handleRead(modelInfo);
   }
@@ -27,18 +27,19 @@ class ModelTDG{
   ****************************************/
 
   SQLadd_model(model){                                               //Adds a model into the database
-    let addModel = {sql: 'INSERT INTO models SET ?',
-                    values:[model];
+    let addModel = {sql: `INSERT INTO models SET ?`,
+                    values:[model];}
     handler.handleWrite(addModel);
   }
 
   SQLmodify_model(modelNumber, column, modification){                 //Modifies the information for the model
-    let modifyModel = '';
+    let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`, 
+                        values:[column, modification, modelNumber]; }
     handler.handleWrite(modifyModel);
   }
 
   SQLdelete_product(modelNumber){                                       //Will remove a model from the database
-    let deleteProduct = {sql:'DELETE FROM models WHERE ModelNumber = ?',
+    let deleteProduct = {sql:`DELETE FROM models WHERE ModelNumber = ?`,
                          values: [modelNumber]};
       handler.handleWrite(deleteProduct);
   }

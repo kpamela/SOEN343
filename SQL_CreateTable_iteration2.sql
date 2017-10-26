@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Models(
     Size double, 
 	DisplaySize double,
     HadCamera boolean, 
+    CameraInfo varchar(30), 
     HadTouchScreen boolean, 
 	OperatingSystem varchar(20),
     BatteryInfo varchar(20),
@@ -67,3 +68,16 @@ CREATE TABLE ActiveUsersRegistry(
     PRIMARY KEY (UserID), 
     FOREIGN KEY (UserID) REFERENCES Users (UserID) ON UPDATE CASCADE
 ); 
+
+-- Table structure for table 'PurchaseHistory' -- 
+CREATE TABLE PurchaseHistory( 
+	SerialNumber int(9) NOT NULL, 
+    ModelNumber varchar(10) NOT NULL, 
+    UserID int(9) NOT NULL, 
+    PurchaseTimeStamp timestamp,
+    PRIMARY KEY (UserID, ModelNumber, SerialNumber), 
+    FOREIGN KEY (UserID) REFERENCES Users (UserID) ON UPDATE CASCADE, 
+	FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE, 
+	FOREIGN KEY (SerialNumber) REFERENCES products (SerialNumber) ON UPDATE CASCADE
+); 
+    

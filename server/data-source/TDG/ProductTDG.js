@@ -39,18 +39,21 @@ class ProductTDG{
   ****************************************/
 
   SQLadd_product(modelNumber, quantity){                                        // Will add the specified amount of products into the database, with unique serial numbers
-    let addProduct = '';
+    let addProduct = { sql:`Call addProducts(?,?)`, 
+                       values:[modelNumber,quantity];}
       handler.handleWrite(addProduct);
   }
 
 
   SQLdelete_product(modelNumber){                                               //Will remove all products from the database of a certain modelNumber
-    let deleteProduct = '';
+    let deleteProduct = {sql: `DELETE FROM models WHERE models.ModelNumber = ?`, 
+                         values:[modelNumber]; }
       handler.handleWrite(deleteProduct);
   }
 
   SQLdelete_product(modelNumber, quantity){                                     //Will remove the specified amount of products from the database of a certain model number
-    let deleteProduct = '';
+    let deleteProduct = {sql: `Call deleteProducts(?,?)`, 
+                        values:[modelNumber, quantity]; }
       handler.handleWrite(deleteProduct);
   }
 

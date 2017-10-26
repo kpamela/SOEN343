@@ -19,8 +19,11 @@ class UserTDG{
   ****************************************/
 
   SQLadd_user(userInfo){
-    let newUser = {sql:''};
+    let newUser = {sql:`INSERT INTO users SET ?`,
+                  values:[userInfo];}
+    handler.handleWrite(newUser);
   }
+
   SQLset_user_Password(username){
     let setUserPassword = {sql:`SELECT Password FROM users WHERE Username = ? LIMIT 1`,
                           values:[username]};
