@@ -28,13 +28,13 @@ class ModelTDG{
 
   SQLadd_model(model){                                               //Adds a model into the database
     let addModel = {sql: `INSERT INTO models SET ?`,
-                    values:[model];}
+                    values:[model]};
     handler.handleWrite(addModel);
   }
 
   SQLmodify_model(modelNumber, column, modification){                 //Modifies the information for the model
-    let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`, 
-                        values:[column, modification, modelNumber]; }
+    let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`,
+                        values:[column, modification, modelNumber]};
     handler.handleWrite(modifyModel);
   }
 
