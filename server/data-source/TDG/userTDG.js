@@ -21,13 +21,32 @@ class UserTDG{
   /****************************************
                   Write
   ****************************************/
-  SQLadd_users(user){
+  SQLadd_users(user) {
       let data = new jquery.Deferred();
-    let newUser = {sql: "INSERT INTO users SET ?",
-                    values: [user]};
-    handler.handleWrite(newUser,data);
-    return data
-  SQLadd_users(user, password){
+      this.SQLget_users(user.Username).then(function(existingUser){
+        if(!existingUser){
+            data.resolve({success: false, msg:"User already exists"});
+        }
+        else{
+            console.log(user.Password);
+            bcrypt.hash(user.Password, 10, (err, hash) =>{
+
+                if(err){
+                    data.resolve(err);
+                }
+                user.Password = hash;//setting password to hashed password
+                let newUser = {
+                    sql: "INSERT INTO users SET ?",
+                    values: [user]
+                };
+                handler.handleWrite(newUser, data);
+        });
+
+        }
+      });
+      return data
+  }
+ /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
       bcrypt.hash(password, 10, (err, hash) => {

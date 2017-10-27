@@ -24,9 +24,8 @@ export default class Admin extends User {
      */
     addProduct(category, amount) {
         let q = Admin.newProduct(category, amount);
-        console.log(q);
         this.p.push(q);
-
+        console.log(q);
         return this.p.length - 1;//returning index for future use
     }
 
@@ -47,7 +46,7 @@ export default class Admin extends User {
     }
 
     handleRevert(response) {
-        console.log(response);
+
         this.hasUncommittedChanges.resolve(response.data.hasUncommittedChanges);
         this.setListing(response.data);
     }

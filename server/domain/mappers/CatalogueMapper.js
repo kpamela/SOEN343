@@ -119,7 +119,7 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         else{
             //TODO proper tdg and identyMap calls
 
-            modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
+            //modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
            // ProductTDG.SQLget_product_All();
             return res.send(CatalogueMapper.productListing.content);
 
@@ -129,7 +129,7 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 
     static setListingFromDatabase(data){
         for(let i in data){
-            let product = CatalogueMapper.addNewProduct(data[i].category,data[i]);
+            let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
 
             CatalogueMapper.productListing.add(product);
         }

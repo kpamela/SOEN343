@@ -70,7 +70,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             AdminDashboardMapper.productListing.add(product);
 
-
             return res.json({msg:"Item has been added to change list",
                 data: AdminDashboardMapper.productListing.content,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
@@ -164,6 +163,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Added product: " + product.modelNumber);
                 //TODO tdg work
+
             }
             while(changes.dirtyList.length){//removing item every time
                 let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[0]);

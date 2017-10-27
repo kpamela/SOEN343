@@ -10,7 +10,8 @@ export const RegisterModal = React.createClass({
             showModal: false,
 
             Username: '',
-            Password: ''};
+            Password: '',
+            Administrator: 0};
     },
 
     close() {
@@ -26,7 +27,13 @@ export const RegisterModal = React.createClass({
     register(e){
         e.preventDefault();
         console.log(this.state);
-        axios.post('/users/register', {Username: this.state.Username, Password: this.state.Password})
+        axios.post('/users/register', {Username: this.state.Username,
+                                        Password: this.state.Password,
+                                        FirstName: this.state.FirstName,
+                                        LastName:this.state.LastName,
+                                        EmailAddress:this.state.EmailAddress,
+                                        PhoneNumber:this.state.PhoneNumber,
+                                        Administrator:this.state.Administrator})
             .then(res => {
             console.log(res);
             if(res.data.success){
@@ -60,45 +67,45 @@ export const RegisterModal = React.createClass({
                   Register
                   <form onSubmit={this.register}>
                     <label>
-                      First Name: <input type="text" name="firstName" />
+                      First Name: <input type="text" name="FirstName" onChange={this.handleChange} />
                     </label>
                     <br/>
                     <label>
-                      Last Name: <input type="text" name="lastName" />
+                      Last Name: <input type="text" name="LastName"  onChange={this.handleChange}/>
                     </label>
                     <br/>
                     <label>
-                      E-mail: <input type="email" name="name" />
+                      E-mail: <input type="email" name="EmailAddress" onChange={this.handleChange} />
                     </label>
                     <br/>
                     <label>
-                      Street Number: <input type="number" name="streetNumber"/>
+                      Street Number: <input type="number" name="StreetNumber" onChange={this.handleChange}/>
                     </label>
                     <br/>
                     <label>
-                      Street Name: <input type="text" name="streetName"/>
+                      Street Name: <input type="text" name="streetName" onChange={this.handleChange}/>
                     </label>
                     <label>
-                      Apt: <input type="text" name="apt"/>
-                    </label>
-                    <br/>
-                    <label>
-                      City: <input type="text" name="city"/>
+                      Apt: <input type="text" name="apt" onChange={this.handleChange}/>
                     </label>
                     <br/>
                     <label>
-                      Postal Code: <input type="text" name="postalCode"/>
+                      City: <input type="text" name="city" onChange={this.handleChange}/>
+                    </label>
+                    <br/>
+                    <label>
+                      Postal Code: <input type="text" name="postalCode" onChange={this.handleChange}/>
                     </label>
                     <br/>
                     <label>
                       Country:
-                      <select name="country">
+                      <select name="country" onChange={this.handleChange}>
                         <option value="canada">Canada</option>
                       </select>
                     </label>
                     <br/>
                     <label>
-                      Phone Number: <input type="tel" name="name" />
+                      Phone Number: <input type="tel" name="PhoneNumber" onChange={this.handleChange} />
                     </label>
                     <br/><br/>
                     <label>

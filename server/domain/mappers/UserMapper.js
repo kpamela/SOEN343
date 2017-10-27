@@ -48,6 +48,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
     authenticate(req, res){
 
+        console.log(req.body);
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
                 res.status(500).send("User Not found");
