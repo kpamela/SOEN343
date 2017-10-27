@@ -89,9 +89,9 @@ import auth from '../General/auth.js';
             this.state.usr.data.then(this.handleGetData);
         }
 
-        {//this.state.usr.getData()}
+        {//if(!auth.getIsAdmin()){
+           // this.showCatalogueOnly()
         }
-        //console.log(this.state.prods);
         return(
             <div>
                 <h1>TecMarket</h1>

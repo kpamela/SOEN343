@@ -63,7 +63,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
                    UserMapper.activeUsersRegistry.add(activeUser);
-                   res.json({success: true, token: 'JWT' + token, user: activeUser})
+                   res.json({success: true, token: token, user: activeUser})
                }
                else{
                    res.status(500).send('wrong password');
@@ -87,7 +87,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
         const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
         UserMapper.activeUsersRegistry.add(newUser);
-        res.json({success: true, token: 'JWT' + token, user: newUser})
+        res.json({success: true, token: token, user: newUser})
 
     }
 
