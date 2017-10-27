@@ -260,22 +260,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
 
-    static addNewProduct(category, product){
-        switch(category){
-            case 'DesktopComputer':
-                return new DesktopComputer(product);
 
-            case 'TabletComputer':
-                return new TabletComputer(product);
-
-            case 'LaptopComputer':
-                return new LaptopComputer(product);
-
-            case 'Monitor':
-                return new Monitor(product);
-
-        }
-    }
 
 }
 

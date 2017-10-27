@@ -119,14 +119,38 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         else{
             //TODO proper tdg and identyMap calls
 
-            modelTDG.SQLget_models_All().then(function(res){
-                console.log(res);
-            });
+            modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
            // ProductTDG.SQLget_product_All();
             return res.send(CatalogueMapper.productListing.content);
 
         }
 
+    }
+
+    static setListingFromDatabase(data){
+        for(let i in data){
+            let product = CatalogueMapper.addNewProduct(data[i].category,data[i]);
+
+            CatalogueMapper.productListing.add(product);
+        }
+    }
+
+
+    static addNewProduct(category, product){
+        switch(category){
+            case 'DesktopComputer':
+                return new DesktopComputer(product);
+
+            case 'TabletComputer':
+                return new TabletComputer(product);
+
+            case 'LaptopComputer':
+                return new LaptopComputer(product);
+
+            case 'Monitor':
+                return new Monitor(product);
+
+        }
     }
 
 
