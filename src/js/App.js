@@ -18,6 +18,14 @@ import auth from './General/auth.js'
  */
 
 class App extends Component {
+  checkPermissions(){
+    if(auth.getIsAdmin() == 1){
+      return <Route path="/AdminDashboard" component={AdminDashboard} />
+    }
+    else{
+      return <Route path="/ClientDashboard" component={ClientDashboard} />
+    }
+  }
 /**
  * To be added when catalog is created: <Route path="/catalog" component={Catalog} />
  */
@@ -29,8 +37,8 @@ class App extends Component {
             <Route path="/" component={Main} />
               <Switch>
                 <Route exact path="/" component={HomePage} />
-                <Route path="/AdminDashboard" component={AdminDashboard} />
-                <Route path="/ClientDashboard" component={ClientDashboard} />
+
+                  {this.checkPermissions()}
                 <Route path="/Catalogue" component={Catalogue}/>
                 <Route path="/aboutus" component={AboutUs} />
               </Switch>
