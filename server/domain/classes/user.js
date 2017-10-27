@@ -7,13 +7,13 @@ const express = require('express'),
     userTDG = require('../../data-source/TDG/UserTDG');
 class User{
     constructor(user){
-        this.username = user.Username;
-        this.password = user.Password;
-        this.firstName = user.FirstName;
-        this.lastName = user.LastName;
-        this.emailAddress = user.EmailAddress;
-        this.phoneNumber = user.PhoneNumber;
-        this.administrator = user.Administrator;
+        this.Username = user.Username;
+        this.Password = user.Password;
+        this.FirstName = user.FirstName;
+        this.LastName = user.LastName;
+        this.EmailAddress = user.EmailAddress;
+        this.PhoneNumber = user.PhoneNumber;
+        this.Administrator = user.Administrator;
     }
 
 }

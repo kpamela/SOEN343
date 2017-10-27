@@ -14,7 +14,7 @@ const express = require('express'),
 let _activeUsersRegistry = new UsersIdentityMap();
 let userTDG = new UserTDG();
 
-module.exports = class Market extends ClassBasedRouter{
+module.exports = class UserMapper extends ClassBasedRouter{
 
     static get activeUsersRegistry(){
         return _activeUsersRegistry;
@@ -61,7 +61,7 @@ module.exports = class Market extends ClassBasedRouter{
                    const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
-                   Market.activeUsersRegistry.add(activeUser);
+                   UserMapper.activeUsersRegistry.add(activeUser);
                    res.json({success: true, token: 'JWT' + token, user: activeUser})
                }
                else{
@@ -76,6 +76,8 @@ module.exports = class Market extends ClassBasedRouter{
 
         let newUser = new User(req.body);
 
+        console.log(req.body);
+
         userTDG.SQLadd_users(newUser).then(function(res){
             console.log(res);
         });
@@ -83,7 +85,7 @@ module.exports = class Market extends ClassBasedRouter{
 
         const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
-        Market.activeUsersRegistry.add(newUser);
+        UserMapper.activeUsersRegistry.add(newUser);
         res.json({success: true, token: 'JWT' + token, user: newUser})
 
     }
