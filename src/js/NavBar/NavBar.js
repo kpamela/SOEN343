@@ -34,7 +34,7 @@ export default class NavBar extends Component{
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/dashboard">Administrator Dashboard</Link></NavItem> : null}
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem>
+              {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem> : null}
             <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>
             <NavItem eventKey={3} href="#"> <Logout /> </NavItem>
             <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem>

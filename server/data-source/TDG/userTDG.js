@@ -1,7 +1,9 @@
 const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
       db = require('../../data-source/config/database.js'),
-      jwt = require('jsonwebtoken');
+      jwt = require('jsonwebtoken'),
+        jquery = require('jquery-deferred'),
+    handler = require('./handler.js');
 
 class UserTDG{
 
@@ -9,32 +11,71 @@ class UserTDG{
                   Read
   ****************************************/
   SQLget_users(username){
-    let userInfo = "SELECT * FROM users WHERE Username = " + username + " LIMIT 1";
-    handler.handleRead(newUser);
+      let data = new jquery.Deferred();
+    let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
+                    values: username};
+    handler.handleRead(userInfo, data);
+    return data;
   }
 
   /****************************************
                   Write
   ****************************************/
-  SQLadd_users(){
-    let newUser = "INSERT INTO users SET" + userInfo;
-    handler.handleWrite(newUser);
+  SQLadd_users(user) {
+      let data = new jquery.Deferred();
+      this.SQLget_users(user.Username).then(function(existingUser){
+        if(!existingUser){
+            data.resolve({success: false, msg:"User already exists"});
+        }
+        else{
+            console.log(user.Password);
+            bcrypt.hash(user.Password, 10, (err, hash) =>{
+
+                if(err){
+                    data.resolve(err);
+                }
+                user.Password = hash;//setting password to hashed password
+                let newUser = {
+                    sql: "INSERT INTO users SET ?",
+                    values: [user]
+                };
+                handler.handleWrite(newUser, data);
+        });
+
+        }
+      });
+      return data
+  }
+ /* SQLadd_users(user, password){
+    if (SQLget_users(user.Username)!=null){
+      let newUser = "INSERT INTO users SET" + userInfo;
+      bcrypt.hash(password, 10, (err, hash) => {
+          if(err) throw err;
+          password = hash;
+      let hashPassword = `INSERT INTO users SET`;
+      handler.handleWrite(newUser);
+      handleWrite(hashPassword);
+      console.log("Successfully registered user");
+    }
+    else{
+      console.log("user already exists");
+    }
   }
 
-  SQLset_users_Password(username){
-    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1";
+/*
+  SQLset_users_Password(username,password){
+    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1"
 
-    db.getConnection(userPassword, (err, connection) => {
+    db.getConnection((err, connection) => {
         userPassword(username);
         connection.query(userPassword(username), (err, user) => {
             if(err) throw err;
-            if(user.length == 0){
                 let sql = `INSERT INTO users SET ?`;
-                bcrypt.hash(this.password, 10, (err, hash) => {
+                bcrypt.hash(password, 10, (err, hash) => {
                     if(err) throw err;
-                    this.password = hash;
+                    password = hash;
                     // Add user
-                    connection.query(sql, this, (err, result) => {
+                    connection.query(sql, password, (err, result) => {
                         if(err){
                             console.log(err);
                             resolve({success: false, msg: "Failed to register user"});
@@ -53,6 +94,6 @@ class UserTDG{
         });
     });
   }
-
+*/
 }
 module.exports = UserTDG;

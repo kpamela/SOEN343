@@ -23,7 +23,7 @@ module.exports = {
 
     handleWrite: function (sql, data) {
       db.getConnection((err, connection) => {                               // Unsure if this needs to be returned
-          connection.query(sql, data, (err, result) => {
+          connection.query(sql,(err, result) => {
               if (err) {
                   console.log(err);
                   data.resolve(err);

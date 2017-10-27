@@ -1,11 +1,11 @@
 const express = require('express'),
     users = express.Router(),
     mysql = require('mysql'),
-    table = require('../../data-source/models/users.js'),
+    table = require('../../../data-source/models/users.js'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
-    db = require('../../data-source/config/database.js');
-    User = require('../classes/user.js');
+    db = require('../../../data-source/config/database.js');
+    User = require('../../classes/user.js');
 
 db.getConnection((err, connection) => {
 
@@ -28,6 +28,8 @@ db.getConnection((err, connection) => {
             else{
                 res.status(401).json(result);
             }
+        }).catch(function(err){
+
         });
     });
 
