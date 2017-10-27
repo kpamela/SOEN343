@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import {Modal, Button, FieldGroup} from 'react-bootstrap';
 import auth from '../General/auth.js';
+import axios from 'axios';
 
 
 export const RegisterModal = React.createClass({
@@ -14,6 +15,23 @@ export const RegisterModal = React.createClass({
 
     open() {
         this.setState({ showModal: true });
+    },
+    register(e){
+        e.preventDefault();
+        axios.post('/users/register', {Username: this.state.username, Password: this.state.password})
+            .then(res => {
+            console.log(res);
+            if(res.data.success){
+                const token = res.data.token;
+                localStorage.setItem('jwtToken', token);
+                auth.setAuthToken(token);
+                auth.setIsAdmin(res.data.user.administrator);
+                this.setState({redirect: true});
+            }
+            else{
+                console.log(res.data.msg)
+            }
+        });
     },
 
     render() {
@@ -32,7 +50,7 @@ export const RegisterModal = React.createClass({
                 </Modal.Header>
                 <Modal.Body>
                   Register
-                  <form>
+                  <form onSubmit={this.register}>
                     <label>
                       First Name: <input type="text" name="firstName" />
                     </label>

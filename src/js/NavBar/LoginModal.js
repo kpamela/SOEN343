@@ -32,8 +32,6 @@ export const LoginModal = React.createClass({
 
   login(e){
     e.preventDefault();
-    console.log(this.state.Username);
-    console.log(this.state.Password);
     axios.post('/users/authenticate', {Username: this.state.Username, Password: this.state.Password})
       .then(res => {
         console.log(res);
@@ -41,7 +39,7 @@ export const LoginModal = React.createClass({
           const token = res.data.token;
           localStorage.setItem('jwtToken', token);
           auth.setAuthToken(token);
-          auth.setIsAdmin(res.data.user.isAdmin);
+          auth.setIsAdmin(res.data.user.administrator);
           this.setState({redirect: true});
         }
         else{

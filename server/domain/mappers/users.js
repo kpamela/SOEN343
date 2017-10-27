@@ -28,6 +28,8 @@ db.getConnection((err, connection) => {
             else{
                 res.status(401).json(result);
             }
+        }).catch(function(err){
+
         });
     });
 

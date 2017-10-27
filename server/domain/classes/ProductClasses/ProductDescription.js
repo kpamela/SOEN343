@@ -36,6 +36,11 @@ class ProductDescription{
         this.setNew();
     }
 
+    setDescription(ob1){
+
+    }
+
+
     setDirty(){
         _flag = _DIRTY;
     }
