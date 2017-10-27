@@ -16,25 +16,36 @@ class UserTDG{
   /****************************************
                   Write
   ****************************************/
-  SQLadd_users(){
-    let newUser = "INSERT INTO users SET" + userInfo;
-    handler.handleWrite(newUser);
+  SQLadd_users(user, password){
+    if (SQLget_users(user.Username)!=null){
+      let newUser = "INSERT INTO users SET" + userInfo;
+      bcrypt.hash(password, 10, (err, hash) => {
+          if(err) throw err;
+          password = hash;
+      let hashPassword = `INSERT INTO users SET`;
+      handler.handleWrite(newUser);
+      handleWrite(hashPassword);
+      console.log("Successfully registered user");
+    }
+    else{
+      console.log("user already exists");
+    }
   }
 
-  SQLset_users_Password(username){
-    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1";
+/*
+  SQLset_users_Password(username,password){
+    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1"
 
-    db.getConnection(userPassword, (err, connection) => {
+    db.getConnection((err, connection) => {
         userPassword(username);
         connection.query(userPassword(username), (err, user) => {
             if(err) throw err;
-            if(user.length == 0){
                 let sql = `INSERT INTO users SET ?`;
-                bcrypt.hash(this.password, 10, (err, hash) => {
+                bcrypt.hash(password, 10, (err, hash) => {
                     if(err) throw err;
-                    this.password = hash;
+                    password = hash;
                     // Add user
-                    connection.query(sql, this, (err, result) => {
+                    connection.query(sql, password, (err, result) => {
                         if(err){
                             console.log(err);
                             resolve({success: false, msg: "Failed to register user"});
@@ -44,15 +55,9 @@ class UserTDG{
                         }
                     });
                 });
-            }
-            else {
-                if(this.username == user[0].Username){
-                    resolve({success: false, msg: "Username already exists"});
-                }
-            }
         });
     });
   }
-
+*/
 }
 module.exports = UserTDG;
