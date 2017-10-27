@@ -12,7 +12,7 @@ const express = require('express'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/Monitor.js'),
-    UnitOfWork = require('../UnitOfwork.js'),
+    UnitOfWork = require('../UnitOfWork.js'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap');
 
 /**
