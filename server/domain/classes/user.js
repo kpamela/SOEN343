@@ -4,7 +4,7 @@ const express = require('express'),
     mysql = require('mysql'),                             // When all queries are moved to tdg, this can be removed
     db = require('../../data-source/config/database.js'),
     jwt = require('jsonwebtoken'),
-    userTDG = require('../../data-source/TDG/UserTDG');
+    userTDG = require('../../data-source/TDG/userTDG');
 class User{
     constructor(user){
         this.Username       = user.Username;
