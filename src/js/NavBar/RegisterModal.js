@@ -6,7 +6,11 @@ import axios from 'axios';
 
 export const RegisterModal = React.createClass({
     getInitialState() {
-        return { showModal: false };
+        return {
+            showModal: false,
+
+            Username: '',
+            Password: ''};
     },
 
     close() {
@@ -16,9 +20,13 @@ export const RegisterModal = React.createClass({
     open() {
         this.setState({ showModal: true });
     },
+    handleChange(e){
+        this.setState({[e.target.name]: e.target.value})
+    },
     register(e){
         e.preventDefault();
-        axios.post('/users/register', {Username: this.state.username, Password: this.state.password})
+        console.log(this.state);
+        axios.post('/users/register', {Username: this.state.Username, Password: this.state.Password})
             .then(res => {
             console.log(res);
             if(res.data.success){
@@ -94,15 +102,15 @@ export const RegisterModal = React.createClass({
                     </label>
                     <br/><br/>
                     <label>
-                      Username: <input type="text" name="username" />
+                      Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange} />
                     </label>
                     <br/>
                     <label>
-                      Password: <input type="password" name="username" />
+                      Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
                     </label>
                     <br/>
                     <label>
-                      Confirm Password: <input type="password" name="username" />
+                      Confirm Password: <input type="password" name="Password" />
                     </label>
                     <br/>
                     <input type="submit" value="Submit" />

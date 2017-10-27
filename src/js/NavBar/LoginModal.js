@@ -39,8 +39,9 @@ export const LoginModal = React.createClass({
           const token = res.data.token;
           localStorage.setItem('jwtToken', token);
           auth.setAuthToken(token);
-          auth.setIsAdmin(res.data.user.administrator);
+          auth.setIsAdmin(res.data.user.Administrator);
           this.setState({redirect: true});
+          console.log(auth.getIsAdmin());
         }
         else{
           console.log(res.data.msg)

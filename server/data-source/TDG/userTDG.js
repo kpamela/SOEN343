@@ -24,7 +24,7 @@ class UserTDG{
   SQLadd_users(user){
       let data = new jquery.Deferred();
     let newUser = {sql: "INSERT INTO users SET ?",
-                    values: user};
+                    values: [user]};
     handler.handleWrite(newUser,data);
     return data
   }
