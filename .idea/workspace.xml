@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f0e6feb0-9032-4962-acd4-fe60188a4916" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/handler.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/handler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,16 +17,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CatalogueMapper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1113">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ProductHistory.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/ProductHistory.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -101,7 +90,7 @@
       <file leaf-file-name="ProductTDG.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
+            <state relative-caret-position="459">
               <caret line="52" column="41" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -110,7 +99,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="handler.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ModelTDG.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="329">
+              <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="handler.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/data-source/TDG/handler.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
@@ -162,6 +163,7 @@
         <option value="$PROJECT_DIR$/server/classes/ProductClasses/desktopComputer.js" />
         <option value="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" />
         <option value="$PROJECT_DIR$/server/data-source/TDG/handler.js" />
+        <option value="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" />
       </list>
     </option>
   </component>
@@ -291,7 +293,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16357000" />
+    <option name="totallyTimeSpent" value="16916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="727" extended-state="0" />
@@ -432,16 +434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1113">
@@ -514,16 +506,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="52" column="41" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/data-source/TDG/handler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -531,6 +513,26 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1509061191000" expanded="true" signature="1087:1104" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="52" column="41" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="35" column="35" lean-forward="true" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
