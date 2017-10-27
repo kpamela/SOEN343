@@ -20,7 +20,7 @@ class User{
     register(){
         var promise = new Promise((resolve, reject) => {
             setTimeout(() => {
-              SQLset_user_Password(this.username);
+              SQLset_users_Password(this.username);
             });
         });
         return promise;
