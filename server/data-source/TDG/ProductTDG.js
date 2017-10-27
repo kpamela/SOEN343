@@ -39,9 +39,18 @@ class ProductTDG{
   ****************************************/
 
   SQLadd_products(modelNumber, quantity){                                        // Will add the specified amount of products into the database, with unique serial numbers
-    let addProduct = { sql:`Call addProducts(?,?)`,
-                       values:[modelNumber,quantity]};
-      handler.handleWrite(addProduct);
+      // Build the appropriate number of products to put in the product table
+      var products = [];
+      for (var i = 0; i < quantity; i++){
+          console.log(i);
+          if (!products[i]){
+              products[i] = [];
+          }
+          products[i][0] = modelNumber;
+          products[i][1] = 1;
+      }
+      sql = "INSERT INTO products (ModelNumber, Available) VALUES ?";
+      handler.handleWrite(sql, [products]);
   }
 
 

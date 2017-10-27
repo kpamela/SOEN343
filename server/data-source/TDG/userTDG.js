@@ -8,25 +8,21 @@ class UserTDG{
   /****************************************
                   Read
   ****************************************/
-  SQLget_user_All(username){
-    let userInfo = {sql:`SELECT * FROM users WHERE Username = ? LIMIT 1`,
-                    values:[username]};
-    return userInfo;
+  SQLget_users(username){
+    let userInfo = "SELECT * FROM users WHERE Username = " + username + " LIMIT 1";
+    handler.handleRead(newUser);
   }
 
   /****************************************
                   Write
   ****************************************/
-
-  SQLadd_user(userInfo){
-    let newUser = {sql:`INSERT INTO users SET ?`,
-                  values:[userInfo]};
+  SQLadd_users(){
+    let newUser = "INSERT INTO users SET" + userInfo;
     handler.handleWrite(newUser);
   }
 
-  SQLset_user_Password(username){
-    let setUserPassword = {sql:`SELECT Password FROM users WHERE Username = ? LIMIT 1`,
-                          values:[username]};
+  SQLset_users_Password(username){
+    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1";
 
     db.getConnection(userPassword, (err, connection) => {
         userPassword(username);
