@@ -25,7 +25,7 @@ let _productListing = new ProductsIdentityMap();
 
 
 let modelTDG = new ModelTDG();
-// [{Category: "Monitor", description: {ModelNumber: "222", Price: 22, Dimensions: 222, Weight: 22, BrandName: "22"}, Amount: "2"}]
+
 /**
  * Unit of work is common to all catalogues
  */
@@ -74,10 +74,6 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 */
    constructor(options={}) {
         super(options);
-       // this.productListing = [{Category: "Monitor", description: {ModelNumber: "222", Price: 22, Dimensions: 222, Weight: 22, BrandName: "22"}, Amount: "2"}];
-        let test = new Monitor({category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: 2});
-        CatalogueMapper.productListing.add(test);
-
 
         this.register(this.middlewares);
         this.register(this.routes);
@@ -119,7 +115,7 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         else{
             //TODO proper tdg and identyMap calls
 
-            //modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
+            modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
            // ProductTDG.SQLget_product_All();
 
             return res.send(CatalogueMapper.productListing.content);
@@ -129,11 +125,15 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
     }
 
     static setListingFromDatabase(data){
+
         for(let i in data){
             let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
+            if(product){//ignore undefined
 
-            CatalogueMapper.productListing.add(product);
+                CatalogueMapper.productListing.add(product);
+            }
         }
+        console.log(CatalogueMapper.productListing.content);
     }
 
 

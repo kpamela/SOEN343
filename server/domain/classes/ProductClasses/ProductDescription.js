@@ -28,7 +28,7 @@ class ProductDescription{
             this.Dimensions = product.description.dimensions;
             this.Price = product.description.price;
             this.Weight = product.description.weight;
-            this.AdditionalInfo = product.description.additionalInfo;
+            //this.AdditionalInfo = product.description.additionalInfo;
             this.Amount = product.amount;
             this.Category = product.category;
         }
@@ -38,14 +38,13 @@ class ProductDescription{
             this.Dimensions = product.Dimensions;
             this.Price = product.Price;
             this.Weight = product.Weight;
-            this.AdditionalInfo = product.AdditionalInfo;
+            //this.AdditionalInfo = product.AdditionalInfo;
             this.Amount = product.Amount;
             this.Category = product.Category;
         }
 
-        this.productIds = this.setProductIds(this.Amount);
+        //this.productIds = this.setProductIds(this.Amount);
 
-        console.log(this);
         this.setNew();
     }
 

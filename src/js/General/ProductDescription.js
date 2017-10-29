@@ -24,7 +24,10 @@ export default class ProductDescription{
         this.amount = ob1.Amount;
         for(let i in ob1){
             if(i !== 'Category' && i !== 'Amount' && i !== 'productIds'){
-                let ind = i.charAt(0).toLowerCase() + i.slice(1);
+                let ind = i;
+                if(i !== 'RAMSize'){//ignore RAMSize
+                    ind = i.charAt(0).toLowerCase() + i.slice(1);
+                }
                 this.description[ind] = ob1[i];
             }
         }

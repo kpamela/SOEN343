@@ -2,6 +2,7 @@
  * Created by CharlesPhilippe on 2017-10-22.
  */
 const Catalogue = require('./CatalogueMapper.js'),
+    ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer.js'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer.js'),
@@ -16,7 +17,7 @@ const ProductHistory = require('../IdentityMaps/ProductHistory.js');
  * @private
  */
 let _productHistory = new ProductHistory();
-
+let modelTDG = new ModelTDG();
 
 module.exports = class AdminDashboardMapper extends Catalogue{
 
@@ -163,7 +164,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Added product: " + product.ModelNumber);
                 //TODO tdg work
-
+                modelTDG.SQLadd_models(product).then(function(response){
+                    console.log(response);
+                });
             }
             while(changes.dirtyList.length){//removing item every time
                 let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[0]);
@@ -178,6 +181,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.ModelNumber);
                 //TODO tdg work
+                modelTDG.SQLdelete_models(product.ModelNumber);
             }
 
             if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
