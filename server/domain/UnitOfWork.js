@@ -13,14 +13,14 @@ module.exports = class UnitOfWork{
     registerNew(ob1){
         ob1.setNew();
         this.removeFromChangeList(ob1);
-        this.changeList.newList.push(ob1.modelNumber);
+        this.changeList.newList.push(ob1.ModelNumber);
         this.hasUncommittedChanges = true;
     }
 
     registerDirty(ob1){
         ob1.setDirty();
         this.removeFromChangeList(ob1);
-        this.changeList.dirtyList.push(ob1.modelNumber);
+        this.changeList.dirtyList.push(ob1.ModelNumber);
         this.hasUncommittedChanges = true;
     }
 
@@ -33,7 +33,7 @@ module.exports = class UnitOfWork{
     registerDeleted(ob1){
         ob1.setDeleted();
         this.removeFromChangeList(ob1);//removing from any other list before pushing to new one
-        this.changeList.deletedList.push(ob1.modelNumber);
+        this.changeList.deletedList.push(ob1.ModelNumber);
         this.hasUncommittedChanges = true;
     }
 
@@ -43,19 +43,19 @@ module.exports = class UnitOfWork{
         //removing model number from list
         //there should be only one model number instance in all the changeList
         for(let i  in this.changeList.newList){
-            if(this.changeList.newList[i] === ob1.modelNumber){
+            if(this.changeList.newList[i] === ob1.ModelNumber){
                 this.changeList.newList.splice(i,1);
                 return;
             }
         }
         for(let i in this.changeList.dirtyList){
-            if(this.changeList.dirtyList[i] === ob1.modelNumber){
+            if(this.changeList.dirtyList[i] === ob1.ModelNumber){
                 this.changeList.dirtyList.splice(i,1);
                 return;
             }
         }
         for(let i in this.changeList.deletedList){
-            if(this.changeList.deletedList[i] === ob1.modelNumber){
+            if(this.changeList.deletedList[i] === ob1.ModelNumber){
                 this.changeList.deletedList.splice(i,1);
                 return;
             }

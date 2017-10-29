@@ -58,7 +58,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let category = req.body.data.category;
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
-                return res.json(400, {success: false, msg: "Invalid product category."});
+                return res.json(400, {success: false, msg: "Invalid product Category."});
             }
             //TODO fix domain objects
 
@@ -95,17 +95,17 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             //storing old object until commit
             if(old.flag === 1){//item already modified
-                const history = AdminDashboardMapper.getCurrentModelIndexInHistory(old.modelNumber);
+                const history = AdminDashboardMapper.getCurrentModelIndexInHistory(old.ModelNumber);
                 //modify current model number to handle modelnumber changes
                 //keeping the old model in history
-                AdminDashboardMapper.productHistory.modified[history].current = newProduct.modelNumber;
+                AdminDashboardMapper.productHistory.modified[history].current = newProduct.ModelNumber;
                 //remove old product from changelist
                 AdminDashboardMapper.unitOfWork.removeFromChangeList(old);
 
             }
             else{
                 AdminDashboardMapper.productHistory.modified.push(
-                    {current: newProduct.modelNumber,
+                    {current: newProduct.ModelNumber,
                     old: old});
             }
 
@@ -161,7 +161,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 let product = AdminDashboardMapper.productListing.getModel(changes.newList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Added product: " + product.modelNumber);
+                console.log("Added product: " + product.ModelNumber);
                 //TODO tdg work
 
             }
@@ -169,14 +169,14 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Modified product: "+product.modelNumber);
+                console.log("Modified product: "+product.ModelNumber);
                 //TODO tdg work
             }
             while(changes.deletedList.length){//removing item every time
                 let product = AdminDashboardMapper.productHistory.getDeletedModel(changes.deletedList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Deleted product: " + product.modelNumber);
+                console.log("Deleted product: " + product.ModelNumber);
                 //TODO tdg work
             }
 

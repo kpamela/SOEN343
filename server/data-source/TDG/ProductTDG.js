@@ -45,7 +45,7 @@ class ProductTDG{
   }
 
 
-  SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain modelNumber
+  SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain ModelNumber
     let deleteProduct = {sql: `DELETE FROM models WHERE models.ModelNumber = ?`,
                          values:[modelNumber]};
       handler.handleWrite(deleteProduct);

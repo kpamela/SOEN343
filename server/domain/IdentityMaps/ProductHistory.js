@@ -13,7 +13,7 @@ module.exports =  class ProductHistory{
 
      getDeletedModel(model){
         for(let i in this.deleted) {
-            if (this.deleted[i].modelNumber === model) {
+            if (this.deleted[i].ModelNumber === model) {
                 return this.deleted[i];//found
             }
         }

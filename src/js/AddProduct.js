@@ -38,7 +38,7 @@ export default class AddProduct extends React.Component{
                     <input
                         type="text"
                         placeholder={'Enter Product Price'}
-                        value={this.state.newItem.price}
+                        value={this.state.newItem.Price}
                         id="price"
                         onChange={this.handleChange}
                     />
@@ -79,7 +79,7 @@ export default class AddProduct extends React.Component{
         var item = {name:this.state.newItem.name,
             category: this.state.newItem.category,
             description:this.state.newItem.description,
-            price:this.state.newItem.price,
+            Price:this.state.newItem.Price,
             amount:this.state.newItem.amount};
         this.props.onNewItem(item);
         e.preventDefault();

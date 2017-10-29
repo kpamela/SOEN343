@@ -19,7 +19,7 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
      */
     findModel(model){
         for(let i in this.content){
-            if(this.content[i].modelNumber === model){
+            if(this.content[i].ModelNumber === model){
                 return i;
             }
         }

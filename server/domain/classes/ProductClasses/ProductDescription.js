@@ -22,17 +22,30 @@ class ProductDescription{
 
     constructor(product){
 
-        this.brandName = product.description.brandName;
-        this.modelNumber = product.description.modelNumber;
-        this.dimensions = product.description.dimensions;
-        this.price = product.description.price;
-        this.weight = product.description.weight;
-        this.additionalInfo = product.description.additionalInfo;
-        this.amount = product.amount;
-        this.category = product.category;
+        if(product.description){
+            this.BrandName = product.description.brandName;
+            this.ModelNumber = product.description.modelNumber;
+            this.Dimensions = product.description.dimensions;
+            this.Price = product.description.price;
+            this.Weight = product.description.weight;
+            this.AdditionalInfo = product.description.additionalInfo;
+            this.Amount = product.amount;
+            this.Category = product.category;
+        }
+        else{
+            this.BrandName = product.BrandName;
+            this.ModelNumber = product.ModelNumber;
+            this.Dimensions = product.Dimensions;
+            this.Price = product.Price;
+            this.Weight = product.Weight;
+            this.AdditionalInfo = product.AdditionalInfo;
+            this.Amount = product.Amount;
+            this.Category = product.Category;
+        }
 
-        this.productIds = this.setProductIds(this.amount);
+        this.productIds = this.setProductIds(this.Amount);
 
+        console.log(this);
         this.setNew();
     }
 
@@ -65,7 +78,7 @@ class ProductDescription{
         let arr = [];
 
         for(let i = 0; i < amount; i++){
-            arr[i] = this.modelNumber + "_" + i;
+            arr[i] = this.ModelNumber + "_" + i;
         }
 
         return arr;
