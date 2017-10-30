@@ -10,14 +10,13 @@ export default class Main extends Component{
         super(props);
     }
 
+    //
     render(){
         let path = this.props.location.pathname;
         return(
             <div className="main">
                 <NavBar />
-                <footer>
-                    <p>SOEN 343 Team 15 Project</p>
-                </footer>
+                <footer>SOEN 343 Team 15 Project</footer>
             </div>
         );
     }

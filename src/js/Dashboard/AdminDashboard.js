@@ -6,6 +6,7 @@ import React from 'react';
 import Catalogue from './Catalogue.js';
 import NewProductRequest from './NewProductRequest.js';
 import ProductListing from './ProductListing.js';
+import {PageHeader} from 'react-bootstrap';
 
 
 export class AdminDashboard extends Catalogue{
@@ -95,6 +96,7 @@ export class AdminDashboard extends Catalogue{
        // this.handleUncommittedChanges();
         return(
             <div>
+                <PageHeader className="catalogHeader">Administrator Dashboard</PageHeader>
                 {super.render()}
                 <NewProductRequest
                     usr={this.state.usr}

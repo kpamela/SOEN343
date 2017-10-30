@@ -2,6 +2,7 @@
  * Created by CharlesPhilippe on 2017-09-25.
  */
 import React from 'react';
+import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 export default class SearchBar extends React.Component{
     constructor(props){
@@ -26,25 +27,31 @@ export default class SearchBar extends React.Component{
 
     render(){
         return( 
-            <form>
-                <input type="text" placeholder="Search..."
-                       value={this.props.filterText}
-                       onChange={this.handleFilterTextInputChange}
-                />
-                <br/>
-                <select value ={this.props.include} onChange={this.handleIncludeChange}>
-                    <option value="" default>Select filter</option>
-                    <option value="Monitor">Monitor</option>
-                    <option value="Desktop">Desktop</option>
-                    <option value="Laptop">Laptop</option>
-                    <option value="Tablet">Tablet</option>
-                    <option value="Computer">all Computers</option>
-                </select>
-                <select disabled={this.props.disableSort} value={this.props.sorting} onChange={this.handleSortChange}>
-                    <option value="" default>Select Sorting Option</option>
-                    <option value="true">Sort by Ascending Price</option>
-                    <option value="false">Sort by Descending price</option>
-                </select>
+            <form className="catalogForm">
+                <FormGroup>
+                    <ControlLabel>Search</ControlLabel>
+                    <FormControl type="text" placeholder="Search..."
+                        value={this.props.filterText}
+                        onChange={this.handleFilterTextInputChange}
+                    />
+                    <br/>
+                    <ControlLabel>Select Filter</ControlLabel>
+                    <FormControl componentClass="select" value ={this.props.include} onChange={this.handleIncludeChange}>
+                        <option value="" default>Select filter</option>
+                        <option value="Monitor">Monitor</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Computer">all Computers</option>
+                    </FormControl>
+                    <br/>
+                    <ControlLabel>Select Sorting Option</ControlLabel>
+                    <FormControl componentClass="select" disabled={this.props.disableSort} value={this.props.sorting} onChange={this.handleSortChange}>
+                        <option value="" default>Select Sorting Option</option>
+                        <option value="true">Sort by Ascending Price</option>
+                        <option value="false">Sort by Descending price</option>
+                    </FormControl>
+                </FormGroup>
             </form>
         );
     }

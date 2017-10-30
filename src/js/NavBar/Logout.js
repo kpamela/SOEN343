@@ -20,9 +20,9 @@ export default class Logout extends Component{
     }
     
     render(){
-        if(!auth.loggedIn()){
+        if(this.state.redirect){
             return(
-                <Redirect push to="/Catalogue" />
+                <Redirect to="/" />
             );
         }
         return(

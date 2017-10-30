@@ -41,7 +41,6 @@ export const RegisterModal = React.createClass({
                 localStorage.setItem('jwtToken', token);
                 auth.setAuthToken(token);
                 auth.setIsAdmin(res.data.user.administrator);
-                this.setState({redirect: true});
             }
             else{
                 console.log(res.data.msg)
@@ -50,9 +49,18 @@ export const RegisterModal = React.createClass({
     },
 
     render() {
-        if(auth.loggedIn()){
-            return(null);
+      if(auth.loggedIn()){
+        if(auth.getIsAdmin() == 1){
+          return(
+            <Redirect push to="/AdminDashboard" />
+          );
         }
+        else if(auth.getIsAdmin() == 0){
+          return(
+            <Redirect push to="/ClientDashboard" />
+          );
+        }
+      }
         return (
             <div>
               <Button bsStyle="default" bsSize="sm" onClick={this.open}>

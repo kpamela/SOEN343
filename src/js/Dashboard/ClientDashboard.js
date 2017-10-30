@@ -6,6 +6,7 @@
 import React from 'react';
 import Catalogue from './Catalogue.js';
 import ProductListing from './ProductListing.js';
+import {PageHeader} from 'react-bootstrap';
 
 
 export class ClientDashboard extends Catalogue{
@@ -18,8 +19,8 @@ export class ClientDashboard extends Catalogue{
 
         return(
             <div>
+                <PageHeader className="catalogHeader">Client Dashboard</PageHeader>
                 {super.render()}
-
                 <ProductListing
                     isAdmin="client"
                     products={this.state.PRODUCTS}
