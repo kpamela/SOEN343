@@ -31,7 +31,6 @@ export default class ProductDescription{
                 this.description[ind] = ob1[i];
             }
         }
-        console.log(this);
     }
 
     setCategory(category){

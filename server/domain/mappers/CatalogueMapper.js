@@ -125,15 +125,17 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
     }
 
     static setListingFromDatabase(data){
-
+        CatalogueMapper.productListing.content = [];
         for(let i in data){
-            let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
+           // modelTDG.SQLdelete_models(data[i].ModelNumber);
+           let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
             if(product){//ignore undefined
-
                 CatalogueMapper.productListing.add(product);
+                console.log(product);
             }
         }
-        console.log(CatalogueMapper.productListing.content);
+        console.log("%%%%%%%%%%%%%%%%%%%%");
+
     }
 
 
