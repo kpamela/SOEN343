@@ -4,6 +4,7 @@ created by CharlesPhilippe
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {ListGroupItem} from 'react-bootstrap';
 
 export default class Product extends React.Component{
 
@@ -35,15 +36,13 @@ export default class Product extends React.Component{
 
         return (
             <div>
-            <button className="product" onClick={() =>this.showModifyForm()}>
-                <b>{this.props.item.name}</b><br/>
-                <i>{this.props.item.category}</i><br/>
-                {this.displayDescription()}
-                {this.props.item.amount}
-
-            </button>
+                <ListGroupItem bsStyle="secondary" className="product" onClick={() =>this.showModifyForm()}>
+                    <b>{this.props.item.name}</b><br/>
+                    <i>{this.props.item.category}</i><br/>
+                    {this.displayDescription()}
+                    {this.props.item.amount}
+                </ListGroupItem>
                 <br/>
-
             </div>
         );
     }

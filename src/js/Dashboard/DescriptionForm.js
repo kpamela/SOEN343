@@ -2,6 +2,7 @@
  * Created by CharlesPhilippe on 2017-09-28.
  */
 import React from 'react';
+import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
 
 export default class DescriptionForm extends React.Component{
 
@@ -36,14 +37,15 @@ export default class DescriptionForm extends React.Component{
      * @returns {XML}
      */
     televisionDescription(){
-        return(
+        return(   
             <div>
-                <select id="TelevisionType" value={this.state.currentDescription["type"]} onChange={this.handleChange}>
+                <ControlLabel>Television Type</ControlLabel>
+                <FormControl componentClass="select" id="TelevisionType" value={this.state.currentDescription["type"]} onChange={this.handleChange}>
                     <option value="" default>Select Type</option>
                     <option value="HD LED">LED</option>
                     <option value="Smart">Smart</option>
                     <option value="3d">3d</option>
-                </select>
+                </FormControl>
             </div>
         );
     }
@@ -54,14 +56,18 @@ export default class DescriptionForm extends React.Component{
      */
     monitorDescription(){
         return(
-            <input
-                className={this.props.errors["size"] ? "error":""}
-                type="text"
-                placeholder={'Enter Monitor Size'}
-                value={this.state.currentDescription["size"]}
-                id="size"
-                onChange={this.handleChange}
-            />
+            <div>
+                <ControlLabel>Monitor Size</ControlLabel>
+                <FormControl
+                    className={this.props.errors["size"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Monitor Size'}
+                    value={this.state.currentDescription["size"]}
+                    id="size"
+                    onChange={this.handleChange}
+                />
+                <br/>
+            </div>
         );
     }
 
@@ -83,7 +89,8 @@ export default class DescriptionForm extends React.Component{
         }
         return(
             <div>
-                <input
+                <ControlLabel>Processor Type</ControlLabel>
+                <FormControl
                     className={this.props.errors["processorType"] ? "error":""}
                     type="text"
                     placeholder={'Enter Processor Type'}
@@ -91,7 +98,9 @@ export default class DescriptionForm extends React.Component{
                     id="processorType"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>RAM Size</ControlLabel>
+                <FormControl
                     className={this.props.errors["RAMSize"] ? "error":""}
                     type="text"
                     placeholder={'Enter RAM size'}
@@ -99,7 +108,9 @@ export default class DescriptionForm extends React.Component{
                     id="RAMSize"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Number of Cores</ControlLabel>
+                <FormControl
                     className={this.props.errors["numberOfCores"] ? "error":""}
                     type="text"
                     placeholder={'Enter Number of CPU cores'}
@@ -107,7 +118,9 @@ export default class DescriptionForm extends React.Component{
                     id="numberOfCores"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Hard Drive Size</ControlLabel>
+                <FormControl
                     className={this.props.errors["hardDriveSize"] ? "error":""}
                     type="text"
                     placeholder={'Enter Hard Drive Size'}
@@ -117,6 +130,7 @@ export default class DescriptionForm extends React.Component{
                 />
                 <br/>
                 {typeDescription}
+                <br/>
             </div>
         );
     }
@@ -128,7 +142,8 @@ export default class DescriptionForm extends React.Component{
     tabletDescription(){
         return(
             <div>
-                <input
+                <ControlLabel>Television type</ControlLabel>
+                <FormControl
                     className={this.props.errors["operatingSystem"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
@@ -136,7 +151,9 @@ export default class DescriptionForm extends React.Component{
                     id="operatingSystem"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Battery Information</ControlLabel>
+                <FormControl
                     className={this.props.errors["batteryInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
@@ -145,7 +162,8 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <br/>
-                <input
+                <ControlLabel>Display Size</ControlLabel>
+                <FormControl
                     className={this.props.errors["displaySize"] ? "error":""}
                     type="text"
                     placeholder={'Enter Display Size'}
@@ -153,7 +171,9 @@ export default class DescriptionForm extends React.Component{
                     id="displaySize"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Camera Information</ControlLabel>
+                <FormControl
                     className={this.props.errors["cameraInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Camera Information'}
@@ -161,6 +181,7 @@ export default class DescriptionForm extends React.Component{
                     id="cameraInfo"
                     onChange={this.handleChange}
                 />
+                <br/>
             </div>
         );
     }
@@ -177,7 +198,8 @@ export default class DescriptionForm extends React.Component{
     laptopDescription(){
         return(
             <div>
-                <input
+                <ControlLabel>Operating System</ControlLabel>
+                <FormControl
                     className={this.props.errors["operatingSystem"] ? "error":""}
                     type="text"
                     placeholder={'Enter Built-in Operating System'}
@@ -185,7 +207,9 @@ export default class DescriptionForm extends React.Component{
                     id="operatingSystem"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Battery Information</ControlLabel>
+                <FormControl
                     className={this.props.errors["batteryInfo"] ? "error":""}
                     type="text"
                     placeholder={'Enter Battery Information'}
@@ -193,7 +217,9 @@ export default class DescriptionForm extends React.Component{
                     id="batteryInfo"
                     onChange={this.handleChange}
                 />
-                <input
+                <br/>
+                <ControlLabel>Display Size</ControlLabel>
+                <FormControl
                     className={this.props.errors["displaySize"] ? "error":""}
                     type="text"
                     placeholder={'Enter Display Size'}
@@ -202,24 +228,13 @@ export default class DescriptionForm extends React.Component{
                     onChange={this.handleChange}
                 />
                 <br/>
-                <label>
+
+                <Checkbox value={this.state.currentDescription["hasCamera"]} id="hasCamera" onChange={this.handleChange}>
                     Camera
-                <input
-                    type="checkbox"
-                    value={this.state.currentDescription["hasCamera"]}
-                    id="hasCamera"
-                    onChange={this.handleChange}
-                />
-                </label>
-                <label>
-                    Touch-Screen
-                <input
-                    type="checkbox"
-                    value={this.state.currentDescription["touchScreen"]}
-                    id="touchScreen"
-                    onChange={this.handleChange}
-                />
-                </label>
+                </Checkbox>
+                <Checkbox value={this.state.currentDescription["touchScreen"]} id="touchScreen" onChange={this.handleChange}>
+                    Touchscreen
+                </Checkbox>
         </div>
         );
     }
@@ -262,61 +277,71 @@ export default class DescriptionForm extends React.Component{
 
     render(){
         return(
-        <div>
-            <h4> Adding a {this.props.category}</h4>
-            <input
-                className={this.props.errors["price"] ? "error":""}
-                type="text"
-                placeholder={'Enter Price'}
-                value={this.state.currentDescription['price']}
-                id="price"
-                onChange={this.handleChange}
-            />
-            <input
-                className={this.props.errors["modelNumber"] ? "error":""}
-                type="text"
-                placeholder={'Enter Product Model Number'}
-                value={this.state.currentDescription['modelNumber']}
-                id="modelNumber"
-                onChange={this.handleChange}
-            />
-            <br/>
-            <input
-                className={this.props.errors["dimensions"] ? "error":""}
-                type="text"
-                placeholder={'Enter Product Dimensions'}
-                value={this.state.currentDescription['dimensions']}
-                id="dimensions"
-                onChange={this.handleChange}
-            />
-            <input
-                className={this.props.errors["weight"] ? "error":""}
-                type="text"
-                placeholder={'Enter Product Weight'}
-                value={this.state.currentDescription['weight']}
-                id="weight"
-                onChange={this.handleChange}
-            />
-
-            <input
-                className={this.props.errors["brandName"] ? "error":""}
-                type="text"
-                placeholder={'Enter Product Brand Name'}
-                value={this.state.currentDescription['brandName']}
-                id="brandName"
-                onChange={this.handleChange}
-            />
-            <br/>
-            {this.categoryDescription()}
-            <br/>
-            <textarea
-                type="text"
-                placeholder={'Enter Additional Information'}
-                value={this.state.currentDescription['additionalInfo']}
-                id="additionalInfo"
-                onChange={this.handleChange}
+        <form className="catalogForm">
+            <FormGroup>
+                <hr/>
+                <h4> Adding a {this.props.category}</h4>
+                <ControlLabel>Price</ControlLabel>
+                <FormControl
+                    className={this.props.errors["price"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Price'}
+                    value={this.state.currentDescription['price']}
+                    id="price"
+                    onChange={this.handleChange}
                 />
-        </div>
+                <br/>
+                <ControlLabel>Model Number</ControlLabel>
+                <FormControl
+                    className={this.props.errors["modelNumber"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Product Model Number'}
+                    value={this.state.currentDescription['modelNumber']}
+                    id="modelNumber"
+                    onChange={this.handleChange}
+                />
+                <br/>
+                <ControlLabel>Product Dimensions</ControlLabel>
+                <FormControl
+                    className={this.props.errors["dimensions"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Product Dimensions'}
+                    value={this.state.currentDescription['dimensions']}
+                    id="dimensions"
+                    onChange={this.handleChange}
+                />
+                <br/>
+                <ControlLabel>Weight</ControlLabel>
+                <FormControl
+                    className={this.props.errors["weight"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Product Weight'}
+                    value={this.state.currentDescription['weight']}
+                    id="weight"
+                    onChange={this.handleChange}
+                />
+                <br/>
+                <ControlLabel>Brand Name</ControlLabel>
+                <FormControl
+                    className={this.props.errors["brandName"] ? "error":""}
+                    type="text"
+                    placeholder={'Enter Product Brand Name'}
+                    value={this.state.currentDescription['brandName']}
+                    id="brandName"
+                    onChange={this.handleChange}
+                />
+                <br/>
+                {this.categoryDescription()}
+                <ControlLabel>Additional Information</ControlLabel>
+                <FormControl
+                    type="text"
+                    placeholder={'Enter Additional Information'}
+                    value={this.state.currentDescription['additionalInfo']}
+                    id="additionalInfo"
+                    onChange={this.handleChange}
+                />
+            </FormGroup>
+        </form>
         );
 
     }

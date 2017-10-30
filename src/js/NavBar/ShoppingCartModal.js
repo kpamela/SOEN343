@@ -28,7 +28,7 @@ export const ShoppingCartModal = React.createClass({
 
         return(
             <div>
-                <Button onClick={this.open}>Shopping Cart</Button>
+                <Button bsStyle="primary" onClick={this.open}>Shopping Cart</Button>
 
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header closeButton>

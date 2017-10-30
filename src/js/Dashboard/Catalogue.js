@@ -12,7 +12,6 @@ import $ from 'jquery';
 import {Mapper} from  "../General/mapper.js";
 import auth from '../General/auth.js';
 
-
  export default class Catalogue extends React.Component{
     constructor(props){
         super(props);
@@ -94,8 +93,6 @@ import auth from '../General/auth.js';
         }
         return(
             <div>
-                <h1>TecMarket</h1>
-                <h3>Catalogue</h3>
                 {/*this.state.usr.getData()*/}
                 <SearchBar
                     filterText={this.state.filterText}
@@ -106,7 +103,8 @@ import auth from '../General/auth.js';
                     onSortChange={this.handleSortChange}
                     disableSort={this.state.disableSort}
                 />
-                {this.showCatalogueOnly()}
+                
+               {/*this.showCatalogueOnly()*/} {/*Commented because it makes the product listing appear twice*/}
 
             </div>
         );
