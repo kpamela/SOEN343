@@ -10,4 +10,41 @@ module.exports = class UsersIdentityMap extends IdentityMap{
 
     }
 
+
+    /**
+     * Looking through the content of identitymap
+     * returns the index of username
+     * returns -1 if not found
+     * @param username
+     * @returns {*}
+     */
+    findUser(username){
+        for(let i in this.content){
+            if(this.content[i].Username == username){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns the instance of user found in the indentitymap
+     * @param username
+     * @returns {*}
+     */
+    getUser(username){
+
+        return this.content[this.findUser(username)];
+    }
+
+
+    /**
+     * Removes the user from the indentity map
+     * @param username
+     */
+    removeUser(username){
+
+        this.remove(this.findModel[username]);
+    }
+
 };

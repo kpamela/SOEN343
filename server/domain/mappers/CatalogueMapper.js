@@ -113,10 +113,11 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
             return res.status(401).json(authorization);
         }
         else{
-            //TODO proper tdg and identyMap calls
-
-            modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
-           // ProductTDG.SQLget_product_All();
+            if(CatalogueMapper.productListing.content.length == 0){//get from db only if listing is null
+                modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
+            }
+           //TODO get products
+            // ProductTDG.SQLget_product_All();
 
             return res.send(CatalogueMapper.productListing.content);
 

@@ -102,6 +102,8 @@ name={product.name}
                       amount={product.amount}
 
 */
+        console.log(this.props.products);
+
         return(
             <div className="productListing">
                 <hr/>

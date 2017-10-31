@@ -1,4 +1,5 @@
 const express = require('express'),
+    ProductId = require('./ProductId.js'),
     users = express.Router(),
     mysql = require('mysql'),
     bcrypt = require('bcryptjs'),
@@ -11,6 +12,9 @@ const _CLEAN = 0;
 const _DELETED = -1;
 
 let _flag = _CLEAN;
+
+let _productIds = [];
+let _lockedIds = [];
 
 
 class ProductDescription{
@@ -43,7 +47,7 @@ class ProductDescription{
             this.Category = product.Category;
         }
 
-        //this.productIds = this.setProductIds(this.Amount);
+        this.setNewProductIds(this.Amount);
 
         this.setNew();
     }
@@ -71,16 +75,44 @@ class ProductDescription{
     /**
      * TODO Create product ids
      * @param amount
-     * @returns {Array}
      */
-    setProductIds(amount){
-        let arr = [];
+    setNewProductIds(amount){
+        _productIds = [];
 
         for(let i = 0; i < amount; i++){
-            arr[i] = this.ModelNumber + "_" + i;
+            let serial = this.ModelNumber + "_" + i;
+            _productIds[i] = new ProductId(this.ModelNumber, serial);
         }
+    }
 
-        return arr;
+    /**
+     * Returns a product id from the list
+     * stores it in locked list
+     * @returns {*}
+     */
+    getProductId(){
+        let id = _productIds.pop();
+        id.Locked = true;
+        _lockedIds.push(id);
+        this.Amount--;
+
+        return id;
+    }
+
+    /**
+     * Restores a specific product id
+     * @param serial
+     */
+    restoreId(serial){
+        for(let i = 0; i< _lockedIds.length; i++){
+            if(_lockedIds[i].SerialNumber == serial){
+                _lockedIds[i].Locked = false;
+                _productIds.push(_lockedIds[i]);
+                _lockedIds.splice(i, 1);
+                this.Amount++;
+                break;
+            }
+        }
     }
 
 }
