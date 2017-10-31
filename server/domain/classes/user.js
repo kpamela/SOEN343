@@ -1,6 +1,9 @@
 const express = require('express'),
     ShoppingCart = require('../IdentityMaps/ShoppingCart.js');
 
+/**
+ * Private instance of shopping cart
+ */
 let _cart = new ShoppingCart();
 
 class User{
@@ -28,7 +31,7 @@ class User{
 
 
     /**
-     *
+     *Returns and removes instance of product id in the cart
      * @param {ProductId} serial
      * @return {ProductId} item
      */

@@ -30,6 +30,12 @@ module.exports = class ClientDashboardMapper extends Catalogue{
 
     }
 
+    /**
+     * Adds an item to the cart of specified user
+     *
+     * @param req
+     * @param res
+     */
     addToCart(req, res){
         const authorization = ClientDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -37,16 +43,21 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             return res.status(401).json(authorization);
         }
         else{
+            //getting user from usersRegistry
             let user = UserMapper.activeUsersRegistry.getUser(req.body.username);
 
 
+            //looking for the specified model in productListing
             if(ClientDashboardMapper.productListing.findModel(req.body.modelNumber) == -1){
                 return res.status(500).send("product not found");
             }
             else{
+                //instance of specified model
                 let product = ClientDashboardMapper.productListing.getModel(req.body.modelNumber);
-                //TODO figure this out
+                //TODO test this out
+                // places id to locked ids and returns a product Id
                 let id = product.getProductId();
+                //add productId to cart of user
                 user.addToCart(id);
 
                 res.json(id);
@@ -56,6 +67,11 @@ module.exports = class ClientDashboardMapper extends Catalogue{
     }
 
 
+    /**
+     * Removes a specified product from the specified user's cart
+     * @param req
+     * @param res
+     */
     removeFromCart(req, res){
         const authorization = ClientDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -63,13 +79,16 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             return res.status(401).json(authorization);
         }
         else{
+            //getting the user from users Registry
             let user = UserMapper.activeUsersRegistry.getUser(req.body.username);
 
+            //removes and returns specified serial number of the cart
             let id = user.removeFromCart(req.body.serialNumber);
 
+            //instance of the specified model number
             let product = ClientDashboardMapper.productListing.getModel(req.body.modelNumber);
-            //TODO figure this out
-
+            //TODO test this out
+            //unlocks productId and place it in available productid list
             product.restoreId(id.SerialNumber);
 
         }

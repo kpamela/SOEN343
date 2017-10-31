@@ -17,10 +17,18 @@ const ProductHistory = require('../IdentityMaps/ProductHistory.js');
  * @private
  */
 let _productHistory = new ProductHistory();
+/**
+ *
+ * @type {ModelTDG}
+ */
 let modelTDG = new ModelTDG();
 
 module.exports = class AdminDashboardMapper extends Catalogue{
 
+    /**
+     * One product history for all admins
+     * @returns {{modified: Array, deleted: Array}}
+     */
     static get productHistory(){
         return _productHistory;
     }
@@ -30,6 +38,10 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         return super.middlewares;
     }
 
+    /**
+     * Set of verb, route, callback functions
+     * @returns {Array.<T>}
+     */
     get routes(){
         return super.routes.concat([
                 ['post', '/add','add'],
@@ -49,6 +61,11 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
     }
 
+    /**
+     * Adds a new Item to the product Listing, and sets to new in Unit of Work, no database calls
+     * @param req
+     * @param res
+     */
     add(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -61,16 +78,18 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
             }
-            //TODO fix domain objects
 
+            //Instantiates a new product with the information passed in via the HTTP request
             let product = AdminDashboardMapper.addNewProduct(category, req.body.data);
 
 
             //transfer to unit of work for later commit
             AdminDashboardMapper.unitOfWork.registerNew(product);
-
+            //Add new item to productListing
+            //All changes should be reflected on all instances of Catalogue
             AdminDashboardMapper.productListing.add(product);
 
+            //Returns teh new productListing contents, and the state of commit
             return res.json({msg:"Item has been added to change list",
                 data: AdminDashboardMapper.productListing.content,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
@@ -79,6 +98,21 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
     }
 
+
+
+    /**
+     * Modifies an existing product, and set it to dirty in Unit of work
+     *
+     * The old product is stored in the productHistory, along with the current model number of the modified object
+     * This allows to modify the model number without losing any information regarding the previous modelNumber
+     *
+     * First has to check if the model was already change to prevent duplicates when reverting.
+     * So if an item is changed multiple times, only the previous item is stored, this might be a problem
+     * If an item was already changed, it needs to be removed from the change list of UoW
+     *
+     * @param req
+     * @param res
+     */
     modify(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -114,14 +148,17 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             AdminDashboardMapper.productListing.setTo(index, newProduct);
 
-
-            //TODO figure out when to commit
-
             res.json({msg:"Item set to modify. Commit when ready",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
         }
     }
 
+
+    /**
+     * Removes an item from the productListing, and stores it temporarily to the productHistory
+     * @param req
+     * @param res
+     */
     remove(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -146,6 +183,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         }
     }
 
+
+    /**
+     * Commits all changes since previous commit to the database.
+     * This is the only place the Database is accessed via the TDGs
+     * @param req
+     * @param res
+     */
     commitChanges(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -158,12 +202,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
-            while(changes.newList.length){//removing item every time
+            while(changes.newList.length){//removing item every time from the changes list see implementation of UoW
                 let product = AdminDashboardMapper.productListing.getModel(changes.newList[0]);
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Added product: " + product.ModelNumber);
-                //TODO tdg work
+                //TODO tdg work for the product Ids
                 modelTDG.SQLadd_models(product).then(function(response){
                     console.log(response);
                 });
@@ -180,7 +224,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.ModelNumber);
-                //TODO tdg work
+                //TODO tdg work for product ids
                 modelTDG.SQLdelete_models(product.ModelNumber);
             }
 
@@ -202,6 +246,18 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
 
+    /**
+     * Reverts all changes since the last commit.
+     * Resets unit of work
+     *
+     * new items are simply removed from product listing
+     *
+     * dirty items are restored to their previous state
+     *
+     * removed items are replaced in the productListing
+     * @param req
+     * @param res
+     */
     revertChanges(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
@@ -252,6 +308,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         }
     }
 
+
+    /**
+     * Returns state of commits
+     * not sure that this is useful
+     * @param req
+     * @param res
+     */
     getCommitState(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 

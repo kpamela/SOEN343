@@ -86,6 +86,14 @@ class ProductDescription{
     }
 
     /**
+     * Gets a list of product ids and sets the current product id list
+     * @param list
+     */
+    setProducIds(list){
+        _productIds = list;
+    }
+
+    /**
      * Returns a product id from the list
      * stores it in locked list
      * @returns {*}

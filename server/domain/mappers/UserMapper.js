@@ -10,12 +10,23 @@ const express = require('express'),
     UsersIdentityMap = require('../IdentityMaps/UsersIdentityMap.js'),
     UserTDG = require('../../data-source/TDG/userTDG.js'),
     User = require('../classes/user.js');
-
+/**
+ * List of all active users
+ * @type {UsersIdentityMap}
+ */
 let _activeUsersRegistry = new UsersIdentityMap();
+/**
+ *
+ * @type {UserTDG}
+ */
 let userTDG = new UserTDG();
 
 module.exports = class UserMapper extends ClassBasedRouter{
 
+    /**
+     * Returns the list of all active users
+     * @returns {UsersIdentityMap}
+     */
     static get activeUsersRegistry(){
         return _activeUsersRegistry;
     }
@@ -46,6 +57,15 @@ module.exports = class UserMapper extends ClassBasedRouter{
         next();
     }
 
+    /**
+     * Authenticating a user, checking for user name and password match found in database
+     * Instantiates user, and push it to active user
+     *
+     * Should return its token, and user itself for use in the frontend
+     *
+     * @param req
+     * @param res
+     */
     authenticate(req, res){
 
         userTDG.SQLget_users(req.body.Username).then(function(user){
@@ -53,6 +73,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
                 res.status(500).send("User Not found");
             }
 
+            //checking password match
             bcrypt.compare(req.body.Password, user[0].Password, (err, isMatch) =>{
                if(err){
                    res.status(500);
@@ -72,12 +93,21 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
     }
 
+
+    /**
+     * Registering a new user that doesn't exist in database
+     * Upon successful termination, user should be instanciated and pushed to active usersRegistry
+     *
+     * @param req
+     * @param res
+     */
     registerUser(req, res){
 
         let newUser = new User(req.body);
 
         console.log(req.body);
 
+        //TODO should handle already existing users
         userTDG.SQLadd_users(newUser).then(function(res){
             console.log(res);
         });

@@ -17,13 +17,16 @@ const express = require('express'),
 
 /**
  * ProductListing is common to all catalogues
- * @type {[*]}
+ * @type {ProductsIdentityMap}
  * @private
  */
 //TODO make that a jquery deferred object, maybe
 let _productListing = new ProductsIdentityMap();
 
-
+/**
+ *
+ * @type {ModelTDG}
+ */
 let modelTDG = new ModelTDG();
 
 /**
@@ -39,13 +42,20 @@ let _unitOfWork = new UnitOfWork();
 module.exports = class CatalogueMapper extends ClassBasedRouter{
 
 
-
+    /**
+     * returns the list middlewares functions (required by ClassBasedRouter
+     * @returns {[*]}
+     */
     get middlewares(){
         return [
             ['GET','/', 'middleware']
         ]
     }
 
+    /**
+     * List of verb, routes, callback functions
+     * @returns {[*]}
+     */
     get routes(){
         return[
             ['GET','/view', 'view']
@@ -54,7 +64,7 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 
     /**
      * Product listing is common to all catalogues
-     * @returns {*[]}
+     * @returns {ProductsIdentityMap}
      */
     static get productListing(){
         return _productListing;
@@ -67,14 +77,11 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
     static get unitOfWork(){
         return _unitOfWork;
     }
-   /* static set productListing(p){
-        this.productListing.push(p);
-    }
 
-*/
    constructor(options={}) {
         super(options);
 
+        //registers the routes a middlewares to the class's router
         this.register(this.middlewares);
         this.register(this.routes);
 
@@ -82,6 +89,11 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
        this.middleware = this.middleware.bind(this);
     }
 
+    /**
+     * Checks if the token provided is authorized
+     * @param token
+     * @returns {*}
+     */
     static authorizeToken(token){
         if(!token){
             return {success: false, msg: "Unauthorized: No Token Provided"};
@@ -105,7 +117,15 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         next();
     }
 
-    //TODO view route
+    /**
+     *If the productListing isn't set, set it to the content of the database
+     * Else, simply return the current product listing
+     *
+     * This follows that the productListing is static, and should always match the content of the Database
+     * Plus the changes in AdminDashboardMapper if there is any.
+     * @param req
+     * @param res
+     */
     view(req, res) {
         const authorization = CatalogueMapper.authorizeToken(req.headers.authorization);
 
@@ -116,8 +136,6 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
             if(CatalogueMapper.productListing.content.length == 0){//get from db only if listing is null
                 modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
             }
-           //TODO get products
-            // ProductTDG.SQLget_product_All();
 
             return res.send(CatalogueMapper.productListing.content);
 
@@ -125,10 +143,14 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 
     }
 
+    /**
+     * Should be used as the callback function of SQLget_models_All
+     * Sets the content of the productListing to the content of the database, passed in as argument
+     * @param data
+     */
     static setListingFromDatabase(data){
         CatalogueMapper.productListing.content = [];
         for(let i in data){
-           // modelTDG.SQLdelete_models(data[i].ModelNumber);
            let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
             if(product){//ignore undefined
                 CatalogueMapper.productListing.add(product);
@@ -140,6 +162,12 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
     }
 
 
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
     static addNewProduct(category, product){
         switch(category){
             case 'DesktopComputer':
