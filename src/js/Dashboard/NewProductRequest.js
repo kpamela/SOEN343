@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import DescriptionForm from './DescriptionForm.js'
+import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 export default class NewProductRequest extends React.Component{
 
     constructor(props){
@@ -10,11 +11,13 @@ export default class NewProductRequest extends React.Component{
         this.state ={
             productIndex: 0,
             fieldValue: {category:'', amount:''},
-            currentForm: <div>
-                <button className="add" onClick={() => this.newProductRequest()}  >
-                    +
-                </button>
-            </div>
+            currentForm: 
+                <div className="addButton">
+                    <br/>
+                    <Button bsStyle="primary" className="add" onClick={() => this.newProductRequest()}  >
+                        Add Product
+                    </Button>
+                </div>
         };
 
         this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -101,11 +104,13 @@ export default class NewProductRequest extends React.Component{
             this.props.usr.specify(this.state.productIndex, this.state.fieldValue.description);
             this.props.onSubmit();
 
-            this.setState({currentForm: <div>
-                <button className="add" onClick={() => this.newProductRequest()}  >
-                    +
-                </button>
-            </div>});
+            this.setState({currentForm: 
+                <div className="addButton">
+                    <br/>
+                    <Button bsStyle="primary" className="add" onClick={() => this.newProductRequest()}  >
+                        Add Product
+                    </Button>
+                </div>});
         }
     }
 
@@ -114,35 +119,33 @@ export default class NewProductRequest extends React.Component{
      */
     addProductForm(errors){
         return(
-            <div>
+            <div className="catalogForm">
+                <hr/>
                 <form onSubmit={this.handleOnAddProduct}>
-
-                    <label>
-                        Select Category
-                        <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
+                    <FormGroup>
+                        <ControlLabel>Select Category</ControlLabel>
+                        <FormControl componentClass="select" placeholder="Select" value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
                             <option value="" default> Select Category</option>
                             {/* <option value="Television">Television</option>*/}
                             <option value="Monitor">Monitor</option>
                             <option value="TabletComputer">TabletComputer</option>
                             <option value="DesktopComputer">DesktopComputer</option>
                             <option value="LaptopComputer">LaptopComputer</option>
-
-                        </select>
-                    </label>
-                    <br/>
-                    <label>
-                        Enter amount
-
-                        <input
+                        </FormControl>
+                        <br/>
+                        <ControlLabel>Amount</ControlLabel>
+                        <FormControl
                             className={errors.amount ? "error" : ""}
-                            type="number"
+                            type="text"
+                            placeholder="Enter amount"
                             value={this.state.fieldValue.amount}
                             min="0"
                             id="amount"
                             onChange={this.handleFieldChange}
                         />
-                    </label>
-                    <input disabled={errors.disabled} type="submit" value="Add" />
+                        <br/>
+                        <Button bsStyle="primary" disabled={errors.disabled} type="submit">Add</Button>
+                    </FormGroup>
                 </form>
             </div>
         );
@@ -193,10 +196,10 @@ export default class NewProductRequest extends React.Component{
                                  price=""
                                  category={this.state.fieldValue.category}
                                  onDescriptionChange={this.handleDescriptionChange}/>
-                <button disabled={errors.disabled} className="another" onClick={() => this.handleAnotherProduct()}  >
-                    Add Another
-                </button>
-                <button disabled={errors.disabled} className="done"  onClick={() => this.handleOnSubmit()}>Done</button>
+                <span className="addButton">
+                    <Button bsStyle="primary" disabled={errors.disabled} className="submit"  onClick={() => this.handleOnSubmit()}>Submit</Button>
+                    <Button disabled={errors.disabled} className="addAnother" onClick={() => this.handleAnotherProduct()}>Add Another</Button>
+                </span>
             </div>
         );
     }

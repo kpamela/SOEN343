@@ -4,6 +4,7 @@
 import React from 'react';
 import Product from './Product.js'
 import ModifyProduct from './ModifyProduct.js'
+import {Button, ListGroup} from 'react-bootstrap';
 
 export default class ProductListing extends React.Component{
   constructor(props){
@@ -25,15 +26,15 @@ export default class ProductListing extends React.Component{
           const pos = this.props.usr.lookForModel(item.description.modelNumber);
           this.setState({modifyForm: <div>...</div>, currentPosition: pos, model: item.description.modelNumber}, function () {
               this.setState({
-                  modifyForm: <div>
+                  modifyForm: <span>
                       <ModifyProduct item={item} onModify={this.handleModify}/>
-                      <button onClick={() => this.remove()}>
+                      <Button bsStyle="danger" className="delete" onClick={() => this.remove()}>
                           Delete {this.state.model}
-                      </button>
-                      <button onClick={() => this.cancel()}>
+                      </Button>
+                      <Button className="cancel" onClick={() => this.cancel()}>
                           Cancel
-                      </button>
-                  </div>
+                      </Button>
+                  </span>
               })
           });
       }
@@ -88,9 +89,9 @@ export default class ProductListing extends React.Component{
             }
 
             //Converting product object to product component
-            listing.push(<Product item={product}
-                          onShowForm={this.handleShowForm}
-                            />);
+            listing.push(
+                <Product item={product} onShowForm={this.handleShowForm}/>
+            );
         });
 
 /*
@@ -102,9 +103,14 @@ name={product.name}
 
 */
         return(
-            <div>
-                {listing}
+            <div className="productListing">
+                <hr/>
+                <h2>Product Listing</h2>
+                <ListGroup>
+                    {listing}
+                </ListGroup>
                 {this.state.modifyForm}
+                {window.scrollTo(0,document.body.scrollHeight)}
             </div>
         );
 

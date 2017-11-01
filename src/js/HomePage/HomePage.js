@@ -7,7 +7,7 @@ import Catalogue from '../Dashboard/Catalogue.js';
  * HomePage rendered by going to path "/"
  */
 
-export default class Main extends Component{
+export default class HomePage extends Component{
     constructor(props){
         super(props);
 
@@ -29,8 +29,8 @@ export default class Main extends Component{
     render(){
         if(this.state.viewCatalog){
             return(
-                <Redirect to="/Catalogue" component={Catalogue} />
-            )
+                <Redirect to="/ClientDashboard" />
+            );
         }
         else{
             return (
@@ -41,7 +41,7 @@ export default class Main extends Component{
                         <Button bsStyle="primary" onClick={this.handleViewCatalogClick}>View Catalog</Button>
                     </Jumbotron>
                 </div>
-            )
+            );
         }
     }
 

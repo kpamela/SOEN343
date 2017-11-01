@@ -26,9 +26,7 @@ class App extends Component {
       return <Route path="/ClientDashboard" component={ClientDashboard} />
     }
   }
-/**
- * To be added when catalog is created: <Route path="/catalog" component={Catalog} />
- */
+
   render() {
     return(
       <div className="App">
@@ -37,9 +35,8 @@ class App extends Component {
             <Route path="/" component={Main} />
               <Switch>
                 <Route exact path="/" component={HomePage} />
-
-                  {this.checkPermissions()}
-                <Route path="/Catalogue" component={Catalogue}/>
+                <Route path="/AdminDashboard" component={AdminDashboard} />
+                <Route path="/ClientDashboard" component={ClientDashboard} />
                 <Route path="/aboutus" component={AboutUs} />
               </Switch>
           </div>

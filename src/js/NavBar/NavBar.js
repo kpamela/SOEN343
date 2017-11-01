@@ -29,15 +29,15 @@ export default class NavBar extends Component{
                 <MenuItem eventKey={4.3}> Desktops </MenuItem>
               </NavDropdown>
               <MenuItem divider />
-              <MenuItem eventKey={3.3}><Link className="NavbarDropdownLink" to="/catalog">Shop all categories</Link></MenuItem>
+              <MenuItem eventKey={3.3}><Link className="NavbarDropdownLink" to="/ClientDashboard">Shop all categories</Link></MenuItem>
             </NavDropdown>
-            {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/dashboard">Administrator Dashboard</Link></NavItem> : null}
+            {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/AdminDashboard">Administrator Dashboard</Link></NavItem> : null}
           </Nav>
           <Nav pullRight>
-              {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem> : null}
-            <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>
-            <NavItem eventKey={3} href="#"> <Logout /> </NavItem>
-            <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem>
+            {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem> : null}
+            {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <Logout /> </NavItem> : null}
+            {auth.loggedIn() ? <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem> : null}
 
           </Nav>
         </Navbar.Collapse>
