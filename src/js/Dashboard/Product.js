@@ -35,7 +35,7 @@ export default class Product extends React.Component{
        // console.log(JSON.stringify(this.props.description));
 
         return (
-            <div>
+            <div className="prodcutContainer">
                 <ListGroupItem bsStyle="secondary" className="product" onClick={() =>this.showModifyForm()}>
                     <b>{this.props.item.name}</b><br/>
                     <i>{this.props.item.category}</i><br/>

@@ -26,15 +26,15 @@ export default class ProductListing extends React.Component{
           const pos = this.props.usr.lookForModel(item.description.modelNumber);
           this.setState({modifyForm: <div>...</div>, currentPosition: pos, model: item.description.modelNumber}, function () {
               this.setState({
-                  modifyForm: <div>
+                  modifyForm: <span>
                       <ModifyProduct item={item} onModify={this.handleModify}/>
-                      <Button bsStyle="danger" onClick={() => this.remove()}>
+                      <Button bsStyle="danger" className="delete" onClick={() => this.remove()}>
                           Delete {this.state.model}
                       </Button>
-                      <Button onClick={() => this.cancel()}>
+                      <Button className="cancel" onClick={() => this.cancel()}>
                           Cancel
                       </Button>
-                  </div>
+                  </span>
               })
           });
       }
@@ -110,6 +110,7 @@ name={product.name}
                     {listing}
                 </ListGroup>
                 {this.state.modifyForm}
+                {window.scrollTo(0,document.body.scrollHeight)}
             </div>
         );
 

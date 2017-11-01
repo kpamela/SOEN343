@@ -197,10 +197,8 @@ export default class NewProductRequest extends React.Component{
                                  category={this.state.fieldValue.category}
                                  onDescriptionChange={this.handleDescriptionChange}/>
                 <span className="addButton">
-                    <Button bsStyle="primary" disabled={errors.disabled} className="another" onClick={() => this.handleAnotherProduct()}  >
-                        Add Another
-                    </Button>
-                    <Button bsStytle="primary" disabled={errors.disabled} className="done"  onClick={() => this.handleOnSubmit()}>Done</Button>
+                    <Button bsStyle="primary" disabled={errors.disabled} className="submit"  onClick={() => this.handleOnSubmit()}>Submit</Button>
+                    <Button disabled={errors.disabled} className="addAnother" onClick={() => this.handleAnotherProduct()}>Add Another</Button>
                 </span>
             </div>
         );

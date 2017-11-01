@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {Modal, Button, FieldGroup} from 'react-bootstrap';
+import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import auth from '../General/auth.js';
 import axios from 'axios';
 
@@ -72,63 +72,54 @@ export const RegisterModal = React.createClass({
                   <Modal.Title>Register</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  Register
-                  <form onSubmit={this.register}>
-                    <label>
-                      First Name: <input type="text" name="FirstName" onChange={this.handleChange} />
-                    </label>
-                    <br/>
-                    <label>
-                      Last Name: <input type="text" name="LastName"  onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      E-mail: <input type="email" name="EmailAddress" onChange={this.handleChange} />
-                    </label>
-                    <br/>
-                    <label>
-                      Street Number: <input type="number" name="StreetNumber" onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      Street Name: <input type="text" name="streetName" onChange={this.handleChange}/>
-                    </label>
-                    <label>
-                      Apt: <input type="text" name="apt" onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      City: <input type="text" name="city" onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      Postal Code: <input type="text" name="postalCode" onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      Country:
-                      <select name="country" onChange={this.handleChange}>
+                  <form>
+                    <FormGroup>
+                      <ControlLabel>First Name</ControlLabel>
+                      <FormControl type="text" name="FirstName" onChange={this.handleChange} placeholder="Enter First Name" />
+
+                      <ControlLabel>Last Name</ControlLabel>
+                      <FormControl type="text" name="LastName"  onChange={this.handleChange} placeholder="Enter Last Name"/>
+
+                      <ControlLabel>E-mail</ControlLabel>
+                      <FormControl type="email" name="EmailAddress" onChange={this.handleChange} placeholder="Enter E-mail"/>
+
+                      <ControlLabel>Street Number</ControlLabel>
+                      <FormControl type="number" name="StreetNumber" onChange={this.handleChange} placeholder="Enter Street Number"/>
+
+                      <ControlLabel>Street Name</ControlLabel>
+                      <FormControl type="text" name="streetName" onChange={this.handleChange} placeholder="Enter Street Name"/>
+
+                      <ControlLabel>Apt:</ControlLabel>
+                      <FormControl type="text" name="apt" onChange={this.handleChange} placeholder="Enter Apt Number"/>
+
+                      <ControlLabel>City</ControlLabel>
+                      <FormControl type="text" name="city" onChange={this.handleChange} placeholder="Enter City"/>
+
+                      <ControlLabel>Postal Code</ControlLabel>
+                      <FormControl type="text" name="postalCode" onChange={this.handleChange} placeholder="Enter Postal Code"/>
+
+                      <ControlLabel>Country</ControlLabel>
+                      <FormControl componentClass="select" name="country" onChange={this.handleChange}>
+                        <option disabled selected>Select Country</option>
                         <option value="canada">Canada</option>
-                      </select>
-                    </label>
-                    <br/>
-                    <label>
-                      Phone Number: <input type="tel" name="PhoneNumber" onChange={this.handleChange} />
-                    </label>
-                    <br/><br/>
-                    <label>
-                      Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange} />
-                    </label>
-                    <br/>
-                    <label>
-                      Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
-                    </label>
-                    <br/>
-                    <label>
-                      Confirm Password: <input type="password" name="Password" />
-                    </label>
-                    <br/>
-                    <input type="submit" value="Submit" />
+                        <option value="usa">USA</option>
+                      </FormControl>
+
+                      <ControlLabel>PhoneNumber</ControlLabel>
+                      <FormControl type="tel" name="PhoneNumber" onChange={this.handleChange} placeholder="Enter Phone Number" />
+
+                      <ControlLabel>Username</ControlLabel>
+                      <FormControl type="text" name="Username" value={this.state.Username} onChange={this.handleChange} placeholder="Enter Username"/>
+
+                      <ControlLabel>Password</ControlLabel>
+                      <FormControl type="password" name="Password" value={this.state.Password} onChange={this.handleChange} placeholder="Enter Password"/>
+
+                      <ControlLabel>Confirm Password</ControlLabel>
+                      <FormControl type="password" name="Password" placeholder="Confirm Password"/>
+
+                      <br/>
+                      <Button bsStyle="primary" onClick={this.register}>Submit</Button>
+                    </FormGroup>
                   </form>
                 </Modal.Body>
                 <Modal.Footer>
