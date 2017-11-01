@@ -5,10 +5,10 @@ const express = require('express'),
 class Computers extends ProductDescription {
     constructor(product){
         super(product);
-        this.processorType = product.description.processorType;
+        this.ProcessorType = product.description.processorType;
         this.RAMSize = product.description.RAMSize;
-        this.numberOfCores = product.description.numberOfCores;
-        this.hardDriveSize = product.description.hardDriveSize;
+        this.NumberOfCores = product.description.numberOfCores;
+        this.HardDriveSize = product.description.hardDriveSize;
     }
 }
 

@@ -22,14 +22,14 @@ class ProductDescription{
 
     constructor(product){
 
-        this.brandName = product.description.brandName;
-        this.modelNumber = product.description.modelNumber;
-        this.dimensions = product.description.dimensions;
-        this.price = product.description.price;
-        this.weight = product.description.weight;
-        this.additionalInfo = product.description.additionalInfo;
-        this.amount = product.amount;
-        this.category = product.category;
+        this.BrandName = product.description.brandName;
+        this.ModelNumber = product.description.modelNumber;
+        this.Dimensions = product.description.dimensions;
+        this.Price = product.description.price;
+        this.Weight = product.description.weight;
+        this.AdditionalInfo = product.description.additionalInfo;
+        this.Amount = product.amount;
+        this.Category = product.category;
 
         this.productIds = this.setProductIds(this.amount);
 

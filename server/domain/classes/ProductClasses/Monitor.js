@@ -5,7 +5,7 @@ const express = require('express'),
 class Monitor extends ProductDescription {
     constructor(product){
         super(product);
-        this.size = product.description.size;
+        this.Size = product.description.size;
     }
 
 }

@@ -6,10 +6,10 @@ class TabletComputer extends Computers {
     constructor(product){
         super(product);
         if(product.description){
-            this.displaySize = product.description.displaySize;
-            this.batteryInfo = product.description.batteryInfo;
-            this.cameraInfo = product.description.cameraInfo;
-            this.operatingSystem = product.description.operatingSystem;
+            this.DisplaySize = product.description.displaySize;
+            this.BatteryInfo = product.description.batteryInfo;
+            this.CameraInfo = product.description.cameraInfo;
+            this.OperatingSystem = product.description.operatingSystem;
         }
     }
 
