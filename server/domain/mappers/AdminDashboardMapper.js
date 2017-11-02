@@ -50,13 +50,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
     add(req, res){
         const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
-
+        console.log(req.body);
         if(!authorization.success){
             return res.status(401).json(authorization);
         }
         else{
-
-            let category = req.body.data.category;
+            let category = req.body.category;
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product category."});
             }
@@ -263,4 +262,3 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
 
 }
-

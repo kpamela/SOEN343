@@ -51,7 +51,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
         console.log(req.body);
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
-                res.status(500).send("User Not found");
+                res.status(500).json({success:false, msg:'User Not found'});
             }
 
             bcrypt.compare(req.body.Password, user[0].Password, (err, isMatch) =>{
@@ -63,10 +63,10 @@ module.exports = class UserMapper extends ClassBasedRouter{
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
                    UserMapper.activeUsersRegistry.add(activeUser);
-                   res.json({success: true, token: 'JWT' + token, user: activeUser})
+                   res.json({success: true, token: token, user: activeUser})
                }
                else{
-                   res.status(500).send('wrong password');
+                   res.status(500).json({success:false, msg:'Wrong password'});
                }
             });
         })

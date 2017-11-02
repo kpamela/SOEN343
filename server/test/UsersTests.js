@@ -44,7 +44,7 @@ describe('Users', () => {
             .post('/users/authenticate')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(401);
+                res.should.have.status(500);
                 res.body.should.be.a('object');
                 res.body.should.have.property('success').eql(false);
                 res.body.should.have.property('msg').eqls('Wrong password');
