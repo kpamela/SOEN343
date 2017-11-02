@@ -41,8 +41,7 @@ class ModelTDG{
 
   SQLmodify_models(modelNumber, column, modification){                 //Modifies the information for the model
       let data = new jquery.Deferred();
-      let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`,
-                        values:[column, modification, modelNumber]};
+      let modifyModel = { sql: "UPDATE models SET" + column + "=" + modification + "WHERE models.ModelNumber =" + modelNumber};
     handler.handleWrite(modifyModel, data);
     return data;
   }

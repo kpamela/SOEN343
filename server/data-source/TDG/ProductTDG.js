@@ -17,9 +17,7 @@ class ProductTDG{
     let productInfo = `SELECT * FROM products, models
                        WHERE products.ModelNumber = models.ModelNumber
                        AND products.Available = 1`;
-    handler.handleRead(productInfo, data);
-    return
-
+    return handler.handleRead(productInfo, data);
   }
 
   SQLget_products(modelNumber){                                              //Retrieves all products of a specific model
@@ -32,6 +30,18 @@ class ProductTDG{
         values: [modelNumber]};
       return handler.handleRead(productInfo, connection);
 
+  }
+
+  SQLgetSingle_products(modelNumber){ 
+    let productInfo = {
+        sql: `SELECT * FROM products
+              inner join models on models.ModelNumber = products.ModelNumber
+              WHERE models.ModelNumber = ?
+              AND products.Available = 1
+              LIMIT 1`,
+        timeout: 40000,
+        values: [modelNumber]};
+      return handler.handleRead(productInfo, connection);
   }
 
   /****************************************
