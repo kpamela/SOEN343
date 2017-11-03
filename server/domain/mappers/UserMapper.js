@@ -51,7 +51,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
         console.log(req.body);
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
-                res.status(500).json({success:false, msg:'User Not found'});
+                return res.status(500).json({success:false, msg:'User Not found'});
             }
 
             bcrypt.compare(req.body.Password, user[0].Password, (err, isMatch) =>{
@@ -63,10 +63,10 @@ module.exports = class UserMapper extends ClassBasedRouter{
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
                    UserMapper.activeUsersRegistry.add(activeUser);
-                   res.json({success: true, token: token, user: activeUser})
+                   return res.json({success: true, token: token, user: activeUser})
                }
                else{
-                   res.status(500).json({success:false, msg:'Wrong password'});
+                   return res.status(500).json({success:false, msg:'Wrong password'});
                }
             });
         })
@@ -75,6 +75,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
     registerUser(req, res){
 
+      console.log(req.body);
         let newUser = new User(req.body);
 
         console.log(req.body);
@@ -87,7 +88,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
         const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
         UserMapper.activeUsersRegistry.add(newUser);
-        res.json({success: true, token: 'JWT' + token, user: newUser})
+        return res.json({success: true, token: 'JWT' + token, user: newUser})
 
     }
 
