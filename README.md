@@ -7,11 +7,11 @@ Concordia Students that worked on the project:
 
 Team members          | Email                         | Student Id   | Role        |Github Usernames
 ------------          | --------------------          | ------------ |------------ |----------------
-Pamela Khouri         | khouripamela@gmail.com        | 40016194     | Team leader | kpamela
+Pamela Khouri         | khouripamela@gmail.com        | 40016194     |             | kpamela
 Sarbeng Frimpong      | sarbeng4@hotmail.com          | 29344039     |             | jiggy357
 Raphaelle Giraud      | Raph1105@hotmail.com          | 27514204     |             | Raph1105
 William Leclerc       | w.dfj.leclerc@gmail.com       | 27424973     |             | LeCleric
-Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     |             | franksauve
+Francois Crispo-Sauve | francoiscrisposauve@gmail.com | 27454139     | Team leader | franksauve
 Joséphine Ng          | jng11232@hotmail.com          | 40001872     |             | jng11232
 Yan Ming Hu           | yanming_hu1996@yahoo.ca       | 40005813     |             | Lordofsnails
 Hasan Ahmed           | hasan.mahmed95@gmail.com      | 27546467     |             | hasan-ahmed

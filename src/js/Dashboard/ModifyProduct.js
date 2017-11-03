@@ -19,7 +19,7 @@ import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
               productIndex: 0,
               fieldValue: props.item,
               currentForm:
-                  <Button bsStyle="warning" className="Edit" onClick={() => this.modifyProductRequest()}  >
+                  <Button bsStyle="warning" className="edit" onClick={() => this.modifyProductRequest()}  >
                      Edit {this.props.item.description.modelNumber}
                   </Button>
 
