@@ -1,1 +1,20 @@
-{ "presets": ["react", "es2015"] }
+{ "presets": ["react", "es2015"],
+  "plugins": [
+    ["contracts", {
+      "env": {
+        "production": {
+          "strip": true
+        }
+      },
+      "names": {
+        "assert": "assert",
+        "precondition": "pre",
+        "postcondition": "post",
+        "invariant": "inv",
+        "return": "it",
+        "old": "old"
+      }
+
+    }]
+  ]
+}
