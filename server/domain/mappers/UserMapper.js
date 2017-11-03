@@ -40,7 +40,8 @@ module.exports = class UserMapper extends ClassBasedRouter{
     get routes(){
         return[
             ['post','/authenticate', 'authenticate'],
-            ['post', '/register', 'registerUser']
+            ['post', '/register', 'registerUser'],
+            ['get','/activeUsers', 'getActiveUsers']
         ]
     }
 
@@ -120,5 +121,8 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
     }
 
+    getActiveUsers(req, res){
+
+    }
 
 };

@@ -8,6 +8,8 @@ const Catalogue = require('./CatalogueMapper.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer.js'),
     Monitor = require('../classes/ProductClasses/Monitor.js');
 const ProductHistory = require('../IdentityMaps/ProductHistory.js');
+const aspect = require('aspect-js');
+const meld = require('meld');
 
 /**
  * History containing the old products that were modified or deleted
@@ -42,7 +44,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * Set of verb, route, callback functions
      * @returns {Array.<T>}
      */
-    get routes(){
+   /* get routes(){
         return super.routes.concat([
                 ['post', '/add','add'],
                 ['patch', '/modify', 'modify'],
@@ -52,12 +54,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 ['get', '/getCommitState', 'getCommitState']]);
 
 
-    }
+    }*/
 
    constructor(options={}) {
         super(options);
 
         this.add = this.add.bind(this);
+        this.view = super.view.bind(this);
 
     }
 
@@ -67,12 +70,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     add(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
-
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
 
             let category = req.body.data.category;
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
@@ -94,7 +91,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 data: AdminDashboardMapper.productListing.content,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
-        }
 
     }
 
@@ -114,12 +110,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     modify(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
-
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
 
             const index =  AdminDashboardMapper.productListing.findModel(req.body.previous);
 
@@ -150,7 +140,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             res.json({msg:"Item set to modify. Commit when ready",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
-        }
+
     }
 
 
@@ -160,12 +150,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     remove(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
-
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
 
             let product = AdminDashboardMapper.productListing.getModel(req.body.model);
 
@@ -180,7 +164,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             res.json({msg: "Item will be deleted on commit.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
-        }
+
     }
 
 
@@ -191,12 +175,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     commitChanges(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
             const changes = AdminDashboardMapper.unitOfWork.commit();
 
             //Committing changes from unit of work
@@ -240,7 +219,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             res.json({msg: "All changes have been committed to Database.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
-        }
+
 
 
     }
@@ -259,12 +238,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     revertChanges(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else if(!AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
+         if(!AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
             return res.status(412).json("No changes to revert");
         }
         else{
@@ -316,14 +291,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     getCommitState(req, res){
-        const authorization = AdminDashboardMapper.authorizeToken(req.headers.authorization);
+        res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
-            res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
-        }
     }
 
 

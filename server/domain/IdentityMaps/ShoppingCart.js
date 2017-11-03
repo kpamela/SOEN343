@@ -15,9 +15,12 @@ module.exports = class ShoppingCart extends IdentityMap{
      * @param ob1
      */
     add(ob1){
-        if(this.content.length <= 7){//only 7 items in cart
-            this.content.push(ob1);
+        invariant: {
+            this.content.length <=7, "Can't have more than 7 items in the shopping cart";
         }
+      //  if(this.content.length <= 7){//only 7 items in cart
+            this.content.push(ob1);
+       // }
     }
 
     /**

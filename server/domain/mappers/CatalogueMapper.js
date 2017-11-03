@@ -14,6 +14,9 @@ const express = require('express'),
     Monitor = require('../classes/ProductClasses/Monitor.js'),
     UnitOfWork = require('../UnitOfWork.js'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap');
+const aspect = require('aspect-js');
+const meld = require('meld');
+const trace = require('meld/aspect/trace');
 
 /**
  * ProductListing is common to all catalogues
@@ -58,7 +61,7 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
      */
     get routes(){
         return[
-            ['GET','/view', 'view']
+           // ['GET','/view', 'view']
         ]
     }
 
@@ -82,33 +85,14 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         super(options);
 
         //registers the routes a middlewares to the class's router
-        this.register(this.middlewares);
-        this.register(this.routes);
+       // this.register(this.middlewares);
+       // this.register(this.routes);
 
+        //let traced =  meld(this, 'router', trace());
        this.view = this.view.bind(this);
        this.middleware = this.middleware.bind(this);
     }
 
-    /**
-     * Checks if the token provided is authorized
-     * @param token
-     * @returns {*}
-     */
-    static authorizeToken(token){
-        if(!token){
-            return {success: false, msg: "Unauthorized: No Token Provided"};
-        }
-
-        return jwt.verify(token, 'mysecret', function(err, decoded) {
-            if (err) {
-                return {success: false, msg: "Unauthorized: Incorrect Token Signature"};
-            }
-            else {
-                return {success: true};
-            }
-        });
-
-    }
 
 
     //TODO middleware
@@ -126,22 +110,19 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
      * @param req
      * @param res
      */
-    view(req, res) {
-        const authorization = CatalogueMapper.authorizeToken(req.headers.authorization);
+     view(req, res) {
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
             if(CatalogueMapper.productListing.content.length == 0){//get from db only if listing is null
                 modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
             }
 
             return res.send(CatalogueMapper.productListing.content);
 
-        }
-
     }
+
+
+
+
 
     /**
      * Should be used as the callback function of SQLget_models_All

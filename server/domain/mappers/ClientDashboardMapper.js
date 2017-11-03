@@ -55,6 +55,8 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 //instance of specified model
                 let product = ClientDashboardMapper.productListing.getModel(req.body.modelNumber);
                 //TODO test this out
+                //TODO TDG calls with products table
+                //instantiating product id with results, putting in the user
                 // places id to locked ids and returns a product Id
                 let id = product.getProductId();
                 //add productId to cart of user
