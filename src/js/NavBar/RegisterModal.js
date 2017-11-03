@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import {Redirect} from 'react-router-dom'
 import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import auth from '../General/auth.js';
 import axios from 'axios';
@@ -11,7 +12,18 @@ export const RegisterModal = React.createClass({
 
             Username: '',
             Password: '',
-            Administrator: 0};
+            FirstName: '',
+            LastName: '',
+            EmailAddress: '',
+            PhoneNumber: '',
+            Administrator: 0,
+            Apt: '',
+            StreetNumber: '',
+            Street: '',
+            City: '',
+            ZIP: '',
+            Country: ''
+          };
     },
 
     close() {
@@ -27,20 +39,28 @@ export const RegisterModal = React.createClass({
     register(e){
         e.preventDefault();
         console.log(this.state);
-        axios.post('/users/register', {Username: this.state.Username,
+        axios.post('/users/register', { Username: this.state.Username,
                                         Password: this.state.Password,
                                         FirstName: this.state.FirstName,
                                         LastName:this.state.LastName,
                                         EmailAddress:this.state.EmailAddress,
                                         PhoneNumber:this.state.PhoneNumber,
-                                        Administrator:this.state.Administrator})
+                                        Administrator:this.state.Administrator,
+                                        Apt: this.state.Apt,
+                                        StreetNumber: this.state.StreetNumber,
+                                        Street: this.state.Street,
+                                        City: this.state.City,
+                                        ZIP: this.state.ZIP,
+                                        Country: this.state.Country
+                                      })
             .then(res => {
             console.log(res);
             if(res.data.success){
                 const token = res.data.token;
                 localStorage.setItem('jwtToken', token);
                 auth.setAuthToken(token);
-                auth.setIsAdmin(res.data.user.administrator);
+                auth.setIsAdmin(res.data.user.Administrator);
+                this.setState({showModal:false});
             }
             else{
                 console.log(res.data.msg)
