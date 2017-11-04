@@ -11,7 +11,7 @@ import auth from '../General/auth.js';
 export default class NavBar extends Component{
   render(){
     return(
-      <Navbar className="Navbar" inverse collapseOnSelect>
+      <Navbar className="Navbar" inverse collapseOnSelect staticTop>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/" className="NavbarLink">TecMarket</Link>

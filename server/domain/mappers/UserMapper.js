@@ -74,21 +74,21 @@ module.exports = class UserMapper extends ClassBasedRouter{
     }
 
     registerUser(req, res){
-
-      console.log(req.body);
         let newUser = new User(req.body);
 
-        console.log(req.body);
-
-        userTDG.SQLadd_users(newUser).then(function(res){
-            console.log(res);
+        userTDG.SQLadd_users(newUser).then(function(data){
+            //Successful insertion
+            if(data.affectedRows === 1){
+                const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
+                UserMapper.activeUsersRegistry.add(newUser);            
+                return res.json({success: true, token: token, user: newUser});
+            }
+            else{
+                return res.json(data);
+            }
+            
         });
-        //userTDG.SQLset_user_Password(newUser.userName(), newUser.password);
-
-        const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
-
-        UserMapper.activeUsersRegistry.add(newUser);
-        return res.json({success: true, token: 'JWT' + token, user: newUser})
+        //userTDG.SQLset_user_Password(newUser.userName(), newUser.password);        
 
     }
 
