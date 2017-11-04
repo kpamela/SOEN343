@@ -48,5 +48,17 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
         this.removeIndex(index);
     }
 
+    /**
+     * Looks, removes, and returns the specified model
+     * @param model
+     * @returns {*}
+     */
+    popModel(model){
+        let index = this.findModel(model);
+        let item = this.content[index]
+        this.removeIndex(index);
+        return item;
+    }
+
 
 };

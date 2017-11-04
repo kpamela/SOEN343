@@ -75,10 +75,14 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 
     /**
      *
-     * @returns {*}
+     * @returns {UnitOfWork}
      */
     static get unitOfWork(){
         return _unitOfWork;
+    }
+
+     static get modelTDG(){
+        return modelTDG
     }
 
    constructor(options={}) {
@@ -112,35 +116,13 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
      */
      view(req, res) {
 
-            if(CatalogueMapper.productListing.content.length == 0){//get from db only if listing is null
-                modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
-            }
-
-            return res.send(CatalogueMapper.productListing.content);
+        modelTDG.SQLget_models_All().then(function(response){
+            return res.send(response.content);
+        });
 
     }
 
 
-
-
-
-    /**
-     * Should be used as the callback function of SQLget_models_All
-     * Sets the content of the productListing to the content of the database, passed in as argument
-     * @param data
-     */
-    static setListingFromDatabase(data){
-        CatalogueMapper.productListing.content = [];
-        for(let i in data){
-           let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
-            if(product){//ignore undefined
-                CatalogueMapper.productListing.add(product);
-                console.log(product);
-            }
-        }
-        console.log("%%%%%%%%%%%%%%%%%%%%");
-
-    }
 
 
     /**

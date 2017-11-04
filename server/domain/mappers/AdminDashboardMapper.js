@@ -3,6 +3,7 @@
  */
 const Catalogue = require('./CatalogueMapper.js'),
     ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
+    ProductTDG = require('../../data-source/TDG/ProductTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer.js'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer.js'),
@@ -18,21 +19,23 @@ const meld = require('meld');
  * @type {{modified: Array, deleted: Array}}
  * @private
  */
-let _productHistory = new ProductHistory();
+//let _productHistory = new ProductHistory();
 /**
  *
  * @type {ModelTDG}
  */
 let modelTDG = new ModelTDG();
 
+/**
+ *
+ * @type {ProductTDG}
+ */
+let productTDG = new ProductTDG();
+
 module.exports = class AdminDashboardMapper extends Catalogue{
 
-    /**
-     * One product history for all admins
-     * @returns {{modified: Array, deleted: Array}}
-     */
-    static get productHistory(){
-        return _productHistory;
+    static get modelTDG(){
+        return modelTDG;
     }
 
 
@@ -82,13 +85,10 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             //transfer to unit of work for later commit
             AdminDashboardMapper.unitOfWork.registerNew(product);
-            //Add new item to productListing
-            //All changes should be reflected on all instances of Catalogue
-            AdminDashboardMapper.productListing.add(product);
 
             //Returns teh new productListing contents, and the state of commit
             return res.json({msg:"Item has been added to change list",
-                data: AdminDashboardMapper.productListing.content,
+                newData: product,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
 
@@ -111,32 +111,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     modify(req, res){
 
-            const index =  AdminDashboardMapper.productListing.findModel(req.body.previous);
-
-            const old = AdminDashboardMapper.productListing.content[index];
-
             let newProduct = AdminDashboardMapper.addNewProduct(req.body.current.category, req.body.current);
 
-
-            //storing old object until commit
-            if(old.flag === 1){//item already modified
-                const history = AdminDashboardMapper.getCurrentModelIndexInHistory(old.ModelNumber);
-                //modify current model number to handle modelnumber changes
-                //keeping the old model in history
-                AdminDashboardMapper.productHistory.modified[history].current = newProduct.ModelNumber;
-                //remove old product from changelist
-                AdminDashboardMapper.unitOfWork.removeFromChangeList(old);
-
-            }
-            else{
-                AdminDashboardMapper.productHistory.modified.push(
-                    {current: newProduct.ModelNumber,
-                    old: old});
-            }
-
             AdminDashboardMapper.unitOfWork.registerDirty(newProduct);
-
-            AdminDashboardMapper.productListing.setTo(index, newProduct);
 
             res.json({msg:"Item set to modify. Commit when ready",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
@@ -151,15 +128,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     remove(req, res){
 
-            let product = AdminDashboardMapper.productListing.getModel(req.body.model);
-
-
-            AdminDashboardMapper.productListing.removeModel(req.body.model);
-
-            AdminDashboardMapper.unitOfWork.registerDeleted(product);
-
-            //storing deleted product until commit
-            AdminDashboardMapper.productHistory.deleted.push(product);
+            AdminDashboardMapper.unitOfWork.registerDeleted(req.body.product);
 
             res.json({msg: "Item will be deleted on commit.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
@@ -176,46 +145,49 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     commitChanges(req, res){
 
-            const changes = AdminDashboardMapper.unitOfWork.commit();
+            let changes = AdminDashboardMapper.unitOfWork.commit();
+
 
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
-            while(changes.newList.length){//removing item every time from the changes list see implementation of UoW
-                let product = AdminDashboardMapper.productListing.getModel(changes.newList[0]);
+           for(let i in changes.newList){
+                let product = changes.newList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Added product: " + product.ModelNumber);
                 //TODO tdg work for the product Ids
                 modelTDG.SQLadd_models(product).then(function(response){
                     console.log(response);
+                    /*productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
+                        console.log(response);
+                    });*/
                 });
             }
-            while(changes.dirtyList.length){//removing item every time
-                let product = AdminDashboardMapper.productListing.getModel(changes.dirtyList[0]);
+            for(let i in changes.dirtyList){
+                let product = changes.dirtyList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Modified product: "+product.ModelNumber);
                 //TODO tdg work
             }
-            while(changes.deletedList.length){//removing item every time
-                let product = AdminDashboardMapper.productHistory.getDeletedModel(changes.deletedList[0]);
+            for(let i in changes.deletedList){
+                let product = changes.deletedList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.ModelNumber);
                 //TODO tdg work for product ids
-                modelTDG.SQLdelete_models(product.ModelNumber);
+               // productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
+                    modelTDG.SQLdelete_models(product.ModelNumber);
+                //});
+
             }
 
             if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
-                console.log(AdminDashboardMapper.productHistory);
+
                 return res.status(500).json("Oops, something went wrong ")
             }
 
-
-            AdminDashboardMapper.productHistory.resetHistory();
-
-            console.log(AdminDashboardMapper.productHistory);
 
             res.json({msg: "All changes have been committed to Database.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
@@ -243,28 +215,20 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             return res.status(412).json("No changes to revert");
         }
         else{
-            const changes = AdminDashboardMapper.unitOfWork.rollback();
+            let changes = AdminDashboardMapper.unitOfWork.rollback();
             //reverting all changes to as they are in the database
             //setting all clean -> sets UoW's changeList to default
-            for(let i in changes.newList){
-                //removing all new models
-                AdminDashboardMapper.productListing.removeModel(changes.newList[i]);
 
-            }
+             //nothing to do with new products, simply forget them
+
             for(let i in changes.dirtyList){
-                const index = AdminDashboardMapper.productListing.findModel(changes.dirtyList[i]);
-                //getting old object
-                let old = AdminDashboardMapper.productHistory.getOldModel(changes.dirtyList[i]);
-                //restoring old model
-                AdminDashboardMapper.productListing.content[index] = old;
+                let old = changes.dirtyList[i];
                 //setting old model to clean
                 AdminDashboardMapper.unitOfWork.registerClean(old);
             }
             for(let i in changes.deletedList){
 
-                let old = AdminDashboardMapper.productHistory.getDeletedModel(changes.deletedList[i]);
-
-                AdminDashboardMapper.productListing.add(old);
+                let old = changes.deletedList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(old);
             }
@@ -273,11 +237,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 return res.status(500).json("Oops, something went wrong");
             }
 
-            AdminDashboardMapper.productHistory.resetHistory();
+            //getting the current productListing
+            AdminDashboardMapper.modelTDG.SQLget_models_All().then(function(response){
+                return res.json({msg:"All uncommitted changes have been reverted!",
+                    data: response.content,
+                    hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
+            });
 
-            res.json({msg:"All uncommitted changes have been reverted!",
-                data: AdminDashboardMapper.productListing.content,
-                hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 
         }

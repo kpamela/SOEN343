@@ -4,9 +4,9 @@
 
 class ProductId{
 
-    constructor(modelNumber, serialNumber){
-        this.ModelNumber = modelNumber;
-        this.SerialNumber = serialNumber;
+    constructor(id){
+        this.ModelNumber = id.ModelNumber;
+        this.SerialNumber = id.SerialNumber;
 
         this.Locked = false;
     }

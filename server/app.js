@@ -17,10 +17,14 @@ const express = require('express'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
     config = require('../webpack.config.js'),
     compiler = webpack(config),
-    Advice = require('./Advice.js');
+    Advice = require('./Advice.js'),
+    CatalogueAspect = require('./domain/Aspects/CatalogueAspect.js'),
+    AdminAspect = require('./domain/Aspects/AdminDashboardAspect.js'),
+    ClientAspect = require('./domain/Aspects/ClientDashboardAspect.js');
 const aspect = require('aspect-js');
 const meld = require('meld');
 const trace = require('meld/aspect/trace');
+
 
 // Configure the database
 var configDB = require('./data-source/config/database.js');
@@ -70,15 +74,19 @@ let clientDashboardMapper = new ClientDashboardMapper();
  *
  * For Authorization of token
  */
-
-meld.around(catalogueMapper,'view', Advice.aroundAuthorization);
+let catAspect = new CatalogueAspect(catalogueMapper);
+let adminAspect = new AdminAspect(adminDashboardMapper);
+//let clientAspect = new ClientAspect(clientDashboardMapper);
+/*meld.around(catalogueMapper,'view', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'revertChanges', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'getCommitState', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'add', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'commitChanges', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'remove', Advice.aroundAuthorization);
 meld.around(adminDashboardMapper,'modify', Advice.aroundAuthorization);
-
+meld.around(clientDashboardMapper,'addToCart', Advice.aroundAuthorization);
+meld.around(clientDashboardMapper,'removeFromCart', Advice.aroundAuthorization);
+*/
 /**
  *
  *
@@ -106,6 +114,8 @@ app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
 app.post('/products/add', adminDashboardMapper.add);
 app.post('/products/remove', adminDashboardMapper.remove);
 app.post('/products/commitChanges', adminDashboardMapper.commitChanges);
+app.post('/clients/addToCart', clientDashboardMapper.addToCart);
+app.post('/clients/removeFromCart', clientDashboardMapper.removeFromCart);
 app.patch('/products/modify', adminDashboardMapper.modify);
 
 app.all('*', (req, res) => {

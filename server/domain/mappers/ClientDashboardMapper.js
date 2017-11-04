@@ -3,12 +3,14 @@
  */
 const Catalogue = require('./CatalogueMapper.js'),
     UserMapper = require('./UserMapper.js'),
+    ProductId = require('../classes/ProductClasses/ProductId.js'),
+    ProductTDG = require('../../data-source/TDG/ProductTDG'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/television');
 
-
+let productTDG = new ProductTDG();
 
 module.exports = class ClientDashboardMapper extends Catalogue{
 
@@ -18,13 +20,13 @@ module.exports = class ClientDashboardMapper extends Catalogue{
     }
 
     //TODO
-    get routes(){
+   /* get routes(){
         return super.routes.concat([
             ['post','/addToCart','addToCart'],
             ['post','/removeFromCart','removeFromCart']])
 
     }
-
+*/
     constructor(options={}) {
         super(options);
 
@@ -37,12 +39,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      * @param res
      */
     addToCart(req, res){
-        const authorization = ClientDashboardMapper.authorizeToken(req.headers.authorization);
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
             //getting user from usersRegistry
             let user = UserMapper.activeUsersRegistry.getUser(req.body.username);
 
@@ -58,14 +55,18 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 //TODO TDG calls with products table
                 //instantiating product id with results, putting in the user
                 // places id to locked ids and returns a product Id
-                let id = product.getProductId();
-                //add productId to cart of user
-                user.addToCart(id);
+                productTDG.SQLgetSingle_products(product.ModelNumber).then(function(response){
+                    let id = new ProductId(response);
+                    product.addToUsedIds(id);
+                    //add productId to cart of user
+                    user.addToCart(id);
 
-                res.json(id);
+                    res.json(id);
+                });
+
             }
 
-        }
+
     }
 
 
@@ -75,12 +76,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      * @param res
      */
     removeFromCart(req, res){
-        const authorization = ClientDashboardMapper.authorizeToken(req.headers.authorization);
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
             //getting the user from users Registry
             let user = UserMapper.activeUsersRegistry.getUser(req.body.username);
 
@@ -93,7 +89,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             //unlocks productId and place it in available productid list
             product.restoreId(id.SerialNumber);
 
-        }
+
     }
 
 

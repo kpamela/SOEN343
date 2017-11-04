@@ -13,8 +13,7 @@ const _DELETED = -1;
 
 let _flag = _CLEAN;
 
-let _productIds = [];
-let _lockedIds = [];
+let _usedIds = [];
 
 
 class ProductDescription{
@@ -47,7 +46,6 @@ class ProductDescription{
             this.Category = product.Category;
         }
 
-        this.setNewProductIds(this.Amount);
 
         this.setNew();
     }
@@ -72,55 +70,31 @@ class ProductDescription{
         _flag = _DELETED;
     }
 
-    /**
-     * TODO Create product ids
-     * @param amount
-     */
-    setNewProductIds(amount){
-        _productIds = [];
 
-        for(let i = 0; i < amount; i++){
-            let serial = this.ModelNumber + "_" + i;
-            _productIds[i] = new ProductId(this.ModelNumber, serial);
-        }
-    }
 
-    /**
-     * Gets a list of product ids and sets the current product id list
-     * @param list
-     */
-    setProducIds(list){
-        _productIds = list;
-    }
-
-    /**
-     * Returns a product id from the list
-     * stores it in locked list
-     * @returns {*}
-     */
-    getProductId(){
-        let id = _productIds.pop();
-        id.Locked = true;
-        _lockedIds.push(id);
-        this.Amount--;
-
-        return id;
-    }
 
     /**
      * Restores a specific product id
      * @param serial
      */
     restoreId(serial){
-        for(let i = 0; i< _lockedIds.length; i++){
-            if(_lockedIds[i].SerialNumber == serial){
-                _lockedIds[i].Locked = false;
-                _productIds.push(_lockedIds[i]);
-                _lockedIds.splice(i, 1);
+        for(let i = 0; i< _usedIds.length; i++){
+            if(_usedIds[i].SerialNumber == serial){
+                _usedIds[i].Available = false;
+                _usedIds.splice(i, 1);
                 this.Amount++;
                 break;
             }
         }
+    }
+
+    /**
+     *
+     * @param {ProductId} id
+     */
+    addToUsedIds(id){
+        _usedIds.push(id);
+        this.Amount--;
     }
 
 }

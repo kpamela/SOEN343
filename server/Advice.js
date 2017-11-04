@@ -11,6 +11,7 @@ const meld = require('meld'),
  * Advices
  */
 function aroundAuthorization() {
+    Console.log("Advice Triggered");
     let joinpoint = meld.joinpoint();
     let req = joinpoint.args[0];
     let res = joinpoint.args[1];

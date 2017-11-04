@@ -11,13 +11,13 @@ class LaptopComputer extends Computers {
         if(product.description){
             this.DisplaySize = product.description.displaySize;
             this.BatteryInfo = product.description.batteryInfo;
-            this.HadCamera = product.description.hasCamera;
+            this.HasCamera = product.description.hasCamera;
             this.OperatingSystem = product.description.operatingSystem;
         }
         else{
             this.DisplaySize = product.DisplaySize;
             this.BatteryInfo = product.BatteryInfo;
-            this.HadCamera = product.HasCamera;
+            this.HasCamera = product.HasCamera;
             this.OperatingSystem = product.OperatingSystem;
         }
     }
