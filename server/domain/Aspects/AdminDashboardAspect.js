@@ -40,7 +40,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'modify', this.aroundAuthorization);
         meld.around(CatalogueMapper.unitOfWork, 'commit', this.aroundUoWCommit);
         meld.around(CatalogueMapper.unitOfWork, 'rollback', this.aroundUoWRollback);
-        //called after rollback
+        //called after rollback, to send the new data to frontend
         meld.around(AdminDashboardMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
 
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);

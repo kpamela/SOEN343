@@ -12,9 +12,9 @@ const express = require('express'),
     User = require('../classes/user.js');
 /**
  * List of all active users
- * @type {UsersIdentityMap}
+ * @type {[]}
  */
-let _activeUsersRegistry = new UsersIdentityMap();
+let _activeUsersRegistry = [];
 /**
  *
  * @type {UserTDG}
@@ -25,7 +25,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
     /**
      * Returns the list of all active users
-     * @returns {UsersIdentityMap}
+     * @returns {[]}
      */
     static get activeUsersRegistry(){
         return _activeUsersRegistry;
@@ -83,7 +83,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
                    const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
-                   UserMapper.activeUsersRegistry.add(activeUser);
+                   UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);
                    res.json({success: true, token: token, user: activeUser})
                }
                else{
@@ -116,13 +116,13 @@ module.exports = class UserMapper extends ClassBasedRouter{
 
         const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
-        UserMapper.activeUsersRegistry.add(newUser);
+        UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
         res.json({success: true, token: token, user: newUser})
 
     }
 
-    getActiveUsers(req, res){
-
+    getActiveUsersRegistry(req, res){
+        res.json(UserMapper.activeUsersRegistry);
     }
 
 };

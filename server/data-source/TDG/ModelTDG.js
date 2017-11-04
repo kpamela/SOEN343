@@ -18,10 +18,10 @@ class ModelTDG{
       return data;
   }
 
-  SQLget_models(category){                                          //Retrieves all models of a certain category
+  SQLget_models(model){                                          //Retrieves model of specified modelnumber
       let data = new jquery.Deferred();
-      let modelInfo = {sql: `SELECT * FROM models WHERE models.Category = ?`,
-                     values: [category]};
+      let modelInfo = {sql: `SELECT * FROM models WHERE models.ModelNumber = ?`,
+                     values: [model]};
     handler.handleRead(modelInfo, data);
     return data;
   }
