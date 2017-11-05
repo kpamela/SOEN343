@@ -5,8 +5,10 @@
   /**
    * Created by CharlesPhilippe on 2017-10-09.
    */
-  import React from 'react';
-  import DescriptionForm from './DescriptionForm.js'
+import React from 'react';
+import DescriptionForm from './DescriptionForm.js';
+import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+
   export default class ModifyProduct extends React.Component{
 
       constructor(props){
@@ -17,9 +19,9 @@
               productIndex: 0,
               fieldValue: props.item,
               currentForm:
-                  <button className="Edit" onClick={() => this.modifyProductRequest()}  >
+                  <Button bsStyle="warning" className="edit" onClick={() => this.modifyProductRequest()}  >
                      Edit {this.props.item.description.modelNumber}
-                  </button>
+                  </Button>
 
           };
 
@@ -101,32 +103,28 @@
           return(
               <div>
                   <form onSubmit={this.handleOnSubmit}>
+                    <FormGroup>
+                            <ControlLabel>Select Category</ControlLabel>
+                            <FormControl componentClass="select" value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
+                                <option value="" default> Select Category</option>
+                                {/*<option value="Television">Television</option>*/}
+                                <option value="Monitor">Monitor</option>
+                                <option value="TabletComputer">TabletComputer</option>
+                                <option value="DesktopComputer">DesktopComputer</option>
+                                <option value="LaptopComputer">LaptopComputer</option>
 
-                      <label>
-                          Select Category
-                          <select value={this.state.fieldValue.category} id="category"  onChange={this.handleFieldChange}>
-                              <option value="" default> Select Category</option>
-                              {/*<option value="Television">Television</option>*/}
-                              <option value="Monitor">Monitor</option>
-                              <option value="TabletComputer">TabletComputer</option>
-                              <option value="DesktopComputer">DesktopComputer</option>
-                              <option value="LaptopComputer">LaptopComputer</option>
+                            </FormControl>
 
-                          </select>
-                      </label>
-                      <br/>
-                      <label>
-                          Enter amount
-
-                          <input
-                              className={errors.amount ? "error" : ""}
-                              type="number"
-                              value={this.state.fieldValue.amount}
-                              min="0"
-                              id="amount"
-                              onChange={this.handleFieldChange}
-                          />
-                      </label>
+                            <ControlLabel>Enter amount</ControlLabel>
+                            <FormControl
+                                className={errors.amount ? "error" : ""}
+                                type="number"
+                                value={this.state.fieldValue.amount}
+                                min="0"
+                                id="amount"
+                                onChange={this.handleFieldChange}
+                            />
+                    </FormGroup>
                   </form>
                   {this.validateDescription()}
 
@@ -191,9 +189,9 @@
                                    category={this.state.fieldValue.category}
                                    onDescriptionChange={this.handleDescriptionChange}/>
 
-                  <button disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
+                  <Button bsStyle="primary" disabled={this.state.disabled || errors.disabled} className="Submit-mod" onClick={()=>this.handleOnModifyProduct()}>
                       Submit
-                  </button>
+                  </Button>
 
               </div>
           );

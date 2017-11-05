@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Modal, Button, FieldGroup} from 'react-bootstrap';
+import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import axios from 'axios';
 import auth from '../General/auth.js'
 import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
@@ -74,17 +74,16 @@ export const LoginModal = React.createClass({
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Login to your account to save items to save your cart and make purchases!
-            <form onSubmit={this.login}>
-              <label>
-                Username: <input type="text" name="Username" value={this.state.Username} onChange={this.handleChange}/>
-              </label>
-              <br />
-              <label>
-                Password: <input type="password" name="Password" value={this.state.Password} onChange={this.handleChange}/>
-              </label>
-              <br />
-              <input type="submit" value="Submit" />
+            <p>Login to your account to save items to save your cart and make purchases!</p>
+            <form>
+              <FormGroup>
+                <ControlLabel>Username</ControlLabel>
+                   <FormControl type="text" name="Username" value={this.state.Username} onChange={this.handleChange} placeholder="Enter Username"/>
+                <ControlLabel>Password</ControlLabel>
+                   <FormControl type="password" name="Password" value={this.state.Password} onChange={this.handleChange} placeholder="Enter Password"/>
+                <br />
+                <Button bsStyle="primary" onClick={this.login}>Submit</Button>
+              </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>

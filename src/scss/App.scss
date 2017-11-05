@@ -1,24 +1,13 @@
-//// Say you have a file named style.scss in the same directory as main.scss
-// to import the styling here follow the convention below
-// @import 'style'
-// you dont need the file extension.
-// Make sure all imports are at the top of this file.
+//HTML and body css
+html, body{
+    margin:0px;
+    padding:0px;
+}
 
-// NESTING example
-// MARKUP
-// <div className="container">
-//   <div className="child1"></div>
-//   <div className="child2"></div>
-// </div>
-// SCSS
-// .container {
-//     .child1 {
-//         width: 50px;
-//     }
-//     .child2 {
-//         height: 50px;
-//     }
-// }
+//Page seperator (<hr/>) css
+hr{
+    border-color:#777777;
+}
 
 //HomePage css
 .HomePage-Container{
@@ -26,6 +15,7 @@
         margin-left:200px;
         margin-right:200px;
         text-align: center;
+        background-color:#afafaf;
     }
     Button{
         margin-left:5px;
@@ -35,13 +25,14 @@
 
 //Footer css
 footer{
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    position: fixed;
     left: 0;
-    padding: 1rem;
-    background-color: #eee;
+    bottom: 0;
+    width: 100%;
     text-align: center;
+    background-color: #afafaf;
+    z-index:999;
+    font-size: 16px;
 }
 
 //NavBar css
@@ -63,12 +54,55 @@ footer{
     }
 }
 
-input.error {
-    border-color: red;
-}
-
 //AboutUs css
 .AboutUs-Container{
     margin-left:100px;
     margin-right:100px;
 }
+
+//Catalog form css
+.catalogForm{
+    margin-left:200px;
+    margin-right:200px;
+}
+.addButton{
+    margin-left:200px;
+    margin-right:200px;
+
+    .addAnother{
+        margin-left:10px;
+    }
+}
+.catalogHeader{
+    margin-left:200px;
+    margin-right:200px;
+}
+.uncommittedChanges{
+    margin-left:200px;
+    margin-right:300px;
+    margin-bottom:30px;
+    Button{
+        margin-left:10px;
+    }
+}
+
+//Product Listing css
+.productListing{
+    margin-top:30px;
+    margin-left:200px;
+    margin-right:200px;
+    h2{
+        margin-bottom:30px;
+    }
+    Button{
+        margin-top:10px;
+        margin-left:10px;
+        margin-bottom:10px;
+    }
+}
+.product{
+    border-color: #777777;
+}
+
+
+

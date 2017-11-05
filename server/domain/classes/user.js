@@ -14,6 +14,12 @@ class User{
         this.EmailAddress   = user.EmailAddress;
         this.PhoneNumber    = user.PhoneNumber;
         this.Administrator  = user.Administrator;
+        this.Apt            = user.Apt;
+        this.StreetNumber   = user.StreetNumber;
+        this.Street         = user.Street;
+        this.City           = user.City;
+        this.ZIP            = user.ZIP;
+        this.Country        = user.Country;
     }
 
 }

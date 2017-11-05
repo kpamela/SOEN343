@@ -24,11 +24,10 @@ class UserTDG{
   SQLadd_users(user) {
       let data = new jquery.Deferred();
       this.SQLget_users(user.Username).then(function(existingUser){
-        if(!existingUser){
+        if(existingUser != ''){
             data.resolve({success: false, msg:"User already exists"});
         }
         else{
-            console.log(user.Password);
             bcrypt.hash(user.Password, 10, (err, hash) =>{
 
                 if(err){
@@ -44,7 +43,7 @@ class UserTDG{
 
         }
       });
-      return data
+      return data;
   }
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){

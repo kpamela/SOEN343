@@ -14,7 +14,7 @@ describe('Users', () => {
   * Test the /POST route for user login
   */
   describe('/POST users', () => {
-      it('User shuld be able to login with correct username and password', (done) => {
+      it('User should be able to login with correct username and password', (done) => {
         let user =  {
           Username: "test",
           Password: "test"
@@ -31,9 +31,31 @@ describe('Users', () => {
               done();
             });
       });
-
   });
-
+  /*
+  * Test the /POST route for incorrect usernmane in user login
+  */
+  describe('/POST users', () => {
+      it('User should not be able to register with an incorrect username', (done) => {
+        let user =  {
+          Username: "incorrect",
+          Password: "test"
+        }
+        chai.request(server)
+            .post('/users/authenticate')
+            .send(user)
+            .end((err, res) => {
+                res.should.have.status(500);
+                res.body.should.be.a('object');
+                res.body.should.have.property('success').eql(false);
+                res.body.should.have.property('msg').eqls('User Not found');
+              done();
+            });
+      });
+  });
+  /*
+  * Test the /POST route for incorrect password in user login
+  */
   describe('/POST users', () => {
       it('User should not be able to login with wrong password', (done) => {
         let user =  {
@@ -44,13 +66,13 @@ describe('Users', () => {
             .post('/users/authenticate')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(401);
+                res.should.have.status(500);
                 res.body.should.be.a('object');
                 res.body.should.have.property('success').eql(false);
                 res.body.should.have.property('msg').eqls('Wrong password');
               done();
             });
       });
-
   });
+
 });
