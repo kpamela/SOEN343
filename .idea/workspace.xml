@@ -2,12 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0e6feb0-9032-4962-acd4-fe60188a4916" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/Advice.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/domain/Aspects/AdminDashboardAspect.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/domain/Aspects/CatalogueAspect.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/domain/Aspects/ClientDashboardAspect.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/domain/IdentityMaps/ShoppingCart.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductId.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/AddProduct.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.babelrc" afterPath="$PROJECT_DIR$/.babelrc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SQL_CreateTable_iteration2.sql" afterPath="$PROJECT_DIR$/SQL_CreateTable_iteration2.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/app.js" afterPath="$PROJECT_DIR$/server/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/data-source/TDG/handler.js" afterPath="$PROJECT_DIR$/server/data-source/TDG/handler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/IdentityMaps/ProductHistory.js" afterPath="$PROJECT_DIR$/server/domain/IdentityMaps/ProductHistory.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/IdentityMaps/ProductsIdentityMap.js" afterPath="$PROJECT_DIR$/server/domain/IdentityMaps/ProductsIdentityMap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/IdentityMaps/UsersIdentityMap.js" afterPath="$PROJECT_DIR$/server/domain/IdentityMaps/UsersIdentityMap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/UnitOfWork.js" afterPath="$PROJECT_DIR$/server/domain/UnitOfWork.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/ProductClasses/television.js" afterPath="$PROJECT_DIR$/server/domain/classes/ProductClasses/television.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/classes/user.js" afterPath="$PROJECT_DIR$/server/domain/classes/user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js" afterPath="$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js" afterPath="$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/mappers/ClientDashboardMapper.js" afterPath="$PROJECT_DIR$/server/domain/mappers/ClientDashboardMapper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/mappers/OldFiles/products.js" afterPath="$PROJECT_DIR$/server/domain/mappers/OldFiles/products.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/domain/mappers/UserMapper.js" afterPath="$PROJECT_DIR$/server/domain/mappers/UserMapper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/test/ProductsTests.js" afterPath="$PROJECT_DIR$/server/test/ProductsTests.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Dashboard/Catalogue.js" afterPath="$PROJECT_DIR$/src/js/Dashboard/Catalogue.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Dashboard/ModifyProduct.js" afterPath="$PROJECT_DIR$/src/js/Dashboard/ModifyProduct.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Dashboard/ProductListing.js" afterPath="$PROJECT_DIR$/src/js/Dashboard/ProductListing.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/General/Admin.js" afterPath="$PROJECT_DIR$/src/js/General/Admin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/General/ProductDescription.js" afterPath="$PROJECT_DIR$/src/js/General/ProductDescription.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/General/User.js" afterPath="$PROJECT_DIR$/src/js/General/User.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/NavBar/ShoppingCartModal.js" afterPath="$PROJECT_DIR$/src/js/NavBar/ShoppingCartModal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/scss/App.scss" afterPath="$PROJECT_DIR$/src/scss/App.scss" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,6 +54,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Computers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userTDG.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/userTDG.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ModelTDG.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="47" column="3" lean-forward="true" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminDashboardMapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="86" column="50" lean-forward="false" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ProductHistory.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/ProductHistory.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -31,92 +106,59 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminDashboardMapper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js">
+      <file leaf-file-name="CatalogueMapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="215" column="51" lean-forward="false" selection-start-line="215" selection-start-column="37" selection-end-line="215" selection-end-column="51" />
+            <state relative-caret-position="-183">
+              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Computers.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js">
+      <file leaf-file-name="UnitOfWork.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/domain/UnitOfWork.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state relative-caret-position="-1324">
+              <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DesktopComputer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/DesktopComputer.js">
+      <file leaf-file-name="ProductTDG.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1095">
+              <caret line="73" column="16" lean-forward="false" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddressTDG.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/AddressTDG.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LaptopComputer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js">
+      <file leaf-file-name="handler.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/data-source/TDG/handler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Monitor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="14" lean-forward="false" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IdentityMap.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/IdentityMap.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProductDescription.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TabletComputer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="television.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/television.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="480">
+              <caret line="32" column="38" lean-forward="true" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1509917895000" expanded="true" signature="1080:1097" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -134,8 +176,9 @@
     <findStrings>
       <find>handle</find>
       <find>monitor</find>
-      <find>addNewProduct</find>
       <find>productListing</find>
+      <find>addNewProduct</find>
+      <find>modify</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,12 +206,12 @@
         <option value="$PROJECT_DIR$/server/classes/ProductClasses/desktopComputer.js" />
         <option value="$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js" />
         <option value="$PROJECT_DIR$/server/data-source/TDG/handler.js" />
-        <option value="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" />
-        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js" />
-        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js" />
-        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js" />
-        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js" />
         <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js" />
+        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js" />
+        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js" />
+        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js" />
+        <option value="$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js" />
+        <option value="$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js" />
       </list>
     </option>
   </component>
@@ -184,10 +227,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="24" />
+    <option name="x" value="5" />
+    <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="1380" />
+    <option name="height" value="743" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -205,7 +248,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -242,21 +285,6 @@
               <item name="SOEN343" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="domain" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SOEN343" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SOEN343" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-              <item name="ProductClasses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SOEN343" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SOEN343" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
               <item name="IdentityMaps" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -276,7 +304,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -323,51 +351,42 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19673000" />
+    <option name="totallyTimeSpent" value="22507000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="727" extended-state="6" />
+    <frame x="5" y="23" width="1280" height="727" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2946565" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29312977" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23969465" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2946565" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23969465" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23125" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23125" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -382,9 +401,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/classes/user.js" />
-    <entry file="file://$PROJECT_DIR$/server/routes/products.js" />
-    <entry file="file://$PROJECT_DIR$/server/routes/users.js" />
     <entry file="file://$PROJECT_DIR$/server/classes/ProductClasses/productDescription.js" />
     <entry file="file://$PROJECT_DIR$/server/classes/ProductClasses/television.js" />
     <entry file="file://$PROJECT_DIR$/server/classes/ProductClasses/laptopComputer.js" />
@@ -395,13 +411,6 @@
     <entry file="file://$PROJECT_DIR$/server/classes/user.js" />
     <entry file="file://$PROJECT_DIR$/server/routes/products.js" />
     <entry file="file://$PROJECT_DIR$/server/routes/users.js" />
-    <entry file="file://$PROJECT_DIR$/server/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="50" column="11" lean-forward="false" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/AddProduct.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-952">
@@ -428,18 +437,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/userTDG.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/data-source/models/MonitorDisplay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -465,45 +466,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/handler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1509497189000" expanded="true" signature="143:1129" ph="{...}" />
-            <marker date="1509497189000" expanded="true" signature="631:1127" ph="{...}" />
-            <marker date="1509497189000" expanded="true" signature="677:1119" ph="{...}" />
-            <marker date="1509497189000" expanded="true" signature="821:911" ph="{...}" />
-            <marker date="1509497189000" expanded="true" signature="931:1097" ph="{...}" />
-            <marker date="1509497189000" expanded="true" signature="1080:1097" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="35" column="35" lean-forward="false" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/ProductsIdentityMap.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="52" lean-forward="false" selection-start-line="76" selection-start-column="52" selection-end-line="76" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -515,13 +481,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
+    <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/IdentityMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/television.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/DesktopComputer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="9" lean-forward="false" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="32" lean-forward="true" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="45" column="9" lean-forward="false" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="118" column="44" lean-forward="false" selection-start-line="118" selection-start-column="44" selection-end-line="118" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -541,18 +560,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/UnitOfWork.js">
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+        <state relative-caret-position="-192">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js">
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/AddressTDG.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="215" column="51" lean-forward="false" selection-start-line="215" selection-start-column="37" selection-end-line="215" selection-end-column="51" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ActiveUsersRegistryTDG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ProductTDG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1095">
+          <caret line="73" column="16" lean-forward="false" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/userTDG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/UnitOfWork.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1324">
+          <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="26" lean-forward="true" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/domain/mappers/CatalogueMapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-183">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -565,67 +638,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/IdentityMaps/IdentityMap.js">
+    <entry file="file://$PROJECT_DIR$/server/domain/mappers/AdminDashboardMapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        <state relative-caret-position="194">
+          <caret line="86" column="50" lean-forward="false" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/television.js">
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/ModelTDG.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="390">
+          <caret line="47" column="3" lean-forward="true" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/TabletComputer.js">
+    <entry file="file://$PROJECT_DIR$/server/data-source/TDG/handler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/ProductDescription.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="24" column="14" lean-forward="false" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Monitor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="14" lean-forward="false" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/LaptopComputer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/DesktopComputer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/domain/classes/ProductClasses/Computers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="480">
+          <caret line="32" column="38" lean-forward="true" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1509917895000" expanded="true" signature="1080:1097" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

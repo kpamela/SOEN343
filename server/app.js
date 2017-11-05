@@ -4,6 +4,8 @@
  */
 
 const express = require('express'),
+    CatalogueMapper = require('./domain/mappers/CatalogueMapper'),
+    ClientDashboardMapper = require('./domain/mappers/ClientDashboardMapper'),
     AdminDashboardMapper = require('./domain/mappers/AdminDashboardMapper.js'),
     UserMapper = require('./domain/mappers/UserMapper.js'),
     path = require('path'),
@@ -14,7 +16,15 @@ const express = require('express'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
     config = require('../webpack.config.js'),
-    compiler = webpack(config);
+    compiler = webpack(config),
+    Advice = require('./Advice.js'),
+    CatalogueAspect = require('./domain/Aspects/CatalogueAspect.js'),
+    AdminAspect = require('./domain/Aspects/AdminDashboardAspect.js'),
+    ClientAspect = require('./domain/Aspects/ClientDashboardAspect.js');
+const aspect = require('aspect-js');
+const meld = require('meld');
+const trace = require('meld/aspect/trace');
+
 
 // Configure the database
 var configDB = require('./data-source/config/database.js');
@@ -53,15 +63,80 @@ require('./data-source/config/passport')(passport);
 //TODO check for admin or client
 let userMapper = new UserMapper();
 let adminDashboardMapper = new AdminDashboardMapper();
+let catalogueMapper = new CatalogueMapper();
+let clientDashboardMapper = new ClientDashboardMapper();
+
+
+/**
+ *
+ *
+ * Aspects
+ *
+ * For Authorization of token
+ */
+let catAspect = new CatalogueAspect(catalogueMapper);
+let adminAspect = new AdminAspect(adminDashboardMapper);
+//let clientAspect = new ClientAspect(clientDashboardMapper);
+/*meld.around(catalogueMapper,'view', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'revertChanges', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'getCommitState', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'add', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'commitChanges', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'remove', Advice.aroundAuthorization);
+meld.around(adminDashboardMapper,'modify', Advice.aroundAuthorization);
+meld.around(clientDashboardMapper,'addToCart', Advice.aroundAuthorization);
+meld.around(clientDashboardMapper,'removeFromCart', Advice.aroundAuthorization);
+*/
+/**
+ *
+ *
+ *
+ * Routes
+ */
+
 app.use('/users', userMapper.router);
-app.use('/products', adminDashboardMapper.router);
+//app.use('/products', adminDashboardMapper.router);
+
+/**
+ *
+ * GET
+ *
+ */
+app.get('/products/view', catalogueMapper.view);
+app.get('/products/revertChanges', adminDashboardMapper.revertChanges);
+app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
+/**
+ *
+ * POST
+ * ['post','/addToCart','addToCart'],
+ ['post','/removeFromCart','removeFromCart']]
+ */
+app.post('/products/add', adminDashboardMapper.add);
+app.post('/products/remove', adminDashboardMapper.remove);
+app.post('/products/commitChanges', adminDashboardMapper.commitChanges);
+app.post('/clients/addToCart', clientDashboardMapper.addToCart);
+app.post('/clients/removeFromCart', clientDashboardMapper.removeFromCart);
+app.patch('/products/modify', adminDashboardMapper.modify);
+
 app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
+
+
+/**
+ *
+ *
+ *
+ *
+ */
 
 // Start server
 app.listen(port, () => {
     console.log('Server started on port ' + port);
 });
+
+
+
+
 
 module.exports = app;

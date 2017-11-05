@@ -14,18 +14,24 @@ const express = require('express'),
     Monitor = require('../classes/ProductClasses/Monitor.js'),
     UnitOfWork = require('../UnitOfWork.js'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap');
+const aspect = require('aspect-js');
+const meld = require('meld');
+const trace = require('meld/aspect/trace');
 
 /**
  * ProductListing is common to all catalogues
- * @type {[*]}
+ * @type {ProductsIdentityMap}
  * @private
  */
 //TODO make that a jquery deferred object, maybe
 let _productListing = new ProductsIdentityMap();
 
-
+/**
+ *
+ * @type {ModelTDG}
+ */
 let modelTDG = new ModelTDG();
-// [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}]
+
 /**
  * Unit of work is common to all catalogues
  */
@@ -39,22 +45,29 @@ let _unitOfWork = new UnitOfWork();
 module.exports = class CatalogueMapper extends ClassBasedRouter{
 
 
-
+    /**
+     * returns the list middlewares functions (required by ClassBasedRouter
+     * @returns {[*]}
+     */
     get middlewares(){
         return [
             ['GET','/', 'middleware']
         ]
     }
 
+    /**
+     * List of verb, routes, callback functions
+     * @returns {[*]}
+     */
     get routes(){
         return[
-            ['GET','/view', 'view']
+           // ['GET','/view', 'view']
         ]
     }
 
     /**
      * Product listing is common to all catalogues
-     * @returns {*[]}
+     * @returns {ProductsIdentityMap}
      */
     static get productListing(){
         return _productListing;
@@ -62,45 +75,28 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
 
     /**
      *
-     * @returns {*}
+     * @returns {UnitOfWork}
      */
     static get unitOfWork(){
         return _unitOfWork;
     }
-   /* static set productListing(p){
-        this.productListing.push(p);
+
+     static get modelTDG(){
+        return modelTDG
     }
 
-*/
    constructor(options={}) {
         super(options);
-       // this.productListing = [{category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: "2"}];
-        let test = new Monitor({category: "Monitor", description: {modelNumber: "222", price: 22, dimensions: 222, weight: 22, brandName: "22"}, amount: 2});
-        CatalogueMapper.productListing.add(test);
 
+        //registers the routes a middlewares to the class's router
+       // this.register(this.middlewares);
+       // this.register(this.routes);
 
-        this.register(this.middlewares);
-        this.register(this.routes);
-
+        //let traced =  meld(this, 'router', trace());
        this.view = this.view.bind(this);
        this.middleware = this.middleware.bind(this);
     }
 
-    static authorizeToken(token){
-        if(!token){
-            return {success: false, msg: "Unauthorized: No Token Provided"};
-        }
-
-        return jwt.verify(token, 'mysecret', function(err, decoded) {
-            if (err) {
-                return {success: false, msg: "Unauthorized: Incorrect Token Signature"};
-            }
-            else {
-                return {success: true};
-            }
-        });
-
-    }
 
 
     //TODO middleware
@@ -109,33 +105,32 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         next();
     }
 
-    //TODO view route
-    view(req, res) {
-        const authorization = CatalogueMapper.authorizeToken(req.headers.authorization);
+    /**
+     *If the productListing isn't set, set it to the content of the database
+     * Else, simply return the current product listing
+     *
+     * This follows that the productListing is static, and should always match the content of the Database
+     * Plus the changes in AdminDashboardMapper if there is any.
+     * @param req
+     * @param res
+     */
+     view(req, res) {
 
-        if(!authorization.success){
-            return res.status(401).json(authorization);
-        }
-        else{
-            //TODO proper tdg and identyMap calls
-
-            //modelTDG.SQLget_models_All().then(CatalogueMapper.setListingFromDatabase);
-           // ProductTDG.SQLget_product_All();
-            return res.send(CatalogueMapper.productListing.content);
-
-        }
+        modelTDG.SQLget_models_All().then(function(response){
+            return res.send(response.content);
+        });
 
     }
 
-    static setListingFromDatabase(data){
-        for(let i in data){
-            let product = CatalogueMapper.addNewProduct(data[i].Category,data[i]);
-
-            CatalogueMapper.productListing.add(product);
-        }
-    }
 
 
+
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
     static addNewProduct(category, product){
         switch(category){
             case 'DesktopComputer':

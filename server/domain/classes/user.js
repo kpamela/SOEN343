@@ -1,10 +1,11 @@
 const express = require('express'),
-    users = express.Router(),
-    bcrypt = require('bcryptjs'),
-    mysql = require('mysql'),                             // When all queries are moved to tdg, this can be removed
-    db = require('../../data-source/config/database.js'),
-    jwt = require('jsonwebtoken'),
-    userTDG = require('../../data-source/TDG/userTDG');
+    ShoppingCart = require('../IdentityMaps/ShoppingCart.js');
+
+/**
+ * Private instance of shopping cart
+ */
+let _cart = new ShoppingCart();
+
 class User{
     constructor(user){
         this.Username       = user.Username;
@@ -20,6 +21,30 @@ class User{
         this.City           = user.City;
         this.ZIP            = user.ZIP;
         this.Country        = user.Country;
+    }
+
+    getCart(){
+        return _cart.content;
+    }
+
+    /**
+     *
+     * @param {ProductId} product
+     */
+    addToCart(product){
+        _cart.add(product);
+    }
+
+
+    /**
+     *Returns and removes instance of product id in the cart
+     * @param {ProductId} serial
+     * @return {ProductId} item
+     */
+    removeFromCart(serial){
+        let item = _cart.getItem(serial);
+        _cart.removeItem(serial);
+        return item;
     }
 
 }

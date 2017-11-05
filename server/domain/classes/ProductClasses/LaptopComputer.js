@@ -8,10 +8,18 @@ const express = require('express'),
 class LaptopComputer extends Computers {
     constructor(product){
         super(product);
-        this.DisplaySize = product.description.displaySize;
-        this.BatteryInfo = product.description.batteryInfo;
-        this.HasCamera = product.description.hasCamera;
-        this.OperatingSystem = product.description.operatingSystem;
+        if(product.description){
+            this.DisplaySize = product.description.displaySize;
+            this.BatteryInfo = product.description.batteryInfo;
+            this.HasCamera = product.description.hasCamera;
+            this.OperatingSystem = product.description.operatingSystem;
+        }
+        else{
+            this.DisplaySize = product.DisplaySize;
+            this.BatteryInfo = product.BatteryInfo;
+            this.HasCamera = product.HasCamera;
+            this.OperatingSystem = product.OperatingSystem;
+        }
     }
 
 
