@@ -23,21 +23,8 @@ module.exports = class ClientDashboardMapper extends Catalogue{
         return productTDG;
     }
 
-    //TODO
-    get middlewares(){
-        return super.middlewares;
-    }
-
-    //TODO
-   /* get routes(){
-        return super.routes.concat([
-            ['post','/addToCart','addToCart'],
-            ['post','/removeFromCart','removeFromCart']])
-
-    }
-*/
-    constructor(options={}) {
-        super(options);
+    constructor() {
+        super();
 
     }
 
@@ -55,12 +42,18 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 //instantiating product id with results, putting in the user
                 // places id to locked ids and returns a product Id
                 productTDG.SQLgetSingle_products(req.body.modelNumber).then(function(response){
-                    let id = response;
+                    if(!response){
+                        //empty
+                        return res.status(500).send('Products list is empty')
+                    }
+                    else{
+                        let id = response;
 
-                    //add productId to cart of user
-                    user.addToCart(id);
+                        //add productId to cart of user
+                        user.addToCart(id);
 
-                    res.json(id);
+                        res.json(id);
+                    }
                 });
             });
     }

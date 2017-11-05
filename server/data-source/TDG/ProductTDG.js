@@ -40,7 +40,7 @@ class ProductTDG{
       let productInfo = {
         sql: `SELECT * FROM products
               inner join models on models.ModelNumber = products.ModelNumber
-              WHERE models.ModelNumber = ?
+              WHERE products.ModelNumber = ?
               AND products.Available = 1
               LIMIT 1`,
         timeout: 40000,
@@ -64,11 +64,19 @@ class ProductTDG{
 
   SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain ModelNumber
       let data = new jquery.Deferred();
-      let deleteProduct = {sql: `DELETE FROM models WHERE models.ModelNumber = ?`,
+      let deleteProduct = {sql: `DELETE FROM products WHERE products.ModelNumber = ?`,
                          values:[modelNumber]};
       handler.handleWrite(deleteProduct, data);
       return data;
   }
+
+    SQLdeleteSingle_products(serialNumber){
+        let data = new jquery.Deferred();
+        let deleteProduct = {sql: `DELETE FROM products WHERE products.SerialNumber = ?`,
+                            values:[serialNumber]};
+        handler.handleWrite(deleteProduct, data);
+        return data;
+    }
 
   SQLdelete_products_Quantity(modelNumber, quantity){                                     //Will remove the specified amount of products from the database of a certain model number
     let deleteProduct = {sql: `Call deleteProducts(?,?)`,

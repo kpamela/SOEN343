@@ -38,7 +38,9 @@ export default class ProductListing extends React.Component{
               })
           });
       }
-      else{}//TODO handle add to cart
+      else if(this.props.userType === "client"){
+          this.props.usr.addToCart(item.description.modelNumber);
+      }//TODO handle add to cart
 
   }
 

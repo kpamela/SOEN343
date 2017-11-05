@@ -8,8 +8,8 @@ import $ from 'jquery';
 
 export default class Admin extends User {
 
-    constructor() {
-        super();
+    constructor(username) {
+        super(username);
         this.hasUncommittedChanges = new $.Deferred();
 
         this.setUncommittedChange = this.setUncommittedChange.bind(this);

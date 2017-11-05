@@ -22,7 +22,7 @@ export class ClientDashboard extends Catalogue{
                 <PageHeader className="catalogHeader">Client Dashboard</PageHeader>
                 {super.render()}
                 <ProductListing
-                    isAdmin="client"
+                    userType="client"
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
                     include={this.state.include}

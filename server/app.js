@@ -20,10 +20,20 @@ const express = require('express'),
     Advice = require('./Advice.js'),
     CatalogueAspect = require('./domain/Aspects/CatalogueAspect.js'),
     AdminAspect = require('./domain/Aspects/AdminDashboardAspect.js'),
-    ClientAspect = require('./domain/Aspects/ClientDashboardAspect.js');
+    ClientAspect = require('./domain/Aspects/ClientDashboardAspect.js'),
+    UserAspect = require('./domain/Aspects/UserAspect.js');
 const aspect = require('aspect-js');
 const meld = require('meld');
 const trace = require('meld/aspect/trace');
+const Test = require('./Test.js');
+
+function t(i){
+    precondition: i ===0;
+    console.log(i);
+}
+t(9);
+let test = new Test();
+test.add(2);
 
 
 // Configure the database
@@ -76,17 +86,9 @@ let clientDashboardMapper = new ClientDashboardMapper();
  */
 let catAspect = new CatalogueAspect(catalogueMapper);
 let adminAspect = new AdminAspect(adminDashboardMapper);
-//let clientAspect = new ClientAspect(clientDashboardMapper);
-/*meld.around(catalogueMapper,'view', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'revertChanges', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'getCommitState', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'add', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'commitChanges', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'remove', Advice.aroundAuthorization);
-meld.around(adminDashboardMapper,'modify', Advice.aroundAuthorization);
-meld.around(clientDashboardMapper,'addToCart', Advice.aroundAuthorization);
-meld.around(clientDashboardMapper,'removeFromCart', Advice.aroundAuthorization);
-*/
+let clientAspect = new ClientAspect(clientDashboardMapper);
+let userAspect = new UserAspect(userMapper);
+
 /**
  *
  *
@@ -94,7 +96,7 @@ meld.around(clientDashboardMapper,'removeFromCart', Advice.aroundAuthorization);
  * Routes
  */
 
-app.use('/users', userMapper.router);
+//app.use('/users', userMapper.router);
 //app.use('/products', adminDashboardMapper.router);
 
 /**
@@ -102,20 +104,23 @@ app.use('/users', userMapper.router);
  * GET
  *
  */
+app.get('/users/activeUsers', userMapper.getActiveUsersRegistry);
 app.get('/products/view', catalogueMapper.view);
 app.get('/products/revertChanges', adminDashboardMapper.revertChanges);
 app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
 /**
  *
  * POST
- * ['post','/addToCart','addToCart'],
- ['post','/removeFromCart','removeFromCart']]
+ *
  */
+app.post('/users/authenticate', userMapper.authenticate);
+app.post('/users/register', userMapper.registerUser);
+app.post('/users/logout', userMapper.logout);
 app.post('/products/add', adminDashboardMapper.add);
 app.post('/products/remove', adminDashboardMapper.remove);
 app.post('/products/commitChanges', adminDashboardMapper.commitChanges);
-app.post('/clients/addToCart', clientDashboardMapper.addToCart);
-app.post('/clients/removeFromCart', clientDashboardMapper.removeFromCart);
+app.post('/products/addToCart', clientDashboardMapper.addToCart);
+app.post('/products/removeFromCart', clientDashboardMapper.removeFromCart);
 app.patch('/products/modify', adminDashboardMapper.modify);
 
 app.all('*', (req, res) => {

@@ -39,28 +39,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
 
-    get middlewares(){
-        return super.middlewares;
-    }
-
-    /**
-     * Set of verb, route, callback functions
-     * @returns {Array.<T>}
-     */
-   /* get routes(){
-        return super.routes.concat([
-                ['post', '/add','add'],
-                ['patch', '/modify', 'modify'],
-                ['post', '/remove', 'remove'],
-                ['post', '/commitChanges', 'commitChanges'],
-                ['get', '/revertChanges', 'revertChanges'],
-                ['get', '/getCommitState', 'getCommitState']]);
-
-
-    }*/
-
-   constructor(options={}) {
-        super(options);
+   constructor() {
+        super();
 
         this.add = this.add.bind(this);
         this.view = super.view.bind(this);
@@ -147,7 +127,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let changes = AdminDashboardMapper.unitOfWork.commit();
 
-
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
@@ -159,9 +138,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 //TODO tdg work for the product Ids
                 modelTDG.SQLadd_models(product).then(function(response){
                     console.log(response);
-                    /*productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
+                    productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);
-                    });*/
+                    });
                 });
             }
             for(let i in changes.dirtyList){
@@ -177,9 +156,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 console.log("Deleted product: " + product.ModelNumber);
                 //TODO tdg work for product ids
-               // productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
+                productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
                     modelTDG.SQLdelete_models(product.ModelNumber);
-                //});
+                });
 
             }
 

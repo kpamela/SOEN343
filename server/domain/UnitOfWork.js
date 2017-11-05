@@ -2,9 +2,23 @@
  * Created by CharlesPhilippe on 2017-10-23.
  */
 
+/**
+ * 
+ * @type {boolean}
+ * @private
+ */
+let _writing = false;
+
 module.exports = class UnitOfWork{
 
-//TODO add currently committing, to prevent writing at the same time
+    /**
+     *
+     * @returns {boolean}
+     */
+    static get isWriting(){
+        return _writing;
+    }
+
     constructor(){
         this.changeList = {newList:[], dirtyList:[], deletedList:[]};
         this.hasUncommittedChanges = false;

@@ -104,9 +104,16 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
      * Adds to product listing
      * @param {ProductDescription} product
      */
-  onRegisterDirty(product){
-      AdminDashboardAspect.productListing.add(product);
-  }
+  onRegisterDirty(product) {
+        let index = AdminDashboardAspect.productListing.findModel(product.ModelNumber);
+        if (index === -1) {
+            AdminDashboardAspect.productListing.add(product);
+        }
+        else {
+            AdminDashboardAspect.productListing.setTo(index, product);
+
+        }
+    }
 
     /**
      * Modifies the structure of req, to include an instanciated product

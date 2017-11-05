@@ -31,39 +31,21 @@ let _productListing = new ProductsIdentityMap();
  * @type {ModelTDG}
  */
 let modelTDG = new ModelTDG();
+let productTDG = new ProductTDG();
 
 /**
  * Unit of work is common to all catalogues
  */
 let _unitOfWork = new UnitOfWork();
 
+
 /**
  * Based on express-class-router
  * @type {CatalogueMapper}
  */
 
-module.exports = class CatalogueMapper extends ClassBasedRouter{
+module.exports = class CatalogueMapper{
 
-
-    /**
-     * returns the list middlewares functions (required by ClassBasedRouter
-     * @returns {[*]}
-     */
-    get middlewares(){
-        return [
-            ['GET','/', 'middleware']
-        ]
-    }
-
-    /**
-     * List of verb, routes, callback functions
-     * @returns {[*]}
-     */
-    get routes(){
-        return[
-           // ['GET','/view', 'view']
-        ]
-    }
 
     /**
      * Product listing is common to all catalogues
@@ -85,25 +67,19 @@ module.exports = class CatalogueMapper extends ClassBasedRouter{
         return modelTDG
     }
 
-   constructor(options={}) {
-        super(options);
+    static get productTDG(){
+         return productTDG;
+    }
 
-        //registers the routes a middlewares to the class's router
-       // this.register(this.middlewares);
-       // this.register(this.routes);
-
+   constructor() {
         //let traced =  meld(this, 'router', trace());
        this.view = this.view.bind(this);
-       this.middleware = this.middleware.bind(this);
+
     }
 
 
 
-    //TODO middleware
-    middleware(req, res, next){
-        console.log('middleware triggered!');
-        next();
-    }
+
 
     /**
      *If the productListing isn't set, set it to the content of the database

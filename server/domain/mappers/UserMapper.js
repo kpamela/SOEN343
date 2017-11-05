@@ -21,7 +21,7 @@ let _activeUsersRegistry = [];
  */
 let userTDG = new UserTDG();
 
-module.exports = class UserMapper extends ClassBasedRouter{
+module.exports = class UserMapper {
 
     /**
      * Returns the list of all active users
@@ -31,32 +31,14 @@ module.exports = class UserMapper extends ClassBasedRouter{
         return _activeUsersRegistry;
     }
 
-    get middlewares(){
-        return [
-            ['get','/', 'middleware']
-        ]
-    }
-
-    get routes(){
-        return[
-            ['post','/authenticate', 'authenticate'],
-            ['post', '/register', 'registerUser'],
-            ['get','/activeUsers', 'getActiveUsersRegistry']
-        ]
-    }
-
-    constructor(options={}) {
-        super(options);
-        this.register(this.middlewares);
-        this.register(this.routes);
-    }
 
 
-    //TODO middleware
-    middleware(req, res, next){
-        console.log('middleware triggered!');
-        next();
+    constructor() {
+
+
+
     }
+
 
     /**
      * Authenticating a user, checking for user name and password match found in database
@@ -85,6 +67,7 @@ module.exports = class UserMapper extends ClassBasedRouter{
                    console.log(activeUser);
                    UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);
                    res.json({success: true, token: token, user: activeUser})
+
                }
                else{
                    res.status(500).send('wrong password');
@@ -117,12 +100,22 @@ module.exports = class UserMapper extends ClassBasedRouter{
         const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
         UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
-        res.json({success: true, token: token, user: newUser})
+        return res.json({success: true, token: token, user: newUser})
 
     }
 
     getActiveUsersRegistry(req, res){
         res.json(UserMapper.activeUsersRegistry);
+    }
+
+    logout(req, res){
+        for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
+            if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
+                UserMapper.activeUsersRegistry.splice(1, i);
+                return res.send('logged out');
+            }
+        }
+        return res.status(500).send("user not found");
     }
 
 };

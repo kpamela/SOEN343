@@ -90,11 +90,26 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         let joinpoint = meld.joinpoint();
         let data = new jquery.Deferred();
         let product = ClientDashboardAspect.productListing.getModel(joinpoint.args[0]);
-        joinpoint.proceed().then(function(response){
-            let id = new ProductId(response);
-            product.addToUsedIds(id);
-            data.resolve(id);
-        });
+        if(product.Amount > 0){
+            joinpoint.proceed().then(function(response){
+                if(response.length === 0){
+                    product.Amount = 0;
+                    data.resolve(null);
+                }
+                else{
+                    let id = new ProductId(response[0]);
+                    product.addToUsedIds(id);
+                    data.resolve(id);
+                    //ClientDashboardMapper.productTDG.SQLdeleteSingle_products(id.SerialNumber);
+                }
+
+            });
+            CatalogueMapper.unitOfWork.registerDirty(product);
+        }
+        else{
+            data.resolve(null);
+        }
+
         return data;
     }
 

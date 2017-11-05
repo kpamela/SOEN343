@@ -44,7 +44,7 @@ module.exports = class UsersIdentityMap extends IdentityMap{
      */
     removeUser(username){
 
-        this.remove(this.findModel[username]);
+        this.removeIndex(this.findUser(username));
     }
 
 };
