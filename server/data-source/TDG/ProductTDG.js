@@ -26,7 +26,7 @@ class ProductTDG{
       let productInfo = {
         sql: `SELECT * FROM products
               inner join models on models.ModelNumber = products.ModelNumber
-              WHERE models.ModelNumber = ?
+              WHERE products.ModelNumber = ?
               AND products.Available = 1`,
         timeout: 40000,
         values: [modelNumber]};

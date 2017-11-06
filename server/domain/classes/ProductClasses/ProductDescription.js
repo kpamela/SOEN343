@@ -11,19 +11,27 @@ const _DIRTY = 1;
 const _CLEAN = 0;
 const _DELETED = -1;
 
-let _flag = _CLEAN;
+let flag = Symbol();
 
-let _usedIds = [];
-
-
+let unusedIds = Symbol();//truly private fields
+let usedIds = Symbol();//tryly privatefields
 class ProductDescription{
 
+
+
     get flag(){
-        return _flag;
+        return this[flag];
     }
 
 
     constructor(product){
+
+        /*
+        Private properties
+         */
+        this[flag] = _CLEAN;
+        this[unusedIds] = [];
+        this[usedIds] = [];
 
         if(product.description){
             this.BrandName = product.description.brandName;
@@ -50,24 +58,21 @@ class ProductDescription{
         this.setNew();
     }
 
-    setDescription(ob1){
-
-    }
 
 
     setDirty(){
-        _flag = _DIRTY;
+        this[flag] = _DIRTY;
     }
 
     setNew(){
-        _flag = _NEW;
+        this[flag] = _NEW;
     }
 
     setClean(){
-        _flag = _CLEAN;
+        this[flag] = _CLEAN;
     }
     setDeleted(){
-        _flag = _DELETED;
+        this[flag] = _DELETED;
     }
 
 
@@ -78,10 +83,11 @@ class ProductDescription{
      * @param serial
      */
     restoreId(serial){
-        for(let i = 0; i< _usedIds.length; i++){
-            if(_usedIds[i].SerialNumber == serial){
-                _usedIds[i].Available = false;
-                _usedIds.splice(i, 1);
+        for(let i = 0; i< this[usedIds].length; i++){
+            if(this[usedIds][i].SerialNumber == serial){
+                this[usedIds][i].Available = 1;
+                this[unusedIds].push(this[usedIds][i]);
+                this[usedIds].splice(i, 1);
                 this.Amount++;
                 break;
             }
@@ -93,8 +99,39 @@ class ProductDescription{
      * @param {ProductId} id
      */
     addToUsedIds(id){
-        _usedIds.push(id);
+        this[usedIds].push(id);
+    }
+
+    /**
+     *
+     * @param arr
+     */
+    setUnusedIds(arr){
+        this[unusedIds] = [];//set to empty before
+        for(let i = 0; i<arr.length; i++){
+            this[unusedIds].push(new ProductId(arr[i]));
+        }
+        this.Amount = this[unusedIds].length;
+    }
+
+    /**
+     *
+     * @returns {*}
+     */
+    popUnusedId(){
+        let id = this[unusedIds].pop();
+        id.Available = 0;
+        this.addToUsedIds(id);
         this.Amount--;
+        return id;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    hasUnusedIds(){
+        return this[unusedIds].length > 0;
     }
 
 }

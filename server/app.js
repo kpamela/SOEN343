@@ -25,15 +25,13 @@ const express = require('express'),
 const aspect = require('aspect-js');
 const meld = require('meld');
 const trace = require('meld/aspect/trace');
-const Test = require('./Test.js');
+
 
 function t(i){
     precondition: i ===0;
     console.log(i);
 }
 t(9);
-let test = new Test();
-test.add(2);
 
 
 // Configure the database

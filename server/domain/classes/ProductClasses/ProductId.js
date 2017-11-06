@@ -8,7 +8,7 @@ class ProductId{
         this.ModelNumber = id.ModelNumber;
         this.SerialNumber = id.SerialNumber;
 
-        this.Locked = false;
+        this.Available = id.Available;
     }
 
 }

@@ -40,23 +40,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(ClientDashboardMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
     }
 
-    /**
-     * Makes sure that Products in the listing
-     * before proceeding to addToCart
-     */
-    aroundAddToCart(){
-        let joinpoint = meld.joinpoint();
-        let req = joinpoint.args[0];
-        let res = joinpoint.args[1];
 
-        let index = ClientDashboardAspect.productListing.findModel(req.body.modelNumber);//looking for model
-        if(index === -1){
-            res.status(500).send('Item not found in productListing');
-        }
-        else{
-            joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
-        }
-    }
 
     /**
      * Gets the user either from the identity map, or db
@@ -81,6 +65,41 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         return data;
     }
 
+
+
+    /**
+     * Makes sure that Products in the listing
+     * before proceeding to addToCart
+     */
+    aroundAddToCart(){
+        let joinpoint = meld.joinpoint();
+        let req = joinpoint.args[0];
+        let res = joinpoint.args[1];
+
+        let index = ClientDashboardAspect.productListing.findModel(req.body.modelNumber);//looking for model
+        if(index === -1){
+            res.status(500).send('Item not found in productListing');
+        }
+        else{
+            //setting the product ids
+            let product = ClientDashboardAspect.productListing.content[index];
+            //prevents multiple db calls acts as identity map for product ids
+            if(!product.hasUnusedIds()){
+                ClientDashboardMapper.productTDG.SQLget_products(product.ModelNumber).then(function(response){
+                    product.setUnusedIds(response);
+                    joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
+                });
+            }
+            else{
+                joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
+            }
+
+        }
+    }
+
+
+
+
     /**
      * Gets productId from db, so set it as used in product, returns it to dashboard
      *
@@ -90,20 +109,30 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         let joinpoint = meld.joinpoint();
         let data = new jquery.Deferred();
         let product = ClientDashboardAspect.productListing.getModel(joinpoint.args[0]);
+        //making sure there are some available ids
         if(product.Amount > 0){
-            joinpoint.proceed().then(function(response){
-                if(response.length === 0){
-                    product.Amount = 0;
-                    data.resolve(null);
-                }
-                else{
-                    let id = new ProductId(response[0]);
-                    product.addToUsedIds(id);
-                    data.resolve(id);
-                    //ClientDashboardMapper.productTDG.SQLdeleteSingle_products(id.SerialNumber);
-                }
+            //check if contents if idMap matches db
+            if(!product.hasUnusedIds()){
+                joinpoint.proceed().then(function(response){
+                    if(response.length === 0){//no more in db
+                        product.Amount = 0;
+                        data.resolve(null);
+                    }
+                    else{//should never occur because of the around
+                        console.log("The impossible happened");
+                        let id = new ProductId(response[0]);
+                        product.addToUsedIds(id);
+                        data.resolve(id);
+                        //ClientDashboardMapper.productTDG.SQLdeleteSingle_products(id.SerialNumber);
+                    }
 
-            });
+                });
+            }
+            else{
+                //sends data from instantiated products in product
+                data.resolve(product.popUnusedId());//give single id
+            }
+            //changes have been made
             CatalogueMapper.unitOfWork.registerDirty(product);
         }
         else{
@@ -120,7 +149,8 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
      */
     onRemoveFromCart(req, res){
         let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
-        product.restoreId(req.body.serialNumber)
+        product.restoreId(req.body.serialNumber);
+        CatalogueMapper.unitOfWork.registerDirty(product);
     }
 
 };
