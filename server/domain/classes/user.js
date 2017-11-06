@@ -4,7 +4,7 @@ const express = require('express'),
 /**
  * Private instance of shopping cart
  */
-let _cart = new ShoppingCart();
+let cart = Symbol();
 
 class User{
     constructor(user){
@@ -21,10 +21,13 @@ class User{
         this.City           = user.City;
         this.ZIP            = user.ZIP;
         this.Country        = user.Country;
+
+        //private instance of shoppingcart
+        this[cart] = new ShoppingCart();
     }
 
     getCart(){
-        return _cart.content;
+        return this[cart].content;
     }
 
     /**
@@ -32,7 +35,7 @@ class User{
      * @param {ProductId} product
      */
     addToCart(product){
-        _cart.add(product);
+        this[cart].add(product);
     }
 
 
@@ -42,8 +45,8 @@ class User{
      * @return {ProductId} item
      */
     removeFromCart(serial){
-        let item = _cart.getItem(serial);
-        _cart.removeItem(serial);
+        let item = this[cart].getItem(serial);
+        this[cart].removeItem(serial);
         return item;
     }
 

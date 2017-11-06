@@ -106,6 +106,7 @@ app.get('/users/activeUsers', userMapper.getActiveUsersRegistry);
 app.get('/products/view', catalogueMapper.view);
 app.get('/products/revertChanges', adminDashboardMapper.revertChanges);
 app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
+app.get('/products/getShoppingCart', clientDashboardMapper.getShoppingCart);
 /**
  *
  * POST

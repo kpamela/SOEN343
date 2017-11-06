@@ -111,6 +111,7 @@ class ProductDescription{
         for(let i = 0; i<arr.length; i++){
             this[unusedIds].push(new ProductId(arr[i]));
         }
+        console.log(this[unusedIds]);
         this.Amount = this[unusedIds].length;
     }
 
@@ -132,6 +133,14 @@ class ProductDescription{
      */
     hasUnusedIds(){
         return this[unusedIds].length > 0;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    hasUsedIds(){
+        return this[usedIds].length >0;
     }
 
 }
