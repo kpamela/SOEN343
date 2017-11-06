@@ -77,7 +77,6 @@ CREATE TABLE PurchaseHistory(
     PurchaseTimeStamp timestamp,
     PRIMARY KEY (UserID, ModelNumber, SerialNumber), 
     FOREIGN KEY (UserID) REFERENCES Users (UserID) ON UPDATE CASCADE, 
-	FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE, 
-	FOREIGN KEY (SerialNumber) REFERENCES products (SerialNumber) ON UPDATE CASCADE
+	FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE
 ); 
     

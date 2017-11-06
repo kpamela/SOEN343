@@ -3,9 +3,11 @@
 */
 const mysql   = require('mysql'),
       db      = require('../config/database.js');
-
+let _writing = false;
 module.exports = {
     handleRead: function (sql, data) {
+        console.log(_writing);
+        while(_writing){}//busy wait
        db.getConnection((err, connection) => {
           connection.query(sql, (err, result) => {
               if (err) {
@@ -22,8 +24,13 @@ module.exports = {
     },
 
     handleWrite: function (sql, data) {
-      db.getConnection((err, connection) => {                               // Unsure if this needs to be returned
+        console.log(_writing);
+        while(_writing){}//busy wait
+      db.getConnection((err, connection) => {
+            _writing = true;
           connection.query(sql,(err, result) => {
+              _writing = false;
+              console.log(_writing);
               if (err) {
                   console.log(err);
                   data.resolve(err);
@@ -33,7 +40,8 @@ module.exports = {
                   console.log(result);
                   data.resolve(result);
               }
+
           });
       });
     }
-}
+};

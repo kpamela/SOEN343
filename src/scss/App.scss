@@ -97,12 +97,10 @@ footer{
     Button{
         margin-top:10px;
         margin-left:10px;
-        margin-bottom:10px;
     }
 }
-.product{
-    border-color: #777777;
+
+//input errors
+input.error{
+    border-color: red;
 }
-
-
-

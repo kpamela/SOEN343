@@ -17,9 +17,12 @@ export const ShoppingCartModal = React.createClass({
     },
 
     render(){
-        if(auth.loggedIn()){
+        if(auth.getIsAdmin() == 0){
             return(
-                <Button>Shopping Cart</Button>
+                <div>
+                    <Button>Shopping Cart</Button>
+                    <p>Hello, </p>
+                </div>
                 );
         }
 
