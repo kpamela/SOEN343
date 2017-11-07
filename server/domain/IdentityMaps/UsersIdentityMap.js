@@ -47,4 +47,15 @@ module.exports = class UsersIdentityMap extends IdentityMap{
         this.removeIndex(this.findUser(username));
     }
 
+    /**
+     * Removes and returns a user from the content list
+     * @param username
+     * @returns {User}
+     */
+    popUser(username){
+        let index = this.findUser(username);
+        let user = this.content[index];
+        this.removeIndex(index);
+        return user;
+    }
 };

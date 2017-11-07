@@ -111,7 +111,7 @@ module.exports = class UserMapper {
     logout(req, res){
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
-                UserMapper.activeUsersRegistry.splice(1, i);
+                UserMapper.activeUsersRegistry.splice(i, 1);
                 return res.send('logged out');
             }
         }

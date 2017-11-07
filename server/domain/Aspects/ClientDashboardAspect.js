@@ -50,6 +50,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
     aroundGetUser(){
         let joinpoint = meld.joinpoint();
         let data = new jquery.Deferred();
+
         let index = ClientDashboardAspect.activeUsers.findUser(joinpoint.args[0]);
         //if not found fetch from db, and add to active user
         if(index == -1){
@@ -94,6 +95,8 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
             else{
                 joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
             }
+            //after everything check for ids made available by the user (background check)
+            product.checkForReleasedIds();
 
         }
     }

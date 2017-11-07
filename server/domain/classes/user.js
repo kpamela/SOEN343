@@ -26,8 +26,15 @@ class User{
         this[cart] = new ShoppingCart();
     }
 
+    /**
+     *
+     */
     getCart(){
         return this[cart].content;
+    }
+
+    getTimeStamps(){
+        return this[cart].timestamps;
     }
 
     /**

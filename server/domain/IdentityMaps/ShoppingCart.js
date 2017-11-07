@@ -6,13 +6,15 @@ const IdentityMap = require('./IdentityMap');
 
 module.exports = class ShoppingCart extends IdentityMap{
 
-    constructor(content){
+    constructor(content) {
         super(content);
+        this.timestamps = {};
     }
+
 
     /**
      *
-     * @param ob1
+     * @param {ProductId} ob1
      */
     add(ob1){
         invariant: {
@@ -20,6 +22,7 @@ module.exports = class ShoppingCart extends IdentityMap{
         }
       //  if(this.content.length <= 7){//only 7 items in cart
             this.content.push(ob1);
+            this.timestamps[ob1.SerialNumber] = Date.now();
        // }
     }
 
@@ -57,6 +60,7 @@ module.exports = class ShoppingCart extends IdentityMap{
         const index = this.findItem(serial);
         //removing model number
         this.removeIndex(index);
+        delete this.timestamps[serial];
     }
 
 }

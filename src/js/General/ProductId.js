@@ -6,16 +6,18 @@ const delay = 5000;
 
 export default class ProductID {
 
-    constructor(id, user){
+    constructor(id, timestamp, user){
         this.user = user;
         this.modelNumber = id.ModelNumber;
         this.serialNumber = id.SerialNumber;
         this.available = id.Available;
 
-        this.timeCreated = Date.now();
+        this.timeCreated = timestamp;
 
         this.onTimeout = this.onTimeout.bind(this);
 
+        //check timeout upon creation
+        this.onTimeout();
         setTimeout(this.onTimeout, 5000);
     }
 
@@ -25,6 +27,7 @@ export default class ProductID {
 
         if(now >= this.timeCreated + delay) {
             this.user.removeFromShoppingCart(this.serialNumber, this.modelNumber);
+            delete this;
         }
 
     }

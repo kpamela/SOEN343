@@ -23,9 +23,7 @@ export default class Logout extends Component{
                 console.log(err);
         });
         auth.logOut();
-
         this.setState({redirect:true});
-
     }
     
     render(){

@@ -33,7 +33,10 @@ module.exports = class UserAspect{
 
 
     onLogout(req, res){
-        ClientDashboardAspect.activeUsers.removeUser(req.body.username);
-        console.log(ClientDashboardAspect.activeUsers.content);
+        let user = ClientDashboardAspect.activeUsers.popUser(req.body.username);
+        let cart = user.getCart();
+        for(let i = 0; i<cart.length; i++){
+            cart[i].Available = 1;//restoring availability;
+        }
     }
 };

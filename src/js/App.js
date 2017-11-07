@@ -22,8 +22,11 @@ class App extends Component {
     if(auth.getIsAdmin() == 1){
       return <Route path="/AdminDashboard" component={AdminDashboard} />
     }
-    else{
+    else if (auth.getIsAdmin() == 0){
       return <Route path="/ClientDashboard" component={ClientDashboard} />
+    }
+    else{
+      return <Route path="/Catalogue" component={Catalogue} />
     }
   }
 
@@ -37,6 +40,7 @@ class App extends Component {
                 <Route exact path="/" component={HomePage} />
                 <Route path="/AdminDashboard" component={AdminDashboard} />
                 <Route path="/ClientDashboard" component={ClientDashboard} />
+                <Route path="/Catalogue" component={Catalogue} />
                 <Route path="/aboutus" component={AboutUs} />
               </Switch>
           </div>

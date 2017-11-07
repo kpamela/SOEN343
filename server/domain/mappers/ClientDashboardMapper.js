@@ -35,7 +35,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      * @param res
      */
     addToCart(req, res){
-
+            console.log(req.body.username);
             //getting user from TDG
             userTDG.SQLget_users(req.body.username).then(function(response){
                 let user = response;
@@ -52,7 +52,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                         //add productId to cart of user
                         user.addToCart(id);
                         console.log(user.getCart());
-                        res.json(id);
+                        res.json({id: id, timeStamp: user.getTimeStamps()[id.SerialNumber]});
                     }
                 });
             });
@@ -72,6 +72,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             //removes and returns specified serial number of the cart
             let id = user.removeFromCart(req.body.serialNumber);
             console.log(user.getCart());
+            res.json(id);
         });
 
 
@@ -83,9 +84,11 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      * @param res
      */
     getShoppingCart(req, res){
-        userTDG.SQLget_users(req.body.username).then(function(response){
+
+        userTDG.SQLget_users(req.query.username).then(function(response){
             let user = response;
-            res.json(user.getCart());
+
+            res.json({cart: user.getCart(), timestamps: user.getTimeStamps()});
         });
     }
 

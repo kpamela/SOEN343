@@ -21,7 +21,7 @@ export const ShoppingCartModal = React.createClass({
             return(
                 <div>
                     <Button>Shopping Cart</Button>
-                    <p>Hello, </p>
+                    <p>Hello, {localStorage.getItem('username')}</p>
                 </div>
                 );
         }

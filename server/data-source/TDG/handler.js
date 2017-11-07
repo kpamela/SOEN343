@@ -6,7 +6,7 @@ const mysql   = require('mysql'),
 let _writing = false;
 module.exports = {
     handleRead: function (sql, data) {
-        console.log(_writing);
+
         while(_writing){}//busy wait
        db.getConnection((err, connection) => {
           connection.query(sql, (err, result) => {
@@ -24,13 +24,13 @@ module.exports = {
     },
 
     handleWrite: function (sql, data) {
-        console.log(_writing);
+
         while(_writing){}//busy wait
       db.getConnection((err, connection) => {
             _writing = true;
           connection.query(sql,(err, result) => {
               _writing = false;
-              console.log(_writing);
+
               if (err) {
                   console.log(err);
                   data.resolve(err);

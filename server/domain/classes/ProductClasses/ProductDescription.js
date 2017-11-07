@@ -143,6 +143,23 @@ class ProductDescription{
         return this[usedIds].length >0;
     }
 
+    /**
+     * Used as a background check
+     * Checks in the list of usedIds if there are any available ids
+     * Would occur if a user logs out with a full shopping cart
+     *
+     */
+    checkForReleasedIds(){
+        for(let i = 0; i < this[usedIds].length; i++){
+            let id = this[usedIds][i];
+            if(id.Available === 1){
+                this[usedIds].splice(i, 1);//remove from usedlist
+                this[unusedIds].push(id);
+            }
+        }
+        this.Amount = this[unusedIds].length;
+    }
+
 }
 
 module.exports = ProductDescription;
