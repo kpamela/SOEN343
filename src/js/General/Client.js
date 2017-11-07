@@ -77,6 +77,20 @@ export default class Client extends User{
         }
     }
 
+    displayShoppingCart(){
+      let shoppingCartItem;
+      if(this.shoppingCart){
+        shoppingCartItem = this.props.shoppingCart.map(cartItem => {
+          return (
+            <div>
+              <shoppingCartItem key={cartItem.model} cartItem={cartItem} />
+            </div>
+
+          )
+        })
+      }
+    }
+
     /**
      * Gets shopping cart from server side and sets the client's cart
      */
