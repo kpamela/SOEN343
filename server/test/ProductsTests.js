@@ -32,7 +32,7 @@ describe('Products', () => {
   * Test the /POST route
   */
   describe('/POST products', () => {
-      it('it should not POST a product with an incorrect category field', (done) => {
+      it('it should not POST a product with an incorrect Category field', (done) => {
         let product =  {
          	"name":"Hello",
          	"category":"tv",

@@ -18,11 +18,11 @@ class ProductTDG{
                        WHERE products.ModelNumber = models.ModelNumber
                        AND products.Available = 1`;
     handler.handleRead(productInfo, data);
-    return
-
+    return data;
   }
 
   SQLget_products(modelNumber){                                              //Retrieves all products of a specific model
+      let data = new jquery.Deferred();
       let productInfo = {
         sql: `SELECT * FROM products
               inner join models on models.ModelNumber = products.ModelNumber
@@ -30,8 +30,23 @@ class ProductTDG{
               AND products.Available = 1`,
         timeout: 40000,
         values: [modelNumber]};
-      return handler.handleRead(productInfo, connection);
+      handler.handleRead(productInfo, data);
+      return data;
 
+  }
+
+  SQLgetSingle_products(modelNumber){
+      let data = new jquery.Deferred();
+      let productInfo = {
+        sql: `SELECT * FROM products
+              inner join models on models.ModelNumber = products.ModelNumber
+              WHERE models.ModelNumber = ?
+              AND products.Available = 1
+              LIMIT 1`,
+        timeout: 40000,
+        values: [modelNumber]};
+      handler.handleRead(productInfo, data);
+      return data;
   }
 
   /****************************************
@@ -39,19 +54,23 @@ class ProductTDG{
   ****************************************/
 
   SQLadd_products(modelNumber, quantity){                                        // Will add the specified amount of products into the database, with unique serial numbers
-    let addProduct = { sql:`Call addProducts(?,?)`,
+      let data = new jquery.Deferred();
+      let addProduct = { sql:`Call addProducts(?,?)`,
                        values:[modelNumber,quantity]};
-      handler.handleWrite(addProduct);
+      handler.handleWrite(addProduct, data);
+      return data;
   }
 
 
-  SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain modelNumber
-    let deleteProduct = {sql: `DELETE FROM models WHERE models.ModelNumber = ?`,
+  SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain ModelNumber
+      let data = new jquery.Deferred();
+      let deleteProduct = {sql: `DELETE FROM models WHERE models.ModelNumber = ?`,
                          values:[modelNumber]};
-      handler.handleWrite(deleteProduct);
+      handler.handleWrite(deleteProduct, data);
+      return data;
   }
 
-  SQLdelete_products(modelNumber, quantity){                                     //Will remove the specified amount of products from the database of a certain model number
+  SQLdelete_products_Quantity(modelNumber, quantity){                                     //Will remove the specified amount of products from the database of a certain model number
     let deleteProduct = {sql: `Call deleteProducts(?,?)`,
                         values:[modelNumber, quantity]};
       handler.handleWrite(deleteProduct);

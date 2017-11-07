@@ -1,4 +1,5 @@
 const express = require('express'),
+    ProductId = require('./ProductId.js'),
     users = express.Router(),
     mysql = require('mysql'),
     bcrypt = require('bcryptjs'),
@@ -12,6 +13,8 @@ const _DELETED = -1;
 
 let _flag = _CLEAN;
 
+let _usedIds = [];
+
 
 class ProductDescription{
 
@@ -21,18 +24,26 @@ class ProductDescription{
 
 
     constructor(product){
-
-        this.brandName = product.description.brandName;
-        this.modelNumber = product.description.modelNumber;
-        this.dimensions = product.description.dimensions;
-        this.price = product.description.price;
-        this.weight = product.description.weight;
-        this.additionalInfo = product.description.additionalInfo;
-        this.amount = product.amount;
-        this.category = product.category;
-
-        this.productIds = this.setProductIds(this.amount);
-
+        if(product.description){
+            this.BrandName = product.description.brandName;
+            this.ModelNumber = product.description.modelNumber;
+            this.Dimensions = product.description.dimensions;
+            this.Price = product.description.price;
+            this.Weight = product.description.weight;
+            //this.AdditionalInfo = product.description.additionalInfo;
+            this.Amount = product.amount;
+            this.Category = product.category;
+        }
+        else{
+            this.BrandName = product.BrandName;
+            this.ModelNumber = product.ModelNumber;
+            this.Dimensions = product.Dimensions;
+            this.Price = product.Price;
+            this.Weight = product.Weight;
+            //this.AdditionalInfo = product.AdditionalInfo;
+            this.Amount = product.Amount;
+            this.Category = product.Category;
+        }
         this.setNew();
     }
 
@@ -56,19 +67,31 @@ class ProductDescription{
         _flag = _DELETED;
     }
 
+
+
+
     /**
-     * TODO Create product ids
-     * @param amount
-     * @returns {Array}
+     * Restores a specific product id
+     * @param serial
      */
-    setProductIds(amount){
-        let arr = [];
-
-        for(let i = 0; i < amount; i++){
-            arr[i] = this.modelNumber + "_" + i;
+    restoreId(serial){
+        for(let i = 0; i< _usedIds.length; i++){
+            if(_usedIds[i].SerialNumber == serial){
+                _usedIds[i].Available = false;
+                _usedIds.splice(i, 1);
+                this.Amount++;
+                break;
+            }
         }
+    }
 
-        return arr;
+    /**
+     *
+     * @param {ProductId} id
+     */
+    addToUsedIds(id){
+        _usedIds.push(id);
+        this.Amount--;
     }
 
 }

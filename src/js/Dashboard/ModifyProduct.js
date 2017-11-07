@@ -212,6 +212,7 @@ import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 
       render(){
+          console.log(this.props.item);
           return(
               <div>
                   {this.state.currentForm}
