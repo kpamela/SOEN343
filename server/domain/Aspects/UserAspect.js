@@ -8,11 +8,15 @@ const meld = require('meld'),
 module.exports = class UserAspect{
 
     constructor(mapper){
+        this.aroundCheck = this.aroundCheck.bind(this);
+        this.mapper = mapper;
         meld.around(mapper, 'authenticate', this.aroundCheck);
         meld.around(mapper, 'registerUser', this.aroundCheck);
 
 
         meld.on(mapper, 'logout', this.onLogout);
+
+
     }
 
     aroundCheck(){
@@ -25,9 +29,12 @@ module.exports = class UserAspect{
         }
         else{
             meld.on(res, 'json', function(ob1){//pushing to activeUsers identityMap
-                ClientDashboardAspect.activeUsers.add(ob1.user);//adviception
+                if(ob1.user){
+                    ClientDashboardAspect.activeUsers.add(ob1.user);//adviception
+                }
+
             });
-           console.log(joinpoint.proceed());
+           joinpoint.proceed();
         }
     }
 

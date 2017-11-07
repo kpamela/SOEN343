@@ -137,7 +137,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                 data.resolve(product.popUnusedId());//give single id
             }
             //changes have been made
-            CatalogueMapper.unitOfWork.registerDirty(product);
+            //CatalogueMapper.unitOfWork.registerDirty(product);
         }
         else{
             data.resolve(null);

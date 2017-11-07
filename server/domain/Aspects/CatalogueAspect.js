@@ -59,12 +59,32 @@ module.exports = class CatalogueAspect{
             return res.status(401).json({success: false, msg: "Unauthorized: No Token Provided"});
         }
 
+
         return jwt.verify(token, 'mysecret', function (err, decoded) {
             if (err) {
                 return res.status(401).json({success: false, msg: "Unauthorized: Incorrect Token Signature"});
             }
             else {
-                joinpoint.proceed();
+                //make suere that users can access their info only
+                if(req.body.username){
+                    if(req.body.username === decoded.user.Username){
+                        joinpoint.proceed();//matching
+                    }
+                    else{
+                        res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
+                    }
+                }
+                else if(req.query.username){
+                    if(req.query.username === decoded.user.Username){
+                        joinpoint.proceed();//matching
+                    }
+                    else{
+                        res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
+                    }
+                }
+                else{
+                    joinpoint.proceed();
+                }
             }
         });
     }
