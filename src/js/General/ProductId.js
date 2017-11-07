@@ -2,7 +2,7 @@
  * Created by CharlesPhilippe on 2017-10-10.
  */
 
-const delay = 5000;
+const delay = 60000;
 
 export default class ProductID {
 

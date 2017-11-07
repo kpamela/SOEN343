@@ -42,7 +42,7 @@ class User{
      * @param {ProductId} product
      */
     addToCart(product){
-        this[cart].add(product);
+        return this[cart].add(product);
     }
 
 

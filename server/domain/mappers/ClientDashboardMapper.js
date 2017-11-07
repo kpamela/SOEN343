@@ -48,11 +48,16 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                     }
                     else{
                         let id = response;
+                        if(user.getCart().length < 7){
+                            user.addToCart(id)
+                            console.log(user.getCart());
+                            res.json({success: true, id: id, timeStamp: user.getTimeStamps()[id.SerialNumber]});
+                        }
+                        else{
+                            res.json({success: false, error: "can't add more then seven items to cart"})
+                        }
 
                         //add productId to cart of user
-                        user.addToCart(id);
-                        console.log(user.getCart());
-                        res.json({id: id, timeStamp: user.getTimeStamps()[id.SerialNumber]});
                     }
                 });
             });
@@ -90,6 +95,26 @@ module.exports = class ClientDashboardMapper extends Catalogue{
 
             res.json({cart: user.getCart(), timestamps: user.getTimeStamps()});
         });
+    }
+
+    completeTransaction(req, res){
+
+        userTDG.SQLget_users(req.body.username).then(function(response){
+            let user = response;
+            let cart = user.getCart();
+            for(let i = 0; i < cart.length; i++){
+                //TODO put item in purchased history first
+                productTDG.SQLdeleteSingle_products(cart[i].SerialNumber);
+            }
+        })
+    }
+
+    getPurchaseHistory(req, res){
+
+    }
+
+    returnItem(req, res){
+
     }
 
 

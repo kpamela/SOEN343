@@ -20,10 +20,14 @@ module.exports = class ShoppingCart extends IdentityMap{
         invariant: {
             this.content.length <=7, "Can't have more than 7 items in the shopping cart";
         }
-      //  if(this.content.length <= 7){//only 7 items in cart
+        if(this.content.length < 7){//only 7 items in cart
             this.content.push(ob1);
             this.timestamps[ob1.SerialNumber] = Date.now();
-       // }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**

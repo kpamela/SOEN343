@@ -149,8 +149,10 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
           productChanges.newList[i] = AdminDashboardAspect.productListing.getModel(changes.newList[i]);
       }
       for(let i in changes.dirtyList){
+          let oldModel = AdminDashboardAspect.productHistory.getOldModel(changes.dirtyList[i]);
           //getting the instance of model number stored in changeList, pass it to productChanges
-          productChanges.dirtyList[i] = AdminDashboardAspect.productListing.getModel(changes.dirtyList[i]);
+          productChanges.dirtyList[i] = {newModel: AdminDashboardAspect.productListing.getModel(changes.dirtyList[i]),
+                                            oldModel: oldModel};
       }
       for(let i in changes.deletedList){
           //getting the instance of model stored in history, pass it to product changes

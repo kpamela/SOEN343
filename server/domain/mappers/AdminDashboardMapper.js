@@ -134,30 +134,53 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 let product = changes.newList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Added product: " + product.ModelNumber);
-                //TODO tdg work for the product Ids
+
+
                 modelTDG.SQLadd_models(product).then(function(response){
                     console.log(response);
                     productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);
+                        console.log("Added product: " + product.ModelNumber);
                     });
                 });
             }
             for(let i in changes.dirtyList){
-                let product = changes.dirtyList[i];
-
+                let product = changes.dirtyList[i].newModel;
+                let old = changes.dirtyList[i].oldModel;
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Modified product: "+product.ModelNumber);
+                if(old.ModelNumber === product.ModelNumber){//same model number
+                    modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
+                        console.log(response);
+                        console.log("Modified product: "+product.ModelNumber);
+                    });
+                    if(old.Amount < product.Amount){//add specified quantity
+                        productTDG.SQLadd_products(old.ModelNumber, product.Amount - old.Amount);
+                    }
+                    else if(old.Amount < product.Amount){//remove specified quantity
+                        productTDG.SQLadd_products(old.ModelNumber, old.Amount - product.Amount);
+                    }
+                }
+                else{
+                    productTDG.SQLdelete_products(old.ModelNumber).then(function(response){
+                        modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
+                            console.log("Modified product: "+product.ModelNumber);
+                            productTDG.SQLadd_products(product.ModelNumber, product.Amount);
+                        })
+                    })
+                }
+
                 //TODO tdg work
             }
             for(let i in changes.deletedList){
                 let product = changes.deletedList[i];
 
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-                console.log("Deleted product: " + product.ModelNumber);
+
                 //TODO tdg work for product ids
                 productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
-                    modelTDG.SQLdelete_models(product.ModelNumber);
+                    modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
+                        console.log("Deleted product: " + product.ModelNumber);
+                    });
                 });
 
             }

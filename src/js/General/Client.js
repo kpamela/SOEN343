@@ -22,9 +22,14 @@ export default class Client extends User{
      * @param id
      */
     addToCartCallback(id){
-        this.shoppingCart.push(new ProductId(id.data.id, id.data.timeStamp, this));
-        console.log(this.shoppingCart[this.shoppingCart.length - 1]);
-        location.reload();
+        if(id.data.success){
+            this.shoppingCart.push(new ProductId(id.data.id, id.data.timeStamp, this));
+            console.log(this.shoppingCart[this.shoppingCart.length - 1]);
+            location.reload();
+        }
+        else{
+            window.alert("You can't add more then 7 items to your cart");
+        }
     }
 
     /**
@@ -35,7 +40,7 @@ export default class Client extends User{
         this.axiosInstance.post("addToCart", {username: this.username, modelNumber: model},{cancelToken: this.source.token})
             .then(this.addToCartCallback)
             .catch(function (thrown) {
-                if (axios.isCancel(thrown)) {
+                if (axios.isCancel(thrown.error)) {
                     console.log(thrown.message);
                 }
                 else{
