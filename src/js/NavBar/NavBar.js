@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LoginModal } from './LoginModal.js';
 import { RegisterModal } from './RegisterModal.js';
 import Logout from './Logout.js';
+import MyAccount from './MyAccount.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {ShoppingCartModal} from './ShoppingCartModal.js';
 import { Link } from 'react-router-dom';
@@ -34,10 +35,11 @@ export default class NavBar extends Component{
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/AdminDashboard">Administrator Dashboard</Link></NavItem> : null}
           </Nav>
           <Nav pullRight>
-            {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem> : null}
+            {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}
             {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
-            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <Logout /> </NavItem> : null}
-            {auth.loggedIn() ? <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem> : null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <MyAccount/> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <Logout /> </NavItem> : null}
+            {auth.loggedIn() ? <NavItem eventKey={5} href="#"><ShoppingCartModal/></NavItem> : null}
 
           </Nav>
         </Navbar.Collapse>
