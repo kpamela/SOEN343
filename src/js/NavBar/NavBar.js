@@ -5,6 +5,7 @@ import Logout from './Logout.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import auth from '../General/auth.js';
+import {ShoppingCartModal} from "./ShoppingCartModal";
 
 
 export default class NavBar extends Component{
@@ -41,6 +42,7 @@ export default class NavBar extends Component{
             <NavItem eventKey={1} href="#"> < LoginModal /> </NavItem>
             <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>
             <NavItem eventKey={3} href="#"> <Logout /> </NavItem>
+            <NavItem eventKey={4} href="#"><ShoppingCartModal/></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
