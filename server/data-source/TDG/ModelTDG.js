@@ -30,10 +30,12 @@ class ModelTDG{
                 Write
   ****************************************/
 
-  SQLadd_models(model){                                               //Adds a model into the database
-      let data = new jquery.Deferred();
-    sql = "INSERT INTO models SET ?";
+  SQLadd_models(models){                                               //Adds a model into the database
+    let data = new jquery.Deferred();
+    sql = {sql: `INSERT INTO models SET ?`,
+           values: models};
     handler.handleWrite(sql, data);
+    return data;
   }
 
   SQLmodify_models(modelNumber, column, modification){                 //Modifies the information for the model
