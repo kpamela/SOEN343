@@ -4,6 +4,7 @@
 const Catalogue = require('./CatalogueMapper.js'),
     UserMapper = require('./UserMapper.js'),
     ProductId = require('../classes/ProductClasses/ProductId.js'),
+    PurchaseHistory = require('../../data-source/TDG/PurchaseHistory.js'),
     ProductTDG = require('../../data-source/TDG/ProductTDG'),
     UserTDG = require('../../data-source/TDG/userTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
@@ -11,10 +12,16 @@ const Catalogue = require('./CatalogueMapper.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/television');
 
+
+let purchases = new PurchaseHistory();
 let productTDG = new ProductTDG();
 let userTDG = new UserTDG();
 
 module.exports = class ClientDashboardMapper extends Catalogue{
+
+    static get purchases(){
+        return purchases;
+    }
 
     static get userTDG(){
         return userTDG;
@@ -103,13 +110,22 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             let user = response;
             let cart = user.getCart();
             for(let i = 0; i < cart.length; i++){
-                //TODO put item in purchased history first
+                purchases.SQLadd_purchases({Username: user.Username,
+                                            ModelNumber: cart[i].ModelNumber,
+                                            SerialNumber: cart[i].SerialNumber,
+                                            isReturned: false,
+                                            Timestamp: Date.now()});
                 productTDG.SQLdeleteSingle_products(cart[i].SerialNumber);
             }
-        })
+            res.json({success: true});
+        });
     }
 
     getPurchaseHistory(req, res){
+
+        purchases.SQLget_purchases_All(req.query.username).then(function(response){
+            res.json(response);
+        });
 
     }
 

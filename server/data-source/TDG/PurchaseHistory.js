@@ -2,7 +2,7 @@
  Created by kpamela on 2017-11-07.
 */
 const mysql = require('mysql'),
-      handler = require('/handler.js');
+      handler = require('./handler.js');
       jquery = require('jquery-deferred');
 
 

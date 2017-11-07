@@ -130,6 +130,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
+        
            for(let i in changes.newList){
                 let product = changes.newList[i];
 
