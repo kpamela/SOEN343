@@ -1,3 +1,4 @@
+-- This procedure will allow us to add a certain quantity "y" of products which will be refered to "x" modelNumber, and will generate their productId -- 
 CREATE PROCEDURE `addProducts`(x VARCHAR(20), y int(3))
 BEGIN 
 	DECLARE nb INT(9); 
