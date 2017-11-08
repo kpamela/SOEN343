@@ -15,11 +15,11 @@ class Television extends ProductDescription {
         db.getConnection((err, connection) => {
             var television = {
                 ProductName : this.productName,
-                BrandName : this.brandName,
-                ModelNumber: this.modelNumber,
-                Dimensions: this.dimensions,
-                Price: this.price,
-                Weight: this.weight,
+                BrandName : this.BrandName,
+                ModelNumber: this.ModelNumber,
+                Dimensions: this.Dimensions,
+                Price: this.Price,
+                Weight: this.Weight,
                 TelevisionType: this.televisionType
             }
 

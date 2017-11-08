@@ -38,7 +38,11 @@ export default class ProductListing extends React.Component{
               })
           });
       }
-      else{}//TODO handle add to cart
+      else if(this.props.userType === "client"){
+          this.props.usr.addToCart(item.description.modelNumber);
+          item.amount -=1;
+          this.forceUpdate();
+      }//TODO handle add to cart
 
   }
 
@@ -102,6 +106,8 @@ name={product.name}
                       amount={product.amount}
 
 */
+        console.log(this.props.products);
+
         return(
             <div className="productListing">
                 <hr/>

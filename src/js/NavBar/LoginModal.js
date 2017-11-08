@@ -44,9 +44,12 @@ export const LoginModal = React.createClass({
           console.log(auth.getIsAdmin());
         }
         else{
-          console.log(res.data.msg)
+            window.alert(res.data.msg);
         }
-      });
+      }).catch(function(err){
+        window.alert("User not found")
+        console.log(err);
+    });
 
   },
 

@@ -1,10 +1,12 @@
 const express = require('express'),
-    users = express.Router(),
-    bcrypt = require('bcryptjs'),
-    mysql = require('mysql'),                             // When all queries are moved to tdg, this can be removed
-    db = require('../../data-source/config/database.js'),
-    jwt = require('jsonwebtoken'),
-    userTDG = require('../../data-source/TDG/userTDG');
+    ShoppingCart = require('../IdentityMaps/ShoppingCart.js');
+
+/**
+ * Private instance of shopping cart
+ */
+let cart = Symbol();
+let purchases = Symbol();
+
 class User{
     constructor(user){
         this.Username       = user.Username;
@@ -20,7 +22,67 @@ class User{
         this.City           = user.City;
         this.ZIP            = user.ZIP;
         this.Country        = user.Country;
+
+        //private instance of shoppingcart
+        this[cart] = new ShoppingCart();
+        this[purchases] = [];
     }
+
+    /**
+     *
+     */
+    getCart(){
+        return this[cart].content;
+    }
+
+    getTimeStamps(){
+        return this[cart].timestamps;
+    }
+
+    /**
+     *
+     * @param {ProductId} product
+     */
+    addToCart(product){
+        return this[cart].add(product);
+    }
+
+
+    /**
+     *Returns and removes instance of product id in the cart
+     * @param {ProductId} serial
+     * @return {ProductId} item
+     */
+    removeFromCart(serial){
+        let item = this[cart].getItem(serial);
+        this[cart].removeItem(serial);
+        return item;
+    }
+
+    getPurchaseHistory(){
+        return this[purchases];
+    }
+
+    getPurchaseSerialNumber(serial){
+
+        for(let i = 0; i < this[purchases].length; i++){
+            if(this[purchases][i].SerialNumber === serial){
+                return this[purchases][i];
+            }
+        }
+        return null;
+    }
+
+    addPurchase(purchase){
+        this[purchases].push(purchase);
+    }
+
+    setPurchaseHistory(history){
+        this[purchases] = history;
+    }
+
+
+
 
 }
 

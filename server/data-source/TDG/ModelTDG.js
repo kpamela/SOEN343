@@ -18,11 +18,12 @@ class ModelTDG{
       return data;
   }
 
-  SQLget_models(category){                                          //Retrieves all models of a certain category
+  SQLget_models(model){                                          //Retrieves model of specified modelnumber
       let data = new jquery.Deferred();
-      let modelInfo = {sql: `SELECT * FROM models WHERE models.Category = ?`,
-                     values: [category]};
+      let modelInfo = {sql: `SELECT * FROM models WHERE models.ModelNumber = ?`,
+                     values: [model]};
     handler.handleRead(modelInfo, data);
+    return data;
   }
 
 
@@ -32,15 +33,18 @@ class ModelTDG{
 
   SQLadd_models(model){                                               //Adds a model into the database
       let data = new jquery.Deferred();
-    sql = "INSERT INTO models SET ?";
-    handler.handleWrite(sql, data);
+    let addInfo = {sql: "INSERT INTO models SET ?",
+                    values: [model]};
+    handler.handleWrite(addInfo, data);
+    return data;
   }
 
-  SQLmodify_models(modelNumber, column, modification){                 //Modifies the information for the model
+  SQLmodify_models(modelNumber, newModel){                 //Modifies the information for the model
       let data = new jquery.Deferred();
-      let modifyModel = { sql: `UPDATE models SET ? = ? WHERE models.ModelNumber = ?`,
-                        values:[column, modification, modelNumber]};
+      let modifyModel = { sql: "UPDATE models SET ? WHERE models.ModelNumber = +" + modelNumber,
+                            values:[newModel]};
     handler.handleWrite(modifyModel, data);
+    return data;
   }
 
   SQLdelete_models(modelNumber){                                       //Will remove a model from the database
@@ -48,6 +52,7 @@ class ModelTDG{
     let deleteProduct = {sql:`DELETE FROM models WHERE ModelNumber = ?`,
                          values: [modelNumber]};
       handler.handleWrite(deleteProduct,data);
+      return data;
   }
 
 }
