@@ -19,6 +19,7 @@ module.exports = {
                     data.resolve(result);
                   //return results;
               }
+              connection.release();
           });
       });
     },
@@ -40,6 +41,7 @@ module.exports = {
                   console.log(result);
                   data.resolve(result);
               }
+              connection.release();
 
           });
       });

@@ -8,6 +8,7 @@ const express = require('express'),
     jwt = require('jsonwebtoken'),
     ProductTDG = require('../../data-source/TDG/ProductTDG.js'),
     ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
+    UserTDG = require('../../data-source/TDG/userTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
@@ -18,13 +19,6 @@ const aspect = require('aspect-js');
 const meld = require('meld');
 const trace = require('meld/aspect/trace');
 
-/**
- * ProductListing is common to all catalogues
- * @type {ProductsIdentityMap}
- * @private
- */
-//TODO make that a jquery deferred object, maybe
-let _productListing = new ProductsIdentityMap();
 
 /**
  *
@@ -32,7 +26,7 @@ let _productListing = new ProductsIdentityMap();
  */
 let modelTDG = new ModelTDG();
 let productTDG = new ProductTDG();
-
+let userTDG = new UserTDG();
 /**
  * Unit of work is common to all catalogues
  */
@@ -48,14 +42,6 @@ module.exports = class CatalogueMapper{
 
 
     /**
-     * Product listing is common to all catalogues
-     * @returns {ProductsIdentityMap}
-     */
-    static get productListing(){
-        return _productListing;
-    }
-
-    /**
      *
      * @returns {UnitOfWork}
      */
@@ -69,6 +55,10 @@ module.exports = class CatalogueMapper{
 
     static get productTDG(){
          return productTDG;
+    }
+
+    static get userTDG(){
+        return userTDG;
     }
 
    constructor() {

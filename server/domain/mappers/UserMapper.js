@@ -89,11 +89,11 @@ module.exports = class UserMapper {
 
         let newUser = new User(req.body);
 
-        console.log(req.body);
+       // console.log(req.body);
 
         //TODO should handle already existing users
         userTDG.SQLadd_users(newUser).then(function(response){
-            console.log(response);
+           // console.log(response);
             if(response.failure){
                 return res.send(response)
             }

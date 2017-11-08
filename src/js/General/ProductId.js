@@ -11,6 +11,7 @@ export default class ProductID {
         this.modelNumber = id.ModelNumber;
         this.serialNumber = id.SerialNumber;
         this.available = id.Available;
+        this.price = id.Price;
 
         this.timeCreated = timestamp;
 
