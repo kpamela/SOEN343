@@ -37,8 +37,11 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'addToCart', this.aroundAuthorization);
         meld.around(mapper, 'getShoppingCart', this.aroundAuthorization);
         meld.around(mapper,'removeFromCart', this.aroundAuthorization);
+        meld.around(mapper,'completeTransaction', this.aroundAuthorization);
+        meld.around(mapper,'getPurchaseHistory', this.aroundAuthorization);
         meld.around(ClientDashboardMapper.userTDG, 'SQLget_users', this.aroundGetUser);
         meld.around(ClientDashboardMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
+        meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases)
     }
 
 
@@ -156,5 +159,35 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         product.restoreId(req.body.serialNumber);
         CatalogueMapper.unitOfWork.registerDirty(product);
     }
+
+    aroundGetPurchases(){
+        let joinpoint = meld.joinpoint();
+        let data = new jquery.Deferred();
+
+        ClientDashboardMapper.userTDG.SQLget_users(joinpoint.args[0]).then(function(client){
+            //user must exist
+            if(client){
+                let history = client.getPurchaseHistory();
+                if(history.length > 0){//history exists
+                    data.resolve(history);
+                }
+                else{//check the database
+                    joinpoint.proceed().then(function(response){
+                        client.setPurchaseHistory(response);
+                        data.resolve(response);
+                    });
+                }
+
+            }
+            else{
+                data.resolve({failure: true, msg: "oops"})
+            }
+        });
+
+        return data
+
+    }
+
+
 
 };

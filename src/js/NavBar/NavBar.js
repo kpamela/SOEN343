@@ -37,9 +37,9 @@ export default class NavBar extends Component{
           <Nav pullRight>
             {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}
             {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
-            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <MyAccount/> </NavItem>: null}
-            {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <Logout /> </NavItem> : null}
-            {auth.loggedIn() ? <NavItem eventKey={5} href="#"><ShoppingCartModal/></NavItem> : null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <MyAccount/><p>Hello, {localStorage.getItem('username')}</p> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <div id="ShoppingCart"></div><div id="PurchaseHistory"></div> </NavItem> : null}
+            {auth.loggedIn() ? <NavItem  eventKey={5} href="#"><Logout /></NavItem> : null}
 
           </Nav>
         </Navbar.Collapse>

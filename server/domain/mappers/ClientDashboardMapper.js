@@ -109,20 +109,27 @@ module.exports = class ClientDashboardMapper extends Catalogue{
         userTDG.SQLget_users(req.body.username).then(function(response){
             let user = response;
             let cart = user.getCart();
+
             for(let i = 0; i < cart.length; i++){
-                purchases.SQLadd_purchases({Username: user.Username,
-                                            ModelNumber: cart[i].ModelNumber,
-                                            SerialNumber: cart[i].SerialNumber,
-                                            isReturned: false,
-                                            Timestamp: Date.now()});
-                productTDG.SQLdeleteSingle_products(cart[i].SerialNumber);
+                let purchase = {Username: user.Username,
+                    ModelNumber: cart[i].ModelNumber,
+                    SerialNumber: cart[i].SerialNumber,
+                    isReturned: false,
+                    PurchaseTimeStamp: Date.now()};
+                user.addPurchase(purchase);
+                purchases.SQLadd_purchases(purchase).then(function(response){
+                    productTDG.SQLdeleteSingle_products(purchase.SerialNumber).then(function(response){
+                        user.removeFromCart(purchase.SerialNumber);
+                    });
+                });
+
             }
-            res.json({success: true});
+
+            res.json({success: true, history: user.getPurchaseHistory});
         });
     }
 
     getPurchaseHistory(req, res){
-
         purchases.SQLget_purchases_All(req.query.username).then(function(response){
             res.json(response);
         });

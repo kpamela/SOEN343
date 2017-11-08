@@ -14,8 +14,9 @@ class PurchaseHistoryTDG{
 
   SQLget_purchases_All(username){
     let data = new jquery.Deferred();
-    let purchases = 'SELECT * FROM purchasehistory WHERE Username = ' + username;
-    hanler.handleRead(purchases, data);
+    let purchases = {sql:'SELECT * FROM purchasehistory WHERE purchasehistory.Username = ?',
+                    values: [username]};
+    handler.handleRead(purchases, data);
     return data;
   }
 
@@ -25,16 +26,17 @@ class PurchaseHistoryTDG{
 
   SQLadd_purchases(purchase){
     let data = new jquery.Deferred();
-    let addPurchase = 'INSERT INTO purchasehistory SET' + purchase;
+    let addPurchase = {sql:'INSERT INTO purchasehistory SET ?',
+                        values: [purchase]};
     handler.handleWrite(addPurchase, data);
     return data;
     }
 
   SQLset_purchases_isReturned(username, serialNumber, bool){
     let data = new jquery.Deferred();
-    let setReturned = 'UPDATE purchasehistory SET isReturned = ' + bool
+    let setReturned = {sql:'UPDATE purchasehistory SET isReturned = ' + bool
                     + ' WHERE SerialNumber = ' + serialNumber
-                    + ' AND Username =  ' + username ;
+                    + ' AND Username =  ' + username };
     handler.handleWrite(setReturned, data);
     return data;
   }

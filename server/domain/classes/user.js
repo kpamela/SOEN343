@@ -81,6 +81,9 @@ class User{
         this[purchases] = history;
     }
 
+
+
+
 }
 
 module.exports = User;

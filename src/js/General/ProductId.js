@@ -27,6 +27,7 @@ export default class ProductID {
 
         if(now >= this.timeCreated + delay) {
             this.user.removeFromShoppingCart(this.serialNumber, this.modelNumber);
+            alert(this.serialNumber + " was removed from your cart.")
             delete this;
         }
 

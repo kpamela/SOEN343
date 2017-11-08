@@ -40,6 +40,8 @@ export default class ProductListing extends React.Component{
       }
       else if(this.props.userType === "client"){
           this.props.usr.addToCart(item.description.modelNumber);
+          item.amount -=1;
+          this.forceUpdate();
       }//TODO handle add to cart
 
   }

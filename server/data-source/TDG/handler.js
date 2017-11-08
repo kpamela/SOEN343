@@ -25,7 +25,7 @@ module.exports = {
 
     handleWrite: function (sql, data) {
 
-        while(_writing){}//busy wait
+        while(_writing){console.log(data, " is waiting")}//busy wait
       db.getConnection((err, connection) => {
             _writing = true;
           connection.query(sql,(err, result) => {
