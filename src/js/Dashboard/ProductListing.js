@@ -87,6 +87,8 @@ export default class ProductListing extends React.Component{
             if(product.category.indexOf(this.props.include) === -1){
                     return;
             }
+            if(product.amount === 0)
+                return;
             const str = JSON.stringify(product);//easier to search through one string
             if(str.indexOf(this.props.filterText) === -1){
                 return;

@@ -143,11 +143,36 @@ module.exports = class ClientDashboardMapper extends Catalogue{
         purchases.SQLget_purchases_All(req.query.username).then(function(response){
             res.json(response);
         });
-
+        return 'x';
     }
 
     returnItem(req, res){
+        purchases.SQLgetSingle_purchase(req.body.username, req.body.serialNumber).then(function(purchase){
+            if(purchase.failure){//something went wrong, see aspect for further info
+                return res.status(500).json(purchase);// failed
+            }
+            else{
+                let product = {SerialNumber: purchase.SerialNumber, ModelNumber: purchase.ModelNumber, Available: 1};
+                purchases.SQLset_purchases_isReturned(req.body.username, product.SerialNumber, 1).then(function(response){//setting as returned
+                    //checking for failures
+                    if(response.Error){
+                        purchase.isReturned = 0;
+                        return res.status(500).json(response);
+                    }
+                    else{//proceed to restoring product to db
+                        purchase.isReturned = 1;//changing state of purchase instance
+                        productTDG.SQLaddSpecific_products(product).then(function(response){
+                            if(response.Error){//failure
+                                purchase.isReturned = 0;
+                                return res.status(500).json(purchase);
+                            }
+                        });
+                    }
+                });
 
+                return res.json(purchase);
+            }
+        });
     }
 
 

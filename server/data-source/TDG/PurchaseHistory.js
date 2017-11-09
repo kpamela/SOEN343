@@ -20,6 +20,14 @@ class PurchaseHistoryTDG{
     return data;
   }
 
+    SQLgetSingle_purchase(username, serialNumber){
+        let data = new jquery.Deferred();
+        let product = {sql: `SELECT * FROM purchasehistory WHERE Username = ? AND SerialNumber = ? LIMIT 1`,
+            values:[username, serialNumber]};
+        handler.handleWrite(product, data);
+        return data;
+    }
+
   /****************************************
                 Write
   ****************************************/
@@ -34,9 +42,10 @@ class PurchaseHistoryTDG{
 
   SQLset_purchases_isReturned(username, serialNumber, bool){
     let data = new jquery.Deferred();
-    let setReturned = {sql:'UPDATE purchasehistory SET isReturned = ' + bool
-                    + ' WHERE SerialNumber = ' + serialNumber
-                    + ' AND Username =  ' + username };
+    let setReturned = {sql:'UPDATE purchasehistory SET isReturned = ?'
+                    + ' WHERE SerialNumber = ?'
+                    + ' AND Username =  ?',
+                        values:[bool, serialNumber, username]};
     handler.handleWrite(setReturned, data);
     return data;
   }

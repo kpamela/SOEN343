@@ -138,6 +138,10 @@ export default class Client extends User{
         });
     }
 
+    /**
+     *
+     * @param response
+     */
     purchaseHistoryCallback(response){
         this.purchaseHistory = response.data;
     }
@@ -150,6 +154,15 @@ export default class Client extends User{
             .then(this.purchaseHistoryCallback)
             .catch(function(response){
                 console.log(response);
+        })
+    }
+
+    returnItem(serial){
+        this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
+            .then(function(response){
+                console.log(response);
+            }).catch(function(err){
+                console.log(err);
         })
     }
 }

@@ -121,7 +121,9 @@ app.post('/products/commitChanges', adminDashboardMapper.commitChanges);
 app.post('/products/addToCart', clientDashboardMapper.addToCart);
 app.post('/products/removeFromCart', clientDashboardMapper.removeFromCart);
 app.post('/products/completeTransaction', clientDashboardMapper.completeTransaction);
+app.post('/products/returnItem', clientDashboardMapper.returnItem);
 app.patch('/products/modify', adminDashboardMapper.modify);
+
 
 app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));

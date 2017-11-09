@@ -34,9 +34,12 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'removeFromCart', this.aroundAuthorization);
         meld.around(mapper,'completeTransaction', this.aroundAuthorization);
         meld.around(mapper,'getPurchaseHistory', this.aroundAuthorization);
+        meld.around(mapper, 'returnItem', this.aroundAuthorization);
 
         meld.around(ClientDashboardMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
-        meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases)
+        meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases);
+        meld.around(ClientDashboardMapper.purchases, 'SQLgetSingle_purchase', this.aroundGetSinglePurchase);
+
     }
 
 
@@ -131,6 +134,11 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         CatalogueMapper.unitOfWork.registerDirty(product);
     }
 
+    /**
+     * Returns the list of purchases made by the specified user
+     *
+     * @returns {exports.Deferred|jQuery.Deferred|Deferred}
+     */
     aroundGetPurchases(){
         let joinpoint = meld.joinpoint();
         let data = new jquery.Deferred();
@@ -151,7 +159,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
             }
             else{
-                data.resolve({failure: true, msg: "oops"})
+                data.resolve({failure: true, msg: "Client must be logged in"})
             }
 
 
@@ -159,6 +167,56 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
     }
 
+
+    /**
+     * returns a single purchase, either directly from the user or from the database
+     * @returns {exports.Deferred|jQuery.Deferred|Deferred}
+     */
+    aroundGetSinglePurchase(){
+        let joinpoint = meld.joinpoint();
+        let data = new jquery.Deferred();
+        let username = joinpoint.args[0];
+        let serialNumber = joinpoint.args[1];
+
+        let client = CatalogueAspect.activeUsers.getUser(username);//getting instance of user
+
+        if(client){//user has to be logged in
+            let purchase = client.getPurchasedSerialNumber(serialNumber);
+            //purchase is there, in the purchase history
+            if(purchase){
+                //setting purchase to returned
+                purchase.isReturned = 1;
+                data.resolve(purchase);
+            }
+            else{
+                joinpoint.proceed().then(function(response){
+                    //check if puchase actually exists
+                    if(response.length > 0){
+                        //adding purchase to purchase history
+                        response[0].isReturned = 1;//setting as returned purchase
+                        client.addPurchase(response[0]);
+                        data.resolve(response[0]);
+                    }
+                    else{//item was not found
+                        data.resolve({failure: true, msg: "Could not find purchased Item"});
+                    }
+                });
+            }
+
+        }
+        else{
+            data.resolve({failure: true, msg: "Must be loggged in user"});//user isn't part of the active users
+        }
+
+        return data;
+
+    }
+
+    onAddSpecificProduct(id){
+        //restoring product
+        let product =  CatalogueAspect.productListing.getModel(id.ModelNumber);
+        product.addToUnusedIds(new ProductId(id, product.Price));
+    }
 
 
 };
