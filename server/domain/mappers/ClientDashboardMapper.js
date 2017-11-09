@@ -119,7 +119,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 let purchase = {Username: user.Username,
                     ModelNumber: cart[i].ModelNumber,
                     SerialNumber: cart[i].SerialNumber,
-                    isReturned: false,
+                    IsReturned: 0,
                     PurchaseTimeStamp: Date.now()};
                 user.addPurchase(purchase);
                 purchases.SQLadd_purchases(purchase).then(function(response){
@@ -156,14 +156,17 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 purchases.SQLset_purchases_isReturned(req.body.username, product.SerialNumber, 1).then(function(response){//setting as returned
                     //checking for failures
                     if(response.Error){
-                        purchase.isReturned = 0;
+                        purchase.IsReturned = 0;
+                        return res.status(500).json(response);
+                    }
+                    else if(response.failure){
                         return res.status(500).json(response);
                     }
                     else{//proceed to restoring product to db
-                        purchase.isReturned = 1;//changing state of purchase instance
+                        purchase.IsReturned = 1;//changing state of purchase instance
                         productTDG.SQLaddSpecific_products(product).then(function(response){
                             if(response.Error){//failure
-                                purchase.isReturned = 0;
+                                purchase.IsReturned = 0;
                                 return res.status(500).json(purchase);
                             }
                         });

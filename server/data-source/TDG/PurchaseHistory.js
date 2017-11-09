@@ -42,7 +42,7 @@ class PurchaseHistoryTDG{
 
   SQLset_purchases_isReturned(username, serialNumber, bool){
     let data = new jquery.Deferred();
-    let setReturned = {sql:'UPDATE purchasehistory SET isReturned = ?'
+    let setReturned = {sql:'UPDATE purchasehistory SET IsReturned = ?'
                     + ' WHERE SerialNumber = ?'
                     + ' AND Username =  ?',
                         values:[bool, serialNumber, username]};

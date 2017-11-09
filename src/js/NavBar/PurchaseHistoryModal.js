@@ -43,6 +43,7 @@ export class PurchaseHistoryModal extends React.Component{
     returnItem(value){
         for(let i = 0; i< this.state.selection.length; i++){
             this.props.user.returnItem(this.state.selection[i]);
+            this.state.selection.splice(i,1);
         }
     }
 

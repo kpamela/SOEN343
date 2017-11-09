@@ -185,16 +185,22 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
             //purchase is there, in the purchase history
             if(purchase){
                 //setting purchase to returned
-                purchase.isReturned = 1;
+                if(purchase.IsReturned === 1){
+                    return data.resolve({failure: true, msg: "Item is already returned"})
+                }
+                purchase.IsReturned = 1;
                 data.resolve(purchase);
-                console.log(purchase.isReturned, " aspect, from id map")
+                console.log(purchase.IsReturned, " aspect, from id map")
             }
             else{
                 joinpoint.proceed().then(function(response){
                     //check if puchase actually exists
                     if(response.length > 0){
                         //adding purchase to purchase history
-                        response[0].isReturned = 1;//setting as returned purchase
+                        if(response[0].IsReturned ===1){
+                            return data.resolve({failure: true, msg: "Item is already returned"})
+                        }
+                        response[0].IsReturned = 1;//setting as returned purchase
                         client.addPurchase(response[0]);
                         data.resolve(response[0]);
                         console.log(response[0], " aspect, from db")
