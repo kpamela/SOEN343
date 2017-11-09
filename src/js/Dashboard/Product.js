@@ -9,7 +9,7 @@ import {ListGroupItem} from 'react-bootstrap';
 export default class Product extends React.Component{
 
     showModifyForm(){
-        let item = {category: this.props.item.category, amount: this.props.item.amount, description:{}}
+        let item = {category: this.props.item.category, amount: this.props.item.amount, description:{}};
 
         for(let i in this.props.item.description){
             item.description[i]= this.props.item.description[i];

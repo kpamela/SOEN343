@@ -6,11 +6,12 @@
 
 class ProductId{
 
-    constructor(id){
+    constructor(id, price){
         this.ModelNumber = id.ModelNumber;
         this.SerialNumber = id.SerialNumber;
 
         this.Available = id.Available;
+        this.Price = price;
 
     }
 

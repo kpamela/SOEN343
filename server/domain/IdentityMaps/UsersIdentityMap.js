@@ -16,10 +16,11 @@ module.exports = class UsersIdentityMap extends IdentityMap{
      * returns the index of username
      * returns -1 if not found
      * @param username
-     * @returns {*}
+     * @returns {Number}
      */
     findUser(username){
-        for(let i in this.content){
+
+        for(let i  = 0; i< this.content.length; i++){
             if(this.content[i].Username == username){
                 return i;
             }

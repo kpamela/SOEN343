@@ -4,6 +4,7 @@
 const Catalogue = require('./CatalogueMapper.js'),
     UserMapper = require('./UserMapper.js'),
     ProductId = require('../classes/ProductClasses/ProductId.js'),
+    PurchaseHistory = require('../../data-source/TDG/PurchaseHistory.js'),
     ProductTDG = require('../../data-source/TDG/ProductTDG'),
     UserTDG = require('../../data-source/TDG/userTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
@@ -11,14 +12,18 @@ const Catalogue = require('./CatalogueMapper.js'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/television');
 
+
+let purchases = new PurchaseHistory();
 let productTDG = new ProductTDG();
-let userTDG = new UserTDG();
+
 
 module.exports = class ClientDashboardMapper extends Catalogue{
 
-    static get userTDG(){
-        return userTDG;
+    static get purchases(){
+        return purchases;
     }
+
+
     static get productTDG(){
         return productTDG;
     }
@@ -37,7 +42,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
     addToCart(req, res){
             console.log(req.body.username);
             //getting user from TDG
-            userTDG.SQLget_users(req.body.username).then(function(response){
+            ClientDashboardMapper.userTDG.SQLget_users(req.body.username).then(function(response){
                 let user = response;
                 //instantiating product id with results, putting in the user
                 // places id to locked ids and returns a product Id
@@ -49,11 +54,12 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                     else{
                         let id = response;
                         if(user.getCart().length < 7){
-                            user.addToCart(id)
+                            user.addToCart(id);
                             console.log(user.getCart());
                             res.json({success: true, id: id, timeStamp: user.getTimeStamps()[id.SerialNumber]});
                         }
                         else{
+                            id.Available = 1;
                             res.json({success: false, error: "can't add more then seven items to cart"})
                         }
 
@@ -72,7 +78,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
     removeFromCart(req, res){
 
         //getting user from TDG
-        userTDG.SQLget_users(req.body.username).then(function(response){
+        ClientDashboardMapper.userTDG.SQLget_users(req.body.username).then(function(response){
             let user = response;
             //removes and returns specified serial number of the cart
             let id = user.removeFromCart(req.body.serialNumber);
@@ -90,26 +96,53 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      */
     getShoppingCart(req, res){
 
-        userTDG.SQLget_users(req.query.username).then(function(response){
+        ClientDashboardMapper.userTDG.SQLget_users(req.query.username).then(function(response){
             let user = response;
 
             res.json({cart: user.getCart(), timestamps: user.getTimeStamps()});
         });
     }
 
+    /**
+     * Puts items in purchase history
+     * and delete them from the db
+     * @param req
+     * @param res
+     */
     completeTransaction(req, res){
 
-        userTDG.SQLget_users(req.body.username).then(function(response){
+        ClientDashboardMapper.userTDG.SQLget_users(req.body.username).then(function(response){
             let user = response;
             let cart = user.getCart();
+
             for(let i = 0; i < cart.length; i++){
-                //TODO put item in purchased history first
-                productTDG.SQLdeleteSingle_products(cart[i].SerialNumber);
+                let purchase = {Username: user.Username,
+                    ModelNumber: cart[i].ModelNumber,
+                    SerialNumber: cart[i].SerialNumber,
+                    isReturned: false,
+                    PurchaseTimeStamp: Date.now()};
+                user.addPurchase(purchase);
+                purchases.SQLadd_purchases(purchase).then(function(response){
+                    productTDG.SQLdeleteSingle_products(purchase.SerialNumber).then(function(response){
+                        user.removeFromCart(purchase.SerialNumber);
+                    });
+                });
+
             }
-        })
+
+            res.json({success: true, history: user.getPurchaseHistory});
+        });
     }
 
+    /**
+     * returns teh purchase history
+     * @param req
+     * @param res
+     */
     getPurchaseHistory(req, res){
+        purchases.SQLget_purchases_All(req.query.username).then(function(response){
+            res.json(response);
+        });
 
     }
 

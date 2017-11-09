@@ -109,7 +109,7 @@ class ProductDescription{
     setUnusedIds(arr){
         this[unusedIds] = [];//set to empty before
         for(let i = 0; i<arr.length; i++){
-            this[unusedIds].push(new ProductId(arr[i]));
+            this[unusedIds].push(new ProductId(arr[i], this.Price));
         }
         console.log(this[unusedIds]);
         this.Amount = this[unusedIds].length;

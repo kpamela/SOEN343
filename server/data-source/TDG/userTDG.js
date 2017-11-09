@@ -25,7 +25,7 @@ class UserTDG{
       let data = new jquery.Deferred();
       this.SQLget_users(user.Username).then(function(existingUser){
         if(existingUser != ''){
-            data.resolve({success: false, msg:"User already exists"});
+            data.resolve({failure: true, msg:"User already exists"});
         }
         else{
             bcrypt.hash(user.Password, 10, (err, hash) =>{

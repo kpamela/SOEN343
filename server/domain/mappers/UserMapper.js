@@ -53,7 +53,7 @@ module.exports = class UserMapper {
 
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
-                res.status(500).send("User Not found");
+                return res.status(500).send("User Not found");
             }
 
             //checking password match
@@ -70,7 +70,7 @@ module.exports = class UserMapper {
 
                }
                else{
-                   res.status(500).send('wrong password');
+                   res.json({success: false, msg: 'wrong password'});
                }
             });
         })
@@ -89,18 +89,24 @@ module.exports = class UserMapper {
 
         let newUser = new User(req.body);
 
-        console.log(req.body);
+       // console.log(req.body);
 
         //TODO should handle already existing users
-        userTDG.SQLadd_users(newUser).then(function(res){
-            console.log(res);
+        userTDG.SQLadd_users(newUser).then(function(response){
+           // console.log(response);
+            if(response.failure){
+                return res.send(response)
+            }
+            else{
+                const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
+
+                UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
+                return res.json({success: true, token: token, user: newUser});
+            }
         });
         //userTDG.SQLset_user_Password(newUser.userName(), newUser.password);
 
-        const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
-        UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
-        return res.json({success: true, token: token, user: newUser})
 
     }
 

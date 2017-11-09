@@ -106,6 +106,7 @@ app.get('/products/view', catalogueMapper.view);
 app.get('/products/revertChanges', adminDashboardMapper.revertChanges);
 app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
 app.get('/products/getShoppingCart', clientDashboardMapper.getShoppingCart);
+app.get('/products/getPurchaseHistory', clientDashboardMapper.getPurchaseHistory);
 /**
  *
  * POST
@@ -119,6 +120,7 @@ app.post('/products/remove', adminDashboardMapper.remove);
 app.post('/products/commitChanges', adminDashboardMapper.commitChanges);
 app.post('/products/addToCart', clientDashboardMapper.addToCart);
 app.post('/products/removeFromCart', clientDashboardMapper.removeFromCart);
+app.post('/products/completeTransaction', clientDashboardMapper.completeTransaction);
 app.patch('/products/modify', adminDashboardMapper.modify);
 
 app.all('*', (req, res) => {

@@ -10,10 +10,13 @@ export default class Client extends User{
         super(username);
 
         this.shoppingCart = [];
+        this.purchaseHistory = [];
 
+        this.purchaseHistoryCallback = this.purchaseHistoryCallback.bind(this);
         this.addToCartCallback = this.addToCartCallback.bind(this);
         this.fetchCartCallback = this.fetchCartCallback.bind(this);
         this.fetchShoppingCart();
+        this.fetchPurchaseHistory();
     }
 
 
@@ -24,8 +27,8 @@ export default class Client extends User{
     addToCartCallback(id){
         if(id.data.success){
             this.shoppingCart.push(new ProductId(id.data.id, id.data.timeStamp, this));
-            console.log(this.shoppingCart[this.shoppingCart.length - 1]);
-            location.reload();
+            alert(this.shoppingCart[this.shoppingCart.length - 1].modelNumber + " was added to cart");
+            //location.reload();
         }
         else{
             window.alert("You can't add more then 7 items to your cart");
@@ -57,12 +60,12 @@ export default class Client extends User{
      * @param model
      */
     removeFromShoppingCart(id, model){
-        for(let i = 0; i < this.shoppingCart.length; i++){
-            if(id === this.shoppingCart[i].serialNumber){
-                this.shoppingCart.splice(i, 1);
-                break;
-            }
+        let productId = this.popId(id);
+
+        if(!model){
+            model = productId.modelNumber;
         }
+
         if(localStorage.getItem('jwtToken')){
             this.axiosInstance.post("removeFromCart", {username: this.username, modelNumber: model, serialNumber: id})
                 .then(function(response){
@@ -91,6 +94,25 @@ export default class Client extends User{
       }
     }
 
+    popId(serial){
+        for(let i = 0; i < this.shoppingCart.length; i++){
+            if(serial === this.shoppingCart[i].serialNumber){
+                let id = this.shoppingCart[i];
+                this.shoppingCart.splice(i, 1);
+                return id;
+            }
+        }
+    }
+
+    /**
+     * Removes an array of serial numbers from the cart
+     */
+    removeIdsFromCart(arr){
+        for(let i = 0; i< arr.length; i++){
+            this.removeFromShoppingCart(arr[i])
+        }
+    }
+
     /**
      * Gets shopping cart from server side and sets the client's cart
      */
@@ -107,12 +129,41 @@ export default class Client extends User{
      * @param data
      */
     fetchCartCallback(data){
-        console.log(data.data.timestamps);
+
         for(let i = 0; i< data.data.cart.length; i++){
             let product = data.data.cart[i];
 
             this.shoppingCart.push(new ProductId(product, data.data.timestamps[product.SerialNumber], this));
         }
-        console.log(this.shoppingCart);
+
+    }
+
+    /**
+     *
+     */
+    completeTransaction(){
+
+        this.shoppingCart = [];
+        this.axiosInstance.post("completeTransaction", {username: this.username},{cancelToken: this.source.token} )
+            .then(function(response){
+                alert("transaction completed! " + response.data.history)
+            }).catch(function(response){
+                console.log(response);
+        });
+    }
+
+    purchaseHistoryCallback(response){
+        this.purchaseHistory = response.data;
+    }
+
+    /**
+     *
+     */
+    fetchPurchaseHistory(){
+        this.axiosInstance.get("getPurchaseHistory?username="+this.username,{cancelToken: this.source.token})
+            .then(this.purchaseHistoryCallback)
+            .catch(function(response){
+                console.log(response);
+        })
     }
 }

@@ -5,13 +5,16 @@ const meld = require('meld'),
     jwt = require('jsonwebtoken'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap'),
     jquery = require('jquery-deferred'),
-    CatalogueMapper = require('../mappers/CatalogueMapper.js');
+    CatalogueMapper = require('../mappers/CatalogueMapper.js'),
+    UsersIdentityMap = require('../IdentityMaps/UsersIdentityMap.js'),
+    User = require('../classes/user.js'),
     ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
     DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
     LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/Monitor.js');
 
+let _activeUsers = new UsersIdentityMap();
 let _productListing = new ProductsIdentityMap();
 
 module.exports = class CatalogueAspect{
@@ -22,6 +25,14 @@ module.exports = class CatalogueAspect{
      */
     static get productListing(){
         return _productListing;
+    }
+
+    /**
+     *
+     * @returns {UsersIdentityMap}
+     */
+    static get activeUsers(){
+        return _activeUsers;
     }
 
     /**
@@ -36,7 +47,7 @@ module.exports = class CatalogueAspect{
         this.viewAspect = meld.around(mapper, 'view', this.aroundAuthorization);
 
         this.getAllAspect = meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
-
+        this.getUserAspect = meld.around(CatalogueMapper.userTDG, 'SQLget_users', this.aroundGetUser);
   }
 
   /*
@@ -59,15 +70,66 @@ module.exports = class CatalogueAspect{
             return res.status(401).json({success: false, msg: "Unauthorized: No Token Provided"});
         }
 
+
         return jwt.verify(token, 'mysecret', function (err, decoded) {
             if (err) {
                 return res.status(401).json({success: false, msg: "Unauthorized: Incorrect Token Signature"});
             }
             else {
+                //make suere that users can access their info only
+                if(req.body.username){
+                    if (req.body.username !== decoded.user.Username) {
+                       return res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
+                    }
+                }
+                else if(req.query.username){
+                    if (req.query.username !== decoded.user.Username) {
+                       return res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
+                    }
+                }
+                //else{
+
+                let index = CatalogueAspect.activeUsers.findUser(decoded.user.Username);
+                //adding new active user to active users list
+                if(index === -1){
+                    let activeUser = new User(decoded.user);///activeUser
+                    console.log(activeUser);
+                    CatalogueAspect.activeUsers.add(activeUser);
+                }
                 joinpoint.proceed();
             }
         });
     }
+
+
+
+
+
+    /**
+     * Gets the user either from the identity map, or db
+     * @returns {jQuery.Deferred|exports.Deferred|Deferred}
+     */
+    aroundGetUser(){
+        let joinpoint = meld.joinpoint();
+        let data = new jquery.Deferred();
+
+        let index = CatalogueAspect.activeUsers.findUser(joinpoint.args[0]);
+        //if not found fetch from db, and add to active user
+        if(index === -1){
+            joinpoint.proceed().then(function(response){
+                let user = new User(response[0]);
+                CatalogueAspect.activeUsers.add(user);
+                console.log(user);
+                data.resolve(user);
+            });
+        }
+        else{//user found in active users
+            data.resolve(CatalogueAspect.activeUsers.content[index]);
+        }
+
+        return data;
+    }
+
 
 
     /**
@@ -110,7 +172,7 @@ module.exports = class CatalogueAspect{
             let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
             if(product){//ignore undefined
                 CatalogueAspect.productListing.add(product);
-                console.log(product);
+                //console.log(product);
             }
         }
         console.log("%%%%%%%%%%%%%%%%%%%%");

@@ -11,6 +11,7 @@ export default class ProductID {
         this.modelNumber = id.ModelNumber;
         this.serialNumber = id.SerialNumber;
         this.available = id.Available;
+        this.price = id.Price;
 
         this.timeCreated = timestamp;
 
@@ -27,6 +28,7 @@ export default class ProductID {
 
         if(now >= this.timeCreated + delay) {
             this.user.removeFromShoppingCart(this.serialNumber, this.modelNumber);
+            alert(this.serialNumber + " was removed from your cart.")
             delete this;
         }
 

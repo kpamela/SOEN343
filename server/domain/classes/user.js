@@ -5,6 +5,7 @@ const express = require('express'),
  * Private instance of shopping cart
  */
 let cart = Symbol();
+let purchases = Symbol();
 
 class User{
     constructor(user){
@@ -24,6 +25,7 @@ class User{
 
         //private instance of shoppingcart
         this[cart] = new ShoppingCart();
+        this[purchases] = [];
     }
 
     /**
@@ -56,6 +58,31 @@ class User{
         this[cart].removeItem(serial);
         return item;
     }
+
+    getPurchaseHistory(){
+        return this[purchases];
+    }
+
+    getPurchaseSerialNumber(serial){
+
+        for(let i = 0; i < this[purchases].length; i++){
+            if(this[purchases][i].SerialNumber === serial){
+                return this[purchases][i];
+            }
+        }
+        return null;
+    }
+
+    addPurchase(purchase){
+        this[purchases].push(purchase);
+    }
+
+    setPurchaseHistory(history){
+        this[purchases] = history;
+    }
+
+
+
 
 }
 

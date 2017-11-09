@@ -19,13 +19,14 @@ module.exports = {
                     data.resolve(result);
                   //return results;
               }
+              connection.release();
           });
       });
     },
 
     handleWrite: function (sql, data) {
 
-        while(_writing){}//busy wait
+        while(_writing){console.log(data, " is waiting")}//busy wait
       db.getConnection((err, connection) => {
             _writing = true;
           connection.query(sql,(err, result) => {
@@ -40,6 +41,7 @@ module.exports = {
                   console.log(result);
                   data.resolve(result);
               }
+              connection.release();
 
           });
       });

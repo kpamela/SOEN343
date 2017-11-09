@@ -63,7 +63,9 @@ export const RegisterModal = React.createClass({
                 this.setState({showModal:false});
             }
             else{
-                console.log(res.data.msg)
+                console.log(res.data.msg);
+                window.alert(res.data.msg);
+               // location.reload();
             }
         });
     },
