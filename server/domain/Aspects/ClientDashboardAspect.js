@@ -187,6 +187,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                 //setting purchase to returned
                 purchase.isReturned = 1;
                 data.resolve(purchase);
+                console.log(purchase.isReturned, " aspect, from id map")
             }
             else{
                 joinpoint.proceed().then(function(response){
@@ -196,6 +197,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                         response[0].isReturned = 1;//setting as returned purchase
                         client.addPurchase(response[0]);
                         data.resolve(response[0]);
+                        console.log(response[0], " aspect, from db")
                     }
                     else{//item was not found
                         data.resolve({failure: true, msg: "Could not find purchased Item"});
