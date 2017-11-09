@@ -76,15 +76,15 @@ export default class Client extends User{
             location.reload();
         }
     }
-
-    displayShoppingCart(){
+// creating the loop that will display the array shoppingCart
+    displayShoppingCart(props){
       let shoppingCartItem;
       if(this.shoppingCart){
         shoppingCartItem = this.props.shoppingCart.map(cartItem => {
           return (
-            <div>
+            <li>
               <shoppingCartItem key={cartItem.model} cartItem={cartItem} />
-            </div>
+            </li>
 
           )
         })
