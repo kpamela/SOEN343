@@ -54,7 +54,7 @@ module.exports = class UserMapper {
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
 
-                return res.json({success:false, msg:'User Not found'}
+                return res.json({success:false, msg:'User Not found'});
 
             }
 
