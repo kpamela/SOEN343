@@ -266,6 +266,7 @@ export const RegisterModal = React.createClass({
             }
             else{
                 this.msg.show(res.data.msg, {type: 'error'})
+
             }
           });
       }

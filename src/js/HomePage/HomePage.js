@@ -29,7 +29,7 @@ export default class HomePage extends Component{
     render(){
         if(this.state.viewCatalog){
             return(
-                <Redirect to="/ClientDashboard" />
+                <Redirect to="/Catalogue" />
             );
         }
         else{

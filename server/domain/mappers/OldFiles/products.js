@@ -61,22 +61,22 @@ db.getConnection((err, connection) => {
       if (err){
         return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
-        //verify if the category is valid
+        //verify if the Category is valid
 
-        let category = req.body.data.category;
+        let category = req.body.data.Category;
         if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
-          return res.json(400, {success: false, msg: "Invalid product category."});
+          return res.json(400, {success: false, msg: "Invalid product Category."});
         }
 
         // build newProduct JSON Object by parsing the request
-        let newProduct = {category: req.body.data.category, amount: req.body.data.amount};
+        let newProduct = {category: req.body.data.Category, amount: req.body.data.Amount};
         for(let i in req.body.data.description){
             newProduct[i] = req.body.data.description[i];
         }
 
         console.log(newProduct);
 
-        // Instantiate the right product class based on the category
+        // Instantiate the right product class based on the Category
         var product;
 
         switch(category){
@@ -123,10 +123,10 @@ db.getConnection((err, connection) => {
       if (err){
         return res.json(401, {success: false, msg: "Unauthorized: Incorrect Token Signature"});
       } else {
-        //verify if the category is valid
-        let category = req.body.category;
+        //verify if the Category is valid
+        let category = req.body.Category;
         if (!category.match(/^(desktopComputer|tabletcomputer|laptop|television|monitordisplay)$/)){
-          return res.json(400, {success: false, msg: "Invalid product category."});
+          return res.json(400, {success: false, msg: "Invalid product Category."});
         }
 
         // build newProduct JSON Object by parsing the request
@@ -149,7 +149,7 @@ db.getConnection((err, connection) => {
               return res.json(500,{success: true, msg: "Catalogue Item Was Removed"});
               /*
               //Build query and remove product description in the db
-              sql = `DELETE FROM ${category} WHERE ?`;
+              sql = `DELETE FROM ${Category} WHERE ?`;
               connection.query(sql, oldProduct, (err, result) => {
                   if(err){
                       console.log(err);

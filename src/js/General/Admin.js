@@ -8,8 +8,8 @@ import $ from 'jquery';
 
 export default class Admin extends User {
 
-    constructor() {
-        super();
+    constructor(username) {
+        super(username);
         this.hasUncommittedChanges = new $.Deferred();
 
         this.setUncommittedChange = this.setUncommittedChange.bind(this);
@@ -25,7 +25,6 @@ export default class Admin extends User {
     addProduct(category, amount) {
         let q = Admin.newProduct(category, amount);
         this.p.push(q);
-        console.log(q);
         return this.p.length - 1;//returning index for future use
     }
 
@@ -37,7 +36,7 @@ export default class Admin extends User {
      */
     specify(product, desc) {
         this.p[product].setDescription(desc);
-
+        console.log(this.p[product]);
     }
 
     setUncommittedChange(response) {

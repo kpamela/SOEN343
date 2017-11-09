@@ -85,6 +85,7 @@ export const LoginModal = React.createClass({
           console.log(auth.getIsAdmin());
         }
         else{
+
           this.msg.show(res.data.msg, {type: 'error'});
         }
       });
