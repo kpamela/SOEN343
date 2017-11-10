@@ -20,11 +20,15 @@ export default class ProductDescription{
     }
 
     convertFromDomainObject(ob1){
-        this.category = ob1.category;
-        this.amount = ob1.amount;
+        this.category = ob1.Category;
+        this.amount = ob1.Amount;
         for(let i in ob1){
-            if(i !== 'category' && i !== 'amount' && i !== 'productIds'){
-                this.description[i] = ob1[i];
+            if(i !== 'Category' && i !== 'Amount' && i !== 'productIds'){
+                let ind = i;
+                if(i !== 'RAMSize'){//ignore RAMSize
+                    ind = i.charAt(0).toLowerCase() + i.slice(1);
+                }
+                this.description[ind] = ob1[i];
             }
         }
     }

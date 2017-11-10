@@ -265,7 +265,13 @@ export const RegisterModal = React.createClass({
                 this.setState({showModal:false});
             }
             else{
+<<<<<<< HEAD
                 this.msg.show(res.data.msg, {type: 'error'})
+=======
+                console.log(res.data.msg);
+                window.alert(res.data.msg);
+               // location.reload();
+>>>>>>> master
             }
           });
       }

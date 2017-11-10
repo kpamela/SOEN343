@@ -85,6 +85,7 @@ export const LoginModal = React.createClass({
           console.log(auth.getIsAdmin());
         }
         else{
+<<<<<<< HEAD
           this.msg.show(res.data.msg, {type: 'error'});
         }
       });
@@ -92,6 +93,15 @@ export const LoginModal = React.createClass({
     else{
       this.msg.show('Invalid fields', {type: 'error'});
     }
+=======
+            window.alert(res.data.msg);
+        }
+      }).catch(function(err){
+        window.alert("User not found")
+        console.log(err);
+    });
+
+>>>>>>> master
   },
 
   render() {
