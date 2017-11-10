@@ -54,7 +54,7 @@ export class PurchaseHistoryModal extends React.Component{
                 <button type='button'
                         className={ `btn btn-primary` }
                         onClick={this.returnItem}>
-                    MyCustomBtn
+                    Return
                 </button>
             </ButtonGroup>
         );
