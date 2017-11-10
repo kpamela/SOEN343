@@ -1,5 +1,5 @@
-{ "presets": ["react", "es2015"],
-  "plugins": [
+{ "presets": ["react", "es2015"]//,
+  /**"plugins": [
     ["contracts", {
       "env": {
         "production": {
@@ -16,5 +16,5 @@
       }
 
     }]
-  ]
+  ]*/
 }
