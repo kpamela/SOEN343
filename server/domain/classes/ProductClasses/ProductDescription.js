@@ -99,7 +99,17 @@ class ProductDescription{
      * @param {ProductId} id
      */
     addToUsedIds(id){
+        id.Available = 0;
         this[usedIds].push(id);
+    }
+
+    /**
+     *
+     * @param id
+     */
+    addToUnusedIds(id){
+        id.Available = 1;
+        this[unusedIds].push(id);
     }
 
     /**
