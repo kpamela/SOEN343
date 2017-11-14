@@ -28,9 +28,11 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         this.getUserAspect.remove();
         this.viewAspect.remove();//leaving for super instances only
         this.getAllAspect.remove();//removes interference
+
       //defining aspects;
         meld.before(mapper, 'remove', this.beforeRemove);
 
+        meld.around(CatalogueAspect, 'addNewActiveUser', this.singleAdminCheck);
         meld.around(mapper,'revertChanges', this.aroundAuthorization);
         meld.around(mapper,'getCommitState', this.aroundAuthorization);
         meld.around(mapper, 'add',  this.aroundAdd);//should occur after the one under
@@ -42,7 +44,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.around(CatalogueMapper.unitOfWork, 'commit', this.aroundUoWCommit);
         meld.around(CatalogueMapper.unitOfWork, 'rollback', this.aroundUoWRollback);
         //called after rollback, to send the new data to frontend
-        meld.around(AdminDashboardMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
+      //  meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', super.aroundGetAll);
 
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);
         meld.on(CatalogueMapper.unitOfWork, 'registerDirty',this.onRegisterDirty);
@@ -191,7 +193,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       }
       for(let i in changes.deletedList){
           let old = AdminDashboardAspect.productHistory.getDeletedModel(changes.deletedList[i]);
-
+          //readding the old product
           AdminDashboardAspect.productListing.add(old);
 
           productChanges.deletedList[i] = old;
@@ -201,6 +203,27 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       return productChanges;
   }
 
+
+
+    singleAdminCheck(){
+        let joinpoint = meld.joinpoint();
+        let usr = joinpoint.args[0];
+
+        if(usr.Administrator === 1){
+            if(!AdminDashboardMapper.admin){//if there are no admin logged in
+                usr = joinpoint.proceed();
+                AdminDashboardMapper.admin = usr;//setting logged in administrator
+                return usr;
+            }
+            else{//admin is logged in
+                return null
+            }
+        }
+        else{//not an admin
+            return joinpoint.proceed();
+        }
+
+  }
 
 };
 

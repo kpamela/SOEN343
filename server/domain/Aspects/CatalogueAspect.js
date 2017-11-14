@@ -4,6 +4,8 @@
 const meld = require('meld'),
     jwt = require('jsonwebtoken'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap'),
+    Admin = require('../classes/Admin.js'),
+    Client = require('../classes/Client.js'),
     jquery = require('jquery-deferred'),
     CatalogueMapper = require('../mappers/CatalogueMapper.js'),
     UsersIdentityMap = require('../IdentityMaps/UsersIdentityMap.js'),
@@ -48,6 +50,8 @@ module.exports = class CatalogueAspect{
 
         this.getAllAspect = meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
         this.getUserAspect = meld.around(CatalogueMapper.userTDG, 'SQLget_users', this.aroundGetUser);
+
+
   }
 
   /*
@@ -92,9 +96,12 @@ module.exports = class CatalogueAspect{
                 let index = CatalogueAspect.activeUsers.findUser(decoded.user.Username);
                 //adding new active user to active users list
                 if(index === -1){
-                    let activeUser = new User(decoded.user);///activeUser
+                    let activeUser = CatalogueAspect.addNewActiveUser(decoded.user);///activeUser
+                    if(!activeUser){//occurs when an admin is already logged in
+                        return res.json({success: false, msg:"An Admin is already logged in"});
+                    }
                     console.log(activeUser);
-                    CatalogueAspect.activeUsers.add(activeUser);
+
                 }
                 joinpoint.proceed();
             }
@@ -117,8 +124,7 @@ module.exports = class CatalogueAspect{
         //if not found fetch from db, and add to active user
         if(index === -1){
             joinpoint.proceed().then(function(response){
-                let user = new User(response[0]);
-                CatalogueAspect.activeUsers.add(user);
+                let user = CatalogueAspect.addNewActiveUser(response[0]);// watch this one out, make sure that no admin call this...
                 console.log(user);
                 data.resolve(user);
             });
@@ -139,11 +145,12 @@ module.exports = class CatalogueAspect{
      * @returns {jQuery.Deferred|exports.Deferred|Deferred}
      */
   aroundGetAll(){
-
+        console.log(CatalogueAspect.productListing.content,"%%%%%%%%%%%%%%%%%%%%");
       let data = new jquery.Deferred();//matching TDG calls
       if(CatalogueAspect.productListing.content.length == 0){//empty listing, fetch from db
           meld.joinpoint().proceed().then(function(response){
               CatalogueAspect.setListingFromDatabase(response);
+
               data.resolve(CatalogueAspect.productListing);
           });//proceeding to tdg call
       }
@@ -175,7 +182,7 @@ module.exports = class CatalogueAspect{
                 //console.log(product);
             }
         }
-        console.log("%%%%%%%%%%%%%%%%%%%%");
+
 
     }
 
@@ -199,6 +206,26 @@ module.exports = class CatalogueAspect{
             case 'Monitor':
                 return new Monitor(product);
 
+        }
+    }
+
+
+    /**
+     *
+     * @param user
+     * @returns {User}
+     */
+    static addNewActiveUser(user){
+
+        if(user.Administrator === 1){
+            user = new Admin(user);
+            CatalogueAspect.activeUsers.add(user);
+            return user;
+        }
+        else{
+            user = new Client(user);
+            CatalogueAspect.activeUsers.add(user);
+            return user;
         }
     }
 

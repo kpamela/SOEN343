@@ -47,7 +47,7 @@ export const LoginModal = React.createClass({
             window.alert(res.data.msg);
         }
       }).catch(function(err){
-        window.alert("User not found")
+        window.alert("User not found");
         console.log(err);
     });
 

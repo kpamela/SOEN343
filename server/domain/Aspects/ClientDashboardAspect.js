@@ -36,7 +36,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'getPurchaseHistory', this.aroundAuthorization);
         meld.around(mapper, 'returnItem', this.aroundAuthorization);
 
-        meld.around(ClientDashboardMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
+        meld.around(CatalogueMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
         meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases);
         meld.around(ClientDashboardMapper.purchases, 'SQLgetSingle_purchase', this.aroundGetSinglePurchase);
 
@@ -64,7 +64,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
             let product = ClientDashboardAspect.productListing.content[index];
             //prevents multiple db calls acts as identity map for product ids
             if(!product.hasUnusedIds() && !product.hasUsedIds()){
-                ClientDashboardMapper.productTDG.SQLget_products(product.ModelNumber).then(function(response){
+                CatalogueMapper.productTDG.SQLget_products(product.ModelNumber).then(function(response){
                     product.setUnusedIds(response);
                     joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
                 });

@@ -64,9 +64,11 @@ module.exports = class UserMapper {
                else if(isMatch){
                    const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
                    let activeUser = new User(user[0]);
-                   console.log(activeUser);
-                   UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);
-                   res.json({success: true, token: token, user: activeUser})
+                 //  console.log(activeUser);
+                   if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
+                       UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);//no errors, means new active user
+                       console.log(UserMapper.activeUsersRegistry);
+                   }
 
                }
                else{
@@ -91,7 +93,7 @@ module.exports = class UserMapper {
 
        // console.log(req.body);
 
-        //TODO should handle already existing users
+
         userTDG.SQLadd_users(newUser).then(function(response){
            // console.log(response);
             if(response.failure){
@@ -104,16 +106,24 @@ module.exports = class UserMapper {
                 return res.json({success: true, token: token, user: newUser});
             }
         });
-        //userTDG.SQLset_user_Password(newUser.userName(), newUser.password);
-
-
 
     }
 
+    /**
+     *
+     *
+     * @param req
+     * @param res
+     */
     getActiveUsersRegistry(req, res){
         res.json(UserMapper.activeUsersRegistry);
     }
 
+    /**
+     *
+      * @param req
+     * @param res
+     */
     logout(req, res){
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
