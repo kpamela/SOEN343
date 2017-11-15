@@ -33,6 +33,24 @@ describe('Users', () => {
       });
   });
   /*
+  * Test the /POST route for user Logout
+  */
+  describe('/POST users', () => {
+    it('User should be able to log out', (done) => {
+      let user =  {
+        username: "test"
+      }
+      chai.request(server)
+          .post('/users/logout')
+          .send(user)
+          .end((err, res) => {
+            res.body.should.have.property('success').eql(true);
+            res.body.should.have.property("msg").eqls("logged out");
+            done();
+          });
+    });
+});
+  /*
   * Test the /POST route for incorrect usernmane in user login
   */
   describe('/POST users', () => {
@@ -45,7 +63,6 @@ describe('Users', () => {
             .post('/users/authenticate')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(500);
                 res.body.should.be.a('object');
                 res.body.should.have.property('success').eql(false);
                 res.body.should.have.property('msg').eqls('User Not found');
@@ -66,7 +83,6 @@ describe('Users', () => {
             .post('/users/authenticate')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(500);
                 res.body.should.be.a('object');
                 res.body.should.have.property('success').eql(false);
                 res.body.should.have.property('msg').eqls('Wrong password');
