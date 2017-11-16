@@ -5,7 +5,7 @@ import Catalogue from './Dashboard/Catalogue.js';
 import Main from './Main/Main.js';
 import HomePage from './HomePage/HomePage.js';
 import AboutUs from './AboutUs/AboutUs.js';
-
+import AccountSettings from './Client/AccountSettings';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -39,6 +39,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/AdminDashboard" component={AdminDashboard} />
+                <Route path="/AccountSettings" component={AccountSettings} />
                 <Route path="/ClientDashboard" component={ClientDashboard} />
                 <Route path="/Catalogue" component={Catalogue} />
                 <Route path="/aboutus" component={AboutUs} />
