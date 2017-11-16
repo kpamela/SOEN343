@@ -144,6 +144,7 @@ export default class Client extends User{
      */
     purchaseHistoryCallback(response){
         this.purchaseHistory = response.data;
+        
     }
 
     /**

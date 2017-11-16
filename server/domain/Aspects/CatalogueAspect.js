@@ -46,7 +46,7 @@ module.exports = class CatalogueAspect{
       this.aroundGetAll = this.aroundGetAll.bind(this);
       //Defining aspects
 
-        this.viewAspect = meld.around(mapper, 'view', this.aroundAuthorization);
+        //this.viewAspect = meld.around(mapper, 'view', this.aroundAuthorization);
 
         this.getAllAspect = meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
         this.getUserAspect = meld.around(CatalogueMapper.userTDG, 'SQLget_users', this.aroundGetUser);
