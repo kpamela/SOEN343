@@ -18,13 +18,14 @@ export class PurchaseHistoryModal extends React.Component{
             showModal: false,
             selectRow:{mode:'checkbox'},
             selection: new Array()
-
         };
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
         this.returnItem = this.returnItem.bind(this);
         this.onRowSelect = this.onRowSelect.bind(this);
         this.createCustomButtonGroup =this.createCustomButtonGroup.bind(this);
+
+
     }
 
     onRowSelect(row, isSelected){
@@ -72,22 +73,13 @@ export class PurchaseHistoryModal extends React.Component{
 
     }
 
-    submit() {
-        this.props.user.completeTransaction();
-        alert('Your purchase is underway!');
-    }
-
 
     timeFormat(cell, row){
         let date = new Date(cell);
         return date.toISOString();
     }
 
-
-
     render(){
-
-
 
         // When user is not logged in
         if (!auth.loggedIn()) {
@@ -115,13 +107,15 @@ export class PurchaseHistoryModal extends React.Component{
 
         // When user is logged in as client
         const options = {
-            btnGroup: this.createCustomButtonGroup
+            btnGroup: this.createCustomButtonGroup,
+
         };
 
         const selectRow = {
             mode: 'checkbox',
             clickToSelect: true,
-            onSelect: this.onRowSelect
+            onSelect: this.onRowSelect,
+            unselectable:this.props.user.getReturnedItems()
         };
 
         //Hard coded products
@@ -129,6 +123,7 @@ export class PurchaseHistoryModal extends React.Component{
         // this.addProducts(5, products);
 
         if (auth.getIsAdmin() == 0) {
+
             return (
                 <div id="PurchaseHistoryModal">
                     <Button bsStyle="primary" onClick={this.open} >Purchases</Button>
@@ -138,15 +133,14 @@ export class PurchaseHistoryModal extends React.Component{
                             <Modal.Title>Purchases</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <BootstrapTable data={products}  selectRow={selectRow} options={options}>
+                            <BootstrapTable data={products}  selectRow={selectRow} options={options} hover>
                                 <TableHeaderColumn dataField='SerialNumber'  dataAlign="left" isKey>Serial Number</TableHeaderColumn>
                                 <TableHeaderColumn dataField='ModelNumber'>Product Model</TableHeaderColumn>
-                                {/*<TableHeaderColumn dataField='productName'>Product Name</TableHeaderColumn>*/}
                                 <TableHeaderColumn dataField='PurchaseTimeStamp' dataFormat={this.timeFormat}>Time</TableHeaderColumn>
+                                <TableHeaderColumn dataField='IsReturned'>Returned</TableHeaderColumn>
                             </BootstrapTable>
                         </Modal.Body>
                         <Modal.Footer>
-                            {/*<p>Total:{sumofPrices}</p>*/}
                             <Button onClick={this.close}>Close</Button>
 
                         </Modal.Footer>
