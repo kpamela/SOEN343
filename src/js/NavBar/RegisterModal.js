@@ -6,7 +6,7 @@ import axios from 'axios';
 import AlertContainer from 'react-alert';
 
 //Regex validation
-const nameRegex = /^[a-z ,.'-]+$/,
+const nameRegex = /^[a-zA-Z ,.'-]+$/,
       emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
       numberRegex = /^\d+$/,
       streetNameRegex = /^[a-z\d\-_\s]+$/,
