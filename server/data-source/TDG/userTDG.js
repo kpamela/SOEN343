@@ -46,10 +46,10 @@ class UserTDG{
       return data;
   }
 
-  SQLdelete_users(user) {
+  SQLdelete_users(username) {
     let data = new jquery.Deferred(); 
     let deleteUser = {sql:"DELETE FROM users WHERE Username = ?", 
-                      values: user.username};
+                      values: username};
     handler.handleWrite(deleteUser, data);
     return data;
 
