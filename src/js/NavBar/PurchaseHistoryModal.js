@@ -118,6 +118,7 @@ export class PurchaseHistoryModal extends React.Component{
             unselectable:this.props.user.getReturnedItems()
         };
 
+
         //Hard coded products
         const products = this.props.user.purchaseHistory;
         // this.addProducts(5, products);
