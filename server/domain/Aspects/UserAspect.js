@@ -14,7 +14,7 @@ module.exports = class UserAspect{
         meld.around(mapper, 'authenticate', this.aroundCheck);
         meld.around(mapper, 'registerUser', this.aroundCheck);
 
-
+        meld.on(mapper, 'deleteAccount', this.onLogout);
         meld.on(mapper, 'logout', this.onLogout);
 
 

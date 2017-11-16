@@ -134,4 +134,22 @@ module.exports = class UserMapper {
         return res.status(500).send("user not found");
     }
 
+    /**
+     *
+     * @param req
+     * @param res
+     */
+    deleteAccount(req, res){
+        for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
+            if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
+                UserMapper.activeUsersRegistry.splice(i, 1);
+                userTDG.SQLdelete_user(req.body.username).then(function(response){
+                    return res.send('Account deleted');
+                });
+
+            }
+        }
+        return res.status(500).send("user not found");
+    }
+
 };

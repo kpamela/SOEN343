@@ -18,6 +18,10 @@ const meld = require('meld');
  */
 let _admin = null;
 
+/**
+ *
+ * @type {AdminDashboardMapper}
+ */
 module.exports = class AdminDashboardMapper extends Catalogue{
 
     /**
@@ -35,6 +39,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     static set admin(usr){
         _admin = usr
     }
+
 
    constructor() {
         super();
@@ -259,6 +264,15 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
     }
+
+
+
+    getRegisteredUsers(req, res){
+        AdminDashboardMapper.userTDG.SQLget_AllUsers().then(function(response){
+            res.json(response);
+        })
+    }
+
 
 
     /**

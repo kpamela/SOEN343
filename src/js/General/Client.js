@@ -166,4 +166,15 @@ export default class Client extends User{
                 console.log(err);
         })
     }
+
+
+    deleteAccount(){
+        axios.post('/users/deleteAccount', {username: this.username})
+            .then(function(response){
+                alert(response.data);
+            }).catch(function(err){
+                console.log(err);
+        })
+    }
+
 }

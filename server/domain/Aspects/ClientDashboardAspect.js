@@ -26,6 +26,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         //this.viewAspect.remove();//leaving for super instances only
         this.getAllAspect.remove();//removes interference
         //defining aspects;
+
         meld.on(mapper, 'removeFromCart', this.onRemoveFromCart);
 
         meld.around(mapper, 'addToCart', this.aroundAddToCart);
@@ -39,6 +40,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(CatalogueMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
         meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases);
         meld.around(ClientDashboardMapper.purchases, 'SQLgetSingle_purchase', this.aroundGetSinglePurchase);
+
 
     }
 

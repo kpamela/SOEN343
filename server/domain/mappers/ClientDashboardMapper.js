@@ -16,12 +16,16 @@ const Catalogue = require('./CatalogueMapper.js'),
 let purchases = new PurchaseHistory();
 
 
-
+/**
+ *
+ * @type {ClientDashboardMapper}
+ */
 module.exports = class ClientDashboardMapper extends Catalogue{
 
     static get purchases(){
         return purchases;
     }
+
 
 
     constructor() {

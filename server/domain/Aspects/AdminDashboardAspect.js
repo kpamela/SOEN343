@@ -41,6 +41,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'remove', this.aroundAuthorization);
         meld.around(mapper, 'modify', this.aroundModify);
         meld.around(mapper,'modify', this.aroundAuthorization);
+        meld.around(mapper, 'getRegisteredUsers', this.aroundAuthorization);
         meld.around(CatalogueMapper.unitOfWork, 'commit', this.aroundUoWCommit);
         meld.around(CatalogueMapper.unitOfWork, 'rollback', this.aroundUoWRollback);
         //called after rollback, to send the new data to frontend
@@ -49,6 +50,8 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);
         meld.on(CatalogueMapper.unitOfWork, 'registerDirty',this.onRegisterDirty);
         meld.on(CatalogueMapper.unitOfWork, 'registerDeleted', this.onRegisterDeleted);
+
+
   }
 
   /*

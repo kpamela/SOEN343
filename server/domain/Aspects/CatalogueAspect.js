@@ -44,8 +44,9 @@ module.exports = class CatalogueAspect{
      */
   constructor(mapper){
       this.aroundGetAll = this.aroundGetAll.bind(this);
+      this.aroundAuthorization = this.aroundAuthorization.bind(this);
       //Defining aspects
-
+        this.mapper = mapper;
         //this.viewAspect = meld.around(mapper, 'view', this.aroundAuthorization);
 
         this.getAllAspect = meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
@@ -73,7 +74,7 @@ module.exports = class CatalogueAspect{
         if (!token) {
             return res.status(401).json({success: false, msg: "Unauthorized: No Token Provided"});
         }
-
+        //TODO Check if admin call admin functions
 
         return jwt.verify(token, 'mysecret', function (err, decoded) {
             if (err) {
@@ -100,9 +101,10 @@ module.exports = class CatalogueAspect{
                     if(!activeUser){//occurs when an admin is already logged in
                         return res.json({success: false, msg:"An Admin is already logged in"});
                     }
-                    console.log(activeUser);
+
 
                 }
+
                 joinpoint.proceed();
             }
         });
