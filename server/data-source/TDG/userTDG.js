@@ -2,8 +2,8 @@ const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
       db = require('../../data-source/config/database.js'),
       jwt = require('jsonwebtoken'),
-        jquery = require('jquery-deferred'),
-    handler = require('./handler.js');
+      jquery = require('jquery-deferred'),
+      handler = require('./handler.js');
 
 class UserTDG{
 
@@ -45,6 +45,15 @@ class UserTDG{
       });
       return data;
   }
+
+  SQLdelete_users(username){
+    let data = new jquery.Deferred();
+    let userDelete = {sql:"DELETE FROM users WHERE Username = ?",
+                    values: username};
+    handler.handleRead(userDelete, data);
+    return data;
+  }
+
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
