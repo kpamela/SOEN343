@@ -45,6 +45,15 @@ class UserTDG{
       });
       return data;
   }
+
+  SQLdelete_users(user) {
+    let data = new jquery.Deferred(); 
+    let deleteUser = {sql:"DELETE FROM users WHERE Username = ?", 
+                      values: user.username};
+    handler.handleWrite(deleteUser, data);
+    return data;
+
+  } 
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
