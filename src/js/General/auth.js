@@ -49,17 +49,19 @@ function logOut(){
 
 //TODO proper login
 function login(){
-    let username = getCredentials(localStorage.getItem('jwtToken')).user.Username;
-    localStorage.setItem('username', username);
-    if(getIsAdmin() == 1){
-        return new Admin(username);
-    }
-    else if(loggedIn()){
-        console.log(username);
-        return new Client(username);
+    if(localStorage.getItem('jwtToken')){//if logged in
+        let username = getCredentials(localStorage.getItem('jwtToken')).user.Username;
+        localStorage.setItem('username', username);
+        if(getIsAdmin() == 1){
+            return new Admin(username);
+        }
+        else if(loggedIn()){
+            console.log(username);
+            return new Client(username);
+        }
     }
     else{
-        return new User(username);
+        return new User();
     }
 }
 

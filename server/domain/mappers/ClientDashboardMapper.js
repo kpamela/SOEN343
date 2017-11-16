@@ -14,7 +14,7 @@ const Catalogue = require('./CatalogueMapper.js'),
 
 
 let purchases = new PurchaseHistory();
-let productTDG = new ProductTDG();
+
 
 
 module.exports = class ClientDashboardMapper extends Catalogue{
@@ -23,10 +23,6 @@ module.exports = class ClientDashboardMapper extends Catalogue{
         return purchases;
     }
 
-
-    static get productTDG(){
-        return productTDG;
-    }
 
     constructor() {
         super();
@@ -46,7 +42,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                 let user = response;
                 //instantiating product id with results, putting in the user
                 // places id to locked ids and returns a product Id
-                productTDG.SQLgetSingle_products(req.body.modelNumber).then(function(response){
+                ClientDashboardMapper.productTDG.SQLgetSingle_products(req.body.modelNumber).then(function(response){
                     if(!response){
                         //empty
                         return res.status(500).send('Products list is empty')
@@ -123,7 +119,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                     PurchaseTimeStamp: Date.now()};
                 user.addPurchase(purchase);
                 purchases.SQLadd_purchases(purchase).then(function(response){
-                    productTDG.SQLdeleteSingle_products(purchase.SerialNumber).then(function(response){
+                    ClientDashboardMapper.productTDG.SQLdeleteSingle_products(purchase.SerialNumber).then(function(response){
                         user.removeFromCart(purchase.SerialNumber);
                     });
                 });
@@ -164,7 +160,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                     }
                     else{//proceed to restoring product to db
                         purchase.IsReturned = 1;//changing state of purchase instance
-                        productTDG.SQLaddSpecific_products(product).then(function(response){
+                        ClientDashboardMapper.productTDG.SQLaddSpecific_products(product).then(function(response){
                             if(response.Error){//failure
                                 purchase.IsReturned = 0;
                                 return res.status(500).json(purchase);
