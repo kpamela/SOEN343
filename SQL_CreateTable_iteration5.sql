@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS Users(
     IsDeleted tinyint(1) NOT NULL DEFAULT '0',
 	
     PRIMARY KEY (Username), 
+    UNIQUE KEY (Username)
 ); 
 
 -- Table structure for table 'Television' -- 
@@ -45,7 +46,8 @@ CREATE TABLE IF NOT EXISTS Models(
     Amount int(5) NOT NULL,
     IsDeleted tinyint(1) NOT NULL DEFAULT '0', 
 	
-    PRIMARY KEY (ModelNumber)
+    PRIMARY KEY (ModelNumber), 
+    UNIQUE KEY (ModelNumber)
 );
 
 -- Table structure for table 'Products' -- 
@@ -55,7 +57,8 @@ CREATE TABLE IF NOT EXISTS Products(
     Available tinyint(1), 
 	
     PRIMARY KEY (SerialNumber, ModelNumber), 
-    FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE
+    FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE, 
+    UNIQUE KEY (SerialNumber)
 ); 
 
 -- Table structure for table 'PurchaseHistory' -- 
@@ -67,7 +70,8 @@ CREATE TABLE PurchaseHistory2(
     IsReturned tinyint(1) DEFAULT '0',
 	
     PRIMARY KEY (Username, SerialNumber), 
-    FOREIGN KEY (Username) REFERENCES Users (Username)
+    FOREIGN KEY (Username) REFERENCES Users (Username), 
+    UNIQUE KEY (SerialNumber)
 ); 
     
     
