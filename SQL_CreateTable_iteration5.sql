@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS Models(
     TelevisionType varchar(5),
     Size double, 
     DisplaySize double,
-    HadCamera boolean, 
+    HasCamera boolean, 
     CameraInfo varchar(30), 
-    HadTouchScreen boolean, 
+    HasTouchScreen boolean, 
     OperatingSystem varchar(20),
     BatteryInfo varchar(20),
     Dimensions double NOT NULL, 
@@ -40,28 +40,20 @@ CREATE TABLE IF NOT EXISTS Models(
     BrandName varchar(20) NOT NULL, 
     Price double(10,2) NOT NULL,
     ProductName varchar(45) NOT NULL, 
+    Category varchar(30) NOT NULL,
+    Amount int(5) NOT NULL,
 	
     PRIMARY KEY (ModelNumber)
 );
 
--- Table structure for table 'Catalogue' -- 
+-- Table structure for table 'Products' -- 
 CREATE TABLE IF NOT EXISTS Products(
     SerialNumber int(9) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
     Available boolean, 
 	
     PRIMARY KEY (SerialNumber, ModelNumber), 
-    FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE
-); 
-
--- Table structure for table 'ActiveUsersRegistry' -- 
-CREATE TABLE ActiveUsersRegistry(
-    UserID int(9) NOT NULL, 
-    LoginTimestamp timestamp, 
-    IsActive boolean, 
-	
-    PRIMARY KEY (UserID), 
-    FOREIGN KEY (UserID) REFERENCES Users (UserID) ON UPDATE CASCADE
+    FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 -- Table structure for table 'PurchaseHistory' -- 
@@ -72,9 +64,8 @@ CREATE TABLE PurchaseHistory2(
     PurchaseTimeStamp double,
     IsReturned Boolean,
 	
-    PRIMARY KEY (Username, ModelNumber, SerialNumber), 
-    FOREIGN KEY (Username) REFERENCES Users (Username) ON UPDATE CASCADE, 
-    FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE
+    PRIMARY KEY (Username, SerialNumber), 
+    FOREIGN KEY (Username) REFERENCES Users (Username) ON DELETE CASCADE
 ); 
     
     
