@@ -147,6 +147,16 @@ export default class Client extends User{
         
     }
 
+    getReturnedItems(){
+        let returned = [];
+        for(let i = 0; i<this.purchaseHistory.length; i++){
+            if(this.purchaseHistory[i].IsReturned){
+                returned.push(this.purchaseHistory[i].SerialNumber);
+            }
+        }
+        return returned;
+    }
+
     /**
      *
      */
