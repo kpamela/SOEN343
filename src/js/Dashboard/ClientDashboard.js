@@ -8,7 +8,7 @@ import Catalogue from './Catalogue.js';
 import ProductListing from './ProductListing.js';
 import {PageHeader} from 'react-bootstrap';
 import {ShoppingCartModal} from '../NavBar/ShoppingCartModal.js';
-import {PurchaseHistoryModal} from '../NavBar/PurchaseHistoryModal.js';
+import {PurchaseHistoryModal} from '../Client/PurchaseHistoryModal.js';
 
 
 export class ClientDashboard extends Catalogue{

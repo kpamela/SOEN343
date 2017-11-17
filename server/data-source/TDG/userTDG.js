@@ -2,14 +2,21 @@ const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
       db = require('../../data-source/config/database.js'),
       jwt = require('jsonwebtoken'),
-        jquery = require('jquery-deferred'),
-    handler = require('./handler.js');
+      jquery = require('jquery-deferred'),
+      handler = require('./handler.js');
 
 class UserTDG{
 
   /****************************************
                   Read
   ****************************************/
+  SQLget_users_All(username){
+      let data = new jquery.Deferred();
+    let userInfo = {sql:"SELECT * FROM users"};
+    handler.handleRead(userInfo, data);
+    return data;
+  }
+
   SQLget_users(username){
       let data = new jquery.Deferred();
     let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
@@ -47,13 +54,13 @@ class UserTDG{
   }
 
   SQLdelete_users(username) {
-    let data = new jquery.Deferred(); 
-    let deleteUser = {sql:"DELETE FROM users WHERE Username = ?", 
+    let data = new jquery.Deferred();
+    let deleteUser = {sql:"DELETE FROM users WHERE Username = ?",
                       values: username};
     handler.handleWrite(deleteUser, data);
     return data;
 
-  } 
+  }
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
