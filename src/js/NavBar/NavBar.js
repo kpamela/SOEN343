@@ -42,7 +42,6 @@ export default class NavBar extends Component{
               <NavItem eventKey={4}>
                 <NavDropdown className="NavbarItem" eventKey={1} title="My Account" id="basic-nav-dropdown">
                     <MenuItem eventKey={1.1}> <Link className="NavbarLink" to="/AccountSettings"> Account Settings</Link> </MenuItem>
-                    <MenuItem eventKey={1.2}> Purchase History </MenuItem>
                     <MenuItem eventKey={1.3}> <Logout /> </MenuItem>
                 </NavDropdown>
               </NavItem>

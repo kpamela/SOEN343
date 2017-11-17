@@ -13,7 +13,7 @@ export default class Main extends Component{
 
     render(){
         return(
-            <div className="AboutUs-Container">
+            <div className="Centered-Container">
                 <PageHeader>Team 15 Members</PageHeader>
                 <Table>
                     <thead>
