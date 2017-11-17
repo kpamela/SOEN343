@@ -10,6 +10,13 @@ class UserTDG{
   /****************************************
                   Read
   ****************************************/
+  SQLget_users_All(username){
+      let data = new jquery.Deferred();
+    let userInfo = {sql:"SELECT * FROM users"};
+    handler.handleRead(userInfo, data);
+    return data;
+  }
+
   SQLget_users(username){
       let data = new jquery.Deferred();
     let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
