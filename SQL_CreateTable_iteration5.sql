@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Models(
 
 -- Table structure for table 'Products' -- 
 CREATE TABLE IF NOT EXISTS Products(
-    SerialNumber int(9) NOT NULL, 
+    SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
     Available tinyint(1), 
 	
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS Products(
 
 -- Table structure for table 'PurchaseHistory' -- 
 CREATE TABLE PurchaseHistory2( 
-    SerialNumber int(9) NOT NULL, 
+    SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
     Username varchar(10) NOT NULL, 
     PurchaseTimeStamp double,
