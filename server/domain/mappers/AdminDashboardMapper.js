@@ -269,9 +269,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
 
     getRegisteredUsers(req, res){
-        AdminDashboardMapper.userTDG.SQLget_AllUsers().then(function(response){
+        AdminDashboardMapper.userTDG.SQLget_users_All().then(function(response){
             res.json(response);
-        })
+        });
     }
 
 

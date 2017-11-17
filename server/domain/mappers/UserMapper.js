@@ -143,7 +143,7 @@ module.exports = class UserMapper {
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
                 UserMapper.activeUsersRegistry.splice(i, 1);
-                userTDG.SQLdelete_user(req.body.username).then(function(response){
+                userTDG.SQLdelete_users(req.body.username).then(function(response){
                     return res.send('Account deleted');
                 });
 
