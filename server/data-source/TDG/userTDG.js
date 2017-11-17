@@ -45,6 +45,15 @@ class UserTDG{
       });
       return data;
   }
+
+  SQLupdate_delete_users(username) {                              //Will update the IsDeleted status in the database 
+    let data = new jquery.Deferred();
+    let updateUser = {sql:"UPDATE users SET IsDeleted = 2 WHERE Username = ?",
+                         values: [username]};
+      handler.handleWrite(updateUser,data);
+      return data;
+  }
+
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
