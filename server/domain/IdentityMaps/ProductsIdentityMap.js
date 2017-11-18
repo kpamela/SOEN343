@@ -8,6 +8,15 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
     constructor(content){
         super(content);
 
+        this.deletedItems = {};
+    }
+
+    addDeletedProduct(modelNumber){
+        this.deletedItems[modelNumber] = 1;
+    }
+
+    restoreDeletedProduct(modelNumber){
+        delete this.deletedItems[modelNumber];
     }
 
 

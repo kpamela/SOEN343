@@ -31,10 +31,17 @@ class ModelTDG{
                 Write
   ****************************************/
 
-  SQLadd_models(model){                                               //Adds a model into the database
+  SQLadd_models(model, wasDeleted){                                               //Adds a model into the database
       let data = new jquery.Deferred();
-    let addInfo = {sql: "INSERT INTO models SET ?",
-                    values: [model]};
+    let addInfo;
+    if(wasDeleted){
+        addInfo = { sql: "UPDATE models SET ? WHERE models.ModelNumber = +" + model.ModelNumber,
+            values:[model]};
+    }
+    else{
+         addInfo = {sql: "INSERT INTO models SET ?",
+            values: [model]};
+    }
     handler.handleWrite(addInfo, data);
     return data;
   }

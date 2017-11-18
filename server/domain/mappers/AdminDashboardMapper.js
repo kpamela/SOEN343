@@ -139,7 +139,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
 
-               AdminDashboardMapper.modelTDG.SQLadd_models(product).then(function(response){
+               AdminDashboardMapper.modelTDG.SQLadd_models(product, false).then(function(response){
                     console.log(response);
                    AdminDashboardMapper.productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);

@@ -54,6 +54,7 @@ class ProductDescription{
             this.Category = product.Category;
         }
 
+        this.IsDeleted = 0;
 
         this.setNew();
     }

@@ -185,7 +185,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         if(client){//user has to be logged in
             let purchase = client.getPurchasedSerialNumber(serialNumber);
             let ind = CatalogueAspect.productListing.findModel(purchase.ModelNumber);
-            if(ind === -1){
+            if(ind === -1){//TODO fix this to work with new reqs
                 return data.resolve({failure: true, msg: "Product is no longer available for return"});
             }
             //purchase is there, in the purchase history

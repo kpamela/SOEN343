@@ -5,7 +5,8 @@ const meld = require('meld'),
     CatalogueAspect = require('./CatalogueAspect.js'),
     CatalogueMapper = require('../mappers/CatalogueMapper.js'),
     AdminDashboardMapper = require('../mappers/AdminDashboardMapper.js'),
-    ProductHistory = require('../IdentityMaps/ProductHistory.js');
+    ProductHistory = require('../IdentityMaps/ProductHistory.js'),
+    jquery = require('jquery-deferred');
 
 let _productHistory = new ProductHistory();
 
@@ -42,11 +43,13 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.around(mapper, 'modify', this.aroundModify);
         meld.around(mapper,'modify', this.aroundAuthorization);
         meld.around(mapper, 'getRegisteredUsers', this.aroundAuthorization);
+        meld.around(CatalogueMapper.modelTDG, 'SQLadd_models', this.aroundSQLadd);
         meld.around(CatalogueMapper.unitOfWork, 'commit', this.aroundUoWCommit);
         meld.around(CatalogueMapper.unitOfWork, 'rollback', this.aroundUoWRollback);
         //called after rollback, to send the new data to frontend
       //  meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', super.aroundGetAll);
 
+        model.on(CatalogueMapper.modelTDG, 'SQLdelete_models', this.onSQLDelete);
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);
         meld.on(CatalogueMapper.unitOfWork, 'registerDirty',this.onRegisterDirty);
         meld.on(CatalogueMapper.unitOfWork, 'registerDeleted', this.onRegisterDeleted);
@@ -57,6 +60,26 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   /*
   advice
    */
+  aroundSQLadd(){
+      let data = new jquery.Deferred();
+      let joinpoint = meld.joinpoint();
+      let model = joinpoint.args[0];
+     //Checking if the item was previously deleted
+      if(!AdminDashboardAspect.productListing.deletedItems[model.ModelNumber]){
+          //if not then proceed
+          data = joinpoint.proceed();
+      }
+      else{// else, set wasDeleted as true, which will update instead of adding
+          data = joinpoint.proceed(model, true);
+          AdminDashboardAspect.productListing.restoreDeletedProduct(model.ModelNumber);
+      }
+
+      return data;
+  }
+
+  onSQLDelete(modelNumber){
+      AdminDashboardAspect.productListing.addDeletedProduct(modelNumber);
+  }
 
     /**
      * Checks if model already exists before adding it to listing

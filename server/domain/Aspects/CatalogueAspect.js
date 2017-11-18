@@ -180,7 +180,12 @@ module.exports = class CatalogueAspect{
         for(let i in data){
             let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
             if(product){//ignore undefined
-                CatalogueAspect.productListing.add(product);
+                if(product.IsDeleted === 1){//previously deleted
+                    CatalogueAspect.productListing.addDeletedProduct(product.ModelNumber);
+                }
+                else{
+                    CatalogueAspect.productListing.add(product);
+                }
                 //console.log(product);
             }
         }
