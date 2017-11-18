@@ -19,7 +19,7 @@ class UserTDG{
 
   SQLget_users(username){
       let data = new jquery.Deferred();
-    let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
+    let userInfo = {sql:"SELECT * FROM users WHERE Username = ? and IsDeleted = 0 LIMIT 1",
                     values: username};
     handler.handleRead(userInfo, data);
     return data;
