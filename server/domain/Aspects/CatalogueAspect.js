@@ -178,15 +178,17 @@ module.exports = class CatalogueAspect{
     static setListingFromDatabase(data){
         CatalogueAspect.productListing.content = [];
         for(let i in data){
-            let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
-            if(product){//ignore undefined
-                if(product.IsDeleted === 1){//previously deleted
-                    CatalogueAspect.productListing.addDeletedProduct(product.ModelNumber);
-                }
-                else{
+            if(data[i].IsDeleted === 1){
+                CatalogueAspect.productListing.addDeletedProduct(data[i].ModelNumber);
+            }
+            else{
+                let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
+                if(product){//ignore undefined
+
                     CatalogueAspect.productListing.add(product);
+
+                    //console.log(product);
                 }
-                //console.log(product);
             }
         }
 

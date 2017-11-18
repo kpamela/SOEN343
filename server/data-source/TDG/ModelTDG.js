@@ -54,17 +54,17 @@ class ModelTDG{
     return data;
   }
 
-  SQLdelete_models(modelNumber){                                       //Will remove a model from the database
+ /* SQLdelete_models(modelNumber){                                       //Will remove a model from the database
       let data = new jquery.Deferred();
     let deleteProduct = {sql:"DELETE FROM models WHERE ModelNumber = ?",
                          values: [modelNumber]};
       handler.handleWrite(deleteProduct,data);
       return data;
-  }
+  }*/
 
-  SQLupdate_delete_models(modelNumber) {                                //Will update the IsDeleted status in the database 
+  SQLdelete_models(modelNumber) {                                //Will update the IsDeleted status in the database
     let data = new jquery.Deferred();
-    let updateModel = {sql:"UPDATE models SET IsDeleted = 2 WHERE ModelNumber = ?",
+    let updateModel = {sql:"UPDATE models SET IsDeleted = 1 WHERE ModelNumber = ?",
                          values: [modelNumber]};
       handler.handleWrite(updateModel,data);
       return data;

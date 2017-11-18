@@ -49,7 +49,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         //called after rollback, to send the new data to frontend
       //  meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', super.aroundGetAll);
 
-        model.on(CatalogueMapper.modelTDG, 'SQLdelete_models', this.onSQLDelete);
+        meld.on(CatalogueMapper.modelTDG, 'SQLdelete_models', this.onSQLDelete);
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);
         meld.on(CatalogueMapper.unitOfWork, 'registerDirty',this.onRegisterDirty);
         meld.on(CatalogueMapper.unitOfWork, 'registerDeleted', this.onRegisterDeleted);

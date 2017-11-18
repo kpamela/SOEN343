@@ -132,7 +132,8 @@ export default class Client extends User{
         this.shoppingCart = [];
         this.axiosInstance.post("completeTransaction", {username: this.username},{cancelToken: this.source.token} )
             .then(function(response){
-                alert("transaction completed! " + response.data.history)
+                alert("transaction completed! ");
+                location.reload();
             }).catch(function(response){
                 console.log(response);
         });
@@ -171,7 +172,9 @@ export default class Client extends User{
     returnItem(serial){
         this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
             .then(function(response){
+                alert("Return of " + serial + " successful!");
                 console.log(response);
+                location.reload();
             }).catch(function(err){
                 console.log(err);
         })
