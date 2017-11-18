@@ -2,8 +2,8 @@ const mysql = require('mysql'),
       bcrypt = require('bcryptjs'),
       db = require('../../data-source/config/database.js'),
       jwt = require('jsonwebtoken'),
-      jquery = require('jquery-deferred'),
-      handler = require('./handler.js');
+        jquery = require('jquery-deferred'),
+    handler = require('./handler.js');
 
 class UserTDG{
 
@@ -53,14 +53,14 @@ class UserTDG{
       return data;
   }
 
-  SQLdelete_users(username) {
+  SQLupdate_delete_users(username) {                              //Will update the IsDeleted status in the database
     let data = new jquery.Deferred();
-    let deleteUser = {sql:"DELETE FROM users WHERE Username = ?",
-                      values: username};
-    handler.handleWrite(deleteUser, data);
-    return data;
-
+    let updateUser = {sql:"UPDATE users SET IsDeleted = 1 WHERE Username = ?",
+                         values: [username]};
+      handler.handleWrite(updateUser,data);
+      return data;
   }
+
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
