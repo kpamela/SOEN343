@@ -35,8 +35,8 @@ class ModelTDG{
       let data = new jquery.Deferred();
     let addInfo;
     if(wasDeleted){
-        addInfo = { sql: "UPDATE models SET ? WHERE models.ModelNumber = +" + model.ModelNumber,
-            values:[model]};
+        addInfo = { sql: "UPDATE models SET ? WHERE ModelNumber = ?",
+            values:[model, model.ModelNumber]};
     }
     else{
          addInfo = {sql: "INSERT INTO models SET ?",
@@ -48,19 +48,19 @@ class ModelTDG{
 
   SQLmodify_models(modelNumber, newModel){                 //Modifies the information for the model
       let data = new jquery.Deferred();
-      let modifyModel = { sql: "UPDATE models SET ? WHERE models.ModelNumber = +" + modelNumber,
-                            values:[newModel]};
+      let modifyModel = { sql: "UPDATE models SET ? WHERE ModelNumber = ?" ,
+                            values:[newModel, modelNumber]};
     handler.handleWrite(modifyModel, data);
     return data;
   }
 
- /* SQLdelete_models(modelNumber){                                       //Will remove a model from the database
+  SQLupdate_amount(modelNumber, amount){
       let data = new jquery.Deferred();
-    let deleteProduct = {sql:"DELETE FROM models WHERE ModelNumber = ?",
-                         values: [modelNumber]};
-      handler.handleWrite(deleteProduct,data);
+      let modifyModel = { sql: "UPDATE models SET Amount = ? WHERE ModelNumber = ?" ,
+          values:[amount, modelNumber]};
+      handler.handleWrite(modifyModel, data);
       return data;
-  }*/
+  }
 
   SQLdelete_models(modelNumber) {                                //Will update the IsDeleted status in the database
     let data = new jquery.Deferred();

@@ -129,6 +129,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let changes = AdminDashboardMapper.unitOfWork.commit();
 
+            console.log(changes, 'mapper');
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
@@ -172,14 +173,11 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                     })
                 }
 
-                //TODO tdg work
+
             }
             for(let i in changes.deletedList){
                 let product = changes.deletedList[i];
-
                 AdminDashboardMapper.unitOfWork.registerClean(product);
-
-                //TODO tdg work for product ids
                 AdminDashboardMapper.productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
                     AdminDashboardMapper.modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
                         console.log("Deleted product: " + product.ModelNumber);
@@ -270,7 +268,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
     getRegisteredUsers(req, res){
         AdminDashboardMapper.userTDG.SQLget_users_All().then(function(response){
-            res.json(response);
+            let array = [];
+            for(let i = 0; i<response.length; i++){
+                if(response[i].IsDeleted !== 1){
+                    array.push(response[i]);
+                }
+            }
+            res.json(array);
         });
     }
 

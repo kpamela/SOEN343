@@ -56,7 +56,7 @@ class ProductDescription{
 
         this.IsDeleted = 0;
 
-        this.setNew();
+        this.setClean();
     }
 
 
@@ -77,7 +77,9 @@ class ProductDescription{
     }
 
 
-
+    getFlag(){
+        return this[flag];
+    }
 
     /**
      * Restores a specific product id

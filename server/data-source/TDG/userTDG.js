@@ -53,7 +53,7 @@ class UserTDG{
       return data;
   }
 
-  SQLupdate_delete_users(username) {                              //Will update the IsDeleted status in the database
+  SQLdelete_users(username) {                              //Will update the IsDeleted status in the database
     let data = new jquery.Deferred();
     let updateUser = {sql:"UPDATE users SET IsDeleted = 1 WHERE Username = ?",
                          values: [username]};

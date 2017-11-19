@@ -172,21 +172,31 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       let joinpoint = meld.joinpoint();
       let changes = joinpoint.proceed();//getting the change list from UoW
       let productChanges = {newList:[], dirtyList:[], deletedList:[]};//list containing the products themselves
-      //new items
-      for(let i in changes.newList){
-          //getting the instance of model number stored in changeList, pass it to productChanges
-          productChanges.newList[i] = AdminDashboardAspect.productListing.getModel(changes.newList[i]);
-      }
-      for(let i in changes.dirtyList){
-          let oldModel = AdminDashboardAspect.productHistory.getOldModel(changes.dirtyList[i]);
-          //getting the instance of model number stored in changeList, pass it to productChanges
-          productChanges.dirtyList[i] = {newModel: AdminDashboardAspect.productListing.getModel(changes.dirtyList[i]),
-                                            oldModel: oldModel};
-      }
-      for(let i in changes.deletedList){
-          //getting the instance of model stored in history, pass it to product changes
-          productChanges.deletedList[i] = AdminDashboardAspect.productHistory.getDeletedModel(changes.deletedList[i]);
-      }
+        const NEW = 2;
+        const DIRTY = 1;
+
+
+        for(let i = 0; i<AdminDashboardAspect.productListing.content.length; i++){
+            let product = AdminDashboardAspect.productListing.content[i];
+            let flag = product.getFlag();
+
+            switch(flag){
+                case NEW:
+                        //getting the instance of model number stored in changeList, pass it to productChanges
+                        productChanges.newList.push(product);
+                        break;
+                case DIRTY:
+                        let oldModel = AdminDashboardAspect.productHistory.getOldModel(product.ModelNumber);
+                        //getting the instance of model number stored in changeList, pass it to productChanges
+                        productChanges.dirtyList.push({newModel: product, oldModel: oldModel});
+                        break;
+                //DELETED corresponds to history
+            }
+        }
+
+        //getting the instances of model stored in history, pass it to product changes
+        productChanges.deletedList = AdminDashboardAspect.productHistory.deleted;
+
       //resetting history
       AdminDashboardAspect.productHistory.resetHistory();
 
