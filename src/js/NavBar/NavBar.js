@@ -4,7 +4,8 @@ import { RegisterModal } from './RegisterModal.js';
 import Logout from './Logout.js';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {ShoppingCartModal} from './ShoppingCartModal.js';
-import {PurchaseHistoryModal} from '../Client/PurchaseHistoryModal.js';
+import {PurchaseHistoryModal} from './PurchaseHistoryModal.js';
+import {AccountSettings} from './AccountSettings.js';
 import { Link } from 'react-router-dom';
 import auth from '../General/auth.js';
 
@@ -37,15 +38,9 @@ export default class NavBar extends Component{
           <Nav pullRight>
             {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}
             {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
-            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="ShoppingCart"></div><div id="PurchaseHistory"></div> </NavItem> : null}
-            {auth.loggedIn() ?
-              <NavItem eventKey={4}>
-                <NavDropdown className="NavbarItem" eventKey={1} title="My Account" id="basic-nav-dropdown">
-                    <MenuItem eventKey={1.1}> <Link className="NavbarLink" to="/AccountSettings"> Account Settings</Link> </MenuItem>
-                    <MenuItem eventKey={1.3}> <Logout /> </MenuItem>
-                </NavDropdown>
-              </NavItem>
-            : null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <AccountSettings/> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <Logout/> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <div id="ShoppingCart"></div> </NavItem> : null}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

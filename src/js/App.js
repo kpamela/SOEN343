@@ -5,7 +5,7 @@ import Catalogue from './Dashboard/Catalogue.js';
 import Main from './Main/Main.js';
 import HomePage from './HomePage/HomePage.js';
 import AboutUs from './AboutUs/AboutUs.js';
-import AccountSettings from './Client/AccountSettings';
+import AccountSettings from './NavBar/AccountSettings';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
