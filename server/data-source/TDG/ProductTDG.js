@@ -61,6 +61,14 @@ class ProductTDG{
       return data;
   }
 
+  SQLaddSpecific_products(product){                                               //Adds a product into the database
+        let data = new jquery.Deferred();
+        let addInfo = {sql: "INSERT INTO products SET ?",
+            values: [product]};
+        handler.handleWrite(addInfo, data);
+        return data;
+    }
+
 
   SQLdelete_products(modelNumber){                                               //Will remove all products from the database of a certain ModelNumber
       let data = new jquery.Deferred();

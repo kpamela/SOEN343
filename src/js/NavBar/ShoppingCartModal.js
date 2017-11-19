@@ -2,10 +2,7 @@ import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import auth from '../General/auth.js';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-<<<<<<< HEAD
 import Client from '../General/Client';
-=======
->>>>>>> master
 
 
 
@@ -28,7 +25,6 @@ export const ShoppingCartModal = React.createClass({
     },
 
     submit() {
-<<<<<<< HEAD
         alert('Your purchase is confirmed!');
     },
 
@@ -79,65 +75,10 @@ export const ShoppingCartModal = React.createClass({
             );
         }
 
-<<<<<<< HEAD
         // When user is logged in as client
         const options = {
             afterDeleteRow:this.handleDeleteRow
         };
-=======
-
-        const user = this.props.user;
-
-        // When user is logged in as client
-        const options = {
-            afterDeleteRow: function(keys){
-                user.removeIdsFromCart(keys);
-            }
-        };
-
-        const selectRow = {
-            mode: 'checkbox',
-            clickToSelect: true
-        };
-
-        //Hard coded products
-        const products = this.props.user.shoppingCart;
-       // this.addProducts(5, products);
-
-        if (auth.getIsAdmin() == 0) {
-            return (
-                <div id="ShoppingCartModal">
-                    <Button bsStyle="primary" onClick={this.open} >Shopping Cart</Button>
-
-                    <Modal show={this.state.showModal} onHide={this.close} >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Shopping Cart</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <BootstrapTable data={products}  selectRow={selectRow} deleteRow={true} options={options}>
-                                <TableHeaderColumn dataField='serialNumber'  dataAlign="left" isKey>Serial Number</TableHeaderColumn>
-                                <TableHeaderColumn dataField='modelNumber'>Product Model</TableHeaderColumn>
-                                {/*<TableHeaderColumn dataField='productName'>Product Name</TableHeaderColumn>*/}
-                                <TableHeaderColumn dataField='price'>Price</TableHeaderColumn>
-                            </BootstrapTable>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            {/*<p>Total:{sumofPrices}</p>*/}
-                            <Button onClick={this.close}>Cancel</Button>
-                            <Button onClick={this.submit}>Confirm Transaction</Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-            );
-        }
-
-        // When user is an admin
-        if(auth.getIsAdmin() == 1){
-            return(null);
-        }
-}
-});
->>>>>>> master
 
         const selectRow = {
             mode: 'checkbox',
@@ -147,6 +88,8 @@ export const ShoppingCartModal = React.createClass({
         //Hard coded products
         const products = [];
         this.addProducts(5, products);
+
+        // <Client displayShoppingCart() />
 
         if (auth.getIsAdmin() == 0) {
             return (

@@ -8,19 +8,61 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 
 
-export const PurchaseHistoryModal = React.createClass({
+export class PurchaseHistoryModal extends React.Component{
 
-    getInitialState() {
+
+    constructor() {
+        super();
         // noinspection JSAnnotator
-        return {
+        this.state= {
             showModal: false,
-            selectRow:{mode:'checkbox'}
+            selectRow:{mode:'checkbox'},
+            selection: new Array()
+
         };
-    },
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
+        this.returnItem = this.returnItem.bind(this);
+        this.onRowSelect = this.onRowSelect.bind(this);
+        this.createCustomButtonGroup =this.createCustomButtonGroup.bind(this);
+    }
+
+    onRowSelect(row, isSelected){
+        if(isSelected){
+            this.setState({selected: this.state.selection.push(row.SerialNumber)});
+        }
+        else{
+            for(let i = 0; i<this.state.selection.length; i++){
+                if(this.state.selection[i] === row.SerialNumber){
+                    this.state.selection.splice(i, 1);
+                }
+            }
+        }
+    }
+
+    returnItem(value){
+        for(let i = 0; i< this.state.selection.length; i++){
+            this.props.user.returnItem(this.state.selection[i]);
+            this.state.selection.splice(i,1);
+        }
+    }
+
+    createCustomButtonGroup() {
+
+        return (
+            <ButtonGroup className='my-custom-class' sizeClass='btn-group-md'>
+                <button type='button'
+                        className={ `btn btn-primary` }
+                        onClick={this.returnItem}>
+                    Return
+                </button>
+            </ButtonGroup>
+        );
+    }
 
     close(){
         this.setState({showModal: false});
-    },
+    }
 
     open() {
         if(this.props.user.purchaseHistory.length === 0){
@@ -28,20 +70,25 @@ export const PurchaseHistoryModal = React.createClass({
         }
         this.setState({showModal: true});
 
-    },
+    }
 
     submit() {
         this.props.user.completeTransaction();
         alert('Your purchase is underway!');
-    },
+    }
 
 
     timeFormat(cell, row){
         let date = new Date(cell);
         return date.toISOString();
-    },
+    }
+
+
 
     render(){
+
+
+
         // When user is not logged in
         if (!auth.loggedIn()) {
             return (
@@ -68,12 +115,13 @@ export const PurchaseHistoryModal = React.createClass({
 
         // When user is logged in as client
         const options = {
-
+            btnGroup: this.createCustomButtonGroup
         };
 
         const selectRow = {
             mode: 'checkbox',
-            clickToSelect: true
+            clickToSelect: true,
+            onSelect: this.onRowSelect
         };
 
         //Hard coded products
@@ -112,6 +160,7 @@ export const PurchaseHistoryModal = React.createClass({
             return(null);
         }
     }
-});
+}
+
 
 

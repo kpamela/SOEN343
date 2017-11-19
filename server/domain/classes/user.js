@@ -63,7 +63,7 @@ class User{
         return this[purchases];
     }
 
-    getPurchaseSerialNumber(serial){
+    getPurchasedSerialNumber(serial){
 
         for(let i = 0; i < this[purchases].length; i++){
             if(this[purchases][i].SerialNumber === serial){
@@ -80,6 +80,7 @@ class User{
     setPurchaseHistory(history){
         this[purchases] = history;
     }
+
 
 
 
