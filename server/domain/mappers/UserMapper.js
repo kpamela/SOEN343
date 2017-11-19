@@ -67,7 +67,8 @@ module.exports = class UserMapper {
                    const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
                    let activeUser = new User(user[0]);
                    console.log(activeUser);
-                   UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);
+                   let date = new Date(Date.now());
+                   UserMapper.activeUsersRegistry.push([activeUser.Username, date.toISOString()]);
                    res.json({success: true, token: token, user: activeUser})
 
                }
@@ -121,7 +122,7 @@ module.exports = class UserMapper {
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
                 UserMapper.activeUsersRegistry.splice(i, 1);
-                return res.send('logged out');
+                return res.json({success: true, msg:"logged out"});
             }
         }
         return res.status(500).send("user not found");

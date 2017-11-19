@@ -55,6 +55,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     add(req, res){
 
             let category = req.body.data.category;
+            console.log("Here: "+category);
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
             }
