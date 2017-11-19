@@ -99,7 +99,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * The old product is stored in the productHistory, along with the current model number of the modified object
      * This allows to modify the model number without losing any information regarding the previous modelNumber
      *
-     * First has to check if the model was already change to prevent duplicates when reverting.
+     * First has to check if the model was already changed to prevent duplicates when reverting.
      * So if an item is changed multiple times, only the previous item is stored, this might be a problem
      * If an item was already changed, it needs to be removed from the change list of UoW
      *
@@ -205,12 +205,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             }
 
             if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
-
-                return res.status(500).json("Oops, something went wrong ")
+                //return res.status(500).json("Oops, something went wrong ")
+                return res.json(500, {success:false, msg: "Oops, something went wrong"});
             }
 
 
-            res.json({msg: "All changes have been committed to Database.",
+            return res.json({msg: "All changes have been committed to Database.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 
@@ -233,7 +233,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     revertChanges(req, res){
 
          if(!AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
-            return res.status(412).json("No changes to revert");
+            //return res.status(412).json("No changes to revert");
+            return res.json(412, {success:false, msg: "No changes to revert"});
         }
         else{
             let changes = AdminDashboardMapper.unitOfWork.rollback();
@@ -255,7 +256,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             }
 
             if(AdminDashboardMapper.unitOfWork.hasUncommittedChanges){
-                return res.status(500).json("Oops, something went wrong");
+                //return res.status(500).json("Oops, something went wrong");
+                return res.json(500, {success:false, msg: "Oops, something went wrong"});
             }
 
             //getting the current productListing
@@ -278,7 +280,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      * @param res
      */
     getCommitState(req, res){
-        res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
+        return res.json({hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
     }
 
