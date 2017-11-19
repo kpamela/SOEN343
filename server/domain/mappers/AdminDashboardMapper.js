@@ -55,9 +55,25 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     add(req, res){
 
             let category = req.body.data.category;
-            console.log("Here: "+category);
+            let amount = req.body.data.amount;
+            let price = req.body.data.price;
+            console.log("Category: "+category+" Amount: "+amount+" Price: "+price);
+            //testing type
+            if(typeof amount === "string" || typeof amount === "boolean" || typeof amount === "undefined"){
+                return res.json(400, {success:false, msg: "Invalid type for amount variable."});
+            }
+            if(typeof price === "string" || typeof amount === "boolean" || typeof amount === "undefined"){
+                return res.json(400, {success:false, msg: "Invalid type for price variable."});
+            }
+            //testing values
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
+            }
+            if(amount <0){
+                return res.json(400, {success:false, msg: "Negative number input for amount variable."});
+            }
+            if(price <0){
+                return res.json(400, {success:false, msg: "Negative number input for price variable."});
             }
 
             //Instantiates a new product with the information passed in via the HTTP request
@@ -67,7 +83,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             //transfer to unit of work for later commit
             AdminDashboardMapper.unitOfWork.registerNew(product);
 
-            //Returns teh new productListing contents, and the state of commit
+            //Returns the new productListing contents, and the state of commit
             return res.json({msg:"Item has been added to change list",
                 newData: product,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
