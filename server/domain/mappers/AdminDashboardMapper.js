@@ -108,11 +108,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     modify(req, res){
 
+        
             let newProduct = AdminDashboardMapper.addNewProduct(req.body.current.category, req.body.current);
 
             AdminDashboardMapper.unitOfWork.registerDirty(newProduct);
 
-            res.json({msg:"Item set to modify. Commit when ready",
+            return res.json({msg:"Item set to modify. Commit when ready",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
     }
@@ -127,7 +128,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             AdminDashboardMapper.unitOfWork.registerDeleted(req.body.product);
 
-            res.json({msg: "Item will be deleted on commit.",
+            return res.json({msg: "Item will be deleted on commit.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 

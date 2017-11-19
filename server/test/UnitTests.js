@@ -107,21 +107,19 @@ describe('Products', () => {
             .end((err, res) => {
                 res.should.be.json;
                 res.body.should.be.a('array');
-                res.body.should.be.a('object');
-                res.body.should.have.property('Monitor');
               done();
             });
       });
   });
 
   /*
-  * Test the /POST route for including an incorrect data field
+  * Test the /POST route for adding with an incorrect data field
   */
   describe('/POST products', () => {
       it('it should not POST a product with an incorrect category input', (done) => {
         let product =  {"data":{
             "amount":1,
-            "category":"SwaggBoi",
+            "category":"Incorrect Input",
             "price": 10,
             "description":{
                 "additionalInfo": "None",
