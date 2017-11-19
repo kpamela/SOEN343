@@ -41,6 +41,9 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases);
         meld.around(ClientDashboardMapper.purchases, 'SQLgetSingle_purchase', this.aroundGetSinglePurchase);
 
+        meld.on(ClientDashboardMapper.purchases, 'SQLadd_purchases', this.onAmountChange);
+        meld.on(CatalogueMapper.productTDG,'SQLaddSpecific_products', this.onAmountChange);
+        //meld.on(CatalogueMapper.productTDG,'SQLaddSpecific_products', this.onAddSpecificProduct);
 
     }
 
@@ -223,11 +226,19 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
     }
 
-    onAddSpecificProduct(id){
-        //restoring product
-        let product =  CatalogueAspect.productListing.getModel(id.ModelNumber);
-        product.addToUnusedIds(new ProductId(id, product.Price));
-    }
 
+
+    onAmountChange(item){
+        let product =  CatalogueAspect.productListing.getModel(item.ModelNumber);
+
+        if(meld.joinpoint().method === 'SQLaddSpecific_products'){
+            product.addToUnusedIds(new ProductId(item, product.Price));
+            product.Amount++;
+        }
+
+        CatalogueMapper.modelTDG.SQLupdate_amount(item.ModelNumber, product.Amount);
+
+
+    }
 
 };

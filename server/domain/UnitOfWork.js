@@ -116,7 +116,7 @@ module.exports = class UnitOfWork{
      */
     commit(){
         //cleaning handled by register clean
-        console.log(this.changeList);
+        console.log(this.changeList, 'from commit');
         return this.changeList;
     }
 

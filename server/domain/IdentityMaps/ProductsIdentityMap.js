@@ -13,12 +13,12 @@ module.exports = class ProductsIdentityMap extends IdentityMap{
 
     addDeletedProduct(modelNumber){
         this.deletedItems[modelNumber] = 1;
-        console.log(this.deletedItems, 'addition')
+
     }
 
     restoreDeletedProduct(modelNumber){
         delete this.deletedItems[modelNumber];
-        console.log(this.deletedItems, 'restoration')
+
     }
 
 

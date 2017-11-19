@@ -74,7 +74,7 @@ db.getConnection((err, connection) => {
             newProduct[i] = req.body.data.description[i];
         }
 
-        console.log(newProduct);
+
 
         // Instantiate the right product class based on the Category
         var product;

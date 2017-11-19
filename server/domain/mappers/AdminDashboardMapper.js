@@ -57,7 +57,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     add(req, res){
 
             let category = req.body.data.category;
-            console.log("Here: "+category);
+
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
             }
@@ -129,7 +129,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let changes = AdminDashboardMapper.unitOfWork.commit();
 
-            console.log(changes, 'mapper');
+
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default

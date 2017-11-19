@@ -104,6 +104,14 @@ class ProductDescription{
     addToUsedIds(id){
         id.Available = 0;
         this[usedIds].push(id);
+
+      /*  for(let i = 0; this[unusedIds].length; i++){
+            if(this[unusedIds].SerialNumber === id.SerialNumber){
+                this[unusedIds].splice(i, 1);
+                break;
+            }
+        }
+        this.Amount--;*/
     }
 
     /**
@@ -113,10 +121,17 @@ class ProductDescription{
     addToUnusedIds(id){
         id.Available = 1;
         this[unusedIds].push(id);
+       /* for(let i = 0; this[usedIds].length; i++){
+            if(this[usedIds].SerialNumber === id.SerialNumber){
+                this[usedIds].splice(i, 1);
+                break;
+            }
+        }
+        this.Amount++;*/
     }
 
     /**
-     *
+     *Sets the arry of unused ids from the database
      * @param arr
      */
     setUnusedIds(arr){
@@ -124,7 +139,7 @@ class ProductDescription{
         for(let i = 0; i<arr.length; i++){
             this[unusedIds].push(new ProductId(arr[i], this.Price));
         }
-        console.log(this[unusedIds]);
+        //console.log(this[unusedIds]);
         this.Amount = this[unusedIds].length;
     }
 
