@@ -2,9 +2,10 @@
  * Created by CharlesPhilippe on 2017-09-25.
  */
 import React from 'react';
-import Product from './Product.js'
-import ModifyProduct from './ModifyProduct.js'
+import Product from './Product.js';
+import ModifyProduct from './ModifyProduct.js';
 import {Button, ListGroup} from 'react-bootstrap';
+
 
 export default class ProductListing extends React.Component{
   constructor(props){
@@ -12,7 +13,7 @@ export default class ProductListing extends React.Component{
     this.state= {
       modifyForm:<div></div>,
         model: "",
-        currentPosition: -1
+        currentPosition: -1,
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
@@ -20,13 +21,14 @@ export default class ProductListing extends React.Component{
   }
 
   handleShowForm(item){
+    
       if(this.props.userType === "admin") {
           //resetting the state before any change is requested
           this.props.toggleDisableSort("disabled");
           const pos = this.props.usr.lookForModel(item.description.modelNumber);
-          this.setState({modifyForm: <div>...</div>, currentPosition: pos, model: item.description.modelNumber}, function () {
+          this.setState({modifyForm: <div id="modifyForm">...</div>, currentPosition: pos, model: item.description.modelNumber}, function () {
               this.setState({
-                  modifyForm: <span>
+                  modifyForm: <span id="modifyForm">
                       <ModifyProduct item={item} onModify={this.handleModify}/>
                       <Button bsStyle="danger" className="delete" onClick={() => this.remove()}>
                           Delete {this.state.model}
@@ -37,13 +39,14 @@ export default class ProductListing extends React.Component{
                   </span>
               })
           });
+          
       }
       else if(this.props.userType === "client"){
           this.props.usr.addToCart(item.description.modelNumber);
           item.amount -=1;
           this.forceUpdate();
       }//TODO handle add to cart
-
+      document.getElementById('productListingh2').scrollIntoView();
   }
 
 
@@ -78,6 +81,7 @@ export default class ProductListing extends React.Component{
       }
   }
 
+
   render(){
         var listing = [];
 
@@ -95,8 +99,11 @@ export default class ProductListing extends React.Component{
 
             //Converting product object to product component
             listing.push(
-                <Product item={product} onShowForm={this.handleShowForm}/>
+                <div>
+                    <Product className="product" item={product} onShowForm={this.handleShowForm}/>
+                </div>
             );
+            
         });
 
 /*
@@ -112,12 +119,11 @@ name={product.name}
         return(
             <div className="productListing">
                 <hr/>
-                <h2>Product Listing</h2>
+                <h2 id="productListingh2">Product Listing</h2>
+                {this.state.modifyForm}
                 <ListGroup>
                     {listing}
                 </ListGroup>
-                {this.state.modifyForm}
-                {window.scrollTo(0,document.body.scrollHeight)}
             </div>
         );
 
