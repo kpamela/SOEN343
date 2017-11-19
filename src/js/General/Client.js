@@ -157,6 +157,15 @@ export default class Client extends User{
         })
     }
 
+    removeAccount(){
+        this.axiosInstance.post("removeUser", {username: this.username} )
+            .then(function(response){
+                alert("Account Removed ")
+            }).catch(function(response){
+                console.log(response);
+        });
+    }
+
     returnItem(serial){
         this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
             .then(function(response){

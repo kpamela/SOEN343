@@ -116,10 +116,10 @@ module.exports = class UserMapper {
 
     removeUser(req, res){
       console.log("deleting user");
-      /*userTDG.SQLdelete_users(req.body.Username)then(function(user){
+      userTDG.SQLdelete_users(req.body.Username)then(function(user){
           //TODO redirect to main page with logout
-          });
-      this.logout();*/
+          this.logout();
+      });
     }
 
     logout(req, res){

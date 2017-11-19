@@ -1,3 +1,6 @@
+/**
+ * Created by CharlesPhilippe on 2017-10-21.
+ */
 import React, {Component} from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
@@ -29,10 +32,8 @@ export const AccountSettings = React.createClass({
   },
 
   delete(){
-    confirm = window.confirm("Are you sure you want todelete your account?");
-    if(confirm){
-      axios.post('/removeUser', this.usr);
-    }
+    console.log(this.state.usr);
+    this.state.usr.removeAccount();
   },
 
 
@@ -47,6 +48,7 @@ export const AccountSettings = React.createClass({
             <Modal.Title>Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+
           <h1> Purchase History </h1>
           View all your previous purchases or return an item
           <PurchaseHistoryModal user={this.state.usr}/>
@@ -54,6 +56,7 @@ export const AccountSettings = React.createClass({
           <h1> Delete Account </h1>
           This action is irreversible! Please be careful while proceeding <br/>
           <Button bsStyle="danger" bsSize="sm" onClick={this.delete}> Delete </Button>
+
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
