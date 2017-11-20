@@ -6,6 +6,8 @@ import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {ShoppingCartModal} from './ShoppingCartModal.js';
 import {PurchaseHistoryModal} from './PurchaseHistoryModal.js';
 import {AccountSettings} from './AccountSettings.js';
+import {UserActivity} from './UserActivity.js';
+
 import { Link } from 'react-router-dom';
 import auth from '../General/auth.js';
 
@@ -29,11 +31,15 @@ export default class NavBar extends Component{
                 <MenuItem eventKey={4.1}> Tablets </MenuItem>
                 <MenuItem eventKey={4.2}> Laptops </MenuItem>
                 <MenuItem eventKey={4.3}> Desktops </MenuItem>
+        
               </NavDropdown>
               <MenuItem divider />
               <MenuItem eventKey={3.3}><Link className="NavbarDropdownLink" to="/ClientDashboard">Shop all categories</Link></MenuItem>
             </NavDropdown>
+            
+    
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/AdminDashboard">Administrator Dashboard</Link></NavItem> : null}
+            {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/UserActivity">User Activity</Link></NavItem> : null}
           </Nav>
           <Nav pullRight>
             {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}

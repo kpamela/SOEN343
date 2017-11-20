@@ -61,6 +61,7 @@ class UserTDG{
     return data;
   }
 
+
  /* SQLadd_users(user, password){
     if (SQLget_users(user.Username)!=null){
       let newUser = "INSERT INTO users SET" + userInfo;
