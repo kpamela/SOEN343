@@ -114,7 +114,7 @@ app.get('/products/getPurchaseHistory', clientDashboardMapper.getPurchaseHistory
  */
 app.post('/users/authenticate', userMapper.authenticate);
 app.post('/users/register', userMapper.registerUser);
-app.post('/users/removeUser'), userMapper.removeUser);
+app.post('/users/removeUser', userMapper.removeUser);
 app.post('/users/logout', userMapper.logout);
 app.post('/products/add', adminDashboardMapper.add);
 app.post('/products/remove', adminDashboardMapper.remove);

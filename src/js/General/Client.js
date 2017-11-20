@@ -158,9 +158,9 @@ export default class Client extends User{
     }
 
     removeAccount(){
-        this.axiosInstance.post("removeUser", {username: this.username} )
+        this.axiosInstance.post("/users/removeUser", {username: this.username} )
             .then(function(response){
-                alert("Account Removed ")
+                alert("Account Removed " + response)
             }).catch(function(response){
                 console.log(response);
         });
