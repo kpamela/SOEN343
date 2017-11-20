@@ -26,8 +26,8 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
      */
   constructor(mapper){
       super(mapper);
+        //leaving for super instances only
         this.getUserAspect.remove();
-       // this.viewAspect.remove();//leaving for super instances only
         this.getAllAspect.remove();//removes interference
 
       //defining aspects;
@@ -60,26 +60,14 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   /*
   advice
    */
-  aroundSQLadd(){
-      let data = new jquery.Deferred();
-      let joinpoint = meld.joinpoint();
-      let model = joinpoint.args[0];
-     //Checking if the item was previously deleted
-      if(!AdminDashboardAspect.productListing.deletedItems[model.ModelNumber]){
-          //if not then proceed
-          data = joinpoint.proceed();
-      }
-      else{// else, set wasDeleted as true, which will update instead of adding
-          data = joinpoint.proceed(model, true);
-          AdminDashboardAspect.productListing.restoreDeletedProduct(model.ModelNumber);
-      }
 
-      return data;
-  }
 
-  onSQLDelete(modelNumber){
-      AdminDashboardAspect.productListing.addDeletedProduct(modelNumber);
-  }
+
+
+
+  /*
+  For Adding items
+   */
 
     /**
      * Checks if model already exists before adding it to listing
@@ -97,14 +85,54 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       }
   }
 
+
     /**
-     * Before adding product to unit of work, add it to listing
+     * Checks if an item was previously deleted
+     * If so update Fields
+     * If not, add new product
+     *
+     * @returns {jQuery.Deferred|exports.Deferred|Deferred}
+     */
+    aroundSQLadd(){
+        let data = new jquery.Deferred();
+        let joinpoint = meld.joinpoint();
+        let model = joinpoint.args[0];
+        //Checking if the item was previously deleted
+        if(!AdminDashboardAspect.productListing.deletedItems[model.ModelNumber]){
+            //if not then proceed
+            data = joinpoint.proceed();
+        }
+        else{// else, set wasDeleted as true, which will update instead of adding
+            data = joinpoint.proceed(model, true);
+            AdminDashboardAspect.productListing.restoreDeletedProduct(model.ModelNumber);
+        }
+
+        return data;
+    }
+
+
+
+    /**
+     * After adding product to unit of work, add it to listing
      * it gets the product from the argument passed to register new
+     *
      * @param {ProductDescription} product
      */
   onRegisterNew(product){
       AdminDashboardAspect.productListing.add(product);
   }
+
+
+
+
+
+
+  /*
+
+  For modifying items
+
+
+   */
 
     /**
      * Handles removing old product from product listing, pushing to product history (current, and old)
@@ -130,7 +158,10 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   }
 
     /**
-     * Adds to product listing
+     * Adds newly modified product to listing
+     * Checks if it's there, if so update
+     * else add
+     *
      * @param {ProductDescription} product
      */
   onRegisterDirty(product) {
@@ -144,6 +175,14 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         }
     }
 
+
+    /*
+
+    For deleting Items
+
+
+     */
+
     /**
      * Modifies the structure of req, to include an instanciated product
      * and removes the model from productListing
@@ -156,12 +195,31 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   }
 
     /**
-     * saves deleted product
+     * Adds model number to deleted products list
+     * prevents primary key conflict upon adding a product that was previoulsy deleted
+     *
+     * @param modelNumber
+     */
+    onSQLDelete(modelNumber){
+        AdminDashboardAspect.productListing.addDeletedProduct(modelNumber);
+    }
+
+
+    /**
+     * saves deleted product to product history
+     *
      * @param product
      */
   onRegisterDeleted(product){
       AdminDashboardAspect.productHistory.deleted.push(product);
   }
+
+/*
+
+Unit of Work specific
+
+ */
+
 
     /**
      * Gets the changes list from the UoW from commit
@@ -203,6 +261,9 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       return productChanges;
   }
 
+
+
+
     /**
      * Gets the changes list from UoW from rollback
      * Modifies it to return the instances of products
@@ -240,7 +301,11 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   }
 
 
-
+    /**
+     * Checks if an admin is already logged in
+     * if not, logs current admin
+     * @returns {*}
+     */
     singleAdminCheck(){
         let joinpoint = meld.joinpoint();
         let usr = joinpoint.args[0];

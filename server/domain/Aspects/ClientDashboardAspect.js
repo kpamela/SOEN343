@@ -23,7 +23,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
     constructor(mapper){
         super(mapper);
         this.getUserAspect.remove();
-        //this.viewAspect.remove();//leaving for super instances only
+        //leaving for super instances only
         this.getAllAspect.remove();//removes interference
         //defining aspects;
 
@@ -49,7 +49,11 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
 
 
+/*
 
+Shopping Cart
+
+ */
 
     /**
      * Makes sure that Products in the listing
@@ -83,7 +87,16 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         }
     }
 
-
+    /**
+     * After removing from cart, remove from product
+     * @param req
+     * @param res
+     */
+    onRemoveFromCart(req, res){
+        let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
+        product.restoreId(req.body.serialNumber);
+        CatalogueMapper.unitOfWork.registerDirty(product);
+    }
 
 
     /**
@@ -109,7 +122,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                         let id = new ProductId(response[0], product.Price);
                         product.addToUsedIds(id);
                         data.resolve(id);
-                        //ClientDashboardMapper.productTDG.SQLdeleteSingle_products(id.SerialNumber);
+
                     }
 
                 });
@@ -118,8 +131,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                 //sends data from instantiated products in product
                 data.resolve(product.popUnusedId());//give single id
             }
-            //changes have been made
-            //CatalogueMapper.unitOfWork.registerDirty(product);
+
         }
         else{
             data.resolve(null);
@@ -128,16 +140,16 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         return data;
     }
 
-    /**
-     * After removing from cart, remove from product
-     * @param req
-     * @param res
+
+
+    /*
+
+    Purchases
+
+
+
      */
-    onRemoveFromCart(req, res){
-        let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
-        product.restoreId(req.body.serialNumber);
-        CatalogueMapper.unitOfWork.registerDirty(product);
-    }
+
 
     /**
      * Returns the list of purchases made by the specified user
@@ -227,7 +239,10 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
     }
 
 
-
+    /**
+     * Saves new amount directly to database upon returns and purchases
+     * @param item
+     */
     onAmountChange(item){
         let product =  CatalogueAspect.productListing.getModel(item.ModelNumber);
 
