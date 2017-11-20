@@ -8,7 +8,7 @@ import Catalogue from './Catalogue.js';
 import ProductListing from './ProductListing.js';
 import {PageHeader} from 'react-bootstrap';
 import {ShoppingCartModal} from '../NavBar/ShoppingCartModal.js';
-import {PurchaseHistoryModal} from '../Client/PurchaseHistoryModal.js';
+import {PurchaseHistoryModal} from '../NavBar/PurchaseHistoryModal.js';
 
 
 export class ClientDashboard extends Catalogue{
@@ -34,7 +34,7 @@ export class ClientDashboard extends Catalogue{
         return(
             <div>
 
-                <PageHeader className="catalogHeader">Client Dashboard</PageHeader>
+                <PageHeader className="catalogHeader"> Client Dashboard </PageHeader>
                 {super.render()}
                 <ProductListing
                     userType="client"

@@ -117,6 +117,7 @@ app.get('/users/getRegisteredUsers', adminDashboardMapper.getRegisteredUsers);
  */
 app.post('/users/authenticate', userMapper.authenticate);
 app.post('/users/register', userMapper.registerUser);
+app.post('/users/removeUser', userMapper.removeUser);
 app.post('/users/logout', userMapper.logout);
 app.post('/users/deleteAccount', userMapper.deleteAccount);
 

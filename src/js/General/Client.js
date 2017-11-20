@@ -145,7 +145,7 @@ export default class Client extends User{
      */
     purchaseHistoryCallback(response){
         this.purchaseHistory = response.data;
-        
+
     }
 
     getReturnedItems(){
@@ -169,6 +169,15 @@ export default class Client extends User{
         })
     }
 
+    removeAccount(){
+        this.axiosInstance.post("/users/removeUser", {username: this.username} )
+            .then(function(response){
+                alert("Account Removed " + response)
+            }).catch(function(response){
+                console.log(response);
+        });
+    }
+
     returnItem(serial){
         this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
             .then(function(response){
@@ -189,5 +198,4 @@ export default class Client extends User{
                 console.log(err);
         })
     }
-
 }
