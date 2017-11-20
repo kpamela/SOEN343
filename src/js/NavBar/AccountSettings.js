@@ -42,15 +42,19 @@ export const AccountSettings = React.createClass({
   },
 
   delete(){
-    this.state.usr.removeAccount();
-    axios.post("/users/logout",{username: localStorage.getItem('username')})
-        .then(function(res){
+    let confirm = window.confirm("Are you absolutely sure you want to remove your account?");
+    if(confirm){
+      this.state.usr.removeAccount();
+      axios.post("/users/logout",{username: localStorage.getItem('username')})
+          .then(function(res){
 
-        }).catch(function(err){
-            console.log(err);
-    });
-    auth.logOut();
-    this.setState({redirect:true});
+          }).catch(function(err){
+              console.log(err);
+      });
+      auth.logOut();
+      this.setState({redirect:true});
+    }
+
   },
 
   render() {
