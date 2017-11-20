@@ -7,8 +7,6 @@ import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstr
 import {Redirect} from 'react-router-dom';
 import auth from '../General/auth.js';
 import {PurchaseHistoryModal} from './PurchaseHistoryModal.js';
-import {ShoppingCartModal} from './ShoppingCartModal.js';
-import {Catalogue} from '../Dashboard/Catalogue.js';
 
 
 export const AccountSettings = React.createClass({
@@ -17,7 +15,6 @@ export const AccountSettings = React.createClass({
     return {
       showModal: false,
       redirect:false,
-      usr: auth.login(),
       confirm: false
      };
   },
@@ -44,7 +41,7 @@ export const AccountSettings = React.createClass({
   delete(){
     let confirm = window.confirm("Are you absolutely sure you want to remove your account?");
     if(confirm){
-      this.state.usr.deleteAccount();
+      this.props.user.deleteAccount();
       auth.logOut();
       this.setState({redirect:true});
     }
@@ -71,7 +68,7 @@ export const AccountSettings = React.createClass({
 
           <h1> Purchase History </h1>
           View all your previous purchases or return an item
-          <PurchaseHistoryModal user={this.state.usr}/>
+          <PurchaseHistoryModal user={this.props.user}/>
 
           <h1> Delete Account </h1>
           This action is irreversible! Please be careful while proceeding <br/>
