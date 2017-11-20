@@ -1,9 +1,8 @@
 /**
- * Created by CharlesPhilippe on 2017-10-21.
+ * Created by kpamela on 2017-11-19.
  */
 import React, {Component} from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
 import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import auth from '../General/auth.js';
@@ -31,14 +30,37 @@ export const AccountSettings = React.createClass({
     this.setState({ showModal: true });
   },
 
-  delete(){
-    console.log(this.state.usr);
-    this.state.usr.removeAccount();
+  logOut(){
+      axios.post("/users/logout",{username: localStorage.getItem('username')})
+          .then(function(res){
+
+          }).catch(function(err){
+              console.log(err);
+      });
+      auth.logOut();
+      this.setState({redirect:true});
   },
 
+  delete(){
+    this.state.usr.removeAccount();
+    axios.post("/users/logout",{username: localStorage.getItem('username')})
+        .then(function(res){
+
+        }).catch(function(err){
+            console.log(err);
+    });
+    auth.logOut();
+    this.setState({redirect:true});
+  },
 
   render() {
+    if(this.state.redirect){
+        return(
+            <Redirect to="/" />
+        );
+    }
     return (
+
       <div>
         <Button bsSize="sm" onClick={this.open}>
           Profile
