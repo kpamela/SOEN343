@@ -118,6 +118,14 @@ module.exports = class UserMapper {
         res.json(UserMapper.activeUsersRegistry);
     }
 
+    removeUser(req, res){
+      console.log("deleting user");
+      /*userTDG.SQLdelete_users(req.body.Username)then(function(user){
+          //TODO redirect to main page with logout
+          this.logout();
+      });*/
+    }
+
     logout(req, res){
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){

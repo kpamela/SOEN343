@@ -34,7 +34,7 @@ export class ClientDashboard extends Catalogue{
         return(
             <div>
 
-                <PageHeader className="catalogHeader">Client Dashboard</PageHeader>
+                <PageHeader className="catalogHeader"> Client Dashboard </PageHeader>
                 {super.render()}
                 <ProductListing
                     userType="client"
