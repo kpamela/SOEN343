@@ -2,17 +2,19 @@
  * Created by CharlesPhilippe on 2017-10-21.
  */
 
+import ReactDOM from 'react-dom';
 import React from 'react';
 import Catalogue from './Catalogue.js';
 import NewProductRequest from './NewProductRequest.js';
 import ProductListing from './ProductListing.js';
+import {RegisteredUsersModal} from '../NavBar/RegisteredUsersModal'
+import {PageHeader, Button} from 'react-bootstrap';
 
 
 export class AdminDashboard extends Catalogue{
     constructor(props){
         super(props);
         this.state['uncommittedChanges'] = <div></div>;
-
 
         this.handleNewItem = this.handleNewItem.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +23,6 @@ export class AdminDashboard extends Catalogue{
         this.handleUncommittedChanges = this.handleUncommittedChanges.bind(this);
         this.handleUncommittedChangesCB = this.handleUncommittedChangesCB.bind(this);
     }
-
 
     //Adding new product to product list upon receiving new item signal
     handleNewItem(){
@@ -62,17 +63,13 @@ export class AdminDashboard extends Catalogue{
         this.state.usr.data.then(this.handleGetData);
     }
 
-    handleUncommittedChangesCB(response){
-
+     handleUncommittedChangesCB(response){
         if(response){
             this.setState({uncommittedChanges:
-                <div>
-                    <button onClick={()=> this.commitChanges()}>
-                        Commit
-                    </button>
-                    <button onClick={() => this.revertChanges()}>
-                        Revert
-                    </button>
+                <div className="uncommittedChanges">
+                    <h3>Are you sure you want to commit these changes?</h3>
+                    <Button bsStyle="primary" onClick={()=> this.commitChanges()}>Commit</Button>
+                    <Button onClick={() => this.revertChanges()}>Revert</Button>
                 </div>
              });
         }
@@ -84,9 +81,12 @@ export class AdminDashboard extends Catalogue{
     handleUncommittedChanges() {
         this.state.usr.hasUncommittedChanges.then(this.handleUncommittedChangesCB);
     }
-
-
     render(){
+      let registered =<RegisteredUsersModal user={this.state.usr}/>;
+      let usersList = document.getElementById("RegisteredUser");
+      if(usersList) {
+          ReactDOM.render(registered, usersList);
+      }
 
         if(this.state.usr.hasUncommittedChanges.state() === "pending"){
             this.state.usr.getCommitState();
@@ -95,6 +95,7 @@ export class AdminDashboard extends Catalogue{
        // this.handleUncommittedChanges();
         return(
             <div>
+                <PageHeader className="catalogHeader">Administrator Dashboard</PageHeader>
                 {super.render()}
                 <NewProductRequest
                     usr={this.state.usr}
