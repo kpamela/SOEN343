@@ -4,6 +4,8 @@
 const meld = require('meld'),
     jwt = require('jsonwebtoken'),
     ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap'),
+    Admin = require('../classes/Admin.js'),
+    Client = require('../classes/Client.js'),
     jquery = require('jquery-deferred'),
     CatalogueMapper = require('../mappers/CatalogueMapper.js'),
     UsersIdentityMap = require('../IdentityMaps/UsersIdentityMap.js'),
@@ -14,7 +16,14 @@ const meld = require('meld'),
     TabletComputer = require('../classes/ProductClasses/TabletComputer'),
     Monitor = require('../classes/ProductClasses/Monitor.js');
 
+/**
+ * Active Users IdentityMap, keeps track if User instances
+ */
 let _activeUsers = new UsersIdentityMap();
+
+/**
+ * Product Listing IdentityMap, keeps track of all products in the system
+ */
 let _productListing = new ProductsIdentityMap();
 
 module.exports = class CatalogueAspect{
@@ -28,7 +37,7 @@ module.exports = class CatalogueAspect{
     }
 
     /**
-     *
+     * Static active users
      * @returns {UsersIdentityMap}
      */
     static get activeUsers(){
@@ -41,21 +50,24 @@ module.exports = class CatalogueAspect{
      * @param {CatalogueMapper} mapper
      */
   constructor(mapper){
-      this.aroundGetAll = this.aroundGetAll.bind(this);
-      //Defining aspects
-
-        this.viewAspect = meld.around(mapper, 'view', this.aroundAuthorization);
+        this.aroundGetAll = this.aroundGetAll.bind(this);
+        this.aroundAuthorization = this.aroundAuthorization.bind(this);
+        this.mapper = mapper;
+        //Defining aspects
 
         this.getAllAspect = meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
         this.getUserAspect = meld.around(CatalogueMapper.userTDG, 'SQLget_users', this.aroundGetUser);
+
   }
 
-  /*
-  Advice
-   */
+
 
     /**
      * Authorizes user's token before executing
+     * Fist checks validity of token;
+     * Then checks if users are accessing their own information
+     *
+     * Finally if it's an admin, checks if an admin is already logged in
      *
      * @returns {*}
      */
@@ -69,14 +81,15 @@ module.exports = class CatalogueAspect{
         if (!token) {
             return res.status(401).json({success: false, msg: "Unauthorized: No Token Provided"});
         }
-
+        //TODO Check if only admin call admin functions
 
         return jwt.verify(token, 'mysecret', function (err, decoded) {
             if (err) {
                 return res.status(401).json({success: false, msg: "Unauthorized: Incorrect Token Signature"});
             }
             else {
-                //make suere that users can access their info only
+                //make sure that users can access their info only
+                //i.e. prevents other users from accessing their info
                 if(req.body.username){
                     if (req.body.username !== decoded.user.Username) {
                        return res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
@@ -87,22 +100,36 @@ module.exports = class CatalogueAspect{
                        return res.status(401).json({success: false, msg: "Unauthorized: usernames must match"})
                     }
                 }
-                //else{
 
+                //else
+                //looking for an instance of the user
                 let index = CatalogueAspect.activeUsers.findUser(decoded.user.Username);
                 //adding new active user to active users list
                 if(index === -1){
-                    let activeUser = new User(decoded.user);///activeUser
-                    console.log(activeUser);
-                    CatalogueAspect.activeUsers.add(activeUser);
+                    //if user not found, user has to be active
+                    let activeUser = CatalogueAspect.addNewActiveUser(decoded.user);///activeUser
+
+                    //This implements a single admin per system
+                    if(!activeUser){//occurs when an admin is already logged in
+                        return res.json({success: false, msg:"An Admin is already logged in"});
+                    }
+
                 }
+
                 joinpoint.proceed();
             }
         });
     }
 
 
+    /*
 
+
+     TDG Advice
+
+
+
+     */
 
 
     /**
@@ -117,8 +144,7 @@ module.exports = class CatalogueAspect{
         //if not found fetch from db, and add to active user
         if(index === -1){
             joinpoint.proceed().then(function(response){
-                let user = new User(response[0]);
-                CatalogueAspect.activeUsers.add(user);
+                let user = CatalogueAspect.addNewActiveUser(response[0]);// watch this one out, make sure that no admin call this...
                 console.log(user);
                 data.resolve(user);
             });
@@ -144,6 +170,7 @@ module.exports = class CatalogueAspect{
       if(CatalogueAspect.productListing.content.length == 0){//empty listing, fetch from db
           meld.joinpoint().proceed().then(function(response){
               CatalogueAspect.setListingFromDatabase(response);
+
               data.resolve(CatalogueAspect.productListing);
           });//proceeding to tdg call
       }
@@ -169,13 +196,19 @@ module.exports = class CatalogueAspect{
     static setListingFromDatabase(data){
         CatalogueAspect.productListing.content = [];
         for(let i in data){
-            let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
-            if(product){//ignore undefined
-                CatalogueAspect.productListing.add(product);
-                //console.log(product);
+            if(data[i].IsDeleted === 1){
+                CatalogueAspect.productListing.addDeletedProduct(data[i].ModelNumber);
+            }
+            else{
+                let product = CatalogueAspect.addNewProduct(data[i].Category,data[i]);
+                if(product){//ignore undefined
+
+                    CatalogueAspect.productListing.add(product);
+
+                }
             }
         }
-        console.log("%%%%%%%%%%%%%%%%%%%%");
+
 
     }
 
@@ -199,6 +232,27 @@ module.exports = class CatalogueAspect{
             case 'Monitor':
                 return new Monitor(product);
 
+        }
+    }
+
+
+    /**
+     * Instantiates a new User according to its permissions
+     *
+     * @param user
+     * @returns {User}
+     */
+    static addNewActiveUser(user){
+
+        if(user.Administrator === 1){
+            user = new Admin(user);
+            CatalogueAspect.activeUsers.add(user);
+            return user;
+        }
+        else{
+            user = new Client(user);
+            CatalogueAspect.activeUsers.add(user);
+            return user;
         }
     }
 

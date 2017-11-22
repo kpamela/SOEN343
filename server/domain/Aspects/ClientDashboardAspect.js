@@ -23,9 +23,10 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
     constructor(mapper){
         super(mapper);
         this.getUserAspect.remove();
-        this.viewAspect.remove();//leaving for super instances only
+        //leaving for super instances only
         this.getAllAspect.remove();//removes interference
         //defining aspects;
+
         meld.on(mapper, 'removeFromCart', this.onRemoveFromCart);
 
         meld.around(mapper, 'addToCart', this.aroundAddToCart);
@@ -36,15 +37,23 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'getPurchaseHistory', this.aroundAuthorization);
         meld.around(mapper, 'returnItem', this.aroundAuthorization);
 
-        meld.around(ClientDashboardMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
+        meld.around(CatalogueMapper.productTDG, 'SQLgetSingle_products', this.aroundGetId);
         meld.around(ClientDashboardMapper.purchases, 'SQLget_purchases_All', this.aroundGetPurchases);
         meld.around(ClientDashboardMapper.purchases, 'SQLgetSingle_purchase', this.aroundGetSinglePurchase);
+
+        meld.on(ClientDashboardMapper.purchases, 'SQLadd_purchases', this.onAmountChange);
+        meld.on(CatalogueMapper.productTDG,'SQLaddSpecific_products', this.onAmountChange);
+        //meld.on(CatalogueMapper.productTDG,'SQLaddSpecific_products', this.onAddSpecificProduct);
 
     }
 
 
 
+/*
 
+Shopping Cart
+
+ */
 
     /**
      * Makes sure that Products in the listing
@@ -64,7 +73,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
             let product = ClientDashboardAspect.productListing.content[index];
             //prevents multiple db calls acts as identity map for product ids
             if(!product.hasUnusedIds() && !product.hasUsedIds()){
-                ClientDashboardMapper.productTDG.SQLget_products(product.ModelNumber).then(function(response){
+                CatalogueMapper.productTDG.SQLget_products(product.ModelNumber).then(function(response){
                     product.setUnusedIds(response);
                     joinpoint.proceed();//eventually,maybe do tdg call in item not found, but right now we are sure that if it's no in listing, it's not in db
                 });
@@ -78,7 +87,16 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         }
     }
 
-
+    /**
+     * After removing from cart, remove from product
+     * @param req
+     * @param res
+     */
+    onRemoveFromCart(req, res){
+        let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
+        product.restoreId(req.body.serialNumber);
+        CatalogueMapper.unitOfWork.registerDirty(product);
+    }
 
 
     /**
@@ -104,7 +122,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                         let id = new ProductId(response[0], product.Price);
                         product.addToUsedIds(id);
                         data.resolve(id);
-                        //ClientDashboardMapper.productTDG.SQLdeleteSingle_products(id.SerialNumber);
+
                     }
 
                 });
@@ -113,8 +131,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
                 //sends data from instantiated products in product
                 data.resolve(product.popUnusedId());//give single id
             }
-            //changes have been made
-            //CatalogueMapper.unitOfWork.registerDirty(product);
+
         }
         else{
             data.resolve(null);
@@ -123,16 +140,16 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
         return data;
     }
 
-    /**
-     * After removing from cart, remove from product
-     * @param req
-     * @param res
+
+
+    /*
+
+    Purchases
+
+
+
      */
-    onRemoveFromCart(req, res){
-        let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
-        product.restoreId(req.body.serialNumber);
-        CatalogueMapper.unitOfWork.registerDirty(product);
-    }
+
 
     /**
      * Returns the list of purchases made by the specified user
@@ -182,6 +199,7 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
         if(client){//user has to be logged in
             let purchase = client.getPurchasedSerialNumber(serialNumber);
+
             //purchase is there, in the purchase history
             if(purchase){
                 //setting purchase to returned
@@ -220,11 +238,22 @@ module.exports = class ClientDashboardAspect extends CatalogueAspect{
 
     }
 
-    onAddSpecificProduct(id){
-        //restoring product
-        let product =  CatalogueAspect.productListing.getModel(id.ModelNumber);
-        product.addToUnusedIds(new ProductId(id, product.Price));
-    }
 
+    /**
+     * Saves new amount directly to database upon returns and purchases
+     * @param item
+     */
+    onAmountChange(item){
+        let product =  CatalogueAspect.productListing.getModel(item.ModelNumber);
+
+        if(meld.joinpoint().method === 'SQLaddSpecific_products'){
+            product.addToUnusedIds(new ProductId(item, product.Price));
+            product.Amount++;
+        }
+
+        CatalogueMapper.modelTDG.SQLupdate_amount(item.ModelNumber, product.Amount);
+
+
+    }
 
 };

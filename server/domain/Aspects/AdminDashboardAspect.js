@@ -5,7 +5,8 @@ const meld = require('meld'),
     CatalogueAspect = require('./CatalogueAspect.js'),
     CatalogueMapper = require('../mappers/CatalogueMapper.js'),
     AdminDashboardMapper = require('../mappers/AdminDashboardMapper.js'),
-    ProductHistory = require('../IdentityMaps/ProductHistory.js');
+    ProductHistory = require('../IdentityMaps/ProductHistory.js'),
+    jquery = require('jquery-deferred');
 
 let _productHistory = new ProductHistory();
 
@@ -25,12 +26,14 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
      */
   constructor(mapper){
       super(mapper);
+        //leaving for super instances only
         this.getUserAspect.remove();
-        this.viewAspect.remove();//leaving for super instances only
         this.getAllAspect.remove();//removes interference
+
       //defining aspects;
         meld.before(mapper, 'remove', this.beforeRemove);
 
+        meld.around(CatalogueAspect, 'addNewActiveUser', this.singleAdminCheck);
         meld.around(mapper,'revertChanges', this.aroundAuthorization);
         meld.around(mapper,'getCommitState', this.aroundAuthorization);
         meld.around(mapper, 'add',  this.aroundAdd);//should occur after the one under
@@ -39,18 +42,31 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         meld.around(mapper,'remove', this.aroundAuthorization);
         meld.around(mapper, 'modify', this.aroundModify);
         meld.around(mapper,'modify', this.aroundAuthorization);
+        meld.around(mapper, 'getRegisteredUsers', this.aroundAuthorization);
+        meld.around(CatalogueMapper.modelTDG, 'SQLadd_models', this.aroundSQLadd);
         meld.around(CatalogueMapper.unitOfWork, 'commit', this.aroundUoWCommit);
         meld.around(CatalogueMapper.unitOfWork, 'rollback', this.aroundUoWRollback);
         //called after rollback, to send the new data to frontend
-        meld.around(AdminDashboardMapper.modelTDG, 'SQLget_models_All', this.aroundGetAll);
+      //  meld.around(CatalogueMapper.modelTDG, 'SQLget_models_All', super.aroundGetAll);
 
+        meld.on(CatalogueMapper.modelTDG, 'SQLdelete_models', this.onSQLDelete);
         meld.on(CatalogueMapper.unitOfWork,'registerNew',this.onRegisterNew);
         meld.on(CatalogueMapper.unitOfWork, 'registerDirty',this.onRegisterDirty);
         meld.on(CatalogueMapper.unitOfWork, 'registerDeleted', this.onRegisterDeleted);
+
+
   }
 
   /*
   advice
+   */
+
+
+
+
+
+  /*
+  For Adding items
    */
 
     /**
@@ -69,14 +85,54 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       }
   }
 
+
     /**
-     * Before adding product to unit of work, add it to listing
+     * Checks if an item was previously deleted
+     * If so update Fields
+     * If not, add new product
+     *
+     * @returns {jQuery.Deferred|exports.Deferred|Deferred}
+     */
+    aroundSQLadd(){
+        let data = new jquery.Deferred();
+        let joinpoint = meld.joinpoint();
+        let model = joinpoint.args[0];
+        //Checking if the item was previously deleted
+        if(!AdminDashboardAspect.productListing.deletedItems[model.ModelNumber]){
+            //if not then proceed
+            data = joinpoint.proceed();
+        }
+        else{// else, set wasDeleted as true, which will update instead of adding
+            data = joinpoint.proceed(model, true);
+            AdminDashboardAspect.productListing.restoreDeletedProduct(model.ModelNumber);
+        }
+
+        return data;
+    }
+
+
+
+    /**
+     * After adding product to unit of work, add it to listing
      * it gets the product from the argument passed to register new
+     *
      * @param {ProductDescription} product
      */
   onRegisterNew(product){
       AdminDashboardAspect.productListing.add(product);
   }
+
+
+
+
+
+
+  /*
+
+  For modifying items
+
+
+   */
 
     /**
      * Handles removing old product from product listing, pushing to product history (current, and old)
@@ -102,7 +158,10 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   }
 
     /**
-     * Adds to product listing
+     * Adds newly modified product to listing
+     * Checks if it's there, if so update
+     * else add
+     *
      * @param {ProductDescription} product
      */
   onRegisterDirty(product) {
@@ -116,6 +175,14 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
         }
     }
 
+
+    /*
+
+    For deleting Items
+
+
+     */
+
     /**
      * Modifies the structure of req, to include an instanciated product
      * and removes the model from productListing
@@ -128,12 +195,31 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
   }
 
     /**
-     * saves deleted product
+     * Adds model number to deleted products list
+     * prevents primary key conflict upon adding a product that was previoulsy deleted
+     *
+     * @param modelNumber
+     */
+    onSQLDelete(modelNumber){
+        AdminDashboardAspect.productListing.addDeletedProduct(modelNumber);
+    }
+
+
+    /**
+     * saves deleted product to product history
+     *
      * @param product
      */
   onRegisterDeleted(product){
       AdminDashboardAspect.productHistory.deleted.push(product);
   }
+
+/*
+
+Unit of Work specific
+
+ */
+
 
     /**
      * Gets the changes list from the UoW from commit
@@ -144,26 +230,39 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       let joinpoint = meld.joinpoint();
       let changes = joinpoint.proceed();//getting the change list from UoW
       let productChanges = {newList:[], dirtyList:[], deletedList:[]};//list containing the products themselves
-      //new items
-      for(let i in changes.newList){
-          //getting the instance of model number stored in changeList, pass it to productChanges
-          productChanges.newList[i] = AdminDashboardAspect.productListing.getModel(changes.newList[i]);
-      }
-      for(let i in changes.dirtyList){
-          let oldModel = AdminDashboardAspect.productHistory.getOldModel(changes.dirtyList[i]);
-          //getting the instance of model number stored in changeList, pass it to productChanges
-          productChanges.dirtyList[i] = {newModel: AdminDashboardAspect.productListing.getModel(changes.dirtyList[i]),
-                                            oldModel: oldModel};
-      }
-      for(let i in changes.deletedList){
-          //getting the instance of model stored in history, pass it to product changes
-          productChanges.deletedList[i] = AdminDashboardAspect.productHistory.getDeletedModel(changes.deletedList[i]);
-      }
+        const NEW = 2;
+        const DIRTY = 1;
+
+
+        for(let i = 0; i<AdminDashboardAspect.productListing.content.length; i++){
+            let product = AdminDashboardAspect.productListing.content[i];
+            let flag = product.getFlag();
+
+            switch(flag){
+                case NEW:
+                        //getting the instance of model number stored in changeList, pass it to productChanges
+                        productChanges.newList.push(product);
+                        break;
+                case DIRTY:
+                        let oldModel = AdminDashboardAspect.productHistory.getOldModel(product.ModelNumber);
+                        //getting the instance of model number stored in changeList, pass it to productChanges
+                        productChanges.dirtyList.push({newModel: product, oldModel: oldModel});
+                        break;
+                //DELETED corresponds to history
+            }
+        }
+
+        //getting the instances of model stored in history, pass it to product changes
+        productChanges.deletedList = AdminDashboardAspect.productHistory.deleted;
+
       //resetting history
       AdminDashboardAspect.productHistory.resetHistory();
 
       return productChanges;
   }
+
+
+
 
     /**
      * Gets the changes list from UoW from rollback
@@ -191,7 +290,7 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       }
       for(let i in changes.deletedList){
           let old = AdminDashboardAspect.productHistory.getDeletedModel(changes.deletedList[i]);
-
+          //readding the old product
           AdminDashboardAspect.productListing.add(old);
 
           productChanges.deletedList[i] = old;
@@ -201,6 +300,31 @@ module.exports = class AdminDashboardAspect extends CatalogueAspect{
       return productChanges;
   }
 
+
+    /**
+     * Checks if an admin is already logged in
+     * if not, logs current admin
+     * @returns {*}
+     */
+    singleAdminCheck(){
+        let joinpoint = meld.joinpoint();
+        let usr = joinpoint.args[0];
+
+        if(usr.Administrator === 1){
+            if(!AdminDashboardMapper.admin){//if there are no admin logged in
+                usr = joinpoint.proceed();
+                AdminDashboardMapper.admin = usr;//setting logged in administrator
+                return usr;
+            }
+            else{//admin is logged in
+                return null
+            }
+        }
+        else{//not an admin
+            return joinpoint.proceed();
+        }
+
+  }
 
 };
 

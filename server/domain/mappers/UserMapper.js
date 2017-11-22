@@ -53,9 +53,7 @@ module.exports = class UserMapper {
 
         userTDG.SQLget_users(req.body.Username).then(function(user){
             if(user.length == 0){
-
-                return res.json({success:false, msg:'User Not found'});
-
+                return res.status(500).send("User Not found");
             }
 
             //checking password match
@@ -66,15 +64,15 @@ module.exports = class UserMapper {
                else if(isMatch){
                    const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
                    let activeUser = new User(user[0]);
-                   console.log(activeUser);
-                   let date = new Date(Date.now());
-                   UserMapper.activeUsersRegistry.push([activeUser.Username, date.toISOString()]);
-                   res.json({success: true, token: token, user: activeUser})
+                 //  console.log(activeUser);
+                   if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
+                       UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);//no errors, means new active user
+                       console.log(UserMapper.activeUsersRegistry);
+                   }
 
                }
                else{
-                   return res.json({success:false, msg:'Wrong password'});
-
+                   res.json({success: false, msg: 'wrong password'});
                }
             });
         })
@@ -95,7 +93,7 @@ module.exports = class UserMapper {
 
        // console.log(req.body);
 
-        //TODO should handle already existing users
+
         userTDG.SQLadd_users(newUser).then(function(response){
            // console.log(response);
             if(response.failure){
@@ -108,24 +106,51 @@ module.exports = class UserMapper {
                 return res.json({success: true, token: token, user: newUser});
             }
         });
-        //userTDG.SQLset_user_Password(newUser.userName(), newUser.password);
-
-
 
     }
 
+    /**
+     *
+     *
+     * @param req
+     * @param res
+     */
     getActiveUsersRegistry(req, res){
         res.json(UserMapper.activeUsersRegistry);
     }
 
+    /**
+     *
+      * @param req
+     * @param res
+     */
     logout(req, res){
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
                 UserMapper.activeUsersRegistry.splice(i, 1);
-                return res.json({success: true, msg:"logged out"});
+                return res.send('logged out');
             }
         }
         return res.status(500).send("user not found");
+    }
+
+    /**
+     *
+     * @param req
+     * @param res
+     */
+    deleteAccount(req, res){
+        userTDG.SQLdelete_users(req.body.username).then(function(response){
+            console.log(req.body, 'deleting');
+            for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
+                if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
+                    UserMapper.activeUsersRegistry.splice(i, 1);
+                }
+            }
+            return res.send('Account deleted');
+        });
+
+
     }
 
 };

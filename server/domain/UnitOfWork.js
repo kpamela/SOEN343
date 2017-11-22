@@ -2,22 +2,10 @@
  * Created by CharlesPhilippe on 2017-10-23.
  */
 
-/**
- * 
- * @type {boolean}
- * @private
- */
-let _writing = false;
 
 module.exports = class UnitOfWork{
 
-    /**
-     *
-     * @returns {boolean}
-     */
-    static get isWriting(){
-        return _writing;
-    }
+
 
     constructor(){
         this.changeList = {newList:[], dirtyList:[], deletedList:[]};
@@ -128,7 +116,7 @@ module.exports = class UnitOfWork{
      */
     commit(){
         //cleaning handled by register clean
-        console.log(this.changeList);
+        console.log(this.changeList, 'from commit');
         return this.changeList;
     }
 

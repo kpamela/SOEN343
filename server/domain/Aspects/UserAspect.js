@@ -3,6 +3,7 @@
  */
 const meld = require('meld'),
     CatalogueAspect = require('./CatalogueAspect'),
+    AdminDashboardMapper = require('../mappers/AdminDashboardMapper.js'),
     UserMapper = require('../mappers/UserMapper');
 
 module.exports = class UserAspect{
@@ -13,12 +14,17 @@ module.exports = class UserAspect{
         meld.around(mapper, 'authenticate', this.aroundCheck);
         meld.around(mapper, 'registerUser', this.aroundCheck);
 
-
+        meld.on(mapper, 'deleteAccount', this.onLogout);
         meld.on(mapper, 'logout', this.onLogout);
 
 
     }
 
+    /**
+     * Checks if a User tries to log in twice
+     * if not, push user to active list
+     * Checks if admin is already logged in
+     */
     aroundCheck(){
         let joinpoint = meld.joinpoint();
         let req = joinpoint.args[0];
@@ -28,24 +34,46 @@ module.exports = class UserAspect{
             return res.json({success: false, msg:"User is already logged in"});
         }
         else{
-            meld.on(res, 'json', function(ob1){//pushing to activeUsers identityMap
+            meld.around(res, 'json', function(){//pushing to activeUsers identityMap after authentication
+                let joinpoint = meld.joinpoint();
+                let ob1 = joinpoint.args[0];
                 if(ob1.user){
-                    CatalogueAspect.activeUsers.add(ob1.user);//adviception
+                    let tmp = CatalogueAspect.addNewActiveUser(ob1.user);//adviception
+                    if(!tmp){//occurs when an admin is already logged in
+                        ob1 = {success: false, msg:"An Admin is already logged in"};//setting msg
+                        return joinpoint.proceed(ob1);
+                    }
                 }
-
-            });
+                joinpoint.proceed();
+            });//if not returned, everything is fine;
            joinpoint.proceed();
         }
     }
 
-
+    /**
+     * Removes user from active list
+     *
+     * Restore ids contained in a client's shopping cart
+     *
+     * Log admin out
+     *
+     * @param req
+     * @param res
+     */
     onLogout(req, res){
         //console.log(CatalogueAspect.activeUsers.content," onLogout");
         let user = CatalogueAspect.activeUsers.popUser(req.body.username);
-        let cart = user.getCart();
-        for(let i = 0; i<cart.length; i++){
-            cart[i].Available = 1;//restoring availability;
+        if(user.Administrator === 0){//log out for clients
+            let cart = user.getCart();
+            for(let i = 0; i<cart.length; i++){
+                cart[i].Available = 1;//restoring availability;
+            }
+        }
+        else{//log out for admins
+            AdminDashboardMapper.admin = null;
         }
         console.log(CatalogueAspect.activeUsers.content," onLogout");
     }
+
+
 };
