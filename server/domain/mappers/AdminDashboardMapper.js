@@ -18,6 +18,7 @@ const meld = require('meld');
  */
 let _admin = null;
 
+
 /**
  *
  * @type {AdminDashboardMapper}
@@ -30,6 +31,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     static get admin(){
         return _admin;
+
     }
 
     /**
@@ -40,6 +42,13 @@ module.exports = class AdminDashboardMapper extends Catalogue{
         _admin = usr
     }
 
+    /**
+     *
+     * @param {Admin} usr
+     */
+    static set admin(usr){
+        _admin = usr
+    }
 
    constructor() {
         super();
@@ -140,7 +149,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
 
+
                AdminDashboardMapper.modelTDG.SQLadd_models(product, false).then(function(response){
+
                     console.log(response);
                    AdminDashboardMapper.productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);
@@ -178,6 +189,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             for(let i in changes.deletedList){
                 let product = changes.deletedList[i];
                 AdminDashboardMapper.unitOfWork.registerClean(product);
+
                 AdminDashboardMapper.productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
                     AdminDashboardMapper.modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
                         console.log("Deleted product: " + product.ModelNumber);
@@ -265,6 +277,28 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
 
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
+    static addNewProduct(category, product){
+        switch(category){
+            case 'DesktopComputer':
+                return new DesktopComputer(product);
+
+            case 'TabletComputer':
+                return new TabletComputer(product);
+
+            case 'LaptopComputer':
+                return new LaptopComputer(product);
+
+            case 'Monitor':
+                return new Monitor(product);
+        }
+    }
+
 
     getRegisteredUsers(req, res){
         AdminDashboardMapper.userTDG.SQLget_users_All().then(function(response){
@@ -299,7 +333,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             case 'Monitor':
                 return new Monitor(product);
-
         }
     }
 

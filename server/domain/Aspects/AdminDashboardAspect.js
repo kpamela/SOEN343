@@ -306,6 +306,7 @@ Unit of Work specific
      * if not, logs current admin
      * @returns {*}
      */
+  
     singleAdminCheck(){
         let joinpoint = meld.joinpoint();
         let usr = joinpoint.args[0];

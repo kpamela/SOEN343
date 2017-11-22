@@ -26,8 +26,6 @@ module.exports = class ClientDashboardMapper extends Catalogue{
         return purchases;
     }
 
-
-
     constructor() {
         super();
 

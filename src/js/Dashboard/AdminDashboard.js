@@ -96,6 +96,8 @@ export class AdminDashboard extends Catalogue{
                     onSubmit={this.handleSubmit}
                 />
 
+                {this.state.uncommittedChanges}
+
                 <ProductListing
                     userType="admin"
                     products={this.state.PRODUCTS}
@@ -106,7 +108,7 @@ export class AdminDashboard extends Catalogue{
                     onChanges={this.handleUncommittedChanges}
                 />
                 <br/>
-                {this.state.uncommittedChanges}
+                
             </div>
 
         );

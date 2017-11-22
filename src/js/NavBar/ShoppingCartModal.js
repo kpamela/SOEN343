@@ -94,7 +94,7 @@ export const ShoppingCartModal = React.createClass({
                         <Modal.Footer>
                             {/*<p>Total:{sumofPrices}</p>*/}
                             <Button onClick={this.close}>Cancel</Button>
-                            <Button onClick={this.submit}>Confirm Transaction</Button>
+                            <Button bsStyle="primary" onClick={this.submit}>Confirm Transaction</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

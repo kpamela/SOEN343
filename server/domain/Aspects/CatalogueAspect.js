@@ -50,6 +50,7 @@ module.exports = class CatalogueAspect{
      * @param {CatalogueMapper} mapper
      */
   constructor(mapper){
+
         this.aroundGetAll = this.aroundGetAll.bind(this);
         this.aroundAuthorization = this.aroundAuthorization.bind(this);
         this.mapper = mapper;
@@ -114,6 +115,7 @@ module.exports = class CatalogueAspect{
                         return res.json({success: false, msg:"An Admin is already logged in"});
                     }
 
+
                 }
 
                 joinpoint.proceed();
@@ -165,7 +167,7 @@ module.exports = class CatalogueAspect{
      * @returns {jQuery.Deferred|exports.Deferred|Deferred}
      */
   aroundGetAll(){
-
+        console.log(CatalogueAspect.productListing.content,"%%%%%%%%%%%%%%%%%%%%");
       let data = new jquery.Deferred();//matching TDG calls
       if(CatalogueAspect.productListing.content.length == 0){//empty listing, fetch from db
           meld.joinpoint().proceed().then(function(response){

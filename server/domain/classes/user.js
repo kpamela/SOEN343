@@ -19,6 +19,7 @@ class User{
 
         this.IsDeleted = 0;
 
+
     }
 
 
