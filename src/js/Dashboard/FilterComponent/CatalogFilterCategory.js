@@ -1,5 +1,11 @@
 import React from 'react';
 import {FormGroup} from 'react-bootsrap';
+import Checkbox from './Checkbox.js';
+import FilterDesktop from './FilterDesktop.js';
+import FilterLaptop from './FilterLaptop.js';
+import FilterMonitor from './FilterMonitor.js';
+import FilterTablet from './FilterTablet.js';
+import FilterTelevision from './FilterTelevision';
 
 const categories = [
   'DesktopComputer',

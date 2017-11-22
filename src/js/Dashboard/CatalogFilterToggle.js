@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormGroup} from 'react-bootsrap';
+import CatalogFilterCategory from './FilterComponent/CatalogFilterCategory.js';
 
 export default class CatalogFilterToggle extends React.Component{
   constructor(props){
@@ -45,6 +46,7 @@ function ShowFilter(props) {
     <div>
       <h1>THIS IS WHERE THE FILTER FORM WILL BE</h1>
       <h2> some more random text </h2>
+      <CatalogFilterCategory />
     </div>
   )
 }
