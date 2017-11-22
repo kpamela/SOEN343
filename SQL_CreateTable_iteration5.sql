@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Models(
 CREATE TABLE IF NOT EXISTS Products(
     SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
-    Available tinyint(1), 
+    Available tinyint(1) NOT NULL DEFAULT '1', 
 	
     PRIMARY KEY (SerialNumber, ModelNumber), 
     FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE, 
