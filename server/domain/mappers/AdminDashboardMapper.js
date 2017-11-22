@@ -296,6 +296,8 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             case 'Monitor':
                 return new Monitor(product);
+        }
+    }
 
 
     getRegisteredUsers(req, res){
