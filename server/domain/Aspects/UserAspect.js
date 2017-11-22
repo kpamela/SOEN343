@@ -14,12 +14,17 @@ module.exports = class UserAspect{
         meld.around(mapper, 'authenticate', this.aroundCheck);
         meld.around(mapper, 'registerUser', this.aroundCheck);
 
-
+        meld.on(mapper, 'deleteAccount', this.onLogout);
         meld.on(mapper, 'logout', this.onLogout);
 
 
     }
 
+    /**
+     * Checks if a User tries to log in twice
+     * if not, push user to active list
+     * Checks if admin is already logged in
+     */
     aroundCheck(){
         let joinpoint = meld.joinpoint();
         let req = joinpoint.args[0];
@@ -45,7 +50,16 @@ module.exports = class UserAspect{
         }
     }
 
-
+    /**
+     * Removes user from active list
+     *
+     * Restore ids contained in a client's shopping cart
+     *
+     * Log admin out
+     *
+     * @param req
+     * @param res
+     */
     onLogout(req, res){
         //console.log(CatalogueAspect.activeUsers.content," onLogout");
         let user = CatalogueAspect.activeUsers.popUser(req.body.username);

@@ -126,4 +126,14 @@ export default class Admin extends User {
                 else console.log(thrown);
             });
     }
+
+
+    getRegisteredUsers(){
+        axios.get('/users/getRegisteredUsers',{cancelToken: this.source.token})
+            .then(function(users){
+
+            }).catch(function(thrown){
+                console.log(thrown);
+        });
+    }
 }

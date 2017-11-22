@@ -17,6 +17,8 @@ class User{
         this.ZIP            = user.ZIP;
         this.Country        = user.Country;
 
+        this.IsDeleted = 0;
+
 
     }
 

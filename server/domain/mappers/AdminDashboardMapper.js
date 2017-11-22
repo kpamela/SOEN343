@@ -18,6 +18,11 @@ const meld = require('meld');
  */
 let _admin = null;
 
+
+/**
+ *
+ * @type {AdminDashboardMapper}
+ */
 module.exports = class AdminDashboardMapper extends Catalogue{
 
     /**
@@ -26,6 +31,15 @@ module.exports = class AdminDashboardMapper extends Catalogue{
      */
     static get admin(){
         return _admin;
+
+    }
+
+    /**
+     *
+     * @param {Admin} usr
+     */
+    static set admin(usr){
+        _admin = usr
     }
 
     /**
@@ -52,7 +66,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     add(req, res){
 
             let category = req.body.data.category;
-            console.log("Here: "+category);
+
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
             }
@@ -124,6 +138,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let changes = AdminDashboardMapper.unitOfWork.commit();
 
+
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
@@ -134,7 +149,9 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
 
-               AdminDashboardMapper.modelTDG.SQLadd_models(product).then(function(response){
+
+               AdminDashboardMapper.modelTDG.SQLadd_models(product, false).then(function(response){
+
                     console.log(response);
                    AdminDashboardMapper.productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);
@@ -167,14 +184,12 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                     })
                 }
 
-                //TODO tdg work
+
             }
             for(let i in changes.deletedList){
                 let product = changes.deletedList[i];
-
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
-                //TODO tdg work for product ids
                 AdminDashboardMapper.productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
                     AdminDashboardMapper.modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
                         console.log("Deleted product: " + product.ModelNumber);
@@ -282,6 +297,40 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             case 'Monitor':
                 return new Monitor(product);
 
+
+    getRegisteredUsers(req, res){
+        AdminDashboardMapper.userTDG.SQLget_users_All().then(function(response){
+            let array = [];
+            for(let i = 0; i<response.length; i++){
+                if(response[i].IsDeleted !== 1){
+                    array.push(response[i]);
+                }
+            }
+            res.json(array);
+        });
+    }
+
+
+
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
+    static addNewProduct(category, product){
+        switch(category){
+            case 'DesktopComputer':
+                return new DesktopComputer(product);
+
+            case 'TabletComputer':
+                return new TabletComputer(product);
+
+            case 'LaptopComputer':
+                return new LaptopComputer(product);
+
+            case 'Monitor':
+                return new Monitor(product);
         }
     }
 

@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import axios from 'axios';
-import auth from '../General/auth.js';
+import auth from '../General/auth.js'
 import {Redirect, Route, BrowserRouter, Switch} from 'react-router-dom';
-import Catalog from '../Dashboard/Catalogue.js';
-import AlertContainer from 'react-alert';
+import Catalog from '../Dashboard/Catalogue.js'
 
-//Regex for username and password validation
-const regex =/^[a-zA-Z0-9]{4,10}$/;
-
-//Options for react-alert
-const alertOptions={
-  position: 'bottom center'
-}
 
 export const LoginModal = React.createClass({
   getInitialState() {
@@ -21,9 +13,6 @@ export const LoginModal = React.createClass({
 
       Username: '',
       Password: '',
-
-      formStatusUsername: null,
-      formStatusPassword: null,
 
       redirect:false
      };
@@ -38,42 +27,12 @@ export const LoginModal = React.createClass({
   },
 
   handleChange(e){
-    this.setState({[e.target.name]: e.target.value});
-    this.validateOnChange(e.target.name, e.target.value);
-  },
-
-  validateOnChange(name, value){
-    if(name === 'Username'){
-      if(value != '' && regex.test(value)){
-        this.setState({formStatusUsername: 'success'});
-      }
-      else{
-        this.setState({formStatusUsername: 'error'});
-      }
-    }
-    if(name === 'Password'){
-      if(value != '' && regex.test(value)){
-        this.setState({formStatusPassword: 'success'});
-      }
-      else{
-        this.setState({formStatusPassword: 'error'});
-      }
-    }
-  },
-
-  validateOnSubmit(){
-    if(this.state.formStatusUsername === 'success' && this.state.formStatusPassword === 'success'){
-      return true;
-    }
-    else{
-      return false;
-    }
+    this.setState({[e.target.name]: e.target.value})
   },
 
   login(e){
     e.preventDefault();
-    if(this.validateOnSubmit()){
-      axios.post('/users/authenticate', {Username: this.state.Username, Password: this.state.Password})
+    axios.post('/users/authenticate', {Username: this.state.Username, Password: this.state.Password})
       .then(res => {
         console.log(res);
         if(res.data.success){
@@ -85,14 +44,13 @@ export const LoginModal = React.createClass({
           console.log(auth.getIsAdmin());
         }
         else{
-
-          this.msg.show(res.data.msg, {type: 'error'});
+            window.alert(res.data.msg);
         }
-      });
-    }
-    else{
-      this.msg.show('Invalid fields', {type: 'error'});
-    }
+      }).catch(function(err){
+        window.alert("User not found");
+        console.log(err);
+    });
+
   },
 
   render() {
@@ -121,20 +79,14 @@ export const LoginModal = React.createClass({
           <Modal.Body>
             <p>Login to your account to save items to save your cart and make purchases!</p>
             <form>
-            <AlertContainer ref={a => this.msg = a} {...alertOptions}/>
-              <FormGroup validationState={this.state.formStatusUsername}>
+              <FormGroup>
                 <ControlLabel>Username</ControlLabel>
-                <FormControl type="text" name="Username" value={this.state.Username} onChange={this.handleChange} placeholder="Enter Username"/>
-                <FormControl.Feedback />
-              </FormGroup>
-              <FormGroup validationState={this.state.formStatusPassword}>
+                   <FormControl type="text" name="Username" value={this.state.Username} onChange={this.handleChange} placeholder="Enter Username"/>
                 <ControlLabel>Password</ControlLabel>
-                <FormControl type="password" name="Password" value={this.state.Password} onChange={this.handleChange} placeholder="Enter Password"/>
-                <FormControl.Feedback />
-              </FormGroup>
-
+                   <FormControl type="password" name="Password" value={this.state.Password} onChange={this.handleChange} placeholder="Enter Password"/>
                 <br />
                 <Button bsStyle="primary" onClick={this.login}>Submit</Button>
+              </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>

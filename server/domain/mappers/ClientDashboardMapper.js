@@ -16,13 +16,15 @@ const Catalogue = require('./CatalogueMapper.js'),
 let purchases = new PurchaseHistory();
 
 
-
+/**
+ *
+ * @type {ClientDashboardMapper}
+ */
 module.exports = class ClientDashboardMapper extends Catalogue{
 
     static get purchases(){
         return purchases;
     }
-
 
     constructor() {
         super();
@@ -36,7 +38,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
      * @param res
      */
     addToCart(req, res){
-            console.log(req.body.username);
+            //console.log(req.body.username);
             //getting user from TDG
             ClientDashboardMapper.userTDG.SQLget_users(req.body.username).then(function(response){
                 let user = response;
@@ -51,7 +53,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
                         let id = response;
                         if(user.getCart().length < 7){
                             user.addToCart(id);
-                            console.log(user.getCart());
+                            //console.log(user.getCart());
                             res.json({success: true, id: id, timeStamp: user.getTimeStamps()[id.SerialNumber]});
                         }
                         else{
@@ -78,7 +80,7 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             let user = response;
             //removes and returns specified serial number of the cart
             let id = user.removeFromCart(req.body.serialNumber);
-            console.log(user.getCart());
+            //console.log(user.getCart());
             res.json(id);
         });
 
