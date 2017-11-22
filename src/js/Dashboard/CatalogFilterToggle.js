@@ -1,7 +1,7 @@
 import React from 'react';
 import {FormGroup} from 'react-bootsrap';
 
-export default class CatalogFilter extends React.Component{
+export default class CatalogFilterToggle extends React.Component{
   constructor(props){
     super(props);
     this.handleShowFilterClick = this.handleShowFilterClick.bind(this);
@@ -9,6 +9,7 @@ export default class CatalogFilter extends React.Component{
     this.state = {isShowFilter: false};
   }
 
+//the following two handler are a toggle to show or hide the filter
   handleShowFilterClick() {
     this.setState({isShowFilter: true});
   }
@@ -37,6 +38,8 @@ export default class CatalogFilter extends React.Component{
   }
 }
 
+
+//display the filter
 function ShowFilter(props) {
   return(
     <div>
@@ -46,7 +49,7 @@ function ShowFilter(props) {
   )
 }
 
-
+//when the filter is hidden have some kind of text displayed, giving instruction to show filter
 function HideFilter(props) {
   return(
   <div>
@@ -55,6 +58,7 @@ function HideFilter(props) {
   </div>
   )
 }
+
 
 function FilteringCatalog(props) {
   const isShowFilter = props.isShowFilter;
@@ -81,6 +85,6 @@ function HideFilterButton(props) {
 }
 
 ReactDOM.render(
-  <CatalogFilter />,
+  <CatalogFilterToggle />,
   document.getElementById('root')
 );
