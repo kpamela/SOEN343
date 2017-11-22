@@ -67,7 +67,7 @@ CREATE TABLE PurchaseHistory(
     SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
     Username varchar(10) NOT NULL, 
-    PurchaseTimeStamp double,
+    PurchaseTimeStamp double NOT NULL,
     IsReturned tinyint(1) DEFAULT '0',
 	
     PRIMARY KEY (Username, PurchaseID), 
