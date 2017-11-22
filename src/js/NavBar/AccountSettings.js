@@ -40,16 +40,17 @@ export const AccountSettings = React.createClass({
 
   delete(){
     let confirm = window.confirm("Are you absolutely sure you want to remove your account?");
-    if(confirm){
-      this.props.user.deleteAccount();
-      auth.logOut();
-      this.setState({redirect:true});
-    }
+      if(confirm){
+          this.props.user.deleteAccount();
+          auth.logOut();
+          this.setState({redirect:true});
+      }
 
   },
 
   render() {
     if(this.state.redirect){
+        location.href = "/";
         return(
             <Redirect to="/" />
         );

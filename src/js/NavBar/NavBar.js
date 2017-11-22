@@ -40,11 +40,13 @@ export default class NavBar extends Component{
     
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/AdminDashboard">Administrator Dashboard</Link></NavItem> : null}
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/UserActivity">User Activity</Link></NavItem> : null}
+
           </Nav>
           <Nav pullRight>
             {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}
             {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="AccountSettings"></div> </NavItem>: null}
+              {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="RegisteredUser"></div> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <Logout/> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <div id="ShoppingCart"></div> </NavItem> : null}
           </Nav>

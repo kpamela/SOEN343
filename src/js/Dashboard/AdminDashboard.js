@@ -1,7 +1,7 @@
 /**
  * Created by CharlesPhilippe on 2017-10-21.
  */
-
+import ReactDOM from 'react-dom';
 import React from 'react';
 import Catalogue from './Catalogue.js';
 import NewProductRequest from './NewProductRequest.js';
