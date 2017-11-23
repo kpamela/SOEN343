@@ -126,6 +126,7 @@ describe('Products', () => {
       });
   });
 
+  //Test adding products
   /*
   * Test the /POST route for adding with an incorrect data field
   */
@@ -264,6 +265,112 @@ describe('Products', () => {
           });
     });
   });
+  describe('/POST products', () => {
+    it('it should POST a product with correct input fields', (done) => {
+      let product =  {
+        "data":
+        { "category": 'DesktopComputer',
+          "description":{
+            "modelNumber": 'desk999',
+             "price": 999,
+             "dimensions": 999,
+             "weight": 999,
+             "brandName": 'Dell',
+             "processorType": 'Intel',
+             "RAMSize": 8,
+             "numberOfCores": 2,
+             "hardDriveSize": 100 },
+          "amount": 2
+        }
+    }
+      chai.request(server)
+          .post('/products/add')
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
+          .send(product)
+          .end((err, res) => {
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              res.body.should.have.property("msg").eqls("Item has been added to change list");
+            done();
+          });
+    });
+  });
+
+  //Test Modifying products
+  /*
+  * Test the /PATCH route for Modifying an existing product
+  */
+  describe('/PATCH products', () => {
+    it('it should PATCH a product with correct input fields', (done) => {
+      let product =  {
+        
+        "previous": 'desk100',
+        "current":{ 
+          "category": 'DesktopComputer',
+          "amount": 1,
+          "description":{ 
+            "brandName": 'Dell',
+            "modelNumber": 'desk100',
+            "dimensions": 300,
+            "price": 100,
+            "weight": 200,
+            "isDeleted": 0,
+            "processorType": 'Intel',
+            "RAMSize": '8',
+            "numberOfCores": 2,
+            "hardDriveSize": '500' 
+          } 
+        } 
+      }
+      
+      chai.request(server)
+          .patch('/products/modify')
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
+          .send(product)
+          .end((err, res) => {
+              //res.body.should.be.a('object');
+              res.body.should.have.property("success").eqls(true);
+              res.body.should.have.property("msg").eqls("Item set to modify. Commit when ready");
+            done();
+          });
+    });
+  });
+  /*
+  * Test the /POST route for Removing an existing product
+  */
+  describe('/POST products', () => {
+    it('it should POST a product deletion with correct input fields', (done) => {
+      let product =  {
+        
+        "model": "desk999",
+        "product": {
+           "BrandName": "Dell",
+           "ModelNumber": "desk999",
+           "Dimensions": "999",
+           "Price": 999,
+           "Weight": 999,
+           "Amount": 2,
+           "Category": "DesktopComputer",
+           "IsDeleted": 0,
+           "ProcessorType": "Intel",
+           "RAMSize": "8",
+           "NumberOfCores": 2,
+           "HardDriveSize": "100"
+          }
+      }
+      chai.request(server)
+          .post('/products/remove')
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
+          .send(product)
+          .end((err, res) => {
+              //res.body.should.be.a('object');
+              res.body.should.have.property("success").eqls(true);
+              res.body.should.have.property("msg").eqls("Item will be deleted on commit.");
+            done();
+          });
+    });
+  });
+
 
   // TEST
 });
