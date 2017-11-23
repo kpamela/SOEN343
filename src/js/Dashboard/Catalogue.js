@@ -70,7 +70,7 @@ import auth from '../General/auth.js';
 
     }
     showCatalogueOnly(){
-        if(!auth.loggedIn()){
+        if(!this.state.usr.username){//if the user is not registered, show listing
            return( <ProductListing
                 userType="regular"
                 products={this.state.PRODUCTS}
@@ -88,9 +88,7 @@ import auth from '../General/auth.js';
             this.state.usr.data.then(this.handleGetData);
         }
 
-        {//if(!auth.getIsAdmin()){
-           // this.showCatalogueOnly()
-        }
+
         return(
             <div>
                 {/*this.state.usr.getData()*/}
@@ -104,7 +102,7 @@ import auth from '../General/auth.js';
                     disableSort={this.state.disableSort}
                 />
                 
-               {/*this.showCatalogueOnly()*/} {/*Commented because it makes the product listing appear twice*/}
+               {this.showCatalogueOnly()}
 
             </div>
         );

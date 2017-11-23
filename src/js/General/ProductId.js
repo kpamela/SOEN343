@@ -19,7 +19,7 @@ export default class ProductID {
 
         //check timeout upon creation
         this.onTimeout();
-        setTimeout(this.onTimeout, 5000);
+        setInterval(this.onTimeout, 5000);
     }
 
 
@@ -28,7 +28,7 @@ export default class ProductID {
 
         if(now >= this.timeCreated + delay) {
             this.user.removeFromShoppingCart(this.serialNumber, this.modelNumber);
-            alert(this.serialNumber + " was removed from your cart.")
+            alert(this.serialNumber + " was removed from your cart.");
             delete this;
         }
 
