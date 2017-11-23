@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Models(
     HasTouchScreen tinyint(1), 
     OperatingSystem varchar(20),
     BatteryInfo varchar(20),
-    Dimensions double NOT NULL, 
+    Dimensions varchar(20) NOT NULL, 
     Weight double NOT NULL, 
     BrandName varchar(20) NOT NULL, 
     Price double(10,2) NOT NULL,
