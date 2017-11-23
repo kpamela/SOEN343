@@ -42,6 +42,8 @@ export default class SearchBar extends React.Component{
               return   this.setState({categoryFilter: <div> <FilterTablet /> </div> });
           case  'Television':
               return   this.setState({categoryFilter: <div> <FilterTelevision /> </div> });
+          case 'Computer':
+              return   this.setState({categoryFilter: <div> <FilterComputer   /> </div> });
         };
     }
 

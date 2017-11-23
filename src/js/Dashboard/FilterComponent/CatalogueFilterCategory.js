@@ -12,7 +12,8 @@ const categories = [
   'LaptopComputer',
   'Monitor',
   'TabletComputer',
-  'Television',
+  'Computer',
+  // 'Television',
 ];
 
 

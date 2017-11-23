@@ -6,11 +6,9 @@ export default class ProductFilters extends React.Component {
   constructor(props){
     super(props);
     this.state= {
-      productName: '',
-      brandName: '',
-      modelNumber: '',
       dimensions: '',
-      price: '',
+      priceMax: '',
+      priceMin: '',
       amountRemaining: '',
       weight: '',
     }
@@ -34,34 +32,9 @@ export default class ProductFilters extends React.Component {
             <div className="col-sm-12">
 
               <form>
-                <label>
-                  Product Name
-                    <input
-                    name="productName"
-                    type="text"
-                    value={this.state.productName}
-                    onChange={this.handleInputChange} />
-                </label>
 
                 <label>
-                  Brand Name:
-                    <input
-                    name="brandName"
-                    type="text"
-                    value={this.state.brandName}
-                    onChange={this.handleInputChange} />
-                </label>
-
-                <label>
-                    Model Number
-                    <input
-                    name="modelNumber"
-                    type="number"
-                    value={this.state.modelNumber}
-                    onChange={this.handleInputChange} />
-                </label>
-                <label>
-                  Dimensions:
+                  Max Dimensions:
                     <input
                     name="dimensions"
                     type="number"
@@ -70,11 +43,20 @@ export default class ProductFilters extends React.Component {
                 </label>
 
                 <label>
-                  Price
+                  Maximum price
                     <input
-                    name="price"
+                    name="priceMax"
                     type="number"
-                    value={this.state.price}
+                    value={this.state.priceMax}
+                    onChange={this.handleInputChange} />
+                </label>
+
+                <label>
+                  Minimum price
+                    <input
+                    name="priceMin"
+                    type="number"
+                    value={this.state.priceMin}
                     onChange={this.handleInputChange} />
                 </label>
 
@@ -88,7 +70,7 @@ export default class ProductFilters extends React.Component {
                 </label>
 
                 <label>
-                  Weight:
+                  Maximum Weight:
                     <input
                     name="weight"
                     type="number"

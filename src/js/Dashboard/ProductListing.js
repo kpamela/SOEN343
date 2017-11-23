@@ -21,7 +21,7 @@ export default class ProductListing extends React.Component{
   }
 
   handleShowForm(item){
-    
+
       if(this.props.userType === "admin") {
           //resetting the state before any change is requested
           this.props.toggleDisableSort("disabled");
@@ -39,7 +39,7 @@ export default class ProductListing extends React.Component{
                   </span>
               })
           });
-          
+
       }
       else if(this.props.userType === "client"){
           this.props.usr.addToCart(item.description.modelNumber);
@@ -68,6 +68,15 @@ export default class ProductListing extends React.Component{
          this.props.onChanges();
     }
 
+  //check is filter is empty
+  isEmpty(obj) {
+    for(var i in obj) {
+        if(obj.hasOwnProperty(i))
+            return false;
+    }
+    return true;
+}
+
   handleModify(item){
       const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
       if( i === this.state.currentPosition || i == -1){
@@ -81,12 +90,13 @@ export default class ProductListing extends React.Component{
       }
   }
 
-
   render(){
         var listing = [];
 
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
+          console.log(product.description);
+
 
             if(product.category.indexOf(this.props.include) === -1){
                     return;
@@ -97,13 +107,31 @@ export default class ProductListing extends React.Component{
                 return;
             }
 
+            if(product.description.dimensions < this.state.dimensions){ //hassan is dealing with it
+                    return;
+            }
+
+            if(product.description.modelNumber != this.state.modelNumber){
+                    return;
+            }
+
+            if(product.description.weight != this.state.weight){
+                  return;
+            }
+
+            if(product.description.price != this.state.price){
+                    return;
+            }
+
+
+
             //Converting product object to product component
             listing.push(
                 <div>
                     <Product className="product" item={product} onShowForm={this.handleShowForm}/>
                 </div>
             );
-            
+
         });
 
 /*
