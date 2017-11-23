@@ -140,17 +140,20 @@ import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
           if(this.state.fieldValue.description) {
               for(let ind in this.state.fieldValue.description){
                   switch(ind){
-                      case 'modelNumber':err[ind] = this.state.fieldValue.description[ind].length <= 0;
-                                        break;
+                      case 'modelNumber':
+                          err[ind] = /^[a-zA-Z0-9]+$/.test(this.state.fieldValue.description[ind]);
+                          break;
+                      case 'dimensions':
+                          err[ind] = /([0-9][.])?[0-9]+x([0-9][.])?[0-9]+x([0-9]*[.])?[0-9]+/.test(this.state.fieldValue.description[ind]);
+                          break;
                       case 'price':
                       case 'weight':
                       case 'hardDriveSize':
                       case 'size':
                       case 'RAMSize':
-                      case 'dimensions':
                       case 'numberOfCores':
                       case 'displaySize':
-                          err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                          err[ind] = (parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind]) && (this.state.fieldValue.description[ind] < 0);
                           break;
                       default: err[ind] = this.state.fieldValue.description[ind].length < 0;
                   }

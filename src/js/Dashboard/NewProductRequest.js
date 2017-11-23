@@ -160,22 +160,21 @@ export default class NewProductRequest extends React.Component{
             for(let ind in this.state.fieldValue.description){
 
                 switch(ind){
-                    case 'price':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
-                    case 'weight':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
-                    case 'hardDriveSize':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
-                    case 'size':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
-                    case 'RAMSize':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
+                    case 'modelNumber':
+                        err[ind] = /^[a-zA-Z0-9]+$/.test(this.state.fieldValue.description[ind]);
+                        break;
                     case 'dimensions':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
+                        err[ind] = /([0-9][.])?[0-9]+x([0-9][.])?[0-9]+x([0-9]*[.])?[0-9]+/.test(this.state.fieldValue.description[ind]);
+                        break;
+                    case 'amount':
+                    case 'price':
+                    case 'weight':
+                    case 'hardDriveSize':
+                    case 'size':
+                    case 'RAMSize':
                     case 'numberOfCores':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
                     case 'displaySize':
-                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
+                        err[ind] = (parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind]) && (this.state.fieldValue.description[ind] < 0);
                         break;
                     default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
                 }
