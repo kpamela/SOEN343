@@ -44,8 +44,8 @@ class App extends Component {
                 <Route path="/AdminDashboard" component={AdminDashboard} />
 
                 <Route path="/AccountSettings" component={AccountSettings} />
-                <Route path="/UserActivity" component={UserActivity} />
-
+                  {// <Route path="/UserActivity" component={UserActivity} />
+                  }
                 <Route path="/ClientDashboard" component={ClientDashboard} />
                 <Route path="/Catalogue" component={Catalogue} />
                 <Route path="/aboutus" component={AboutUs} />

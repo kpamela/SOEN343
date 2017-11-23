@@ -28,9 +28,22 @@ export default class HomePage extends Component{
 
     render(){
         if(this.state.viewCatalog){
-            return(
-                <Redirect to="/Catalogue" />
-            );
+            let perm = localStorage.getItem("isAdmin");
+            if (perm == 0){
+                return(
+                    <Redirect to="/ClientDashboard" />
+                );
+            }
+            else if (perm == 1){
+                return(
+                    <Redirect to="/AdminDashboard" />
+                );
+            }
+            else{
+                return(
+                    <Redirect to="/Catalogue" />
+                );
+            }
         }
         else{
             return (

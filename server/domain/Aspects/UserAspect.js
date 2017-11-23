@@ -26,11 +26,13 @@ module.exports = class UserAspect{
      * Checks if admin is already logged in
      */
     aroundCheck(){
+        console.log(CatalogueAspect.activeUsers.content, 'active users');
         let joinpoint = meld.joinpoint();
         let req = joinpoint.args[0];
         let res = joinpoint.args[1];
         let index = CatalogueAspect.activeUsers.findUser(req.body.Username);
         if(index > -1){
+
             return res.json({success: false, msg:"User is already logged in"});
         }
         else{
