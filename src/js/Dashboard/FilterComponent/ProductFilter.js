@@ -8,11 +8,11 @@ export default class ProductFilters extends Component {
     this.state= {
       productName: '',
       brandName: '',
-      modelNumber '',
+      modelNumber: '',
       dimensions: '',
       price: '',
       amountRemaining: '',
-      weight '',
+      weight: '',
     }
       this.handleInputChange = this.handleInputChange.bind(this);
   }

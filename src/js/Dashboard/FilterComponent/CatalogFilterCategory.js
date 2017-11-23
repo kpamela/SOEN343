@@ -17,11 +17,11 @@ const categories = [
 
 
 class CatalogFilterCategory extends Component {
-  componentWillMount = () => {
+  componentWillMount() {
     this.selectedCheckboxes = new Set();
   }
 
-  toggleCheckbox = label => {
+  toggleCheckbox(label) {
     if (this.selectedCheckboxes.has(label)) {
       this.selectedCheckboxes.delete(label);
     } else {
@@ -29,7 +29,7 @@ class CatalogFilterCategory extends Component {
     }
   }
 
-  handleFormSubmit = formSubmitEvent => {
+  handleFormSubmit(formSubmitEvent){
     formSubmitEvent.preventDefault();
 
     for (const checkbox of this.selectedCheckboxes) {
@@ -52,17 +52,19 @@ class CatalogFilterCategory extends Component {
   }
 
 
-  createCheckbox = label => (
-    <Checkbox
+  createCheckbox(label){
+     <Checkbox
             label={label}
             handleCheckboxChange={this.toggleCheckbox}
             key={label}
-        />
-  )
+      />
+  }
 
-  createCheckboxes = () => (
-    categories.map(this.createCheckbox)
-  )
+
+  createCheckboxes(){
+     categories.map(this.createCheckbox)
+   }
+
   render() {
       return (
         <div className="container">

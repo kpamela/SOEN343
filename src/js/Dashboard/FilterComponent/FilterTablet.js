@@ -8,12 +8,12 @@ export default class FilterTablet extends Component {
     this.state= {
       processor: '',
       ramSize: '',
-      numberOfCores '',
+      numberOfCores: '',
       hardDriveSize: '',
       oS: '',
       batteryInfo: '',
-      displaySize '',
-      cameraInfo
+      displaySize: '',
+      cameraInfo: '',
     }
       this.handleInputChange = this.handleInputChange.bind(this);
   }

@@ -9,7 +9,7 @@ import FilterLaptop from './FilterComponent/FilterLaptop.js';
 import FilterMonitor from './FilterComponent/FilterMonitor.js';
 import FilterTablet from './FilterComponent/FilterTablet.js';
 import FilterTelevision from './FilterComponent/FilterTelevision';
-import ProductFilter from './FilterComponent/FilterTelevision.js';
+import ProductFilter from './FilterComponent/ProductFilter.js';
 
 
 export default class SearchBar extends React.Component{
@@ -42,8 +42,7 @@ export default class SearchBar extends React.Component{
               return   this.setState({categoryFilter: <div> <FilterTablet /> </div> });
           case  'Television':
               return   this.setState({categoryFilter: <div> <FilterTelevision /> </div> });
-        }
-        this.setState({categoryFilter: <FilterTablet>});
+        };
     }
 
     handleSortChange(e){
@@ -79,6 +78,9 @@ export default class SearchBar extends React.Component{
                     </FormControl>
                 </FormGroup>
             </form>
+            <div>
+              <ProductFilter />
+            </div>
             {this.state.categoryFilter}
           </div>
         );

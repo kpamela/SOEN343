@@ -8,11 +8,11 @@ export default class FilterLaptop extends Component {
     this.state= {
       processor: '',
       ramSize: '',
-      numberOfCores '',
+      numberOfCores: '',
       hardDriveSize: '',
       oS: '',
       batteryInfo: '',
-      displaySize '',
+      displaySize: '',
       camera: false,
       touchScreen: false,
     }

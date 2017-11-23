@@ -8,7 +8,7 @@ export default class FilterDesktop extends Component {
     this.state= {
       processor: '',
       ramSize: '',
-      numberOfCores '',
+      numberOfCores: '',
       hardDriveSize: '',
     }
       this.handleInputChange = this.handleInputChange.bind(this);
