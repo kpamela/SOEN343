@@ -92,6 +92,20 @@ describe('Users', () => {
       });
   });
 
+  //TEST ACTIVE USERS
+    describe('ActiveUsers', () => {
+        it('it should be able to retrieve a registry of active users', (done) => {
+            chai.request(server)
+                .get('/users/activeUsers')
+                .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+                .end((err,res) =>{
+                    res.should.be.json;
+                    res.body.should.be.a('array');
+                    done();
+                });
+        });
+    });
+
 });
 
 //TEST PRODUCTS
@@ -321,8 +335,6 @@ describe('Products', () => {
           });
     });
   });
-
-  //Test Modifying products
   /*
   * Test the /POST route for Removing an existing product
   */
@@ -359,4 +371,6 @@ describe('Products', () => {
     });
   });
 
+
+  // TEST
 });
