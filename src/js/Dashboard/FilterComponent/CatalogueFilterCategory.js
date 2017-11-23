@@ -16,7 +16,7 @@ const categories = [
 ];
 
 
-class CatalogFilterCategory extends Component {
+class CatalogueFilterCategory extends Component {
   componentWillMount() {
     this.selectedCheckboxes = new Set();
   }
@@ -84,4 +84,4 @@ class CatalogFilterCategory extends Component {
     }
   }
 
-export default CatalogFilterCategory;
+export default CatalogueFilterCategory;

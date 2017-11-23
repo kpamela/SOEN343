@@ -1,8 +1,8 @@
 import React from 'react';
 import {FormGroup} from 'react-bootsrap';
-import CatalogFilterCategory from './FilterComponent/CatalogFilterCategory.js';
+import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
 
-export default class CatalogFilterToggle extends React.Component{
+export default class CatalogueFilterToggle extends React.Component{
   constructor(props){
     super(props);
     this.handleShowFilterClick = this.handleShowFilterClick.bind(this);
@@ -32,7 +32,7 @@ export default class CatalogFilterToggle extends React.Component{
 
     return(
       <div>
-        <FilteringCatalog isShowFilter={isShowFilter} />
+        <FilteringCatalogue isShowFilter={isShowFilter} />
         {button}
       </div>
     );
@@ -46,7 +46,7 @@ function ShowFilter(props) {
     <div>
       <h1>THIS IS WHERE THE FILTER FORM WILL BE</h1>
       <h2> some more random text </h2>
-      <CatalogFilterCategory />
+      <CatalogueFilterCategory />
     </div>
   )
 }
@@ -62,7 +62,7 @@ function HideFilter(props) {
 }
 
 
-function FilteringCatalog(props) {
+function FilteringCatalogue(props) {
   const isShowFilter = props.isShowFilter;
   if (isShowFilter) {
     return <ShowFilter />;
@@ -87,6 +87,6 @@ function HideFilterButton(props) {
 }
 
 ReactDOM.render(
-  <CatalogFilterToggle />,
+  <CatalogueFilterToggle />,
   document.getElementById('root')
 );
