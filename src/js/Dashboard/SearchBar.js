@@ -9,6 +9,7 @@ import FilterLaptop from './FilterComponent/FilterLaptop.js';
 import FilterMonitor from './FilterComponent/FilterMonitor.js';
 import FilterTablet from './FilterComponent/FilterTablet.js';
 import FilterTelevision from './FilterComponent/FilterTelevision';
+import ProductFilter from './FilterComponent/FilterTelevision.js';
 
 
 export default class SearchBar extends React.Component{
@@ -77,7 +78,6 @@ export default class SearchBar extends React.Component{
                         <option value="false">Sort by Descending price</option>
                     </FormControl>
                 </FormGroup>
-
             </form>
             {this.state.categoryFilter}
           </div>
