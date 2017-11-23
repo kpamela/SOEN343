@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS Models(
     RAMSize long, 
     NumberOfCores int(5), 
     HardDriveSize long, 
-    TelevisionType varchar(5),
     Size double, 
     DisplaySize double,
     HasCamera tinyint(1), 
