@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
 
-export default class ProductFilters extends Component {
+export default class ProductFilters extends React.Component {
 
   constructor(props){
     super(props);

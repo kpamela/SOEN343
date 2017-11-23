@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormGroup} from 'react-bootsrap';
+import {FormGroup} from 'react-bootstrap';
 import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
 
 export default class CatalogueFilterToggle extends React.Component{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
 
-export default class FilterDesktop extends Component {
+export default class FilterDesktop extends React.Component {
 
   constructor(props){
     super(props);

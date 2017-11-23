@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
-import CatalogFilterCategory from './FilterComponent/CatalogFilterCategory.js';
+import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
 import FilterDesktop from './FilterComponent/FilterDesktop.js';
 import FilterLaptop from './FilterComponent/FilterLaptop.js';
 import FilterMonitor from './FilterComponent/FilterMonitor.js';
@@ -52,7 +52,7 @@ export default class SearchBar extends React.Component{
     render(){
         return(
           <div>
-            <form className="catalogForm">
+            <form className="CatalogueForm">
                 <FormGroup>
                     <ControlLabel>Search</ControlLabel>
                     <FormControl type="text" placeholder="Search..."

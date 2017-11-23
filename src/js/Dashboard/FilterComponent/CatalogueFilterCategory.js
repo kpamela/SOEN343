@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormGroup} from 'react-bootsrap';
+import {FormGroup} from 'react-bootstrap';
 import Checkbox from './Checkbox.js';
 import FilterDesktop from './FilterDesktop.js';
 import FilterLaptop from './FilterLaptop.js';
@@ -16,7 +16,7 @@ const categories = [
 ];
 
 
-class CatalogueFilterCategory extends Component {
+class CatalogueFilterCategory extends React.Component {
   componentWillMount() {
     this.selectedCheckboxes = new Set();
   }

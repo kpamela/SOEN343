@@ -101,11 +101,10 @@ import auth from '../General/auth.js';
                     onSortChange={this.handleSortChange}
                     disableSort={this.state.disableSort}
                 />
-                
+
                {this.showCatalogueOnly()}
 
             </div>
         );
     }
 }
-
