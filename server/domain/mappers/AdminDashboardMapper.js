@@ -13,31 +13,42 @@ const aspect = require('aspect-js');
 const meld = require('meld');
 
 /**
- * History containing the old products that were modified or deleted
- * Modified should contain the current model number, considering model numbers can change,
- * as well as the old object
- * @type {{modified: Array, deleted: Array}}
- * @private
+ * A single admin is allowed on the system at any one time.
+ * @type {Admin}
  */
-//let _productHistory = new ProductHistory();
-/**
- *
- * @type {ModelTDG}
- */
-let modelTDG = new ModelTDG();
+let _admin = null;
+
 
 /**
  *
- * @type {ProductTDG}
+ * @type {AdminDashboardMapper}
  */
-let productTDG = new ProductTDG();
-
 module.exports = class AdminDashboardMapper extends Catalogue{
 
-    static get modelTDG(){
-        return modelTDG;
+    /**
+     *
+     * @returns {Admin}
+     */
+    static get admin(){
+        return _admin;
+
     }
 
+    /**
+     *
+     * @param {Admin} usr
+     */
+    static set admin(usr){
+        _admin = usr
+    }
+
+    /**
+     *
+     * @param {Admin} usr
+     */
+    static set admin(usr){
+        _admin = usr
+    }
 
    constructor() {
         super();
@@ -48,7 +59,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
     /**
-     * Adds a new Item to the product Listing, and sets to new in Unit of Work, no database calls
+     * Instantiates a new product, registers it as new...
      * @param req
      * @param res
      */
@@ -66,6 +77,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 return res.json(400, {success:false, msg: "Invalid type for price variable."});
             }
             //testing values
+
             if (!category.match(/^(DesktopComputer|TabletComputer|LaptopComputer|television|Monitor)$/)){
                 return res.json(400, {success: false, msg: "Invalid product Category."});
             }
@@ -87,7 +99,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             return res.json({msg:"Item has been added to change list",
                 newData: product,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
-
 
     }
 
@@ -145,6 +156,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             let changes = AdminDashboardMapper.unitOfWork.commit();
 
+
             //Committing changes from unit of work
             //storing them on db
             //setting all clean -> sets UoW's changeList to default
@@ -155,9 +167,11 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
 
-                modelTDG.SQLadd_models(product).then(function(response){
+
+               AdminDashboardMapper.modelTDG.SQLadd_models(product, false).then(function(response){
+
                     console.log(response);
-                    productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
+                   AdminDashboardMapper.productTDG.SQLadd_products(product.ModelNumber, product.Amount).then(function(response){
                         console.log(response);
                         console.log("Added product: " + product.ModelNumber);
                     });
@@ -168,36 +182,34 @@ module.exports = class AdminDashboardMapper extends Catalogue{
                 let old = changes.dirtyList[i].oldModel;
                 AdminDashboardMapper.unitOfWork.registerClean(product);
                 if(old.ModelNumber === product.ModelNumber){//same model number
-                    modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
+                    AdminDashboardMapper.modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
                         console.log(response);
                         console.log("Modified product: "+product.ModelNumber);
                     });
                     if(old.Amount < product.Amount){//add specified quantity
-                        productTDG.SQLadd_products(old.ModelNumber, product.Amount - old.Amount);
+                        AdminDashboardMapper.productTDG.SQLadd_products(old.ModelNumber, product.Amount - old.Amount);
                     }
                     else if(old.Amount < product.Amount){//remove specified quantity
-                        productTDG.SQLadd_products(old.ModelNumber, old.Amount - product.Amount);
+                        AdminDashboardMapper.productTDG.SQLadd_products(old.ModelNumber, old.Amount - product.Amount);
                     }
                 }
                 else{
-                    productTDG.SQLdelete_products(old.ModelNumber).then(function(response){
-                        modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
+                    AdminDashboardMapper.productTDG.SQLdelete_products(old.ModelNumber).then(function(response){
+                        AdminDashboardMapper.modelTDG.SQLmodify_models(old.ModelNumber, product).then(function(response){
                             console.log("Modified product: "+product.ModelNumber);
-                            productTDG.SQLadd_products(product.ModelNumber, product.Amount);
+                            AdminDashboardMapper.productTDG.SQLadd_products(product.ModelNumber, product.Amount);
                         })
                     })
                 }
 
-                //TODO tdg work
+
             }
             for(let i in changes.deletedList){
                 let product = changes.deletedList[i];
-
                 AdminDashboardMapper.unitOfWork.registerClean(product);
 
-                //TODO tdg work for product ids
-                productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
-                    modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
+                AdminDashboardMapper.productTDG.SQLdelete_products(product.ModelNumber).then(function(response){
+                    AdminDashboardMapper.modelTDG.SQLdelete_models(product.ModelNumber).then(function(response){
                         console.log("Deleted product: " + product.ModelNumber);
                     });
                 });
@@ -285,7 +297,64 @@ module.exports = class AdminDashboardMapper extends Catalogue{
     }
 
 
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
+    static addNewProduct(category, product){
+        switch(category){
+            case 'DesktopComputer':
+                return new DesktopComputer(product);
+
+            case 'TabletComputer':
+                return new TabletComputer(product);
+
+            case 'LaptopComputer':
+                return new LaptopComputer(product);
+
+            case 'Monitor':
+                return new Monitor(product);
+        }
+    }
 
 
-}
+    getRegisteredUsers(req, res){
+        AdminDashboardMapper.userTDG.SQLget_users_All().then(function(response){
+            let array = [];
+            for(let i = 0; i<response.length; i++){
+                if(response[i].IsDeleted !== 1){
+                    array.push(response[i]);
+                }
+            }
+            res.json(array);
+        });
+    }
+
+
+
+    /**
+     * Instantiate and return a product created from a category, and an already existing product
+     * @param category
+     * @param product
+     * @returns {*}
+     */
+    static addNewProduct(category, product){
+        switch(category){
+            case 'DesktopComputer':
+                return new DesktopComputer(product);
+
+            case 'TabletComputer':
+                return new TabletComputer(product);
+
+            case 'LaptopComputer':
+                return new LaptopComputer(product);
+
+            case 'Monitor':
+                return new Monitor(product);
+        }
+    }
+
+};
 

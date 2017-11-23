@@ -6,6 +6,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {ListGroupItem} from 'react-bootstrap';
 
+import desktopIcon from '../../images/desktopicon.png';
+import laptopIcon from '../../images/laptopicon.png';
+import monitorIcon from '../../images/monitoricon.png';
+import tabletIcon from '../../images/tableticon.png';
+
+
+
 export default class Product extends React.Component{
 
     showModifyForm(){
@@ -29,6 +36,24 @@ export default class Product extends React.Component{
 
         return desc;
     }
+    
+  getIcon(category){
+    switch (category){
+        case 'DesktopComputer':
+            return <img src={desktopIcon} alt="desktopicon"/>
+            break;
+        case 'LaptopComputer':
+            return <img src={laptopIcon} alt="laptopicon"/>
+            break;
+        case 'Monitor':
+            return <img src={monitorIcon} alt="monitoricon"/>
+            break;
+        case 'TabletComputer':
+            return <img src={tabletIcon} alt="tableticon"/>
+            break;
+
+     }
+    }   
 
 
     render(){
@@ -37,6 +62,7 @@ export default class Product extends React.Component{
         return (
             <div className="prodcutContainer">
                 <ListGroupItem bsStyle="secondary" className="product" onClick={() =>this.showModifyForm()}>
+                    {this.getIcon(this.props.item.category)}
                     <b>{this.props.item.name}</b><br/>
                     <i>{this.props.item.category}</i><br/>
                     {this.displayDescription()}

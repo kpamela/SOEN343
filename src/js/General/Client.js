@@ -132,7 +132,8 @@ export default class Client extends User{
         this.shoppingCart = [];
         this.axiosInstance.post("completeTransaction", {username: this.username},{cancelToken: this.source.token} )
             .then(function(response){
-                alert("transaction completed! " + response.data.history)
+                alert("transaction completed! ");
+                location.reload();
             }).catch(function(response){
                 console.log(response);
         });
@@ -144,6 +145,18 @@ export default class Client extends User{
      */
     purchaseHistoryCallback(response){
         this.purchaseHistory = response.data;
+
+    }
+
+    getReturnedItems(){
+        let returned = [];
+        for(let i = 0; i<this.purchaseHistory.length; i++){
+            if(this.purchaseHistory[i].IsReturned){
+                returned.push(this.purchaseHistory[i].SerialNumber);
+            }
+        }
+        return returned;
+
     }
 
     /**
@@ -157,10 +170,26 @@ export default class Client extends User{
         })
     }
 
+
     returnItem(serial){
         this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
             .then(function(response){
+                alert("Return of " + serial + " successful!");
                 console.log(response);
+                location.reload();
+            }).catch(function(err){
+                console.log(err);
+        })
+    }
+
+
+    deleteAccount(){
+        let config = {
+            headers: {'Authorization': this.token}
+        };
+        axios.post('/users/deleteAccount', {username: this.username}, config)
+            .then(function(response){
+                alert(response.data);
             }).catch(function(err){
                 console.log(err);
         })

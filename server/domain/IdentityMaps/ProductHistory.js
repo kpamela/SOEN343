@@ -6,6 +6,7 @@
 module.exports =  class ProductHistory{
     
     constructor(){
+        this.new = [];
         this.modified =[];
         this.deleted=[];
     }
@@ -51,6 +52,7 @@ module.exports =  class ProductHistory{
     }
 
     resetHistory(){
+         this.new = [];
         this.modified =[];
         this.deleted=[];
     }

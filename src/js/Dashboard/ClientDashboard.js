@@ -9,6 +9,7 @@ import ProductListing from './ProductListing.js';
 import {PageHeader} from 'react-bootstrap';
 import {ShoppingCartModal} from '../NavBar/ShoppingCartModal.js';
 import {PurchaseHistoryModal} from '../NavBar/PurchaseHistoryModal.js';
+import {AccountSettings} from '../NavBar/AccountSettings.js';
 
 
 export class ClientDashboard extends Catalogue{
@@ -19,8 +20,10 @@ export class ClientDashboard extends Catalogue{
     }
 
     render() {
+        let account = <AccountSettings user={this.state.usr}/>;
         let shopping =<ShoppingCartModal user={this.state.usr}/>;
         let purchases = <PurchaseHistoryModal user={this.state.usr}/>;
+        let settings = document.getElementById("AccountSettings");
         let history = document.getElementById("PurchaseHistory");
         let cart = document.getElementById("ShoppingCart");
         if(cart) {
@@ -29,12 +32,15 @@ export class ClientDashboard extends Catalogue{
         if(history){
             ReactDOM.render(purchases, history);
         }
+        if(settings){
+            ReactDOM.render(account, settings);
+        }
 
 
         return(
             <div>
 
-                <PageHeader className="catalogHeader">Client Dashboard</PageHeader>
+                <PageHeader className="catalogHeader"> Client Dashboard </PageHeader>
                 {super.render()}
                 <ProductListing
                     userType="client"

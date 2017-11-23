@@ -20,7 +20,8 @@ const express = require('express'),
     CatalogueAspect = require('./domain/Aspects/CatalogueAspect.js'),
     AdminAspect = require('./domain/Aspects/AdminDashboardAspect.js'),
     ClientAspect = require('./domain/Aspects/ClientDashboardAspect.js'),
-    UserAspect = require('./domain/Aspects/UserAspect.js');
+    UserAspect = require('./domain/Aspects/UserAspect.js'),
+    QueueAspect = require('./data-source/TDG/QueueAspect');
 const aspect = require('aspect-js');
 const meld = require('meld');
 const trace = require('meld/aspect/trace');
@@ -102,11 +103,13 @@ let userAspect = new UserAspect(userMapper);
  *
  */
 app.get('/users/activeUsers', userMapper.getActiveUsersRegistry);
+
 app.get('/products/view', catalogueMapper.view);
 app.get('/products/revertChanges', adminDashboardMapper.revertChanges);
 app.get('/products/getCommitState', adminDashboardMapper.getCommitState);
 app.get('/products/getShoppingCart', clientDashboardMapper.getShoppingCart);
 app.get('/products/getPurchaseHistory', clientDashboardMapper.getPurchaseHistory);
+app.get('/users/getRegisteredUsers', adminDashboardMapper.getRegisteredUsers);
 /**
  *
  * POST
@@ -115,6 +118,8 @@ app.get('/products/getPurchaseHistory', clientDashboardMapper.getPurchaseHistory
 app.post('/users/authenticate', userMapper.authenticate);
 app.post('/users/register', userMapper.registerUser);
 app.post('/users/logout', userMapper.logout);
+app.post('/users/deleteAccount', userMapper.deleteAccount);
+
 app.post('/products/add', adminDashboardMapper.add);
 app.post('/products/remove', adminDashboardMapper.remove);
 app.post('/products/commitChanges', adminDashboardMapper.commitChanges);

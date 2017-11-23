@@ -67,6 +67,8 @@
     "babel-plugin-contracts": "^1.2.0",
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
-    "mocha": "^3.5.3"
+    "file-loader": "^1.1.5",
+    "mocha": "^3.5.3",
+    "url-loader": "^0.6.2"
   }
 }

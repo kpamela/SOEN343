@@ -132,7 +132,7 @@ describe('Products', () => {
         }}
         chai.request(server)
             .post('/products/add')
-            .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+            .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
             .send(product)
             .end((err, res) => {
                 res.body.should.be.a('object');
@@ -159,7 +159,7 @@ describe('Products', () => {
       }}
       chai.request(server)
           .post('/products/add')
-          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
           .send(product)
           .end((err, res) => {
               res.body.should.be.a('object');
@@ -186,7 +186,7 @@ describe('Products', () => {
       }}
       chai.request(server)
           .post('/products/add')
-          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
           .send(product)
           .end((err, res) => {
               res.body.should.be.a('object');
@@ -213,7 +213,7 @@ describe('Products', () => {
       }}
       chai.request(server)
           .post('/products/add')
-          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
           .send(product)
           .end((err, res) => {
               res.body.should.be.a('object');
@@ -240,7 +240,7 @@ describe('Products', () => {
       }}
       chai.request(server)
           .post('/products/add')
-          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJG1DRzFzV0pHSkNleHpJSkdYdnB0NGVHSkRRRTV4SEs0b3hYci9pWEowZU1vY0hpVjN1RHl5IiwiRmlyc3ROYW1lIjoidGVzdCIsIkxhc3ROYW1lIjoidGVzdCIsIkVtYWlsQWRkcmVzcyI6InRlc3QiLCJQaG9uZU51bWJlciI6IjEyMyIsIkFkbWluaXN0cmF0b3IiOjAsIkFwdCI6bnVsbCwiU3RyZWV0TnVtYmVyIjowLCJTdHJlZXQiOiIiLCJDaXR5IjoiIiwiWklQIjoiIiwiQ291bnRyeSI6IiJ9LCJpYXQiOjE1MTA3NjY5NDcsImV4cCI6MTUxMTM3MTc0N30.seVNLEik66EPvkd-luer0GxNh3eXOm0ZOX-E3tm6EIM")
+          .set('Authorization', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlVzZXJuYW1lIjoidGVzdCIsIlBhc3N3b3JkIjoiJDJhJDEwJHdiTExqdS54TDVxQURSSHM5SzZSNE93RkpOY2tmLkNQNzlhZnFZTTI3T1N6RlFTNFlNcHBtIiwiRmlyc3ROYW1lIjoiVGVzdCIsIkxhc3ROYW1lIjoiVGVzcyIsIkVtYWlsQWRkcmVzcyI6InRlc3RAdGVzdC5jb20iLCJQaG9uZU51bWJlciI6IjQ1MDkyMzg0OTIiLCJBZG1pbmlzdHJhdG9yIjowLCJBcHQiOiIiLCJTdHJlZXROdW1iZXIiOjY1NSwiU3RyZWV0IjoiIiwiQ2l0eSI6IiIsIlpJUCI6IiIsIkNvdW50cnkiOiIiLCJJc0RlbGV0ZWQiOjB9LCJpYXQiOjE1MTE0MTMxNjEsImV4cCI6MTUxMjAxNzk2MX0.7Yy8OjOrVip4_54_B2I9O3OXE4GSk2AjsGIgWstcvlg")
           .send(product)
           .end((err, res) => {
               res.body.should.be.a('object');
