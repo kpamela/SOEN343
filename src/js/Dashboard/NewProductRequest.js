@@ -161,12 +161,19 @@ export default class NewProductRequest extends React.Component{
 
                 switch(ind){
                     case 'price':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
                     case 'weight':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
                     case 'hardDriveSize':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind]) < 0;
                     case 'size':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
                     case 'RAMSize':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
                     case 'dimensions':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
                     case 'numberOfCores':
+                        err[ind] = parseFloat(this.state.fieldValue.description[ind] < 0);
                     case 'displaySize':
                         err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                         break;
