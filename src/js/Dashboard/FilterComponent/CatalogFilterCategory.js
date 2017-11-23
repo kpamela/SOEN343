@@ -36,15 +36,15 @@ class CatalogFilterCategory extends Component {
       console.log(checkbox, 'is selected.');    //checkbox is a list of all checked items
       switch(checkbox){
         case 'DesktopComputer':
-            return <div> <FilterDesktop> </div>
+            return <div> <FilterDesktop /> </div>
         case 'LaptopComputer':
-            return <div> <FilterLaptop> </div>
+            return <div> <FilterLaptop /> </div>
         case  'Monitor':
-            return <div> <FilterMonitor> </div>
+            return <div> <FilterMonitor /> </div>
         case  'TabletComputer':
-            return <div> <FilterTablet> </div>
+            return <div> <FilterTablet /> </div>
         case  'Television':
-            return <div> <FilterTelevision> </div>
+            return <div> <FilterTelevision /> </div>
         default:
           break;
       }
