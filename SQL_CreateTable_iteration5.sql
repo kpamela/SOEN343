@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Models(
 CREATE TABLE IF NOT EXISTS Products(
     SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
-    Available tinyint(1), 
+    Available tinyint(1) NOT NULL DEFAULT '1', 
 	
     PRIMARY KEY (SerialNumber, ModelNumber), 
     FOREIGN KEY (ModelNumber) REFERENCES models (ModelNumber) ON UPDATE CASCADE, 
@@ -62,16 +62,17 @@ CREATE TABLE IF NOT EXISTS Products(
 ); 
 
 -- Table structure for table 'PurchaseHistory' -- 
-CREATE TABLE PurchaseHistory2( 
+CREATE TABLE PurchaseHistory( 
+    PurchaseID varchart(36) NOT NULL, 
     SerialNumber varchar(36) NOT NULL, 
     ModelNumber varchar(10) NOT NULL, 
     Username varchar(10) NOT NULL, 
-    PurchaseTimeStamp double,
-    IsReturned tinyint(1) DEFAULT '0',
+    PurchaseTimeStamp double NOT NULL,
+    IsReturned tinyint(1) NOT NULL DEFAULT '0',
 	
-    PRIMARY KEY (Username, SerialNumber), 
+    PRIMARY KEY (Username, PurchaseID), 
     FOREIGN KEY (Username) REFERENCES Users (Username), 
-    UNIQUE KEY (SerialNumber)
+    UNIQUE KEY (PurchaseID)
 ); 
     
     

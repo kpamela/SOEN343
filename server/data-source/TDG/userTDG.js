@@ -10,12 +10,27 @@ class UserTDG{
   /****************************************
                   Read
   ****************************************/
+  SQLget_users_All(username){
+      let data = new jquery.Deferred();
+    let userInfo = {sql:"SELECT * FROM users"};
+    handler.handleRead(userInfo, data);
+    return data;
+  }
+
   SQLget_users(username){
       let data = new jquery.Deferred();
-    let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
+    let userInfo = {sql:"SELECT * FROM users WHERE Username = ? and IsDeleted = 0 LIMIT 1",
                     values: username};
     handler.handleRead(userInfo, data);
     return data;
+  }
+
+  SQLget_users_any(username){
+      let data = new jquery.Deferred();
+      let userInfo = {sql:"SELECT * FROM users WHERE Username = ? LIMIT 1",
+          values: username};
+      handler.handleRead(userInfo, data);
+      return data;
   }
 
   /****************************************
@@ -23,7 +38,7 @@ class UserTDG{
   ****************************************/
   SQLadd_users(user) {
       let data = new jquery.Deferred();
-      this.SQLget_users(user.Username).then(function(existingUser){
+      this.SQLget_users_any(user.Username).then(function(existingUser){
         if(existingUser != ''){
             data.resolve({failure: true, msg:"User already exists"});
         }
@@ -46,62 +61,13 @@ class UserTDG{
       return data;
   }
 
-  SQLdelete_users(username) {
-    let data = new jquery.Deferred(); 
-    let deleteUser = {sql:"DELETE FROM users WHERE Username = ?", 
-                      values: username};
-    handler.handleWrite(deleteUser, data);
-    return data;
-
-  } 
- /* SQLadd_users(user, password){
-    if (SQLget_users(user.Username)!=null){
-      let newUser = "INSERT INTO users SET" + userInfo;
-      bcrypt.hash(password, 10, (err, hash) => {
-          if(err) throw err;
-          password = hash;
-      let hashPassword = `INSERT INTO users SET`;
-      handler.handleWrite(newUser);
-      handleWrite(hashPassword);
-      console.log("Successfully registered user");
-    }
-    else{
-      console.log("user already exists");
-    }
+  SQLdelete_users(username) {                              //Will update the IsDeleted status in the database
+    let data = new jquery.Deferred();
+    let updateUser = {sql:"UPDATE users SET IsDeleted = 1 WHERE Username = ?",
+                         values: [username]};
+      handler.handleWrite(updateUser,data);
+      return data;
   }
 
-/*
-  SQLset_users_Password(username,password){
-    let setUserPassword = "SELECT Password FROM users WHERE Username = " + username + " LIMIT 1"
-
-    db.getConnection((err, connection) => {
-        userPassword(username);
-        connection.query(userPassword(username), (err, user) => {
-            if(err) throw err;
-                let sql = `INSERT INTO users SET ?`;
-                bcrypt.hash(password, 10, (err, hash) => {
-                    if(err) throw err;
-                    password = hash;
-                    // Add user
-                    connection.query(sql, password, (err, result) => {
-                        if(err){
-                            console.log(err);
-                            resolve({success: false, msg: "Failed to register user"});
-                        }
-                        else{
-                            resolve({success: true, msg: "User registered"});
-                        }
-                    });
-                });
-            }
-            else {
-                if(this.username == user[0].Username){
-                    resolve({success: false, msg: "Username already exists"});
-                }
-            }
-        });
-    });
-  }
-*/
 }
 module.exports = UserTDG;

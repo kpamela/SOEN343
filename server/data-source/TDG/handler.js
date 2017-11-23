@@ -3,11 +3,19 @@
 */
 const mysql   = require('mysql'),
       db      = require('../config/database.js');
-let _writing = false;
-module.exports = {
-    handleRead: function (sql, data) {
 
-        while(_writing){}//busy wait
+
+const meld = require('meld');
+let writingQueue = [];
+let writing = false;
+module.exports  = class handler{
+    constructor(){
+
+    }
+
+    static handleRead(sql, data) {
+
+       // while(_writing){}//busy wait
        db.getConnection((err, connection) => {
           connection.query(sql, (err, result) => {
               if (err) {
@@ -22,25 +30,27 @@ module.exports = {
               connection.release();
           });
       });
-    },
+    }
 
-    handleWrite: function (sql, data) {
+    static handleWrite(sql, data) {
 
-        while(_writing){console.log(data, " is waiting")}//busy wait
-      db.getConnection((err, connection) => {
-            _writing = true;
+        console.log('writing');
+        db.getConnection((err, connection) => {
+
           connection.query(sql,(err, result) => {
-              _writing = false;
-
+                writing = false;
+                console.log('done');
               if (err) {
                   console.log(err);
                   data.resolve(err);
               }
               else {
+
                   console.log("Successfully modified the database!");
                   console.log(result);
                   data.resolve(result);
               }
+
               connection.release();
 
           });

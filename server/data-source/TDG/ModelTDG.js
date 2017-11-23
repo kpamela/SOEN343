@@ -31,27 +31,42 @@ class ModelTDG{
                 Write
   ****************************************/
 
-  SQLadd_models(model){                                               //Adds a model into the database
+  SQLadd_models(model, wasDeleted){                                               //Adds a model into the database
       let data = new jquery.Deferred();
-    let addInfo = {sql: "INSERT INTO models SET ?",
-                    values: [model]};
+    let addInfo;
+    if(wasDeleted){
+        addInfo = { sql: "UPDATE models SET ? WHERE ModelNumber = ?",
+            values:[model, model.ModelNumber]};
+    }
+    else{
+         addInfo = {sql: "INSERT INTO models SET ?",
+            values: [model]};
+    }
     handler.handleWrite(addInfo, data);
     return data;
   }
 
   SQLmodify_models(modelNumber, newModel){                 //Modifies the information for the model
       let data = new jquery.Deferred();
-      let modifyModel = { sql: "UPDATE models SET ? WHERE models.ModelNumber = +" + modelNumber,
-                            values:[newModel]};
+      let modifyModel = { sql: "UPDATE models SET ? WHERE ModelNumber = ?" ,
+                            values:[newModel, modelNumber]};
     handler.handleWrite(modifyModel, data);
     return data;
   }
 
-  SQLdelete_models(modelNumber){                                       //Will remove a model from the database
+  SQLupdate_amount(modelNumber, amount){
       let data = new jquery.Deferred();
-    let deleteProduct = {sql:`DELETE FROM models WHERE ModelNumber = ?`,
+      let modifyModel = { sql: "UPDATE models SET Amount = ? WHERE ModelNumber = ?" ,
+          values:[amount, modelNumber]};
+      handler.handleWrite(modifyModel, data);
+      return data;
+  }
+
+  SQLdelete_models(modelNumber) {                                //Will update the IsDeleted status in the database
+    let data = new jquery.Deferred();
+    let updateModel = {sql:"UPDATE models SET IsDeleted = 1 WHERE ModelNumber = ?",
                          values: [modelNumber]};
-      handler.handleWrite(deleteProduct,data);
+      handler.handleWrite(updateModel,data);
       return data;
   }
 

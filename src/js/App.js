@@ -5,8 +5,9 @@ import Catalogue from './Dashboard/Catalogue.js';
 import Main from './Main/Main.js';
 import HomePage from './HomePage/HomePage.js';
 import AboutUs from './AboutUs/AboutUs.js';
-import UserActivity from './NavBar/UserActivity.js';
 
+import AccountSettings from './NavBar/AccountSettings';
+import UserActivity from './NavBar/UserActivity.js';
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
@@ -41,7 +42,10 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/AdminDashboard" component={AdminDashboard} />
-                <Route path="/UserActivity" component={UserActivity} />
+
+                <Route path="/AccountSettings" component={AccountSettings} />
+                  {// <Route path="/UserActivity" component={UserActivity} />
+                  }
                 <Route path="/ClientDashboard" component={ClientDashboard} />
                 <Route path="/Catalogue" component={Catalogue} />
                 <Route path="/aboutus" component={AboutUs} />

@@ -2,22 +2,10 @@
  * Created by CharlesPhilippe on 2017-10-22.
  */
 const express = require('express'),
-    ClassBasedRouter = require('express-class-router'),
-  //  products = express.Router(),
-    passport = require('passport'),
-    jwt = require('jsonwebtoken'),
     ProductTDG = require('../../data-source/TDG/ProductTDG.js'),
     ModelTDG = require('../../data-source/TDG/ModelTDG.js'),
     UserTDG = require('../../data-source/TDG/userTDG.js'),
-    DesktopComputer =  require('../classes/ProductClasses/DesktopComputer'),
-    LaptopComputer = require('../classes/ProductClasses/LaptopComputer'),
-    TabletComputer = require('../classes/ProductClasses/TabletComputer'),
-    Monitor = require('../classes/ProductClasses/Monitor.js'),
-    UnitOfWork = require('../UnitOfWork.js'),
-    ProductsIdentityMap = require('../IdentityMaps/ProductsIdentityMap');
-const aspect = require('aspect-js');
-const meld = require('meld');
-const trace = require('meld/aspect/trace');
+    UnitOfWork = require('../UnitOfWork.js');
 
 
 /**
@@ -25,7 +13,15 @@ const trace = require('meld/aspect/trace');
  * @type {ModelTDG}
  */
 let modelTDG = new ModelTDG();
+/**
+ *
+ * @type {ProductTDG}
+ */
 let productTDG = new ProductTDG();
+/**
+ *
+ * @type {UserTDG}
+ */
 let userTDG = new UserTDG();
 /**
  * Unit of work is common to all catalogues
@@ -34,7 +30,7 @@ let _unitOfWork = new UnitOfWork();
 
 
 /**
- * Based on express-class-router
+ *
  * @type {CatalogueMapper}
  */
 
@@ -49,27 +45,33 @@ module.exports = class CatalogueMapper{
         return _unitOfWork;
     }
 
+    /**
+     *
+     * @returns {ModelTDG}
+     */
      static get modelTDG(){
         return modelTDG
     }
 
+    /**
+     * @returns {ProductTDG}
+     */
     static get productTDG(){
          return productTDG;
     }
 
+    /**
+     *
+     * @returns {UserTDG}
+     */
     static get userTDG(){
         return userTDG;
     }
 
    constructor() {
-        //let traced =  meld(this, 'router', trace());
        this.view = this.view.bind(this);
 
     }
-
-
-
-
 
     /**
      *If the productListing isn't set, set it to the content of the database
@@ -88,31 +90,6 @@ module.exports = class CatalogueMapper{
 
     }
 
-
-
-
-    /**
-     * Instantiate and return a product created from a category, and an already existing product
-     * @param category
-     * @param product
-     * @returns {*}
-     */
-    static addNewProduct(category, product){
-        switch(category){
-            case 'DesktopComputer':
-                return new DesktopComputer(product);
-
-            case 'TabletComputer':
-                return new TabletComputer(product);
-
-            case 'LaptopComputer':
-                return new LaptopComputer(product);
-
-            case 'Monitor':
-                return new Monitor(product);
-
-        }
-    }
 
 
 };
