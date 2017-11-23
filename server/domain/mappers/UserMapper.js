@@ -62,7 +62,7 @@ module.exports = class UserMapper {
                    res.status(500);
                }
                else if(isMatch){
-                   const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
+                   const token = jwt.sign({user:user[0]}, 'mysecret', {/*expiresIn:604800*/});
                    let activeUser = new User(user[0]);
                  //  console.log(activeUser);
                    if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
@@ -128,7 +128,7 @@ module.exports = class UserMapper {
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
             if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
                 UserMapper.activeUsersRegistry.splice(i, 1);
-                return res.send('logged out');
+                return res.json({success:true, msg:'logged out'});
             }
         }
         return res.status(500).send("user not found");
