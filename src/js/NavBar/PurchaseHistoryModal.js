@@ -47,6 +47,7 @@ export class PurchaseHistoryModal extends React.Component{
             this.props.user.returnItem(this.state.selection[i]);
             this.state.selection.splice(i,1);
         }
+
     }
 
     createCustomButtonGroup() {

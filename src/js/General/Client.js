@@ -175,9 +175,9 @@ export default class Client extends User{
     returnItem(purchaseId){
         this.axiosInstance.post("returnItem", {username: this.username, purchaseId: purchaseId})
             .then(function(response){
-                alert("Return of " + serial + " successful!");
+                alert("Return of " + purchaseId + " successful!");
                 console.log(response);
-                location.reload();
+               // location.reload();
             }).catch(function(err){
                 console.log(err);
         })

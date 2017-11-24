@@ -2,7 +2,7 @@
  * Created by CharlesPhilippe on 2017-11-12.
  */
 const User = require("./user.js"),
-    ShoppingCart = require('../IdentityMaps/ShoppingCart.js');
+    ShoppingCart = require('./ShoppingCart.js');
 
 
 /**

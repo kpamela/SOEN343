@@ -2,13 +2,18 @@
  * Created by CharlesPhilippe on 2017-10-31.
  */
 var check = require('offensive'); 
-const IdentityMap = require('./IdentityMap');
 
-module.exports = class ShoppingCart extends IdentityMap{
+
+module.exports = class ShoppingCart{
 
     constructor(content) {
-        super(content);
+
+        this.content = [];
         this.timestamps = {};
+
+        if(content){//specified content
+            this.content = content
+        }
     }
 
 
@@ -68,16 +73,25 @@ module.exports = class ShoppingCart extends IdentityMap{
         //Precondition 
         var oldshoppingCart = this.content; 
         const index = this.findItem(serial);
-        check(index).is.not.equalTo(-1); 
+       // check(index).is.not.equalTo(-1);
 
         //removing model number
         this.removeIndex(index);
         delete this.timestamps[serial];
 
         //Post Condition
-        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCart.length()-1); 
+      /*  check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCart.length()-1);
         const index2 = this.findItem(serial); 
-        check(index2).is.equalTo(-1); 
+        check(index2).is.equalTo(-1); */
+    }
+
+
+    removeIndex(index){
+        this.content.splice(index, 1);
+    }
+
+    setTo(index, ob1){
+        this.content[index] = ob1;
     }
 
 }
