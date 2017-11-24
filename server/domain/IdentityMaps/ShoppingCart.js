@@ -66,18 +66,20 @@ module.exports = class ShoppingCart extends IdentityMap{
      */
     removeItem(serial){
         //Precondition 
-        var oldshoppingCart = this.content; 
+        var oldshoppingCartLength = this.content.length; 
         const index = this.findItem(serial);
-        check(index).is.not.equalTo(-1); 
+        check(index, 'index').is.not.equalTo(-1); 
+
+        console.log(oldshoppingCartLength)
 
         //removing model number
         this.removeIndex(index);
         delete this.timestamps[serial];
 
         //Post Condition
-        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCart.length()-1); 
+        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCartLength - 1); 
         const index2 = this.findItem(serial); 
-        check(index2).is.equalTo(-1); 
+        check(index2, 'index').is.equalTo(-1); 
     }
 
 }
