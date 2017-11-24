@@ -19,7 +19,7 @@ export default class Admin extends User {
         this.handleRevert = this.handleRevert.bind(this);
 
         this.fetchRegisteredUsers();
-        this.getActiveUsers();
+        this.getActiveUsers()
     }
 
     /**
