@@ -41,4 +41,14 @@ export default class ProductDescription{
         this.description = desc;
     }
 
+    toString(){
+        let str = this.category;
+
+        for(let i in this.description){
+            str +=", " + this.description[i];
+        }
+
+    return str;
+    }
+
 }

@@ -2,13 +2,18 @@
  * Created by CharlesPhilippe on 2017-10-31.
  */
 var check = require('offensive'); 
-const IdentityMap = require('./IdentityMap');
 
-module.exports = class ShoppingCart extends IdentityMap{
+
+module.exports = class ShoppingCart{
 
     constructor(content) {
-        super(content);
+
+        this.content = [];
         this.timestamps = {};
+
+        if(content){//specified content
+            this.content = content
+        }
     }
 
 
@@ -17,20 +22,21 @@ module.exports = class ShoppingCart extends IdentityMap{
      * @param {ProductId} ob1
      */
     add(ob1){
-        
+        //Precondition
+        check(this.content.length, 'size').is.lessThan(7); 
+        var odlshoppingCart = this.content; 
 
         if(this.content.length < 7){//only 7 items in cart
             this.content.push(ob1);
             this.timestamps[ob1.SerialNumber] = Date.now();
-
-           
-
             return true;
         }
         else{
             return false;
         }
-         
+        //Post Condition
+        check(this.content, 'size').is.lessThan(7); 
+        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCart.length()+1); 
     }
 
     /**
@@ -65,20 +71,27 @@ module.exports = class ShoppingCart extends IdentityMap{
      */
     removeItem(serial){
         //Precondition 
-        var oldshoppingCartLength = this.content.length; 
+        var oldshoppingCart = this.content; 
         const index = this.findItem(serial);
-        check(index, 'index').is.not.equalTo(-1); 
-
-        console.log(oldshoppingCartLength)
+       // check(index).is.not.equalTo(-1);
 
         //removing model number
         this.removeIndex(index);
         delete this.timestamps[serial];
 
         //Post Condition
-        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCartLength - 1); 
+      /*  check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCart.length()-1);
         const index2 = this.findItem(serial); 
-        check(index2, 'index').is.equalTo(-1); 
+        check(index2).is.equalTo(-1); */
+    }
+
+
+    removeIndex(index){
+        this.content.splice(index, 1);
+    }
+
+    setTo(index, ob1){
+        this.content[index] = ob1;
     }
 
 }

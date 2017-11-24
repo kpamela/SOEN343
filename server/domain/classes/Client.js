@@ -2,7 +2,7 @@
  * Created by CharlesPhilippe on 2017-11-12.
  */
 const User = require("./user.js"),
-    ShoppingCart = require('../IdentityMaps/ShoppingCart.js');
+    ShoppingCart = require('./ShoppingCart.js');
 
 
 /**
@@ -63,6 +63,15 @@ module.exports = class Client extends User{
 
         for(let i = 0; i < this[purchases].length; i++){
             if(this[purchases][i].SerialNumber === serial){
+                return this[purchases][i];
+            }
+        }
+        return null;
+    }
+
+    getPurchased(purchaseId){
+        for(let i = 0; i < this[purchases].length; i++){
+            if(this[purchases][i].PurchaseID === purchaseId){
                 return this[purchases][i];
             }
         }

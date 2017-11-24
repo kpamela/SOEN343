@@ -114,11 +114,13 @@ module.exports = class ClientDashboardMapper extends Catalogue{
             let cart = user.getCart();
 
             for(let i = 0; i < cart.length; i++){
+                const time = Date.now();
                 let purchase = {Username: user.Username,
                     ModelNumber: cart[i].ModelNumber,
                     SerialNumber: cart[i].SerialNumber,
                     IsReturned: 0,
-                    PurchaseTimeStamp: Date.now()};
+                    PurchaseTimeStamp: time,
+                    PurchaseID: cart[i].SerialNumber + "" + time};
                 user.addPurchase(purchase);
                 purchases.SQLadd_purchases(purchase).then(function(response){
                     ClientDashboardMapper.productTDG.SQLdeleteSingle_products(purchase.SerialNumber).then(function(response){
@@ -145,13 +147,13 @@ module.exports = class ClientDashboardMapper extends Catalogue{
     }
 
     returnItem(req, res){
-        purchases.SQLgetSingle_purchase(req.body.username, req.body.serialNumber).then(function(purchase){
+        purchases.SQLgetSingle_purchase(req.body.username, req.body.purchaseId).then(function(purchase){
             if(purchase.failure){//something went wrong, see aspect for further info
                 return res.status(500).json(purchase);// failed
             }
             else{
                 let product = {SerialNumber: purchase.SerialNumber, ModelNumber: purchase.ModelNumber, Available: 1};
-                purchases.SQLset_purchases_isReturned(req.body.username, product.SerialNumber, 1).then(function(response){//setting as returned
+                purchases.SQLset_purchases_isReturned(req.body.username, purchase.PurchaseID, 1).then(function(response){//setting as returned
                     //checking for failures
                     if(response.Error){
                         purchase.IsReturned = 0;
