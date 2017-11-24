@@ -105,8 +105,7 @@ export default class ProductListing extends React.Component{
 
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
-          console.log(product.description);
-          console.log(this.props.dimensions)
+          console.log(product);
 
 
             if(product.category.indexOf(this.props.include) === -1){
@@ -117,29 +116,18 @@ export default class ProductListing extends React.Component{
             if(str.indexOf(this.props.filterText) === -1){
                 return;
             }
-            //
-            // if(product.description.dimensions < this.props.dimensions){ //hassan is dealing with it
-            //         return;
-            // }
-            //
-            // if(product.description.modelNumber != this.state.modelNumber){
-            //         return;
-            // }
-            //
-            // if(product.description.weight != this.state.weight){
-            //       return;
-            // }
-            //
-            // if(product.description.price <= this.state.priceMax){
-            //         return;
-            // }
-            //
-            // if(product.description.price >= this.state.priceMin){
-            //         return;
-            // }
 
+            if(this.props.filters.priceMax && product.description['price'] >= this.props.filters.priceMax){
+              return;
+            }
 
+            if(this.props.filters.priceMin && product.description['price'] < this.props.filters.priceMin){
+              return;
+            }
 
+            if(this.props.filters.weight && product.description['weight'] >= this.props.filters.weight){
+              return;
+            }
 
 
             //Converting product object to product component

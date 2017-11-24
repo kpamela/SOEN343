@@ -26,6 +26,12 @@ export default class SearchBar extends React.Component{
         this.handleIncludeChange = this.handleIncludeChange.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        // this.handleDimensionsInputChange = this.handleDimensionsInputChange.bind(this);
+        // this.handlePriceMaxInputChange = this.handlePriceMaxInputChange.bind(this);
+        // this.handlePriceMinInputChange = this.handlePriceMinInputChange.bind(this);
+        // this.handleAmountRemainingInputChange = this.handleAmountRemainingInputChange.bind(this);
+        // this.handleWeightMaxInputChange = this.handleWeightMaxInputChange.bind(this);
+        // this.handleWeightMinInputChange = this.handleWeightMinInputChange.bind(this);
 
     }
 
@@ -34,29 +40,33 @@ export default class SearchBar extends React.Component{
         this.props.onFilterTextInput(e.target.value);
     }
 
-    handleDimensionsInputChange(e) {
-        this.props.onDimensionsInput(e.target.value);
-    }
 
-    handlePriceMaxInputChange(e) {
-        this.props.onPriceMaxInput(e.target.value);
-    }
 
-    handlePriceMinInputChange(e) {
-        this.props.onPriceMinInput(e.target.value);
-    }
+    // handleDimensionsInputChange(e) {
+    //     this.props.onDimensionsInput(e.target.value);
+    // }
+    //
+    // handlePriceMaxInputChange(e) {
+    //     this.props.onPriceMaxInput(e.target.value);
+    // }
+    //
+    // handlePriceMinInputChange(e) {
+    //     this.props.onPriceMinInput(e.target.value);
+    // }
+    //
+    // handleAmountRemainingInputChange(e){
+    //     this.props.onAmountRemainingInput(e.target.value);
+    // }
+    //
+    // handleWeightMaxInputChange(e){
+    //     this.props.onWeightMaxInput(e.target.value);
+    // }
+    //
+    // handleWeightMinInputChange(e){
+    //     this.props.onWeightMinInput(e.target.value);
+    // }
 
-    handleAmountRemainingInputChange(e){
-        this.props.onAmountRemainingInput(e.target.value);
-    }
 
-    handleWeightMaxInputChange(e){
-        this.props.onWeightMaxInput(e.target.value);
-    }
-
-    handleWeightMinInputChange(e){
-        this.props.onWeightMinInput(e.target.value);
-    }
 
     handleInputChange(event) {
       const target = event.target;
@@ -71,20 +81,20 @@ export default class SearchBar extends React.Component{
 
     handleIncludeChange(e){
         this.props.onIncludeChange(e.target.value);
-        switch(e.target.value){
-          case 'Desktop':
-              return   this.setState({categoryFilter: <div> <FilterDesktop /> </div> });
-          case 'Laptop':
-              return   this.setState({categoryFilter: <div> <FilterLaptop /> </div> });
-          case  'Monitor':
-              return   this.setState({categoryFilter: <div> <FilterMonitor /> </div> });
-          case  'Tablet':
-              return   this.setState({categoryFilter: <div> <FilterTablet /> </div> });
-          case  'Television':
-              return   this.setState({categoryFilter: <div> <FilterTelevision /> </div> });
-          case 'Computer':
-              return   this.setState({categoryFilter: <div> <FilterComputers   /> </div> });
-        };
+        // switch(e.target.value){
+        //   case 'Desktop':
+        //       return   this.setState({categoryFilter: <div> <FilterDesktop /> </div> });
+        //   case 'Laptop':
+        //       return   this.setState({categoryFilter: <div> <FilterLaptop /> </div> });
+        //   case  'Monitor':
+        //       return   this.setState({categoryFilter: <div> <FilterMonitor /> </div> });
+        //   case  'Tablet':
+        //       return   this.setState({categoryFilter: <div> <FilterTablet /> </div> });
+        //   case  'Television':
+        //       return   this.setState({categoryFilter: <div> <FilterTelevision /> </div> });
+        //   case 'Computer':
+        //       return   this.setState({categoryFilter: <div> <FilterComputers   /> </div> });
+        // };
     }
 
     handleSortChange(e){
@@ -120,39 +130,9 @@ export default class SearchBar extends React.Component{
                     </FormControl>
                 </FormGroup>
             </form>
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-12">
-                  <form>
-                    <label>
-                      Max Dimensions:
-                        <input name="dimensions" type="number" value={this.state.dimensions} onChange={this.handleDimensionsInputChange} />
-                    </label>
-                    <label>
-                      Maximum price
-                        <input name="priceMax" type="number" value={this.state.priceMax} onChange={this.handlePriceMaxInputChange} />
-                    </label>
-                    <label>
-                      Minimum price
-                        <input name="priceMin" type="number" value={this.state.priceMin} onChange={this.handlePriceMinInputChange} />
-                    </label>
-                    <label>
-                      Amount Remaining:
-                        <input name="amountRemaining" type="number" value={this.state.amountRemaining} onChange={this.handleAmountRemainingInputChange} />
-                    </label>
-                    <label>
-                      Maximum Weight:
-                        <input name="weightMax" type="number" value={this.state.weightMax} onChange={this.handleWeightMaxInputChange} />
-                    </label>
-                    <label>
-                      Minimum Weight:
-                        <input name="weightMin" type="number" value={this.state.weightMin} onChange={this.handleWeightMinInputChange} />
-                    </label>
-                  </form>
-                </div>
-              </div>
+            <div>
+                <ProductFilter handleFilterChange={this.props.onFilterChange} />
             </div>
-
             {this.state.categoryFilter}
           </div>
         );
