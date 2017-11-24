@@ -158,14 +158,16 @@ export default class NewProductRequest extends React.Component{
         let err = {disabled: false, modelNumber: true, price: true};
         if(this.state.fieldValue.description) {
             for(let ind in this.state.fieldValue.description){
+                console.log("here:");
+                console.log(this.state.fieldValue.description);
 
                 switch(ind){
                     case 'modelNumber':
-                        err[ind] = /^[a-zA-Z0-9]+$/.test(this.state.fieldValue.description[ind]);
+                        err[ind] = !(/^[a-zA-Z0-9]+$/.test(this.state.fieldValue.description.modelNumber));
                         break;
                     case 'dimensions':
-                        err[ind] = /([0-9][.])?[0-9]+x([0-9][.])?[0-9]+x([0-9]*[.])?[0-9]+/.test(this.state.fieldValue.description[ind]);
-                        break;
+                        //err[ind] = !(/([0-9][.])?[0-9]+x([0-9][.])?[0-9]+x([0-9]*[.])?[0-9]+/.test(this.state.fieldValue.description[ind]));
+                        //break;
                     case 'amount':
                     case 'price':
                     case 'weight':
@@ -174,7 +176,7 @@ export default class NewProductRequest extends React.Component{
                     case 'RAMSize':
                     case 'numberOfCores':
                     case 'displaySize':
-                        err[ind] = (parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind]) && (this.state.fieldValue.description[ind] < 0);
+                        err[ind] = (parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind]) && (parseFloat(this.state.fieldValue.description[ind]) < 0);
                         break;
                     default: err[ind] = this.state.fieldValue.description[ind].length <= 0;
                 }
