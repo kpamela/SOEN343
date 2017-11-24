@@ -45,14 +45,14 @@ npm test
 
 ## Testing
 Administrator access can be obtained by using the following:
-..* username: admin111 | password: admin111
-..* username: admin222 | password: admin222
-..* username: test | password: test
+* username: admin111 | password: admin111
+* username: admin222 | password: admin222
+* username: test | password: test
 
 Client access can be obtained by using the following:
-..* username: client1 | password: client1
-..* username: client2 | password: client2
-..* username: client3 | password: client3
+* username: client1 | password: client1
+* username: client2 | password: client2
+* username: client3 | password: client3
 
 ## Github Workspace
 Every iteration, a new project is created under the "projects" tab. The product backlog is imported into the iteration and tasks are created. Any left-over tasks from past iterations carry on as cards to the next. 
