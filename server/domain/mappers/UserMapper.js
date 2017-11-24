@@ -68,7 +68,8 @@ module.exports = class UserMapper {
                    let activeUser = new User(user[0]);
                  //  console.log(activeUser);
                    if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
-                       UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);//no errors, means new active user
+                       let timestamp = new Date (Date.now());
+                       UserMapper.activeUsersRegistry.push({username: activeUser.Username, timestamp: timestamp.toISOString()});//no errors, means new active user
                        console.log(UserMapper.activeUsersRegistry);
                    }
 
@@ -103,8 +104,8 @@ module.exports = class UserMapper {
             }
             else{
                 const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
-
-                UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
+                let timestamp = new Date (Date.now());
+                UserMapper.activeUsersRegistry.push([newUser.Username, timestamp.toISOString()]);
                 return res.json({success: true, token: token, user: newUser});
             }
         });

@@ -6,7 +6,8 @@ import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 import {ShoppingCartModal} from './ShoppingCartModal.js';
 import {PurchaseHistoryModal} from './PurchaseHistoryModal.js';
 import {AccountSettings} from './AccountSettings.js';
-import {UserActivity} from './UserActivity.js';
+import {ActiveUsersModal} from './ActiveUsersModal.js';
+
 
 import { Link } from 'react-router-dom';
 import auth from '../General/auth.js';
@@ -28,7 +29,6 @@ export default class NavBar extends Component{
             <NavItem eventKey={2}><Link className="NavbarLink" to="/aboutus">About us</Link></NavItem>
             {auth.getIsAdmin() == 0 ? <NavItem><Link className="NavbarLink" to="/ClientDashboard">Shop all categories</Link></NavItem> : null}
             {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/AdminDashboard">Administrator Dashboard</Link></NavItem> : null}
-            {auth.getIsAdmin() == 1 ? <NavItem><Link className="NavbarLink" to="/UserActivity">User Activity</Link></NavItem> : null}
 
           </Nav>
 
@@ -36,7 +36,8 @@ export default class NavBar extends Component{
             {!auth.loggedIn() ? <NavItem eventKey={1} href="#"> <LoginModal/> </NavItem> : null}
             {!auth.loggedIn() ? <NavItem eventKey={2} href="#"> <RegisterModal/> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="AccountSettings"></div> </NavItem>: null}
-              {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="RegisteredUser"></div> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="RegisteredUser"></div> </NavItem>: null}
+            {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <div id="ActiveUsers"></div> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={3} href="#"> <Logout/> </NavItem>: null}
             {auth.loggedIn() ? <NavItem eventKey={4} href="#"> <div id="ShoppingCart"></div> </NavItem> : null}
           </Nav>
