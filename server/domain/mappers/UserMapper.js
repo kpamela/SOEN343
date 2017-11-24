@@ -1,6 +1,8 @@
 /**
  * Created by CharlesPhilippe on 2017-10-26.
  */
+ var check = require('offensive'); 
+ 
 const express = require('express'),
     ClassBasedRouter = require('express-class-router'),
     //  products = express.Router(),
