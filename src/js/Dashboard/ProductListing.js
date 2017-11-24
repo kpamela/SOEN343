@@ -81,6 +81,21 @@ export default class ProductListing extends React.Component{
       }
   }
 
+  match(str, exp){
+      let res = false;
+      let reg = exp.split(" ");
+
+      for(let i = 0; i< reg.length; i++){
+          let regex = new RegExp(reg[i]);
+          if(regex.test(str)){
+              res = true;
+              break;
+          }
+      }
+
+      return res
+  }
+
 
   render(){
         var listing = [];
@@ -92,8 +107,9 @@ export default class ProductListing extends React.Component{
                     return;
             }
 
-            const str = JSON.stringify(product);//easier to search through one string
-            if(str.indexOf(this.props.filterText) === -1){
+            const str = product.toString();//easier to search through one string
+
+            if(!this.match(str, this.props.filterText)){
                 return;
             }
 
@@ -106,14 +122,7 @@ export default class ProductListing extends React.Component{
             
         });
 
-/*
-name={product.name}
-                      category={product.category}
-                      description={product.description}
-                      price={product.price}
-                      amount={product.amount}
 
-*/
         console.log(this.props.products);
 
         return(

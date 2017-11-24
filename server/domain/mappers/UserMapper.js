@@ -102,7 +102,7 @@ module.exports = class UserMapper {
             else{
                 const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
 
-                UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
+                UserMapper.activeUsersRegistry.push([newUser.Username, Date.now.toISOString()]);
                 return res.json({success: true, token: token, user: newUser});
             }
         });

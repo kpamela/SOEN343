@@ -69,6 +69,15 @@ module.exports = class Client extends User{
         return null;
     }
 
+    getPurchased(purchaseId){
+        for(let i = 0; i < this[purchases].length; i++){
+            if(this[purchases][i].PurchaseID === purchaseId){
+                return this[purchases][i];
+            }
+        }
+        return null;
+    }
+
     addPurchase(purchase){
         this[purchases].push(purchase);
     }

@@ -29,8 +29,9 @@ export class PurchaseHistoryModal extends React.Component{
     }
 
     onRowSelect(row, isSelected){
+
         if(isSelected){
-            this.setState({selected: this.state.selection.push(row.SerialNumber)});
+            this.setState({selected: this.state.selection.push(row.SerialNumber +""+row.PurchaseTimeStamp)});
         }
         else{
             for(let i = 0; i<this.state.selection.length; i++){
@@ -134,7 +135,8 @@ export class PurchaseHistoryModal extends React.Component{
                         </Modal.Header>
                         <Modal.Body>
                             <BootstrapTable data={products}  selectRow={selectRow} options={options} hover>
-                                <TableHeaderColumn dataField='SerialNumber'  dataAlign="left" isKey>Serial Number</TableHeaderColumn>
+                                <TableHeaderColumn dataField='PurchaseID'  dataAlign="left" isKey>PurchaseID</TableHeaderColumn>
+                                <TableHeaderColumn dataField='SerialNumber'  dataAlign="left" >Serial Number</TableHeaderColumn>
                                 <TableHeaderColumn dataField='ModelNumber'>Product Model</TableHeaderColumn>
                                 <TableHeaderColumn dataField='PurchaseTimeStamp' dataFormat={this.timeFormat}>Time</TableHeaderColumn>
                                 <TableHeaderColumn dataField='IsReturned'>Returned</TableHeaderColumn>
