@@ -2,7 +2,7 @@
  * Created by CharlesPhilippe on 2017-10-31.
  */
 var check = require('offensive'); 
-
+//
 
 module.exports = class ShoppingCart{
 
