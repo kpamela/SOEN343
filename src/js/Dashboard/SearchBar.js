@@ -12,7 +12,7 @@ export default class SearchBar extends React.Component{
         super(props);
 
         this.state={
-          categoryFilter: <div>"No filters selected"</div>,
+          categoryFilter: <div></div>,
         };
 
         this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
