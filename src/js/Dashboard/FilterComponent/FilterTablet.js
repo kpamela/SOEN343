@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
-import FilterComputer from './FilterComputers.js';
+import FilterComputers from './FilterComputers.js';
 
 export default class FilterTablet extends React.Component {
 

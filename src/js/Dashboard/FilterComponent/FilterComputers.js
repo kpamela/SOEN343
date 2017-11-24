@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
 
-export default class FilterComputer extends React.Component{
+export default class FilterComputers extends React.Component{
 
   constructor(props){
     super(props);
@@ -54,7 +54,7 @@ export default class FilterComputer extends React.Component{
                     value={this.state.numberOfCores}
                     onChange={this.handleInputChange} />
                 </label>
-                
+
                 <label>
                   Hard Drive Size:
                     <input

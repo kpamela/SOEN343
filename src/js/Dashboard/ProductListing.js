@@ -4,6 +4,13 @@
 import React from 'react';
 import Product from './Product.js';
 import ModifyProduct from './ModifyProduct.js';
+import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
+import FilterDesktop from './FilterComponent/FilterDesktop.js';
+import FilterLaptop from './FilterComponent/FilterLaptop.js';
+import FilterMonitor from './FilterComponent/FilterMonitor.js';
+import FilterTablet from './FilterComponent/FilterTablet.js';
+import FilterTelevision from './FilterComponent/FilterTelevision';
+import ProductFilter from './FilterComponent/ProductFilter.js';
 import {Button, ListGroup} from 'react-bootstrap';
 
 
@@ -49,7 +56,6 @@ export default class ProductListing extends React.Component{
       document.getElementById('productListingh2').scrollIntoView();
   }
 
-
   remove(){
       let confirm = window.confirm("Do you really want to delete " + this.state.model + " forever and ever?");
 
@@ -75,7 +81,7 @@ export default class ProductListing extends React.Component{
             return false;
     }
     return true;
-}
+  }
 
   handleModify(item){
       const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
@@ -90,12 +96,17 @@ export default class ProductListing extends React.Component{
       }
   }
 
+  handleFilterTypeInputChange(e){
+      this.props.handleInputChange(e);
+  }
+
   render(){
         var listing = [];
 
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
           console.log(product.description);
+          console.log(this.props.dimensions)
 
 
             if(product.category.indexOf(this.props.include) === -1){
@@ -106,22 +117,28 @@ export default class ProductListing extends React.Component{
             if(str.indexOf(this.props.filterText) === -1){
                 return;
             }
+            //
+            // if(product.description.dimensions < this.props.dimensions){ //hassan is dealing with it
+            //         return;
+            // }
+            //
+            // if(product.description.modelNumber != this.state.modelNumber){
+            //         return;
+            // }
+            //
+            // if(product.description.weight != this.state.weight){
+            //       return;
+            // }
+            //
+            // if(product.description.price <= this.state.priceMax){
+            //         return;
+            // }
+            //
+            // if(product.description.price >= this.state.priceMin){
+            //         return;
+            // }
 
-            if(product.description.dimensions < this.state.dimensions){ //hassan is dealing with it
-                    return;
-            }
 
-            if(product.description.modelNumber != this.state.modelNumber){
-                    return;
-            }
-
-            if(product.description.weight != this.state.weight){
-                  return;
-            }
-
-            if(product.description.price != this.state.price){
-                    return;
-            }
 
 
 

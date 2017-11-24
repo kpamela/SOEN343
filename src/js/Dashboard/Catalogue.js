@@ -20,6 +20,12 @@ import auth from '../General/auth.js';
             prods: <div>no data</div>,
             PRODUCTS : [],
             filterText: '',
+            dimensions: '',
+            priceMax: '',
+            priceMin: '',
+            amountRemaining: '',
+            weightMax: '',
+            weightMin:'',
             include: "",
             sorting:"",
             disableSort: ""
@@ -100,6 +106,19 @@ import auth from '../General/auth.js';
                     sorting={this.state.sorting}
                     onSortChange={this.handleSortChange}
                     disableSort={this.state.disableSort}
+                    //filter part2
+                    dimensions={this.state.dimensions}
+                    onDimensionsInput={this.handleDimensionsInputChange}
+                    priceMax={this.state.priceMax}
+                    onPriceMaxInput={this.handlePriceMaxInputChange}
+                    priceMin={this.state.priceMin}
+                    onPriceMinInput={this.handlePriceMinInputChange}
+                    amountRemaining={this.state.amountRemaining}
+                    onAmountRemainingInput={this.handleAmountRemainingInputChange}
+                    weightMax={this.state.weightMax}
+                    onWeightMaxInput={this.handleWeightMaxInputChange}
+                    weightMin={this.state.weightMin}
+                    onWeightMinInput={this.state.handleWeightMinInputChange}
                 />
 
                {this.showCatalogueOnly()}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
-import FilterComputer from './FilterComputers.js';
+import FilterComputers from './FilterComputers.js';
 
 export default class FilterDesktop extends React.Component {
 
@@ -25,7 +25,7 @@ export default class FilterDesktop extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-            <FilterComputer />
+              <FilterComputers />
             </div>
           </div>
         </div>
