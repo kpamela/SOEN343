@@ -18,7 +18,7 @@ module.exports = class ShoppingCart extends IdentityMap{
      */
     add(ob1){
         //Preconditions
-        check(this.content.length, 'size').is.lessThan(7); 
+        check(this.content.length).is.lessThan(7); 
         var odlshoppingCartLenght = this.content.length; 
         //End preconditions
 
@@ -27,7 +27,7 @@ module.exports = class ShoppingCart extends IdentityMap{
             this.timestamps[ob1.SerialNumber] = Date.now();
 
             //Post Conditions
-            check(this.content, 'size').is.lessThan(7); 
+            check(this.content.length).is.lessThan(7); 
             check(this.content.length, 'newShoppingCart').is.equalTo(odlshoppingCartLenght+1);
             //End post conditions 
 
