@@ -24,15 +24,15 @@ export class ActiveUsersModal extends React.Component{
       }
 
       open() {
-          this.props.user.fetchRegisteredUsers();
+          this.props.user.getActiveUsers()
           this.setState({showModal: true});
       }
 
       render(){
 
-          const user = this.props.user;
+          var user = this.props.user;
 
-          const usersList = this.props.user.activeUsers;
+          var usersList = this.props.user.activeUsers;
 
           if (auth.getIsAdmin() == 1) {
               return (
