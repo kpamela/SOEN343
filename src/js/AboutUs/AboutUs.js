@@ -13,7 +13,7 @@ export default class Main extends Component{
 
     render(){
         return(
-            <div className="AboutUs-Container">
+            <div className="Centered-Container">
                 <PageHeader>Team 15 Members</PageHeader>
                 <Table>
                     <thead>
@@ -45,14 +45,14 @@ export default class Main extends Component{
                         </tr>
                         <tr>
                             <td>Pamela Khouri</td>
-                            <td>400016194</td>
+                            <td>40016194</td>
                         </tr>
                         <tr>
                             <td>Raphaelle Giraud</td>
                             <td>27514204</td>
                         </tr>
                         <tr>
-                            <td>Sarbeng Frimbong</td>
+                            <td>Sarbeng Frimpong</td>
                             <td>29344039</td>
                         </tr>
                         <tr>
