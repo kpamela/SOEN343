@@ -96,6 +96,9 @@ export default class ProductListing extends React.Component{
       return res
   }
 
+  handleFilterTypeInputChange(e){
+      this.props.handleInputChange(e);
+  }
 
   render(){
         var listing = [];
@@ -112,6 +115,19 @@ export default class ProductListing extends React.Component{
             if(!this.match(str, this.props.filterText)){
                 return;
             }
+
+            if(this.props.filters.priceMax && product.description['price'] >= this.props.filters.priceMax){
+              return;
+            }
+
+            if(this.props.filters.priceMin && product.description['price'] < this.props.filters.priceMin){
+              return;
+            }
+
+            if(this.props.filters.weight && product.description['weight'] >= this.props.filters.weight){
+              return;
+            }
+
 
             //Converting product object to product component
             listing.push(

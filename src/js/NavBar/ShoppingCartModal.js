@@ -107,5 +107,3 @@ export const ShoppingCartModal = React.createClass({
         }
 }
 });
-
-

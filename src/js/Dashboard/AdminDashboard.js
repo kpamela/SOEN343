@@ -112,13 +112,14 @@ export class AdminDashboard extends Catalogue{
                     userType="admin"
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
+                    filters={this.state.filters}
                     include={this.state.include}
                     usr={this.state.usr}
                     toggleDisableSort={this.toggleDisableSort}
                     onChanges={this.handleUncommittedChanges}
                 />
                 <br/>
-                
+
             </div>
 
         );
