@@ -62,7 +62,7 @@ module.exports = class UserMapper {
                    res.status(500);
                }
                else if(isMatch){
-                   const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
+                   const token = jwt.sign({user:user[0]}, 'mysecret', {/*expiresIn:604800*/});
                    let activeUser = new User(user[0]);
                  //  console.log(activeUser);
                    if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
