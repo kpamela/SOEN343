@@ -20,6 +20,7 @@ import auth from '../General/auth.js';
             prods: <div>no data</div>,
             PRODUCTS : [],
             filterText: '',
+            filters: {},
             include: "",
             sorting:"",
             disableSort: ""
@@ -27,11 +28,18 @@ import auth from '../General/auth.js';
 
         //this.state.usr.getData();
         //this.setState({PRODUCTS: this.state.usr.p});
+        this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
         this.handleSearchIncludes = this.handleSearchIncludes.bind(this);
         this.handleGetData = this.handleGetData.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
         this.toggleDisableSort = this.toggleDisableSort.bind(this);
+        // this.handleDimensionsInput = this.handleDimensionsInput.bind(this);
+        // this.handlePriceMaxInput = this.handlePriceMaxInput.bind(this);
+        // this.handlePriceMinInput = this.handlePriceMinInput.bind(this);
+        // this.handleAmountRemainingInput = this.handleAmountRemainingInput.bind(this);
+        // this.handleWeightMaxInput = this.handleWeightMaxInput.bind(this);
+        // this.handleWeightMinInput = this.handleWeightMinInput.bind(this);
     }
 
 
@@ -43,6 +51,50 @@ import auth from '../General/auth.js';
             filterText: filterText
         });
     }
+
+    handleFilterChange(values){
+      this.setState({
+        filters: values
+      });
+    }
+
+    // handleDimensionsInput(dimensions) {
+    //   this.setState({
+    //       dimensions: dimensions
+    //   });
+    // }
+    //
+    // handlePriceMaxInput(priceMax) {
+    //   this.setState({
+    //       priceMax: priceMax
+    //   });
+    // }
+    //
+    // handlePriceMinInput(priceMin) {
+    //   this.setState({
+    //       priceMin: priceMin
+    //   });
+    // }
+    //
+    // handleAmountRemainingInput(amountRemaining){
+    //   this.setState({
+    //       amountRemaining: amountRemaining
+    //   });
+    // }
+    //
+    // handleWeightMaxInput(weightMax){
+    //   this.setState({
+    //       weightMax: weightMax
+    //   });
+    // }
+    //
+    // handleWeightMinInput(weightMin){
+    //   this.setState({
+    //       weightMin: weightMin
+    //   });
+    // }
+
+
     //Selecting where the search searches
      handleSearchIncludes(include){
         this.setState({
@@ -75,6 +127,7 @@ import auth from '../General/auth.js';
                 userType="regular"
                 products={this.state.PRODUCTS}
                 filterText={this.state.filterText}
+                filters = {this.state.filters}
                 include={this.state.include}
                 usr={this.state.usr}
                 toggleDisableSort={this.toggleDisableSort}
@@ -100,12 +153,25 @@ import auth from '../General/auth.js';
                     sorting={this.state.sorting}
                     onSortChange={this.handleSortChange}
                     disableSort={this.state.disableSort}
+                    onFilterChange={this.handleFilterChange}
+                    //filter part2
+                //     dimensions={this.state.dimensions}
+                //     onDimensionsInput={this.handleDimensionsInputChange}
+                //     priceMax={this.state.priceMax}
+                //     onPriceMaxInput={this.handlePriceMaxInputChange}
+                //     priceMin={this.state.priceMin}
+                //     onPriceMinInput={this.handlePriceMinInputChange}
+                //     amountRemaining={this.state.amountRemaining}
+                //     onAmountRemainingInput={this.handleAmountRemainingInputChange}
+                //     weightMax={this.state.weightMax}
+                //     onWeightMaxInput={this.handleWeightMaxInputChange}
+                //     weightMin={this.state.weightMin}
+                //     onWeightMinInput={this.handleWeightMinInputChange}
                 />
-                
+
                {this.showCatalogueOnly()}
 
             </div>
         );
     }
 }
-

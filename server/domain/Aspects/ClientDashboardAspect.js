@@ -97,7 +97,7 @@ Shopping Cart
     onRemoveFromCart(req, res){
         let product = ClientDashboardAspect.productListing.getModel(req.body.modelNumber);
         product.restoreId(req.body.serialNumber);
-        CatalogueMapper.unitOfWork.registerDirty(product);
+        //CatalogueMapper.unitOfWork.registerDirty(product);
     }
 
 
@@ -195,12 +195,12 @@ Shopping Cart
         let joinpoint = meld.joinpoint();
         let data = new jquery.Deferred();
         let username = joinpoint.args[0];
-        let serialNumber = joinpoint.args[1];
+        let purchaseId = joinpoint.args[1];
 
         let client = CatalogueAspect.activeUsers.getUser(username);//getting instance of user
 
         if(client){//user has to be logged in
-            let purchase = client.getPurchasedSerialNumber(serialNumber);
+            let purchase = client.getPurchased(purchaseId);
 
             //purchase is there, in the purchase history
             if(purchase){
@@ -214,6 +214,7 @@ Shopping Cart
             }
             else{
                 joinpoint.proceed().then(function(response){
+                    console.log(response[0]);
                     //check if puchase actually exists
                     if(response.length > 0){
                         //adding purchase to purchase history

@@ -79,6 +79,20 @@ export default class Client extends User{
             location.reload();
         }
     }
+// creating the loop that will display the array shoppingCart
+    displayShoppingCart(props){
+      let shoppingCartItem;
+      if(this.shoppingCart){
+        shoppingCartItem = this.props.shoppingCart.map(cartItem => {
+          return (
+            <li>
+              <shoppingCartItem key={cartItem.model} cartItem={cartItem} />
+            </li>
+
+          )
+        })
+      }
+    }
 
     popId(serial){
         for(let i = 0; i < this.shoppingCart.length; i++){
@@ -152,7 +166,8 @@ export default class Client extends User{
         let returned = [];
         for(let i = 0; i<this.purchaseHistory.length; i++){
             if(this.purchaseHistory[i].IsReturned){
-                returned.push(this.purchaseHistory[i].SerialNumber);
+
+                returned.push(this.purchaseHistory[i].PurchaseID);
             }
         }
         return returned;
@@ -171,12 +186,12 @@ export default class Client extends User{
     }
 
 
-    returnItem(serial){
-        this.axiosInstance.post("returnItem", {username: this.username, serialNumber: serial})
+    returnItem(purchaseId){
+        this.axiosInstance.post("returnItem", {username: this.username, purchaseId: purchaseId})
             .then(function(response){
-                alert("Return of " + serial + " successful!");
+                alert("Return of " + purchaseId + " successful!");
                 console.log(response);
-                location.reload();
+               // location.reload();
             }).catch(function(err){
                 console.log(err);
         })
