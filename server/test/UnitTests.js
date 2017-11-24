@@ -301,20 +301,19 @@ describe('Products', () => {
   * Test the /PATCH route for Modifying an existing product
   */
   describe('/PATCH products', () => {
-    it('it should PATCH a product with correct input fields', (done) => {
+    it('it should PATCH (modify) a product with correct input fields', (done) => {
       let product =  {
         
-        "previous": 'desk100',
+        "previous": 'desk999',
         "current":{ 
           "category": 'DesktopComputer',
-          "amount": 1,
+          "amount": 4,
           "description":{ 
             "brandName": 'Dell',
-            "modelNumber": 'desk100',
-            "dimensions": 300,
+            "modelNumber": 'desk999',
+            "dimensions": 100,
             "price": 100,
-            "weight": 200,
-            "isDeleted": 0,
+            "weight": 100,
             "processorType": 'Intel',
             "RAMSize": '8',
             "numberOfCores": 2,
