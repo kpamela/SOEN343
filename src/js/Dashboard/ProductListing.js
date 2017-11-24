@@ -75,13 +75,6 @@ export default class ProductListing extends React.Component{
     }
 
   //check is filter is empty
-  isEmpty(obj) {
-    for(var i in obj) {
-        if(obj.hasOwnProperty(i))
-            return false;
-    }
-    return true;
-  }
 
   handleModify(item){
       const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
