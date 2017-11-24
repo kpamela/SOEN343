@@ -1,6 +1,8 @@
 /**
  * Created by CharlesPhilippe on 2017-10-26.
  */
+ var check = require('offensive'); 
+ 
 const express = require('express'),
     ClassBasedRouter = require('express-class-router'),
     //  products = express.Router(),
@@ -62,11 +64,12 @@ module.exports = class UserMapper {
                    res.status(500);
                }
                else if(isMatch){
-                   const token = jwt.sign({user:user[0]}, 'mysecret', {expiresIn:604800});
+                   const token = jwt.sign({user:user[0]}, 'mysecret', {/*expiresIn:604800*/});
                    let activeUser = new User(user[0]);
                  //  console.log(activeUser);
                    if(!res.json({success: true, token: token, user: activeUser})){//undefined means no errors from around
-                       UserMapper.activeUsersRegistry.push([activeUser.Username, new Date().toISOString]);//no errors, means new active user
+                       let timestamp = new Date (Date.now());
+                       UserMapper.activeUsersRegistry.push({username: activeUser.Username, timestamp: timestamp.toISOString()});//no errors, means new active user
                        console.log(UserMapper.activeUsersRegistry);
                    }
 
@@ -101,8 +104,8 @@ module.exports = class UserMapper {
             }
             else{
                 const token = jwt.sign({user:newUser}, 'mysecret', {expiresIn:604800});
-
-                UserMapper.activeUsersRegistry.push([newUser.Username, new Date().toISOString()]);
+                let timestamp = new Date (Date.now());
+                UserMapper.activeUsersRegistry.push([newUser.Username, timestamp.toISOString()]);
                 return res.json({success: true, token: token, user: newUser});
             }
         });
@@ -126,7 +129,7 @@ module.exports = class UserMapper {
      */
     logout(req, res){
         for(let i = 0; i < UserMapper.activeUsersRegistry.length; i++){
-            if(UserMapper.activeUsersRegistry[i][0] === req.body.username){
+            if(UserMapper.activeUsersRegistry[i].username === req.body.username){
                 UserMapper.activeUsersRegistry.splice(i, 1);
                 return res.json({success:true, msg:'logged out'});
             }

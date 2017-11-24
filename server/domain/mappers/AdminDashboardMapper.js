@@ -68,7 +68,6 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             let category = req.body.data.category;
             let amount = req.body.data.amount;
             let price = req.body.data.price;
-            console.log("Category: "+category+" Amount: "+amount+" Price: "+price);
             //testing type
             if(typeof amount === "string" || typeof amount === "boolean" || typeof amount === "undefined"){
                 return res.json(400, {success:false, msg: "Invalid type for amount variable."});
@@ -96,7 +95,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
             AdminDashboardMapper.unitOfWork.registerNew(product);
 
             //Returns the new productListing contents, and the state of commit
-            return res.json({msg:"Item has been added to change list",
+            return res.json({success:true, msg:"Item has been added to change list",
                 newData: product,
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
@@ -124,7 +123,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             AdminDashboardMapper.unitOfWork.registerDirty(newProduct);
 
-            return res.json({msg:"Item set to modify. Commit when ready",
+            return res.json({success:true, msg:"Item set to modify. Commit when ready",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges});
 
     }
@@ -139,7 +138,7 @@ module.exports = class AdminDashboardMapper extends Catalogue{
 
             AdminDashboardMapper.unitOfWork.registerDeleted(req.body.product);
 
-            return res.json({msg: "Item will be deleted on commit.",
+            return res.json({success:true, msg: "Item will be deleted on commit.",
                 hasUncommittedChanges: AdminDashboardMapper.unitOfWork.hasUncommittedChanges})
 
 

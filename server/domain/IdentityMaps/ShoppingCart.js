@@ -1,7 +1,7 @@
 /**
  * Created by CharlesPhilippe on 2017-10-31.
  */
-
+var check = require('offensive'); 
 const IdentityMap = require('./IdentityMap');
 
 module.exports = class ShoppingCart extends IdentityMap{
@@ -17,17 +17,20 @@ module.exports = class ShoppingCart extends IdentityMap{
      * @param {ProductId} ob1
      */
     add(ob1){
-        invariant: {
-            this.content.length <=7, "Can't have more than 7 items in the shopping cart";
-        }
+        
+
         if(this.content.length < 7){//only 7 items in cart
             this.content.push(ob1);
             this.timestamps[ob1.SerialNumber] = Date.now();
+
+           
+
             return true;
         }
         else{
             return false;
         }
+         
     }
 
     /**
@@ -61,10 +64,21 @@ module.exports = class ShoppingCart extends IdentityMap{
      * @param serial
      */
     removeItem(serial){
+        //Precondition 
+        var oldshoppingCartLength = this.content.length; 
         const index = this.findItem(serial);
+        check(index, 'index').is.not.equalTo(-1); 
+
+        console.log(oldshoppingCartLength)
+
         //removing model number
         this.removeIndex(index);
         delete this.timestamps[serial];
+
+        //Post Condition
+        check(this.content.length, 'newShoppingCart').is.equalTo(oldshoppingCartLength - 1); 
+        const index2 = this.findItem(serial); 
+        check(index2, 'index').is.equalTo(-1); 
     }
 
 }

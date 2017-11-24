@@ -8,6 +8,7 @@ import NewProductRequest from './NewProductRequest.js';
 import ProductListing from './ProductListing.js';
 import {RegisteredUsersModal} from '../NavBar/RegisteredUsersModal'
 import {PageHeader, Button} from 'react-bootstrap';
+import { ActiveUsersModal } from '../NavBar/ActiveUsersModal';
 
 
 export class AdminDashboard extends Catalogue{
@@ -89,6 +90,12 @@ export class AdminDashboard extends Catalogue{
       let usersList = document.getElementById("RegisteredUser");
       if(usersList) {
           ReactDOM.render(registered, usersList);
+      }
+
+      let active = <ActiveUsersModal user={this.state.usr}/>;
+      let activeUsersList = document.getElementById("ActiveUsers")
+      if(activeUsersList){
+          ReactDOM.render(active, activeUsersList);
       }
 
         if(this.state.usr.hasUncommittedChanges.state() === "pending"){

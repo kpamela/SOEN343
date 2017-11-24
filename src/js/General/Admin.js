@@ -12,12 +12,14 @@ export default class Admin extends User {
         super(username);
         this.hasUncommittedChanges = new $.Deferred();
         this.registeredUsers = [];
+        this.activeUsers = [];
 
         this.registeredUsersCallback = this.registeredUsersCallback.bind(this);
         this.setUncommittedChange = this.setUncommittedChange.bind(this);
         this.handleRevert = this.handleRevert.bind(this);
 
         this.fetchRegisteredUsers();
+        this.getActiveUsers()
     }
 
     /**
@@ -134,6 +136,7 @@ export default class Admin extends User {
     registeredUsersCallback(response){
         this.registeredUsers = response.data;
     }
+    
 
     fetchRegisteredUsers(){
         axios.get('/users/getRegisteredUsers',{cancelToken: this.source.token, headers: {'Authorization': this.token}})
@@ -141,4 +144,10 @@ export default class Admin extends User {
                 console.log(thrown);
         });
     }
+
+    getActiveUsers(){
+        axios.get('/users/activeUsers').then((response) => {
+            this.activeUsers = response.data;
+        });
+      }
 }
