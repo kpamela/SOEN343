@@ -79,6 +79,20 @@ export default class Client extends User{
             location.reload();
         }
     }
+// creating the loop that will display the array shoppingCart
+    displayShoppingCart(props){
+      let shoppingCartItem;
+      if(this.shoppingCart){
+        shoppingCartItem = this.props.shoppingCart.map(cartItem => {
+          return (
+            <li>
+              <shoppingCartItem key={cartItem.model} cartItem={cartItem} />
+            </li>
+
+          )
+        })
+      }
+    }
 
     popId(serial){
         for(let i = 0; i < this.shoppingCart.length; i++){

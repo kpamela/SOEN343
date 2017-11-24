@@ -4,6 +4,13 @@
 import React from 'react';
 import Product from './Product.js';
 import ModifyProduct from './ModifyProduct.js';
+import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
+import FilterDesktop from './FilterComponent/FilterDesktop.js';
+import FilterLaptop from './FilterComponent/FilterLaptop.js';
+import FilterMonitor from './FilterComponent/FilterMonitor.js';
+import FilterTablet from './FilterComponent/FilterTablet.js';
+import FilterTelevision from './FilterComponent/FilterTelevision';
+import ProductFilter from './FilterComponent/ProductFilter.js';
 import {Button, ListGroup} from 'react-bootstrap';
 
 
@@ -21,7 +28,7 @@ export default class ProductListing extends React.Component{
   }
 
   handleShowForm(item){
-    
+
       if(this.props.userType === "admin") {
           //resetting the state before any change is requested
           this.props.toggleDisableSort("disabled");
@@ -39,7 +46,7 @@ export default class ProductListing extends React.Component{
                   </span>
               })
           });
-          
+
       }
       else if(this.props.userType === "client"){
           this.props.usr.addToCart(item.description.modelNumber);
@@ -48,7 +55,6 @@ export default class ProductListing extends React.Component{
       }//TODO handle add to cart
       document.getElementById('productListingh2').scrollIntoView();
   }
-
 
   remove(){
       let confirm = window.confirm("Do you really want to delete " + this.state.model + " forever and ever?");
@@ -68,6 +74,15 @@ export default class ProductListing extends React.Component{
          this.props.onChanges();
     }
 
+  //check is filter is empty
+  isEmpty(obj) {
+    for(var i in obj) {
+        if(obj.hasOwnProperty(i))
+            return false;
+    }
+    return true;
+  }
+
   handleModify(item){
       const i = this.props.usr.lookForModel(item.description.modelNumber);//looking for already existing model numbers
       if( i === this.state.currentPosition || i == -1){
@@ -81,12 +96,17 @@ export default class ProductListing extends React.Component{
       }
   }
 
+  handleFilterTypeInputChange(e){
+      this.props.handleInputChange(e);
+  }
 
   render(){
         var listing = [];
 
         //going through pass-by products adding them to current listing
         this.props.products.forEach((product) => {
+          console.log(product);
+
 
             if(product.category.indexOf(this.props.include) === -1){
                     return;
@@ -97,13 +117,26 @@ export default class ProductListing extends React.Component{
                 return;
             }
 
+            if(this.props.filters.priceMax && product.description['price'] >= this.props.filters.priceMax){
+              return;
+            }
+
+            if(this.props.filters.priceMin && product.description['price'] < this.props.filters.priceMin){
+              return;
+            }
+
+            if(this.props.filters.weight && product.description['weight'] >= this.props.filters.weight){
+              return;
+            }
+
+
             //Converting product object to product component
             listing.push(
                 <div>
                     <Product className="product" item={product} onShowForm={this.handleShowForm}/>
                 </div>
             );
-            
+
         });
 
 /*

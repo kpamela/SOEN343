@@ -46,6 +46,7 @@ export class ClientDashboard extends Catalogue{
                     userType="client"
                     products={this.state.PRODUCTS}
                     filterText={this.state.filterText}
+                    filters={this.state.filters}
                     include={this.state.include}
                     usr={this.state.usr}
                     toggleDisableSort={this.toggleDisableSort}
