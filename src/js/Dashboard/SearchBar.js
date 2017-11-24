@@ -3,14 +3,7 @@
  */
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
-import CatalogueFilterCategory from './FilterComponent/CatalogueFilterCategory.js';
-import FilterDesktop from './FilterComponent/FilterDesktop.js';
-import FilterLaptop from './FilterComponent/FilterLaptop.js';
-import FilterMonitor from './FilterComponent/FilterMonitor.js';
-import FilterTablet from './FilterComponent/FilterTablet.js';
-import FilterTelevision from './FilterComponent/FilterTelevision';
 import ProductFilter from './FilterComponent/ProductFilter.js';
-import FilterComputers from './FilterComponent/FilterComputers.js';
 
 
 
@@ -26,47 +19,12 @@ export default class SearchBar extends React.Component{
         this.handleIncludeChange = this.handleIncludeChange.bind(this);
         this.handleSortChange = this.handleSortChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleDimensionsInputChange = this.handleDimensionsInputChange.bind(this);
-        // this.handlePriceMaxInputChange = this.handlePriceMaxInputChange.bind(this);
-        // this.handlePriceMinInputChange = this.handlePriceMinInputChange.bind(this);
-        // this.handleAmountRemainingInputChange = this.handleAmountRemainingInputChange.bind(this);
-        // this.handleWeightMaxInputChange = this.handleWeightMaxInputChange.bind(this);
-        // this.handleWeightMinInputChange = this.handleWeightMinInputChange.bind(this);
-
     }
 
     //gets input from textField and pass it to AdminDashboard via onFilterTextInput()
     handleFilterTextInputChange(e){
         this.props.onFilterTextInput(e.target.value);
     }
-
-
-
-    // handleDimensionsInputChange(e) {
-    //     this.props.onDimensionsInput(e.target.value);
-    // }
-    //
-    // handlePriceMaxInputChange(e) {
-    //     this.props.onPriceMaxInput(e.target.value);
-    // }
-    //
-    // handlePriceMinInputChange(e) {
-    //     this.props.onPriceMinInput(e.target.value);
-    // }
-    //
-    // handleAmountRemainingInputChange(e){
-    //     this.props.onAmountRemainingInput(e.target.value);
-    // }
-    //
-    // handleWeightMaxInputChange(e){
-    //     this.props.onWeightMaxInput(e.target.value);
-    // }
-    //
-    // handleWeightMinInputChange(e){
-    //     this.props.onWeightMinInput(e.target.value);
-    // }
-
-
 
     handleInputChange(event) {
       const target = event.target;
@@ -81,20 +39,18 @@ export default class SearchBar extends React.Component{
 
     handleIncludeChange(e){
         this.props.onIncludeChange(e.target.value);
-        // switch(e.target.value){
-        //   case 'Desktop':
-        //       return   this.setState({categoryFilter: <div> <FilterDesktop /> </div> });
-        //   case 'Laptop':
-        //       return   this.setState({categoryFilter: <div> <FilterLaptop /> </div> });
-        //   case  'Monitor':
-        //       return   this.setState({categoryFilter: <div> <FilterMonitor /> </div> });
-        //   case  'Tablet':
-        //       return   this.setState({categoryFilter: <div> <FilterTablet /> </div> });
-        //   case  'Television':
-        //       return   this.setState({categoryFilter: <div> <FilterTelevision /> </div> });
-        //   case 'Computer':
-        //       return   this.setState({categoryFilter: <div> <FilterComputers   /> </div> });
-        // };
+        switch(e.target.value){
+          case 'Desktop':
+              return   this.setState({categoryFilter: <div> <FilterDesktop handleFilterChange={this.props.onFilterChange}/> </div> });
+          case 'Laptop':
+              return   this.setState({categoryFilter: <div> <FilterLaptop handleFilterChange={this.props.onFilterChange}/> </div> });
+          case  'Monitor':
+              return   this.setState({categoryFilter: <div> <FilterMonitor handleFilterChange={this.props.onFilterChange}/> </div> });
+          case  'Tablet':
+              return   this.setState({categoryFilter: <div> <FilterTablet handleFilterChange={this.props.onFilterChange}/> </div> });
+          case 'Computer':
+              return   this.setState({categoryFilter: <div> <FilterComputers handleFilterChange={this.props.onFilterChange}/> </div> });
+        };
     }
 
     handleSortChange(e){

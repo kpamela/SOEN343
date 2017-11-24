@@ -23,6 +23,8 @@ export default class FilterLaptop extends React.Component {
 
     this.setState({
       [name]: value
+    }, function(){
+      this.props.handleFilterChange(this.state);
     });
   }
 
