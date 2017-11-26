@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl, Button, Checkbox, ControlLabel} from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Col} from 'react-bootstrap';
 
 export default class ProductFilters extends React.Component {
 
@@ -28,27 +28,25 @@ export default class ProductFilters extends React.Component {
 
   render() {
       return (
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-              <form>
-                <label>
-                  Maximum price
-                    <input name="priceMax" type="number" value={this.state.priceMax} onChange={this.handleInputChange} />
-                </label>
+        <div >
+          <form>
+            <FormGroup className="filters">
+              <ControlLabel className="filterControl">
+                Maximum price
+                  <FormControl name="priceMax" type="number" value={this.state.priceMax} onChange={this.handleInputChange} />
+              </ControlLabel>
 
-                <label>
-                  Minimum price
-                    <input name="priceMin" type="number" value={this.state.priceMin} onChange={this.handleInputChange} />
-                </label>
+              <ControlLabel className="filterControl">
+                Minimum price
+                  <FormControl name="priceMin" type="number" value={this.state.priceMin} onChange={this.handleInputChange} />
+              </ControlLabel>
 
-                <label>
-                  Maximum Weight:
-                    <input name="weight" type="number" value={this.state.weight} onChange={this.handleInputChange} />
-                </label>
-              </form>
-            </div>
-          </div>
+              <ControlLabel className="filterControl">
+                Maximum Weight:
+                  <FormControl name="weight" type="number" value={this.state.weight} onChange={this.handleInputChange} />
+              </ControlLabel>
+            </FormGroup>
+          </form>
         </div>
       );
     }

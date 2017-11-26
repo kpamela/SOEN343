@@ -59,7 +59,7 @@ export default class SearchBar extends React.Component{
 
     render(){
         return(
-          <div>
+          <div className="filtersContainer">
             <form className="CatalogueForm">
                 <FormGroup>
                     <ControlLabel>Search</ControlLabel>

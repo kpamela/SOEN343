@@ -61,7 +61,11 @@ footer{
 }
 
 //Catalog form css
-.catalogForm{
+.filtersContainer{
+    margin-left:200px;
+    margin-right:200px;
+}
+.CatalogForm{
     margin-left:200px;
     margin-right:200px;
 }
@@ -85,6 +89,12 @@ footer{
         margin-left:10px;
     }
 }
+
+.filterControl{
+    margin-right:50px;
+}
+
+
 
 //Product Listing css
 .productListing{
