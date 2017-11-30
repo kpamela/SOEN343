@@ -47,7 +47,6 @@ npm test
 Administrator access can be obtained by using the following:
 * username: admin111 | password: admin111
 * username: admin222 | password: admin222
-* username: test | password: test
 
 Client access can be obtained by using the following:
 * username: client1 | password: client1
