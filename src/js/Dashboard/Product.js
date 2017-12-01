@@ -30,7 +30,65 @@ export default class Product extends React.Component{
         let desc =[];
 
         for(let i in this.props.item.description){
-            desc.push(<p>{i }: {this.props.item.description[i] }</p>);
+            let label;
+            switch(i){
+                case 'isDeleted':
+                    continue;
+                    break;
+                case 'brandName':
+                    label = 'Brand Name';
+                    break;
+                case 'modelNumber':
+                    label = 'Model Number';
+                    break;
+                case 'dimensions':
+                    label = 'Dimensions';
+                    break;
+                case 'price':
+                    label = 'Price';
+                    break;
+                case 'weight':
+                    label = 'Weight';
+                    break;
+                case 'processorType':
+                    label = 'Processor Type';
+                    break;
+                case 'RAMSize':
+                    label = 'RAM Size';
+                    break;
+                case 'numberOfCores':
+                    label = 'Number of Cores';
+                    break;
+                case 'hardDriveSize':
+                    label = 'Hard Drive Size';
+                    break;
+                case 'modelNumber':
+                    label = 'Model Number';
+                    break;
+                case 'displaySize':
+                    label = 'Display Size';
+                    break;
+                case 'batteryInfo':
+                    label = 'Battery Information';
+                    break;
+                case 'size':
+                    label = 'Size';
+                    break;
+                case 'hasCamera':
+                    label = 'Has a Camera';
+                    break;
+                case 'operatingSystem':
+                    label = 'Operating System';
+                    break;
+                case 'touchScreen':
+                    label = 'Touch Screen';
+                    break;
+                case 'additionalInfo':
+                    label = 'Additional Information';
+                    break;
+                
+            }
+            desc.push(<p><b>{label }</b>: {this.props.item.description[i] }</p>);
 
         }
 

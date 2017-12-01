@@ -142,7 +142,7 @@ export default class DescriptionForm extends React.Component{
     tabletDescription(){
         return(
             <div>
-                <ControlLabel>Television type</ControlLabel>
+                <ControlLabel>Operating System</ControlLabel>
                 <FormControl
                     className={this.props.errors["operatingSystem"] ? "error":""}
                     type="text"
@@ -277,7 +277,7 @@ export default class DescriptionForm extends React.Component{
 
     render(){
         return(
-        <form className="catalogForm">
+        <form className="CatalogForm">
             <FormGroup>
                 <hr/>
                 <h4> Adding a {this.props.category}</h4>

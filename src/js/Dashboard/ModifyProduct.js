@@ -42,6 +42,7 @@ import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
       validateModify(){
           let err = {amount: true, disabled: true};//setting erroneous at first
           err.amount = parseInt(this.state.fieldValue.amount) != this.state.fieldValue.amount;//amount is integer
+          err.amount = parseInt(this.state.fieldValue.amount) <= 0; //amount is not negative
           //if category is empty and amount is not an integer prevent submission
           err.disabled = this.state.fieldValue.category == "" || err.amount;
           //applying form change
@@ -142,14 +143,21 @@ import {Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
                   switch(ind){
                       case 'modelNumber':err[ind] = this.state.fieldValue.description[ind].length <= 0;
                                         break;
-                      case 'price':
-                      case 'weight':
-                      case 'hardDriveSize':
-                      case 'size':
-                      case 'RAMSize':
-                      case 'dimensions':
-                      case 'numberOfCores':
-                      case 'displaySize':
+                      case 'price': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'weight': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'hardDriveSize': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'size': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'RAMSize': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'dimensions': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'numberOfCores': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
+                                        break;
+                      case 'displaySize': err[ind] = parseInt(this.state.fieldValue.description[ind]) <= 0;
                           err[ind] = parseFloat(this.state.fieldValue.description[ind]) != this.state.fieldValue.description[ind];
                           break;
                       default: err[ind] = this.state.fieldValue.description[ind].length < 0;
