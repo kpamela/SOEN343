@@ -79,7 +79,15 @@ module.exports = class Client extends User{
     }
 
     addPurchase(purchase){
+      //precondition
+        check(this[cart].content.length, 'ShoppingCart').is.greaterThan(0);
+      //end precondition
+
         this[purchases].push(purchase);
+
+        //post Conditions
+        check(purchase, 'purchases').is.oneOf(this[purchases], 'purchases');
+	    //end postcondition
     }
 
     setPurchaseHistory(history){
